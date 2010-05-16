@@ -1,0 +1,28 @@
+INCLUDE=-I. 
+
+#OPTFLAGS=-O3 -arch ppc
+OPTFLAGS=-g -Wall -arch ppc
+#OPTFLAGS=-g -Wall -march=pentium3 -mfpmath=sse -mmmx -msse -pg
+CPPFLAGS=$(OPTFLAGS) $(INCLUDE)
+
+SRC=SJCBezierPatch.cpp SJCConstants.cpp SJCCubicBSpline.cpp \
+    SJCCubicPolynomial.cpp SJCErrorHandling.cpp SJCException.cpp \
+    SJCMatrix44.cpp SJCNoise.cpp SJCQuaternion.cpp SJCRandom.cpp \
+    SJCRigidTransform.cpp SJCRotateMatrix.cpp \
+    SJCScalarField2D.cpp SJCTargaImage.cpp SJCUtility.cpp
+OBJS=$(SRC:.cpp=.o)
+
+libSJC.a: $(OBJS)
+	ar rc $@ $(OBJS)
+	ranlib libSJC.a
+
+depend: makefile.dep
+	gccmakedep -f makefile.dep -- $(INCLUDE) -- $(SRC)
+
+makefile.dep:
+	touch makefile.dep
+
+clean:
+	rm -fr *.o *.a
+
+include makefile.dep
