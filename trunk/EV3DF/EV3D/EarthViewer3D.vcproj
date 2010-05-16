@@ -29,8 +29,8 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine="upx -9 &quot;$(TargetPath)&quot;   &#x0A;echo OK &gt; &quot;$(OutDir)\upx.trg&quot;"
-				Outputs="$(OutDir)\upx.trg"
+				CommandLine="upx -9 &quot;$(TargetPath)&quot; "
+				Outputs="$(TargetPath)"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -236,7 +236,7 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine="upx -9 &quot;$(TargetPath)&quot;   &#x0A;echo OK &gt; &quot;$(OutDir)\upx.trg&quot;"
+				CommandLine="upx -9 &quot;$(TargetPath)&quot;"
 				Outputs=""
 			/>
 			<Tool
