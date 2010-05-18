@@ -62,7 +62,7 @@ namespace NErrorHandling
 
       // give the user a chance to use the debugger
       #ifdef MS_WINDOWS
-        _asm{int 0x03}
+	assert(0);
       #else
         kill(getpid(), SIGABRT);
       #endif
@@ -92,7 +92,7 @@ namespace NErrorHandling
 
       // give the user a chance to use the debugger
       #ifdef MS_WINDOWS
-         _asm{int 0x03}
+         assert(0);
       #else
          kill(getpid(), SIGABRT);
       #endif
@@ -123,7 +123,7 @@ namespace NErrorHandling
     #ifdef _HALT_ON_WARNING
       // give the user a chance to use the debugger
       #ifdef MS_WINDOWS
-         _asm{int 0x03}
+         assert(0);
       #else
          kill(getpid(), SIGABRT);
       #endif
@@ -154,7 +154,7 @@ namespace NErrorHandling
 
     // give the user a chance to use the debugger
     #ifdef MS_WINDOWS
-      _asm{int 0x03}
+      assert(0);
     #else
       kill(getpid(), SIGABRT);
     #endif

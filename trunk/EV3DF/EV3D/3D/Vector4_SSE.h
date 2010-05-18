@@ -7,8 +7,12 @@
 #include <assert.h>
 #include <stdio.h>
 #include <xmmintrin.h>
-
-#include "FastMath.h"
+#include <cmath>
+#ifndef _WIN64
+#	include "FastMath.h"
+#else
+#	include "FastMathX64.h"
+#endif // WIN32
 
 class Vector4SSE;
 
@@ -683,8 +687,8 @@ inline Vector4SSE VectorQuaternionToRotation(Vector4SSE &v)
 {
 	Vector4SSE result;
 	
-	float cosvalue = FastMath::ACos(v.w);
-	float s = FastMath::ASin(cosvalue);
+	float cosvalue = acos(v.w);
+	float s = asin(cosvalue);
 
 	if ( s==0.0f )
 	{

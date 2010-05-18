@@ -6,7 +6,7 @@
 #endif 
 
 #include "Vector4.h"
-
+#include <cmath>
 class Matrix4x4CPU;
 
 extern Matrix4x4CPU g_MatrixCPU_Identity;

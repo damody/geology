@@ -285,7 +285,7 @@ void FirstMain::CreateControls()
 
     itemGLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxDefaultSize, 0 );
     itemFrame1->GetAuiManager().AddPane(itemGLCanvas, wxAuiPaneInfo()
-        .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().Dockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).Floatable(false).FloatingSize(wxSize(800, 600)));
+        .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().TopDockable(false).BottomDockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).Floatable(false).FloatingSize(wxSize(800, 600)));
 
     m_FileEditToolbar = new wxAuiToolBar( itemFrame1, ID_TOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     wxBitmap itemtool28Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
@@ -381,9 +381,31 @@ void FirstMain::CreateControls()
     itemFrame1->GetAuiManager().AddPane(itemAuiToolBar65, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("PreciseToolbar")).Top().Row(1).Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
-    m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxSize(200, 100), wxLC_REPORT );
+    m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
-        .Name(_T("ColorList")).Caption(_("ColorTable")).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 800)));
+        .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(false).FloatingSize(wxSize(200, 400)));
+
+    wxStatusBar* itemStatusBar71 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar71->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar71);
+
+    wxNotebook* itemNotebook72 = new wxNotebook( itemFrame1, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
+
+    wxTreeCtrl* itemTreeCtrl73 = new wxTreeCtrl( itemNotebook72, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
+
+    itemNotebook72->AddPage(itemTreeCtrl73, _("Tab"));
+
+    wxGrid* itemGrid74 = new wxGrid( itemNotebook72, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    itemGrid74->SetDefaultColSize(50);
+    itemGrid74->SetDefaultRowSize(25);
+    itemGrid74->SetColLabelSize(25);
+    itemGrid74->SetRowLabelSize(50);
+    itemGrid74->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
+
+    itemNotebook72->AddPage(itemGrid74, _("Tab"));
+
+    itemFrame1->GetAuiManager().AddPane(itemNotebook72, wxAuiPaneInfo()
+        .Name(_T("Pane1")).MinSize(wxSize(200, 400)).BestSize(wxSize(200, 600)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(300, 600)));
 
     GetAuiManager().Update();
 
