@@ -10,8 +10,14 @@
 
 #include <assert.h>
 #include <stdio.h>
+#include <cmath>
+#ifndef _WIN64
+#	include "FastMath.h"
+#else
+#	include "FastMathX64.h"
+#endif // WIN32
 
-#include "FastMath.h"
+
 
 class Vector4CPU;
 
@@ -196,10 +202,10 @@ public:
 
 	inline void Sqrt(void)
 	{
-		x = FastMath::Sqrt(x);
-		y = FastMath::Sqrt(y);
-		z = FastMath::Sqrt(z);
-		w = FastMath::Sqrt(w);
+		x = std::sqrt(x);
+		y = std::sqrt(y);
+		z = std::sqrt(z);
+		w = std::sqrt(w);
 	}
 
 	inline void ReciprocalSqrt(void)
@@ -215,7 +221,7 @@ public:
 		float Vectorlength;
 		
 		float sum = x*x + y*y + z*z;
-		Vectorlength = FastMath::Sqrt(sum);
+		Vectorlength = std::sqrt(sum);
 
 		return Vectorlength;
 	}
@@ -239,10 +245,10 @@ public:
 
 	inline Vector4CPU &Abs(void)
 	{
-		x = FastMath::Abs(x);
-		y = FastMath::Abs(y);
-		z = FastMath::Abs(z);
-		w = FastMath::Abs(w);
+		x = abs(x);
+		y = abs(y);
+		z = abs(z);
+		w = abs(w);
 
 		return *this;
 	}
@@ -646,8 +652,8 @@ inline Vector4CPU VectorQuaternionToRotation(Vector4CPU &v)
 {
 	Vector4CPU result;
 
-	float cosvalue = FastMath::ACos(v.w);
-	float s = FastMath::ASin(cosvalue);
+	float cosvalue = acos(v.w);
+	float s = asin(cosvalue);
 
 	if ( s==0.0f )
 	{

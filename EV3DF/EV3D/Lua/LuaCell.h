@@ -28,11 +28,15 @@ const char *a = cell.getLua_String("sssi","table2","table23","table2",1);
 #include "lua.hpp"
 #include "lauxlib.h"
 #include "lualib.h"
-#ifdef _DEBUG
-#pragma comment(lib, "Lua/lua5.1d.lib")
-#else
-#pragma comment(lib, "Lua/lua5.1.lib")
-#endif // _DEBUG
+#ifdef WIN64
+#	pragma comment(lib, "Lua/lua5.1x64.lib")
+#else 
+#	if _DEBUG
+#		pragma comment(lib, "Lua/lua5.1d.lib")
+#	else
+#		pragma comment(lib, "Lua/lua5.1.lib")
+#	endif // _DEBUG
+#endif
 
 #include <cstdarg>
 
