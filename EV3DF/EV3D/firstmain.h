@@ -63,6 +63,7 @@ class wxListCtrl;
 #define ID_XYZchipEditToolbar 10054
 #define ID_ColorTable 10055
 #define ID_MENUPreciseToolbar 10061
+#define ID_RenderBondingBox 10071
 #define ID_RenderAxis 10019
 #define ID_RenderCube 10020
 #define ID_RenderFace1 10021
@@ -79,13 +80,15 @@ class wxListCtrl;
 #define ID_BTNCUT 10005
 #define ID_BTNPASTE 10006
 #define ID_AUITOOLBAR 10011
-#define ID_useXYZchip 10007
+#define ID_USE_XCHIP 10007
 #define ID_LABEL 10012
 #define ID_text_chipX 10048
 #define ID_SLIDER 10004
+#define ID_USE_YCHIP 10069
 #define ID_LABEL1 10013
 #define ID_text_chipY 10049
 #define ID_SLIDER1 10014
+#define ID_USE_ZCHIP 10070
 #define ID_LABEL2 10015
 #define ID_text_chipZ 10050
 #define ID_SLIDER2 10016
@@ -236,6 +239,9 @@ public:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUPreciseToolbar
     void OnMENUPreciseToolbarClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderBondingBox
+    void OnRenderBondingBoxClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderAxis
     void OnRenderAxisClick( wxCommandEvent& event );
 
@@ -260,6 +266,9 @@ public:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace6
     void OnRenderFace6Click( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip
+    void OnRenderXchipClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_BTNOPENFILE
     void OnBtnopenfileClick( wxCommandEvent& event );
 
@@ -275,8 +284,8 @@ public:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_BTNPASTE
     void OnBtnpasteClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_useXYZchip
-    void OnUseXYZchipClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_XCHIP
+    void OnUseXchipClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_text_chipX
     void OnTextChipXTextUpdated( wxCommandEvent& event );
@@ -284,11 +293,17 @@ public:
     /// wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER
     void OnSliderUpdated( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_YCHIP
+    void OnUseYchipClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_text_chipY
     void OnTextChipYTextUpdated( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER1
     void OnSlider1Updated( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_ZCHIP
+    void OnUseZchipClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_text_chipZ
     void OnTextChipZTextUpdated( wxCommandEvent& event );
@@ -366,14 +381,23 @@ public:
     bool GetRenderAxis() const { return m_RenderAxis ; }
     void SetRenderAxis(bool value) { m_RenderAxis = value ; }
 
-    bool GetUseXYZchip() const { return m_useXYZchip ; }
-    void SetUseXYZchip(bool value) { m_useXYZchip = value ; }
+    bool GetUseXYZchip() const { return m_useXchip ; }
+    void SetUseXYZchip(bool value) { m_useXchip = value ; }
 
     bool GetFixMove() const { return m_bFixMove ; }
     void SetFixMove(bool value) { m_bFixMove = value ; }
 
     bool GetLoadColor() const { return m_LoadColor ; }
     void SetLoadColor(bool value) { m_LoadColor = value ; }
+
+    bool GetUseYchip() const { return m_useYchip ; }
+    void SetUseYchip(bool value) { m_useYchip = value ; }
+
+    bool GetUseZchip() const { return m_useZchip ; }
+    void SetUseZchip(bool value) { m_useZchip = value ; }
+
+    bool GetRenderBondingBox() const { return m_RenderBondingBox ; }
+    void SetRenderBondingBox(bool value) { m_RenderBondingBox = value ; }
 
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
@@ -425,9 +449,12 @@ public:
     wxPoint lastP;
     wxPoint P;
     bool m_RenderAxis;
-    bool m_useXYZchip;
+    bool m_useXchip;
     bool m_bFixMove;
     bool m_LoadColor;
+    bool m_useYchip;
+    bool m_useZchip;
+    bool m_RenderBondingBox;
 ////@end FirstMain member variables
     private:
 	    HandleEvr*	m_hEvr;
