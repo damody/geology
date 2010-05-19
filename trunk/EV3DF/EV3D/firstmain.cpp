@@ -76,6 +76,8 @@ BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 
     EVT_MENU( ID_MENUPreciseToolbar, FirstMain::OnMENUPreciseToolbarClick )
 
+    EVT_MENU( ID_RenderBondingBox, FirstMain::OnRenderBondingBoxClick )
+
     EVT_MENU( ID_RenderAxis, FirstMain::OnRenderAxisClick )
 
     EVT_MENU( ID_RenderCube, FirstMain::OnRenderCubeClick )
@@ -92,6 +94,8 @@ BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 
     EVT_MENU( ID_RenderFace6, FirstMain::OnRenderFace6Click )
 
+    EVT_MENU( ID_RenderXchip, FirstMain::OnRenderXchipClick )
+
     EVT_MENU( ID_BTNOPENFILE, FirstMain::OnBtnopenfileClick )
 
     EVT_MENU( ID_BTNSAVEFILE, FirstMain::OnBtnsavefileClick )
@@ -102,15 +106,19 @@ BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 
     EVT_MENU( ID_BTNPASTE, FirstMain::OnBtnpasteClick )
 
-    EVT_CHECKBOX( ID_useXYZchip, FirstMain::OnUseXYZchipClick )
+    EVT_CHECKBOX( ID_USE_XCHIP, FirstMain::OnUseXchipClick )
 
     EVT_TEXT( ID_text_chipX, FirstMain::OnTextChipXTextUpdated )
 
     EVT_SLIDER( ID_SLIDER, FirstMain::OnSliderUpdated )
 
+    EVT_CHECKBOX( ID_USE_YCHIP, FirstMain::OnUseYchipClick )
+
     EVT_TEXT( ID_text_chipY, FirstMain::OnTextChipYTextUpdated )
 
     EVT_SLIDER( ID_SLIDER1, FirstMain::OnSlider1Updated )
+
+    EVT_CHECKBOX( ID_USE_ZCHIP, FirstMain::OnUseZchipClick )
 
     EVT_TEXT( ID_text_chipZ, FirstMain::OnTextChipZTextUpdated )
 
@@ -203,9 +211,12 @@ void FirstMain::Init()
     m_RenderCube = false;
     m_init = false;
     m_RenderAxis = true;
-    m_useXYZchip = false;
+    m_useXchip = false;
     m_bFixMove = false;
     m_LoadColor = false;
+    m_useYchip = false;
+    m_useZchip = false;
+    m_RenderBondingBox = true;
     itemGLCanvas = NULL;
     m_FileEditToolbar = NULL;
     m_XYZchipEditToolbar = NULL;
@@ -270,6 +281,8 @@ void FirstMain::CreateControls()
     itemMenu10->Check(ID_MENUPreciseToolbar, true);
     menuBar->Append(itemMenu10, _("View"));
     wxMenu* itemMenu17 = new wxMenu;
+    itemMenu17->Append(ID_RenderBondingBox, _("RenderBondingBox"), wxEmptyString, wxITEM_CHECK);
+    itemMenu17->Check(ID_RenderBondingBox, true);
     itemMenu17->Append(ID_RenderAxis, _("RenderAxis"), wxEmptyString, wxITEM_CHECK);
     itemMenu17->Check(ID_RenderAxis, true);
     itemMenu17->Append(ID_RenderCube, _("RenderCube"), wxEmptyString, wxITEM_CHECK);
@@ -288,39 +301,45 @@ void FirstMain::CreateControls()
         .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().TopDockable(false).BottomDockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).Floatable(false).FloatingSize(wxSize(800, 600)));
 
     m_FileEditToolbar = new wxAuiToolBar( itemFrame1, ID_TOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
-    wxBitmap itemtool28Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
-    wxBitmap itemtool28BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNOPENFILE, wxEmptyString, itemtool28Bitmap, itemtool28BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool29Bitmap(itemFrame1->GetBitmapResource(wxT("filesave.xpm")));
+    wxBitmap itemtool29Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
     wxBitmap itemtool29BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNSAVEFILE, wxEmptyString, itemtool29Bitmap, itemtool29BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool30Bitmap(itemFrame1->GetBitmapResource(wxT("copy.xpm")));
+    m_FileEditToolbar->AddTool(ID_BTNOPENFILE, wxEmptyString, itemtool29Bitmap, itemtool29BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool30Bitmap(itemFrame1->GetBitmapResource(wxT("filesave.xpm")));
     wxBitmap itemtool30BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNCOPY, wxEmptyString, itemtool30Bitmap, itemtool30BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool31Bitmap(itemFrame1->GetBitmapResource(wxT("cut.xpm")));
+    m_FileEditToolbar->AddTool(ID_BTNSAVEFILE, wxEmptyString, itemtool30Bitmap, itemtool30BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool31Bitmap(itemFrame1->GetBitmapResource(wxT("copy.xpm")));
     wxBitmap itemtool31BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNCUT, wxEmptyString, itemtool31Bitmap, itemtool31BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool32Bitmap(itemFrame1->GetBitmapResource(wxT("paste.xpm")));
+    m_FileEditToolbar->AddTool(ID_BTNCOPY, wxEmptyString, itemtool31Bitmap, itemtool31BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool32Bitmap(itemFrame1->GetBitmapResource(wxT("cut.xpm")));
     wxBitmap itemtool32BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNPASTE, wxEmptyString, itemtool32Bitmap, itemtool32BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    m_FileEditToolbar->AddTool(ID_BTNCUT, wxEmptyString, itemtool32Bitmap, itemtool32BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool33Bitmap(itemFrame1->GetBitmapResource(wxT("paste.xpm")));
+    wxBitmap itemtool33BitmapDisabled;
+    m_FileEditToolbar->AddTool(ID_BTNPASTE, wxEmptyString, itemtool33Bitmap, itemtool33BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
     m_FileEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_FileEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("FileEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Gripper(true));
 
     m_XYZchipEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
-    wxCheckBox* itemCheckBox34 = new wxCheckBox( m_XYZchipEditToolbar, ID_useXYZchip, _("use XYZ chip"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox34->SetValue(false);
-    m_XYZchipEditToolbar->AddControl(itemCheckBox34);
+    wxCheckBox* itemCheckBox35 = new wxCheckBox( m_XYZchipEditToolbar, ID_USE_XCHIP, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    itemCheckBox35->SetValue(false);
+    m_XYZchipEditToolbar->AddControl(itemCheckBox35);
     m_XYZchipEditToolbar->AddLabel(ID_LABEL, _("X"), 10);
     m_text_chipX = new wxTextCtrl( m_XYZchipEditToolbar, ID_text_chipX, _("0"), wxDefaultPosition, wxSize(40, -1), 0 );
     m_XYZchipEditToolbar->AddControl(m_text_chipX);
     m_XSlider = new wxSlider( m_XYZchipEditToolbar, ID_SLIDER, 0, 0, 1000, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
     m_XYZchipEditToolbar->AddControl(m_XSlider);
+    wxCheckBox* itemCheckBox39 = new wxCheckBox( m_XYZchipEditToolbar, ID_USE_YCHIP, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+    itemCheckBox39->SetValue(false);
+    m_XYZchipEditToolbar->AddControl(itemCheckBox39);
     m_XYZchipEditToolbar->AddLabel(ID_LABEL1, _("Y"), 10);
     m_text_chipY = new wxTextCtrl( m_XYZchipEditToolbar, ID_text_chipY, _("0"), wxDefaultPosition, wxSize(40, -1), 0 );
     m_XYZchipEditToolbar->AddControl(m_text_chipY);
     m_YSlider = new wxSlider( m_XYZchipEditToolbar, ID_SLIDER1, 0, 0, 1000, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
     m_XYZchipEditToolbar->AddControl(m_YSlider);
+    wxCheckBox* itemCheckBox43 = new wxCheckBox( m_XYZchipEditToolbar, ID_USE_ZCHIP, _("Checkbox"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemCheckBox43->SetValue(false);
+    m_XYZchipEditToolbar->AddControl(itemCheckBox43);
     m_XYZchipEditToolbar->AddLabel(ID_LABEL2, _("Z"), 10);
     m_text_chipZ = new wxTextCtrl( m_XYZchipEditToolbar, ID_text_chipZ, _("0"), wxDefaultPosition, wxSize(40, -1), 0 );
     m_XYZchipEditToolbar->AddControl(m_text_chipZ);
@@ -370,41 +389,41 @@ void FirstMain::CreateControls()
     itemFrame1->GetAuiManager().AddPane(m_PositionEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("PositionEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Gripper(true));
 
-    wxAuiToolBar* itemAuiToolBar65 = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR3, wxDefaultPosition, wxSize(80, -1), wxAUI_TB_GRIPPER );
-    itemAuiToolBar65->AddLabel(ID_LABEL12, _("Precise"), 40);
-    m_PreciseSpin = new wxSpinCtrl( itemAuiToolBar65, ID_SPINCTRL, _T("1"), wxDefaultPosition, wxSize(40, -1), wxSP_ARROW_KEYS, 1, 9, 1 );
-    itemAuiToolBar65->AddControl(m_PreciseSpin);
-    itemAuiToolBar65->AddLabel(ID_LABEL13, _("MarchCubeSet"), 80);
-    m_MarchCubeSet_spinctrl = new wxSpinCtrl( itemAuiToolBar65, ID_MarchCubeSet_SPINCTRL, _T("0"), wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 100, 0 );
-    itemAuiToolBar65->AddControl(m_MarchCubeSet_spinctrl);
-    itemAuiToolBar65->Realize();
-    itemFrame1->GetAuiManager().AddPane(itemAuiToolBar65, wxAuiPaneInfo()
+    wxAuiToolBar* itemAuiToolBar68 = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR3, wxDefaultPosition, wxSize(80, -1), wxAUI_TB_GRIPPER );
+    itemAuiToolBar68->AddLabel(ID_LABEL12, _("Precise"), 40);
+    m_PreciseSpin = new wxSpinCtrl( itemAuiToolBar68, ID_SPINCTRL, _T("1"), wxDefaultPosition, wxSize(40, -1), wxSP_ARROW_KEYS, 1, 9, 1 );
+    itemAuiToolBar68->AddControl(m_PreciseSpin);
+    itemAuiToolBar68->AddLabel(ID_LABEL13, _("MarchCubeSet"), 80);
+    m_MarchCubeSet_spinctrl = new wxSpinCtrl( itemAuiToolBar68, ID_MarchCubeSet_SPINCTRL, _T("0"), wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 100, 0 );
+    itemAuiToolBar68->AddControl(m_MarchCubeSet_spinctrl);
+    itemAuiToolBar68->Realize();
+    itemFrame1->GetAuiManager().AddPane(itemAuiToolBar68, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("PreciseToolbar")).Top().Row(1).Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
     m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
         .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(false).FloatingSize(wxSize(200, 400)));
 
-    wxStatusBar* itemStatusBar71 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar71->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar71);
+    wxStatusBar* itemStatusBar74 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar74->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar74);
 
-    wxNotebook* itemNotebook72 = new wxNotebook( itemFrame1, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
+    wxNotebook* itemNotebook75 = new wxNotebook( itemFrame1, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
 
-    wxTreeCtrl* itemTreeCtrl73 = new wxTreeCtrl( itemNotebook72, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
+    wxTreeCtrl* itemTreeCtrl76 = new wxTreeCtrl( itemNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
 
-    itemNotebook72->AddPage(itemTreeCtrl73, _("Tab"));
+    itemNotebook75->AddPage(itemTreeCtrl76, _("Tab"));
 
-    wxGrid* itemGrid74 = new wxGrid( itemNotebook72, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
-    itemGrid74->SetDefaultColSize(50);
-    itemGrid74->SetDefaultRowSize(25);
-    itemGrid74->SetColLabelSize(25);
-    itemGrid74->SetRowLabelSize(50);
-    itemGrid74->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
+    wxGrid* itemGrid77 = new wxGrid( itemNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    itemGrid77->SetDefaultColSize(50);
+    itemGrid77->SetDefaultRowSize(25);
+    itemGrid77->SetColLabelSize(25);
+    itemGrid77->SetRowLabelSize(50);
+    itemGrid77->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
 
-    itemNotebook72->AddPage(itemGrid74, _("Tab"));
+    itemNotebook75->AddPage(itemGrid77, _("Tab"));
 
-    itemFrame1->GetAuiManager().AddPane(itemNotebook72, wxAuiPaneInfo()
+    itemFrame1->GetAuiManager().AddPane(itemNotebook75, wxAuiPaneInfo()
         .Name(_T("Pane1")).MinSize(wxSize(200, 400)).BestSize(wxSize(200, 600)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(300, 600)));
 
     GetAuiManager().Update();
@@ -1070,18 +1089,6 @@ void FirstMain::OnZmaxTextTextUpdated( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL5 in FirstMain. 
 }
 
-
-/*
-* wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
-*/
-
-void FirstMain::OnUseXYZchipClick( wxCommandEvent& event )
-{
-	m_useXYZchip = event.IsChecked();
-	event.Skip(false);
-}
-
-
 /*
  * wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER
  */
@@ -1192,12 +1199,12 @@ void FirstMain::RenderFrame()
 	
 	if (m_hEvr)
 	{
-		if (m_useXYZchip)
-		{
+		if (m_useXchip)
 			m_mathCube.RenderChip(MathCube::USE_X, m_XSlider->GetValue());
+		if (m_useYchip)
 			m_mathCube.RenderChip(MathCube::USE_Y, m_YSlider->GetValue());
+		if (m_useZchip)
 			m_mathCube.RenderChip(MathCube::USE_Z, m_ZSlider->GetValue());
-		}
 		if (m_RenderCube)
 			m_mathCube.RenderCube();
 		else
@@ -1215,6 +1222,8 @@ void FirstMain::RenderFrame()
 			if (m_RenderFace6)
 				m_mathCube.RenderFace(6);
 		}
+		if (m_RenderBondingBox)
+			m_mathCube.RenderBondingBox();
 	}
 	itemGLCanvas->SwapBuffers();
 }
@@ -1407,5 +1416,60 @@ void FirstMain::OnMarchCubeSetSPINCTRLUpdated( wxSpinEvent& event )
 {
 	m_mathCube.ResetMarchCubeLevel(m_MarchCubeSet_spinctrl->GetValue());
 	event.Skip(false);
+}
+
+/*
+* wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
+*/
+
+void FirstMain::OnUseXchipClick( wxCommandEvent& event )
+{
+	m_useXchip = event.IsChecked();
+	event.Skip(false);
+}
+
+/*
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_YCHIP
+ */
+
+void FirstMain::OnUseYchipClick( wxCommandEvent& event )
+{
+	m_useYchip = event.IsChecked();
+	event.Skip(false);
+}
+
+
+/*
+ * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_ZCHIP
+ */
+
+void FirstMain::OnUseZchipClick( wxCommandEvent& event )
+{
+	m_useZchip = event.IsChecked();
+	event.Skip(false);
+}
+
+
+/*
+ * wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip
+ */
+
+void FirstMain::OnRenderXchipClick( wxCommandEvent& event )
+{
+////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip in FirstMain.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip in FirstMain. 
+}
+
+
+/*
+ * wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderBondingBox
+ */
+
+void FirstMain::OnRenderBondingBoxClick( wxCommandEvent& event )
+{
+	m_RenderBondingBox = event.IsChecked();
+	event.Skip(false); 
 }
 

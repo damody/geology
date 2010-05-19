@@ -78,6 +78,7 @@ public:
 	void draw_tstrips();
 	void cls();
 	void setup_lighting();
+	void RenderBondingBox();
 private:
 	std::vector<double>	m_chipdata[3];
 	std::vector<double>	m_facedata[6];

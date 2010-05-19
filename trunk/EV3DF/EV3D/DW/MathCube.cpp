@@ -20,13 +20,13 @@
 
 _CrtMemState s1,s2,s3;
 Pos g_Cube[] = {
-	{-1,-1,-1},//0 000
-	{-1,-1,1},//1  001
-	{-1,1,-1},//2  010
-	{-1,1,1},//3   011
-	{1,-1,-1},//4  100
-	{1,-1,1},//5   101
-	{1,1,-1},//6   110
+	{0,0,0},//0 000
+	{0,0,1},//1  001
+	{0,1,0},//2  010
+	{0,1,1},//3   011
+	{1,0,0},//4  100
+	{1,0,1},//5   101
+	{1,1,0},//6   110
 	{1,1,1},//7    111
 };
 
@@ -423,15 +423,15 @@ void MathCube::RenderCube()
 void MathCube::RenderAxis()
 {
 	// draw x y z axis
-	// 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	// 	glBegin(GL_LINES);
-	// 	glColor3ub(255,0,0);
-	// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(0.0f,0.0f,2000.0f);
-	// 	glColor3ub(0,255,0);
-	// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(0.0f,2000.0f,0.0f);
-	// 	glColor3ub(0,0,255);
-	// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(2000.0f,0.0f,0.0f);
-	// 	glEnd();
+// 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+// 	glBegin(GL_LINES);
+// 	glColor3ub(255,0,0);
+// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(0.0f,0.0f,2000.0f);
+// 	glColor3ub(0,255,0);
+// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(0.0f,2000.0f,0.0f);
+// 	glColor3ub(0,0,255);
+// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(2000.0f,0.0f,0.0f);
+// 	glEnd();
 }
 
 void MathCube::SetRotate( float x,float y )
@@ -727,4 +727,29 @@ void MathCube::ResetMarchCubeLevel( double isolevel )
 	clen = 0.5f * m_pTriMesh->feature_size();
 	draw_curv = false;
 	m_pTriMesh->need_tstrips();
+}
+
+void MathCube::RenderBondingBox()
+{
+	float maxX = (float)m_SJCScalarField3d->BoundMaxX();
+	float maxY = (float)m_SJCScalarField3d->BoundMaxY();
+	float maxZ = (float)m_SJCScalarField3d->BoundMaxZ();
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glBegin(GL_LINES);
+	glColor3ub(255,255,255);
+	glVertex3f(0,0,0);glVertex3f(maxX,0,0);
+	glVertex3f(maxX,0,0);glVertex3f(maxX,maxY,0);
+	glVertex3f(maxX,maxY,0);glVertex3f(0,maxY,0);
+	glVertex3f(0,maxY,0);glVertex3f(0,0,0);
+	glVertex3f(0,maxY,0);glVertex3f(0,maxY,maxZ);
+	glVertex3f(0,maxY,maxZ);glVertex3f(0,0,maxZ);
+	glVertex3f(0,0,maxZ);glVertex3f(0,0,0);
+	glVertex3f(0,0,0);glVertex3f(0,0,maxZ);
+	glVertex3f(0,0,maxZ);glVertex3f(maxX,0,maxZ);
+	glVertex3f(maxX,0,maxZ);glVertex3f(maxX,maxY,maxZ);
+	glVertex3f(maxX,maxY,maxZ);glVertex3f(0,maxY,maxZ);
+	glVertex3f(0,maxY,maxZ);glVertex3f(0,0,maxZ);
+	glVertex3f(maxX,0,0);glVertex3f(maxX,0,maxZ);
+	glVertex3f(0,maxY,0);glVertex3f(0,maxY,maxZ);
+	glEnd();
 }
