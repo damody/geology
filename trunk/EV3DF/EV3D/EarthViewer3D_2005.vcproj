@@ -40,7 +40,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="../SJC"
+				AdditionalIncludeDirectories="../SJC;../TriMesh/include;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies=" wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib SJCd.lib"
+				AdditionalDependencies=" wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib SJCd.lib  TriMeshd.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="../lib"
 				GenerateDebugInformation="true"
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="../SJC"
+				AdditionalIncludeDirectories="../SJC;../TriMesh/include;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
@@ -137,7 +137,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib SJC.lib"
+				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib SJC.lib  TriMesh.lib"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="../lib"
 				GenerateDebugInformation="true"
@@ -181,11 +181,66 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\earthviewer3dapp.cpp"
+				RelativePath=".\EarthViewer3D.rc"
 				>
 			</File>
 			<File
+				RelativePath=".\earthviewer3dapp.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\firstmain.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdwx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\stdwx.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdwx.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="stdwx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\stdwx.h"
 				>
 			</File>
 		</Filter>
@@ -202,176 +257,220 @@
 				RelativePath=".\firstmain.h"
 				>
 			</File>
-			<Filter
-				Name="3D"
-				>
-				<File
-					RelativePath=".\3D\FastMath.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Gut.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4_Reference.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4_Reference.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4_SSE.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4_SSE.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_Reference.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_Reference.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_SSE.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_SSE.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="DW"
-				>
-				<File
-					RelativePath=".\DW\bitmap3D.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\Color4.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\ColorTable.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\ConvertToEvr.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\ConvertToEvr.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\ConvStr.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\ConvStr.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\DW2DTexture.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\DW2DTexture.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\FindSpan.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\FindSpan.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\FlaneMesh.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\FlaneMesh.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\HandleEvr.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\HandleEvr.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\MathCube.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\MathCube.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="Lua"
-				>
-				<File
-					RelativePath=".\Lua\CreateLua.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\CreateLua.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\lauxlib.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\lua.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\lua.hpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\LuaCell.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\LuaCell.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\luaconf.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Lua\lualib.h"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+		</Filter>
+		<Filter
+			Name="3D"
+			>
+			<File
+				RelativePath=".\3D\FastMath.h"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Gut.h"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Matrix4x4.h"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Matrix4x4_Reference.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Matrix4x4_Reference.h"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Matrix4x4_SSE.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Matrix4x4_SSE.h"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Vector4.h"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Vector4_Reference.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Vector4_Reference.h"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Vector4_SSE.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\3D\Vector4_SSE.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="DW"
+			>
+			<File
+				RelativePath=".\DW\bitmap3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\Color4.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\ColorTable.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\ConvertToEvr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\ConvertToEvr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\ConvStr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\ConvStr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\DW2DTexture.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\DW2DTexture.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\DWHistogram.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\DWHistogram.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\FindSpan.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\FindSpan.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\FlaneMesh.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\FlaneMesh.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\HandleEvr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\HandleEvr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\MathCube.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\MathCube.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Isosurface"
+			>
+			<File
+				RelativePath=".\Isosurface\FastMarching.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Isosurface\FastMarching.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Isosurface\LevelSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Isosurface\LevelSet.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Isosurface\MarchCube.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Isosurface\MarchCube.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Isosurface\Particle.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Isosurface\Particle.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Lua"
+			>
+			<File
+				RelativePath=".\Lua\CreateLua.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\CreateLua.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\lauxlib.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\lua.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\lua.hpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\LuaCell.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\LuaCell.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\luaconf.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Lua\lualib.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

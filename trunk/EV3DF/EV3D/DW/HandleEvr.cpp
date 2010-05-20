@@ -66,16 +66,9 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 			MessageBox(NULL, L"m_totalSize != ulSize", L"ª`·N", MB_OK|MB_ICONASTERISK);
 		// Allocate some space
 		// Check and clear pDat, just in case
-		if(m_pData)
-			delete [] m_pData;
-		m_pData=new unsigned char[ulSize];
-		if(m_pData==NULL)
-		{
-			fIn.close();
-			return 0;
-		}
+		m_pData.resize(ulSize);
 		// Read the file into memory
-		fIn.read((char*)m_pData,ulSize);
+		fIn.read((char*)&m_pData[0],ulSize);
 		fIn.close();
 	}
 	else
@@ -84,18 +77,11 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 		fIn.open(m_dataWPath.c_str());
 		if(fIn==NULL)
 			return 0;
-		if(m_pData)
-			delete [] m_pData;
-		m_pData=new unsigned char[m_totalSize];
-		if(m_pData==NULL)
-		{
-			fIn.close();
-			return 0;
-		}
+		m_pData.resize(m_totalSize);
 		fIn.ignore(1000,'\n'); // ignore first line
 		double read;
 		int move=0;
-		double *psave = (double*)m_pData;
+		double *psave = (double*)&m_pData[0];
 		for (unsigned int i=0;i<m_total;i++)
 		{		
 			for (int j=0;j<m_format_count;j++)
@@ -114,7 +100,7 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 		SJCScalarField3d* pSF3d = new SJCScalarField3d(Xspan+1, Yspan+1, Zspan+1,
 			deltaX, deltaY, deltaZ,
 			BOUNDARY_WRAP,BOUNDARY_WRAP,BOUNDARY_WRAP,
-			(double*)(m_pData)+i, m_format_count);
+			(double*)(&m_pData[0])+i, m_format_count);
 		dpvec.push_back(pSF3d->begin());
 		m_SJCSF3dMap.push_back(std::make_pair(m_format_name[i] , pSF3d));
 	}
@@ -133,9 +119,6 @@ HandleEvr::~HandleEvr()
 
 void HandleEvr::ExitFile()
 {
-	if(m_pData)
-		delete [] m_pData;
-	m_pData = NULL;
 	for (SJCSF3dMap::iterator it = m_SJCSF3dMap.begin(); it != m_SJCSF3dMap.end();it++)
 		delete it->second;
 }
@@ -183,13 +166,13 @@ int HandleEvr::Save_Evr(std::wstring Path, std::wstring filename)
 	fOut.open((Path+L".evr").c_str(),ios::binary);
 	if(fOut==NULL)
 		return 0;
-	if(m_pData==NULL)
+	if(m_pData.empty())
 	{
 		fOut.close();
 		return 0;
 	}
 	// Write the file into file
-	fOut.write((char*)m_pData,m_totalSize);
+	fOut.write((char*)&m_pData[0],m_totalSize);
 	fOut.close();
 	return 1;
 }
@@ -237,7 +220,7 @@ int HandleEvr::Save_EvrA( std::wstring Path, std::wstring filename )
 	fOut.open((Path+L".evr").c_str());
 	if(fOut==NULL)
 		return 0;
-	if(m_pData==NULL)
+	if(m_pData.empty())
 	{
 		fOut.close();
 		return 0;
