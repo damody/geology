@@ -15,7 +15,7 @@
 #ifdef __BORLANDC__
 #pragma hdrstop
 #endif
-#define  WX_PRECOMP 1
+
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
 #endif
@@ -1207,21 +1207,18 @@ void FirstMain::RenderFrame()
 			m_mathCube.RenderChip(MathCube::USE_Z, m_ZSlider->GetValue());
 		if (m_RenderCube)
 			m_mathCube.RenderCube();
-		else
-		{
-			if (m_RenderFace1)
-				m_mathCube.RenderFace(1);
-			if (m_RenderFace2)
-				m_mathCube.RenderFace(2);
-			if (m_RenderFace3)
-				m_mathCube.RenderFace(3);
-			if (m_RenderFace4)
-				m_mathCube.RenderFace(4);
-			if (m_RenderFace5)
-				m_mathCube.RenderFace(5);
-			if (m_RenderFace6)
-				m_mathCube.RenderFace(6);
-		}
+		if (m_RenderFace1)
+			m_mathCube.RenderFace(1);
+		if (m_RenderFace2)
+			m_mathCube.RenderFace(2);
+		if (m_RenderFace3)
+			m_mathCube.RenderFace(3);
+		if (m_RenderFace4)
+			m_mathCube.RenderFace(4);
+		if (m_RenderFace5)
+			m_mathCube.RenderFace(5);
+		if (m_RenderFace6)
+			m_mathCube.RenderFace(6);
 		if (m_RenderBondingBox)
 			m_mathCube.RenderBondingBox();
 	}

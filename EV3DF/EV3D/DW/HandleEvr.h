@@ -43,11 +43,11 @@ public:
 	// test end
 	void* GetData()
 	{
-		return m_pData;
+		return (void*)&m_pData[0];
 	}
 	double GetData(int index, int column)
 	{
-		return *((double*)(m_pData+index*m_dataSize+m_moveTable[column]));
+		return *(double*)(&m_pData[index*m_dataSize+m_moveTable[column]]);
 	}
 	int GetTotal()
 	{
@@ -57,20 +57,14 @@ public:
 	{
 		return m_dataSize;
 	}
-	double* GetFaceData(int index)
-	{
-		return (double*)&(*m_FaceData[index].begin());
-	}
 	int Save_Evr(std::wstring Path, std::wstring filename);
 	int Save_EvrA(std::wstring Path, std::wstring filename);
 	bool IsLoad();
-
+	void ExitFile();
 	typedef std::vector< std::pair<std::string, SJCScalarField3d*> > SJCSF3dMap;
 	SJCSF3dMap	m_SJCSF3dMap;
-	void ExitFile();
 	double		Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ, Datamin, Datamax;
 	int		Xspan, Yspan, Zspan;
-	dVector		m_FaceData[7];
 	int		m_format_count;
 	strVector	m_format_name;
 	iVector		m_moveTable;
@@ -80,7 +74,7 @@ private:
 	bool		m_isload;
 	unsigned int	m_dataSize, m_total;
 	unsigned long	m_totalSize;
-	unsigned char*	m_pData;
+	std::vector<unsigned char>	m_pData;
 	LuaCell		m_cell;
 	CreateLua	m_CreateLua;
 	int getSize(const std::string& str);

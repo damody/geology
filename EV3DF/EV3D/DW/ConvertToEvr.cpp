@@ -8,7 +8,8 @@ ConvertToEvr::ConvertToEvr() :isLoad(false)
 	m_format_name.push_back("y");
 	m_format_name.push_back("z");
 	m_format_name.push_back("resistance");
-	m_moveTable.clear();
+	if (!m_moveTable.empty())
+		m_moveTable.clear();
 	m_moveTable.push_back(0);
 	m_moveTable.push_back(sizeof(double));
 	m_moveTable.push_back(sizeof(double)*2);

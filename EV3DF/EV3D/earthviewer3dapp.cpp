@@ -10,6 +10,7 @@
 /////////////////////////////////////////////////////////////////////////////
 
 // For compilers that support precompilation, includes "wx/wx.h".
+#include "stdwx.h"
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__

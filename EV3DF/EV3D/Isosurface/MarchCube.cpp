@@ -205,7 +205,7 @@ TriMesh *MarchCubes(SJCScalarField3d  *pLevelSet, double isolevel)
 				} // end of for dz
 
 				// Generate the polygon from the cell
-				int nTriangles = Polygonise(newCell, isolevel, pTriangles);
+				uint nTriangles = Polygonise(newCell, isolevel, pTriangles);
 
 				// Add in the triangles
 				for(uint m = 0; m < nTriangles; m++)	{

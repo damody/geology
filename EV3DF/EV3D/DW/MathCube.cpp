@@ -13,8 +13,8 @@
 #include "../Isosurface/MarchCube.h"
 #include "../3D/Gut.h"
 #include <Windows.h>
-#include <GL\gl.h>
-
+#include <gl/gl.h>
+#include <gl/glu.h>
 #pragma warning(disable:4127) // content error
 #pragma warning(disable:4239) // because & is fast
 
@@ -82,6 +82,10 @@ MathCube::MathCube() :m_init(false),m_size(NULL),m_precise(0),m_pTriMesh(NULL),m
 	ZeroMemory(m_facedata, sizeof(double*)*6);
 	ZeroMemory(m_faceComputed, sizeof(bool)*6);
 	memset(m_persent, INT_MAX, sizeof(double)*3);
+	m_scalar = 1.0;
+	m_moveX = 0;
+	m_moveY = 0;
+	m_moveZ = 0;
 }
 
 void MathCube::initWorld()
@@ -92,12 +96,14 @@ void MathCube::initWorld()
 	m_ObjectMatrix.TranslateZ(-m_SJCScalarField3d->BoundMaxZ()/2);
 	m_eye(100.0f, 100.0f, 100.0f); 
 	m_lookat(1.1f, 1.1f, 1.1f);
-	m_up(0.0f, 0.0f, 1.0f); 
+	m_up(0.0f, 0.0f, 1.0f);
 	m_ViewMatrix = GutMatrixLookAtRH(m_eye, m_lookat, m_up);
 }
 
 void MathCube::SetColorTable(ColorTable* ct)
 {
+	if (m_pCtable == NULL && m_pCtable != ct)
+		delete m_pCtable;
 	m_pCtable = ct;
 }
 
@@ -146,10 +152,18 @@ void MathCube::SetData( SJCScalarField3d* sf3d, int precise, double isolevel )
 	clen = 0.5f * m_pTriMesh->feature_size();
 	draw_curv = false;
 	m_pTriMesh->need_tstrips();
-	m_ObjectMatrix.Identity();
-	m_ObjectMatrix.TranslateX(-m_SJCScalarField3d->BoundMaxX()/2);
-	m_ObjectMatrix.TranslateY(-m_SJCScalarField3d->BoundMaxY()/2);
-	m_ObjectMatrix.TranslateZ(-m_SJCScalarField3d->BoundMaxZ()/2);
+	if (m_moveX!=0)
+	{
+		m_ObjectMatrix.TranslateX(-m_moveX);
+		m_ObjectMatrix.TranslateY(-m_moveY);
+		m_ObjectMatrix.TranslateZ(-m_moveZ);
+	}
+	m_moveX = -m_SJCScalarField3d->BoundMaxX()/2;
+	m_moveY = -m_SJCScalarField3d->BoundMaxY()/2;
+	m_moveZ = -m_SJCScalarField3d->BoundMaxZ()/2;
+	m_ObjectMatrix.TranslateX(m_moveX);
+	m_ObjectMatrix.TranslateY(m_moveY);
+	m_ObjectMatrix.TranslateZ(m_moveZ);
 	memset(m_persent, INT_MAX, sizeof(double)*3);
 	ZeroMemory(m_faceComputed, sizeof(bool)*6);
 	m_precise = precise;
@@ -157,9 +171,14 @@ void MathCube::SetData( SJCScalarField3d* sf3d, int precise, double isolevel )
 	// add color
 	m_histogram = DWHistogram<double>(m_SJCScalarField3d->begin(), m_SJCScalarField3d->size());
 	m_pCtable->clear();
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.01),Color4(0,0,255,0));
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0,255,0,0));
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.99),Color4(255,0,0,0));
+	m_pCtable->push_back(m_histogram.GetPersentValue(1),Color4(255, 0, 0,0));	// ¬õ
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.75),Color4(255, 128, 0,0));	// ¾í
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.625),Color4(255, 255, 0,0));	// ¶À
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0, 255, 0,0));	// ºñ
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.375),Color4(0, 255, 255,0));	// «C
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.25),Color4(0, 0, 255,0));	// ÂÅ
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.125),Color4(102, 0, 255,0));	// ÀQ
+	m_pCtable->push_back(m_histogram.GetPersentValue(0),Color4(167, 87, 168,0));	// µµ
 	int x = m_SJCScalarField3d->NumX()+1;
 	int y = m_SJCScalarField3d->NumY()+1;
 	int z = m_SJCScalarField3d->NumZ()+1;
@@ -422,16 +441,78 @@ void MathCube::RenderCube()
 
 void MathCube::RenderAxis()
 {
-	// draw x y z axis
-// 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-// 	glBegin(GL_LINES);
-// 	glColor3ub(255,0,0);
-// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(0.0f,0.0f,2000.0f);
-// 	glColor3ub(0,255,0);
-// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(0.0f,2000.0f,0.0f);
-// 	glColor3ub(0,0,255);
-// 	glVertex3f(0.0f,0.0f,0.0f);glVertex3f(2000.0f,0.0f,0.0f);
-// 	glEnd();
+	GLUquadricObj *quadObj1 = gluNewQuadric();
+	GLUquadricObj *quadObj2 = gluNewQuadric();
+	GLUquadricObj *quadObj3 = gluNewQuadric();
+	GLubyte draw_list;
+	draw_list = glGenLists(1);
+	glNewList(draw_list, GL_COMPILE);
+	{//µe¶êÀ@
+		gluQuadricDrawStyle(quadObj1,GLU_FILL);
+		gluQuadricNormals(quadObj1,GL_FLAT);
+		gluQuadricOrientation(quadObj1,GLU_OUTSIDE);
+		gluQuadricTexture(quadObj1,GL_FALSE);
+		gluCylinder(quadObj1, 2.0f, 0.0f, 10, 15, 5);
+		gluQuadricDrawStyle(quadObj2,GLU_FILL);
+		gluQuadricNormals(quadObj2,GL_FLAT);
+		gluQuadricOrientation(quadObj2,GLU_OUTSIDE);
+		gluQuadricTexture(quadObj2,GL_FALSE);
+		gluDisk(quadObj2, 0, 2.0f, 15, 5);
+		glEndList();
+	}
+	glPushMatrix();
+	glColor3ub(255,0,0);
+	glTranslatef(m_SJCScalarField3d->BoundMaxX(),0,0);
+	glRotatef(90, 0.0f, 1.0f, 0.0f);
+	glCallList(draw_list);
+	glPopMatrix();
+	glEndList();
+	glPushMatrix();
+	glColor3ub(0,255,0);
+	glTranslatef(0,m_SJCScalarField3d->BoundMaxY(),0);
+	glRotatef(-90, 1.0f, 0.0f, 0.0f);
+	glCallList(draw_list);
+	glPopMatrix();
+	glEndList();
+	glPushMatrix();
+	glColor3ub(0,0,255);
+	glTranslatef(0,0,m_SJCScalarField3d->BoundMaxZ());
+	glRotatef(90, 0.0f, 0.0f, 1.0f);
+	glCallList(draw_list);
+	glPopMatrix();
+	draw_list = glGenLists(1);
+	glNewList(draw_list, GL_COMPILE);
+	{//µe¶ê¬W
+		gluQuadricDrawStyle(quadObj3,GLU_FILL);
+		gluQuadricNormals(quadObj3,GL_FLAT);
+		gluQuadricOrientation(quadObj3,GLU_OUTSIDE);
+		gluQuadricTexture(quadObj3,GL_FALSE);
+		gluCylinder(quadObj3, 1.0f, 1.0f, 1.0f, 15, 5);
+		gluDeleteQuadric(quadObj1);
+		gluDeleteQuadric(quadObj2);
+		gluDeleteQuadric(quadObj3);
+	}
+	glEndList();
+	glPushMatrix();
+	glColor3ub(255,0,0);
+	glScalef(m_SJCScalarField3d->BoundMaxX(),1,1);
+	glRotatef(90, 0.0f, 1.0f, 0.0f);
+	glCallList(draw_list);
+	glPopMatrix();
+	glEndList();
+	glPushMatrix();
+	glColor3ub(0,255,0);
+	glScalef(1,m_SJCScalarField3d->BoundMaxY(),1);
+	glRotatef(-90, 1.0f, 0.0f, 0.0f);
+	glCallList(draw_list);
+	glPopMatrix();
+	glEndList();
+	glPushMatrix();
+	glColor3ub(0,0,255);
+	glScalef(1,1,m_SJCScalarField3d->BoundMaxZ());
+	glRotatef(90, 0.0f, 0.0f, 1.0f);
+	glCallList(draw_list);
+	glPopMatrix();
 }
 
 void MathCube::SetRotate( float x,float y )
@@ -444,12 +525,22 @@ void MathCube::SetRotate( float x,float y )
 	m_ObjectMatrix = m_ObjectMatrix * rotation_matrix;
 }
 
-void MathCube::SetDistance( float z )
+void MathCube::SetDistance( float dis )
 {
-	float scale = 1.0f + z * 0.001f;
-	scale += z * 0.001f;
+	m_ObjectMatrix.Scale(1/m_scalar, 1/m_scalar, 1/m_scalar);
+	m_ObjectMatrix.TranslateX(-m_moveX*m_scalar);
+	m_ObjectMatrix.TranslateY(-m_moveY*m_scalar);
+	m_ObjectMatrix.TranslateZ(-m_moveZ*m_scalar);
+	m_scalar += dis * 0.001f;
+	float x = m_scalar*m_moveX;
+	float y = m_scalar*m_moveY;
+	float z = m_scalar*m_moveZ;
+	m_ObjectMatrix.TranslateX(x);
+	m_ObjectMatrix.TranslateY(y);
+	m_ObjectMatrix.TranslateZ(z);
+	m_ObjectMatrix.Scale(m_scalar, m_scalar, m_scalar);
 	//m_ObjectMatrix.Scale_Replace(scale, scale, scale);
-	m_ObjectMatrix.Scale(scale, scale, scale);
+	
 	// 	m_ObjectMatrix.Translate_Replace(m_SJCScalarField3d->BoundMaxX()/2*scale,
 	// 		m_SJCScalarField3d->BoundMaxY()/2*scale,
 	// 		m_SJCScalarField3d->BoundMaxZ()/2*scale);
@@ -751,5 +842,6 @@ void MathCube::RenderBondingBox()
 	glVertex3f(0,maxY,maxZ);glVertex3f(0,0,maxZ);
 	glVertex3f(maxX,0,0);glVertex3f(maxX,0,maxZ);
 	glVertex3f(0,maxY,0);glVertex3f(0,maxY,maxZ);
+	glVertex3f(maxX,maxY,0);glVertex3f(maxX,maxY,maxZ);
 	glEnd();
 }

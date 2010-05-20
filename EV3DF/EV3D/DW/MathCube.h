@@ -103,6 +103,7 @@ private:
 	bool shiny;
 	bool lit;
 	float clen;
+	double m_scalar,m_moveX,m_moveY,m_moveZ;
 };
 
 #endif  //_MATHCUBE_H
