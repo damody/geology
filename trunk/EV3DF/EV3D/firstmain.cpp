@@ -412,7 +412,7 @@ void FirstMain::CreateControls()
 
     wxTreeCtrl* itemTreeCtrl76 = new wxTreeCtrl( itemNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
 
-    itemNotebook75->AddPage(itemTreeCtrl76, _("Tab"));
+    itemNotebook75->AddPage(itemTreeCtrl76, _("Render Object"));
 
     wxGrid* itemGrid77 = new wxGrid( itemNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     itemGrid77->SetDefaultColSize(50);
@@ -421,7 +421,7 @@ void FirstMain::CreateControls()
     itemGrid77->SetRowLabelSize(50);
     itemGrid77->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
 
-    itemNotebook75->AddPage(itemGrid77, _("Tab"));
+    itemNotebook75->AddPage(itemGrid77, _("attribute"));
 
     itemFrame1->GetAuiManager().AddPane(itemNotebook75, wxAuiPaneInfo()
         .Name(_T("Pane1")).MinSize(wxSize(200, 400)).BestSize(wxSize(200, 600)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(300, 600)));
@@ -1187,11 +1187,11 @@ void FirstMain::RenderFrame()
 		m_init = true;
 	}
 	if (!m_init) return;
-// 	if (!m_LoadColor)
-// 	{
-// 		m_LoadColor = true;
-// 		ShowColorTable(m_mathCube.GetColorTable());
-// 	}
+	if (!m_LoadColor && m_hEvr)
+	{
+		m_LoadColor = true;
+		ShowColorTable(m_mathCube.GetColorTable());
+	}
 	// Init OpenGL once, but after SetCurrent
 	m_mathCube.RenderStart();
 	if (m_RenderAxis)

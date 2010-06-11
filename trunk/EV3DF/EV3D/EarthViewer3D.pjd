@@ -3950,7 +3950,7 @@
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
               <string name="proxy-Member variable name">""</string>
-              <string name="proxy-Tab label">"Tab"</string>
+              <string name="proxy-Tab label">"Render Object"</string>
               <string name="proxy-Tab icon">""</string>
               <string name="proxy-Help text">""</string>
               <string name="proxy-Tooltip text">""</string>
@@ -4031,7 +4031,7 @@
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
               <string name="proxy-Member variable name">""</string>
-              <string name="proxy-Tab label">"Tab"</string>
+              <string name="proxy-Tab label">"attribute"</string>
               <string name="proxy-Tab icon">""</string>
               <long name="proxy-Rows">5</long>
               <long name="proxy-Columns">5</long>
