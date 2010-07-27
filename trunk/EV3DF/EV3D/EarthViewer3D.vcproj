@@ -60,7 +60,7 @@
 				AdditionalIncludeDirectories="../SJC/;../TriMesh/include;"
 				PreprocessorDefinitions="WIN32,__WXMSW__,_WINDOWS,_UNICODE"
 				StringPooling="true"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
