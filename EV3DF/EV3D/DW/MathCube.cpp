@@ -554,7 +554,7 @@ void MathCube::Resize( int width, int height )
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(45.0f, aspect, 0.1f, 10000.0f);
 	// 設定視角轉換矩陣
-	glMatrixMode(GL_PROJECTION);llkl
+	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
