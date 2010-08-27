@@ -71,7 +71,6 @@ CParticle::
 		m_pPrev->SetNext(m_pNext);
 	if (m_pNext)
 		m_pNext->SetPrev(m_pPrev);
-	SJCVector3d::~SJCVector3d();
 }
 
 //****************************************************************************
