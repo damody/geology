@@ -37,7 +37,7 @@ public:
 	}
 	~HandleEvr();
 	int InitLoad(const std::wstring& directoryPath);
-	// 2d test, it will delete on next version
+	// 2d test, it will be delete on next version
 	double* Get2Ddata();
 	double* p2d;
 	// test end

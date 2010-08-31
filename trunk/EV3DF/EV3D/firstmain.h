@@ -21,6 +21,7 @@
 #include "DW/ConvStr.h"
 #include "DW/HandleEvr.h"
 #include "DW/ConvertToEvr.h"
+#include "DW/Solid.h"
 ////@begin includes
 #include "wx/aui/framemanager.h"
 #include "wx/frame.h"
@@ -460,6 +461,7 @@ public:
 	    HandleEvr*	m_hEvr;
 	    ConvertToEvr   m_ConvEvr;
 	    MathCube	m_mathCube;
+	    Solid	m_Solid;
 	    SJCScalarField3d* m_psjcF3d;
 };
 
