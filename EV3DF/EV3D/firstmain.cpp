@@ -1182,6 +1182,7 @@ void FirstMain::OnTextChipZTextUpdated( wxCommandEvent& event )
 void FirstMain::RenderFrame()
 {
 	itemGLCanvas->SetCurrent();
+	if (!m_hEvr) return;
 	if (!m_init) 
 	{
 		m_mathCube.initWorld();
@@ -1199,7 +1200,6 @@ void FirstMain::RenderFrame()
 		m_mathCube.RenderAxis();
 	if (m_hEvr)
 	{
-		
 		if (m_useXchip)
 			m_mathCube.RenderChip(MathCube::USE_X, m_XSlider->GetValue());
 		if (m_useYchip)
@@ -1222,6 +1222,7 @@ void FirstMain::RenderFrame()
 			m_mathCube.RenderFace(6);
 		if (m_RenderBondingBox)
 			m_mathCube.RenderBondingBox();
+		m_Solid.SetHwnd((HWND)itemGLCanvas->GetHandle());
 		m_Solid.Render();
 	}
 	itemGLCanvas->SwapBuffers();
@@ -1312,7 +1313,7 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 void FirstMain::OnSpinctrlUpdated( wxSpinEvent& event )
 {
 	m_mathCube.SetData(m_psjcF3d, m_PreciseSpin->GetValue(), m_MarchCubeSet_spinctrl->GetValue());
-	m_Solid.SetIsoSurface(m_PreciseSpin->GetValue());
+	
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1417,6 +1418,7 @@ void FirstMain::OnMENUPreciseToolbarClick( wxCommandEvent& event )
 void FirstMain::OnMarchCubeSetSPINCTRLUpdated( wxSpinEvent& event )
 {
 	m_mathCube.ResetMarchCubeLevel(m_MarchCubeSet_spinctrl->GetValue());
+	m_Solid.SetIsoSurface(m_MarchCubeSet_spinctrl->GetValue());
 	event.Skip(false);
 }
 

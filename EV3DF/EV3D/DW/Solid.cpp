@@ -5,7 +5,7 @@
 
 Solid::Solid()
 {
-	m_pCtable = new ColorTable();
+	// vtk init
 	m_polydata = vtkSmartPointer<vtkPolyData>::New();
 	m_ImageData = vtkSmartPointer<vtkImageData>::New();
 	axes = vtkSmartPointer<vtkAxesActor>::New();
@@ -20,6 +20,20 @@ Solid::Solid()
 	m_contour_actor = vtkSmartPointer<vtkActor>::New();
 	m_vertex_actor = vtkSmartPointer<vtkActor>::New();
 	m_lut = vtkSmartPointer<vtkLookupTable>::New();
+	m_volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
+	m_volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
+	m_volume = vtkSmartPointer<vtkVolume>::New();
+
+
+
+	m_volumeMapper=vtkSmartVolumeMapper::New();
+	m_volumeMapper->SetBlendModeToComposite(); // composite first
+	
+
+
+	// ofher init
+	m_pCtable = new ColorTable();
+
 	// set flow
 	m_contour->SetInput(m_ImageData);
 	m_contour_mapper->SetInputConnection(m_contour->GetOutputPort());
@@ -45,12 +59,13 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 	m_SJCScalarField3d = sf3d;
 	// color
 	m_histogram = DWHistogram<double>(m_SJCScalarField3d->begin(), m_SJCScalarField3d->size());
-	m_lut->SetTableRange(m_histogram.GetPersentValue(0), m_histogram.GetPersentValue(1));
+	m_lut->SetTableRange(m_histogram.GetPersentValue(0.01), m_histogram.GetPersentValue(0.99));
 	m_lut->Build();
 	// data
 	m_polydata->Initialize();
 	m_ImageData->Initialize();
 	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+	vtkSmartPointer<vtkFloatArray> volcolors = vtkSmartPointer<vtkFloatArray>::New();
 	vtkSmartPointer<vtkUnsignedCharArray> colors = vtkSmartPointer<vtkUnsignedCharArray>::New();
 	colors->SetNumberOfComponents(3);
 	colors->SetName("Colors");
@@ -68,21 +83,21 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 			for(i=0;i<x_len;i++)
 			{
 				offset = i + jOffset + kOffset;
-				points->InsertNextPoint(k,j,i);
+				points->InsertNextPoint(i, j, k);
 				double dcolor[3];
 				m_lut->GetColor(sf3d->Value(i, j, k), dcolor);
-				//scalars->InsertTuple1(offset, sf3d->Value(i, j, k));
+				volcolors->InsertTuple1(offset, sf3d->Value(i, j, k));
 				unsigned char color[3];
 				for(unsigned int j = 0; j < 3; j++)
 				{
 					color[j] = static_cast<unsigned char>(255.0 * dcolor[j]);
 				}
-				OutputDebugString( (ConvStr::GetWstr(color[0])+L" "+ConvStr::GetWstr(color[1])+L" "+ConvStr::GetWstr(color[2])).c_str() );
+				//OutputDebugString( (ConvStr::GetWstr(color[0])+L" "+ConvStr::GetWstr(color[1])+L" "+ConvStr::GetWstr(color[2])+L"\n").c_str() );
 				colors->InsertNextTupleValue(color);
 			}
 		}
 	}
-	m_ImageData->GetPointData()->SetScalars(colors);
+	m_ImageData->GetPointData()->SetScalars(volcolors);
 	m_polydata->SetPoints(points);
 	m_polydata->GetPointData()->SetScalars(colors);
 
@@ -148,4 +163,28 @@ void Solid::SetColorTable( ColorTable* ct )
 	if (m_pCtable == NULL && m_pCtable != ct)
 		delete m_pCtable;
 	m_pCtable = ct;
+}
+
+Solid::~Solid()
+{
+	if (m_pCtable)
+		delete m_pCtable;
+}
+
+void Solid::SetVolume()
+{
+	double range[2] = {0.0, 125.0};
+
+	vtkImageShiftScale *t=vtkImageShiftScale::New();
+	t->SetInput(m_ImageData);
+	t->SetShift(-range[0]);
+	double magnitude=range[1]-range[0];
+	if(magnitude==0.0)
+	{
+		magnitude=1.0;
+	}
+	t->SetScale(255.0/magnitude);
+	t->SetOutputScalarTypeToUnsignedChar();
+	t->Update();
+	m_volumeMapper->SetInputConnection(t->GetOutputPort());
 }
