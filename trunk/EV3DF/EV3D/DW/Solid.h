@@ -20,6 +20,13 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkSmartPointer.h>
 #include <vtkPointData.h>
+#include <vtkVertexGlyphFilter.h>
+#include <vtkContourFilter.h>
+#include <vtkSmartVolumeMapper.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkRenderer.h>
+#include <vtkVolume.h>
+#include <vtkVolumeProperty.h>
 
 // use vtk to implement function like mathcube
 
@@ -30,11 +37,13 @@ public:
 		USE_X, USE_Y, USE_Z 
 	};
 	Solid();
+	~Solid();
 	void SetHwnd(HWND hwnd);
 	// set data to mathcube
 	void SetData(SJCScalarField3d* sf3d);
 	void SetIsoSurface(double isolevel, bool show = true);
 	void SetVertex(bool show = true);
+	void SetVolume();
 	void ReSize(int w, int h);
 	void Render();
 	void SetColorTable(ColorTable* ct);
@@ -42,6 +51,8 @@ public:
 private:
 	ColorTable*	m_pCtable;
 	SJCScalarField3d* m_SJCScalarField3d;
+	DWHistogram<double>	m_histogram;
+	// vtk class
 	vtkSmartPointer<vtkPolyData> m_polydata; // save orgin data
 	vtkSmartPointer<vtkImageData> m_ImageData; // save orgin data
 	vtkSmartPointer<vtkAxesActor> axes; // to show axes
@@ -54,5 +65,7 @@ private:
 	vtkSmartPointer<vtkPolyDataMapper> m_contour_mapper, m_vertex_mapper;
 	vtkSmartPointer<vtkActor> m_contour_actor, m_vertex_actor;
 	vtkSmartPointer<vtkLookupTable> m_lut;
-	DWHistogram<double>	m_histogram;
+	vtkSmartPointer<vtkSmartVolumeMapper> m_volumeMapper;
+	vtkSmartPointer<vtkVolumeProperty> m_volumeProperty;
+	vtkSmartPointer<vtkVolume> m_volume;
 };
