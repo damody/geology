@@ -63,7 +63,7 @@ int ConvertToEvr::Load_Dat( std::wstring Path )
 int ConvertToEvr::Save_Evr( std::wstring Path, std::wstring filename )
 {
 	m_CreateLua.AddString("data_format","binary");
-	m_CreateLua.AddString("data", SConvStr::Getstring(filename.c_str())+std::string(".evr"));
+	m_CreateLua.AddString("data", ConvStr::GetStr(filename.c_str())+std::string(".evr"));
 	m_CreateLua.SaveLua(Path + L".lua");
 	using namespace std;
 	ofstream fOut;
@@ -84,7 +84,7 @@ int ConvertToEvr::Save_Evr( std::wstring Path, std::wstring filename )
 int ConvertToEvr::Save_EvrA( std::wstring Path, std::wstring filename )
 {
 	m_CreateLua.AddString("data_format","ascii");
-	m_CreateLua.AddString("data", SConvStr::Getstring(filename.c_str())+std::string(".evr"));
+	m_CreateLua.AddString("data", ConvStr::GetStr(filename.c_str())+std::string(".evr"));
 	m_CreateLua.SaveLua(Path + L".lua");
 	using namespace std;
 	ofstream fOut;

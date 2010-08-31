@@ -541,6 +541,7 @@ void FirstMain::OnSize( wxSizeEvent& event )
 {
 	itemGLCanvas->SetCurrent();
 	m_mathCube.Resize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
+	m_Solid.ReSize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
 	RenderFrame();
 }
 
@@ -872,7 +873,7 @@ void FirstMain::OpenFile()
 		case 0:
 			if (m_hEvr)
 				delete m_hEvr;
-			m_hEvr = new HandleEvr(SConvStr::GetChar(dialog.GetPath().c_str()));
+			m_hEvr = new HandleEvr(ConvStr::GetStr(dialog.GetPath().c_str()).c_str() );
 			m_hEvr->InitLoad(dialog.GetDirectory().wc_str());
 			m_ShowTypeCombo->Clear();
 			{
@@ -891,16 +892,18 @@ void FirstMain::OpenFile()
 			m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 			m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 			m_mathCube.SetData(m_psjcF3d, m_PreciseSpin->GetValue(), m_MarchCubeSet_spinctrl->GetValue()); // 設定第一順位的資料來顯示
-			m_XminText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Xmin)));
-			m_XmaxText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Xmax)));
-			m_YminText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Ymin)));
-			m_YmaxText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Ymax)));
-			m_ZminText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Zmin)));
-			m_ZmaxText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Zmax)));
+			m_Solid.SetData(m_psjcF3d);
+			m_Solid.SetIsoSurface(m_PreciseSpin->GetValue());
+			m_XminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
+			m_XmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmax).c_str()));
+			m_YminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymin).c_str()));
+			m_YmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymax).c_str()));
+			m_ZminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmin).c_str()));
+			m_ZmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmax).c_str()));
 
-			m_MiddleXText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Xmin)));
-			m_MiddleYText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Ymin)));
-			m_MiddleZText->SetValue(wxString::FromAscii(SConvStr::GetChar(m_hEvr->Zmin)));
+			m_MiddleXText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
+			m_MiddleYText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymin).c_str()));
+			m_MiddleZText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmin).c_str()));
 			break;
 		case 1:
 			{
@@ -1095,7 +1098,7 @@ void FirstMain::OnZmaxTextTextUpdated( wxCommandEvent& event )
 
 void FirstMain::OnSliderUpdated( wxCommandEvent& event )
 {
-	m_text_chipX->SetValue(wxString::FromAscii(SConvStr::GetChar(m_XSlider->GetValue())));
+	m_text_chipX->SetValue(wxString::FromAscii(ConvStr::GetStr(m_XSlider->GetValue()).c_str()));
 	RenderFrame();
 	event.Skip(false); 
 }
@@ -1107,7 +1110,7 @@ void FirstMain::OnSliderUpdated( wxCommandEvent& event )
 
 void FirstMain::OnSlider1Updated( wxCommandEvent& event )
 {
-	m_text_chipY->SetValue(wxString::FromAscii(SConvStr::GetChar(m_YSlider->GetValue())));
+	m_text_chipY->SetValue(wxString::FromAscii(ConvStr::GetStr(m_YSlider->GetValue()).c_str()));
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1119,7 +1122,7 @@ void FirstMain::OnSlider1Updated( wxCommandEvent& event )
 
 void FirstMain::OnSlider2Updated( wxCommandEvent& event )
 {
-	m_text_chipZ->SetValue(wxString::FromAscii(SConvStr::GetChar(m_ZSlider->GetValue())));
+	m_text_chipZ->SetValue(wxString::FromAscii(ConvStr::GetStr(m_ZSlider->GetValue()).c_str()));
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1179,26 +1182,24 @@ void FirstMain::OnTextChipZTextUpdated( wxCommandEvent& event )
 void FirstMain::RenderFrame()
 {
 	itemGLCanvas->SetCurrent();
-	if (!m_init && m_hEvr)
+	if (!m_init) 
 	{
 		m_mathCube.initWorld();
-		m_LoadColor = true;
-		ShowColorTable(m_mathCube.GetColorTable());
 		m_init = true;
 	}
-	if (!m_init) return;
-	if (!m_LoadColor && m_hEvr)
+	if (m_LoadColor!= true && m_hEvr)
 	{
 		m_LoadColor = true;
 		ShowColorTable(m_mathCube.GetColorTable());
 	}
+	
 	// Init OpenGL once, but after SetCurrent
 	m_mathCube.RenderStart();
 	if (m_RenderAxis)
 		m_mathCube.RenderAxis();
-	
 	if (m_hEvr)
 	{
+		
 		if (m_useXchip)
 			m_mathCube.RenderChip(MathCube::USE_X, m_XSlider->GetValue());
 		if (m_useYchip)
@@ -1221,6 +1222,7 @@ void FirstMain::RenderFrame()
 			m_mathCube.RenderFace(6);
 		if (m_RenderBondingBox)
 			m_mathCube.RenderBondingBox();
+		m_Solid.Render();
 	}
 	itemGLCanvas->SwapBuffers();
 }
@@ -1286,7 +1288,7 @@ void FirstMain::InsertColor( int i, double val, wxColour& iwc )
 
 void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 {
-	std::string str = SConvStr::GetChar(m_ShowTypeCombo->GetValue().c_str());
+	std::string str = ConvStr::GetStr(m_ShowTypeCombo->GetValue().c_str());
 	uint i=0;
 	for (;i<m_hEvr->m_SJCSF3dMap.size();i++)
 		if (m_hEvr->m_SJCSF3dMap[i].first == str)
@@ -1296,6 +1298,8 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 	m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 	m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 	m_mathCube.SetData(m_psjcF3d, m_PreciseSpin->GetValue(), m_MarchCubeSet_spinctrl->GetValue()); // 設定第目前的資料來顯示
+	m_Solid.SetData(m_psjcF3d);
+	m_Solid.SetIsoSurface(m_PreciseSpin->GetValue());
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1308,6 +1312,7 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 void FirstMain::OnSpinctrlUpdated( wxSpinEvent& event )
 {
 	m_mathCube.SetData(m_psjcF3d, m_PreciseSpin->GetValue(), m_MarchCubeSet_spinctrl->GetValue());
+	m_Solid.SetIsoSurface(m_PreciseSpin->GetValue());
 	RenderFrame();
 	event.Skip(false);
 }

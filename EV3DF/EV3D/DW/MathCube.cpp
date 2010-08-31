@@ -18,7 +18,6 @@
 #pragma warning(disable:4127) // content error
 #pragma warning(disable:4239) // because & is fast
 
-_CrtMemState s1,s2,s3;
 Pos g_Cube[] = {
 	{0,0,0},//0 000
 	{0,0,1},//1  001
@@ -143,7 +142,9 @@ void MathCube::SetSize( int x, int y, int z )
 
 void MathCube::SetData( SJCScalarField3d* sf3d, int precise, double isolevel )
 {
+	// 儲存資料指標
 	m_SJCScalarField3d = sf3d;
+	// 更新isosurface
 	if (m_pTriMesh)
 		delete m_pTriMesh;
 	m_pTriMesh = MarchCubes(sf3d, isolevel);
@@ -152,12 +153,11 @@ void MathCube::SetData( SJCScalarField3d* sf3d, int precise, double isolevel )
 	clen = 0.5f * m_pTriMesh->feature_size();
 	draw_curv = false;
 	m_pTriMesh->need_tstrips();
-	if (m_moveX!=0)
-	{
-		m_ObjectMatrix.TranslateX(-m_moveX);
-		m_ObjectMatrix.TranslateY(-m_moveY);
-		m_ObjectMatrix.TranslateZ(-m_moveZ);
-	}
+	// 復原位移
+	m_ObjectMatrix.TranslateX(-m_moveX);
+	m_ObjectMatrix.TranslateY(-m_moveY);
+	m_ObjectMatrix.TranslateZ(-m_moveZ);
+	// 位移至中心點
 	m_moveX = -m_SJCScalarField3d->BoundMaxX()/2;
 	m_moveY = -m_SJCScalarField3d->BoundMaxY()/2;
 	m_moveZ = -m_SJCScalarField3d->BoundMaxZ()/2;
@@ -427,8 +427,8 @@ void MathCube::SetRotateZ( float ro )
 
 void MathCube::RenderCube()
 {   
-	// 	for (int i=1;i<=6;i++)
-	// 		RenderFace(i);
+	for (int i=1;i<=6;i++)
+		RenderFace(i);
 	draw_edges = true;
 	draw_2side = true;
 	draw_curv = false;

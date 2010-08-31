@@ -45,7 +45,7 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 	m_total = m_cell.getLua_UsePath<int>("total");
 	m_totalSize = m_total * m_dataSize;
 	m_dataPath = m_cell.getLua_UsePath<const char*>("data");
-	m_dataWPath = SConvStr::GetWchar(m_dataPath.c_str());
+	m_dataWPath = ConvStr::GetWstr(m_dataPath.c_str());
 	m_dataWPath = directoryPath + L"\\" + m_dataWPath;
 	using namespace std;
 	string data_format = m_cell.getLua_UsePath<const char*>("data_format");
@@ -159,7 +159,7 @@ int HandleEvr::Save_Evr(std::wstring Path, std::wstring filename)
 	m_CreateLua.AddDouble("deltaZ",deltaZ);
 	m_CreateLua.AddDouble("Zspan",Zspan);
 	m_CreateLua.AddString("data_format","binary");
-	m_CreateLua.AddString("data", SConvStr::Getstring(filename.c_str())+std::string(".evr"));
+	m_CreateLua.AddString("data", ConvStr::GetStr(filename.c_str())+std::string(".evr"));
 	m_CreateLua.SaveLua(Path + L".lua");
 	using namespace std;
 	ofstream fOut;
@@ -213,7 +213,7 @@ int HandleEvr::Save_EvrA( std::wstring Path, std::wstring filename )
 	m_CreateLua.AddDouble("deltaZ",deltaZ);
 	m_CreateLua.AddDouble("Zspan",Zspan);
 	m_CreateLua.AddString("data_format","ascii");
-	m_CreateLua.AddString("data", SConvStr::Getstring(filename.c_str())+std::string(".evr"));
+	m_CreateLua.AddString("data", ConvStr::GetStr(filename.c_str())+std::string(".evr"));
 	m_CreateLua.SaveLua(Path + L".lua");
 	using namespace std;
 	ofstream fOut;
