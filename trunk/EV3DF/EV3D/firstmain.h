@@ -17,7 +17,6 @@
  * Includes
  */
 #include "DW/ColorTable.h"
-#include "DW/MathCube.h"
 #include "DW/ConvStr.h"
 #include "DW/HandleEvr.h"
 #include "DW/ConvertToEvr.h"
@@ -460,7 +459,6 @@ public:
     private:
 	    HandleEvr*	m_hEvr;
 	    ConvertToEvr   m_ConvEvr;
-	    MathCube	m_mathCube;
 	    Solid	m_Solid;
 	    SJCScalarField3d* m_psjcF3d;
 };
