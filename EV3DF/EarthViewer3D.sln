@@ -2,17 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EarthViewer3D", "EV3D\EarthViewer3D.vcproj", "{9926C1F5-D07F-43FF-959C-7CD14594951D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8} = {0335402D-5885-42F9-B8A4-9C3FF830DFA8}
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB} = {14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SJC", "SJC\SJC.vcproj", "{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TriMesh", "TriMesh\TriMesh.vcproj", "{0335402D-5885-42F9-B8A4-9C3FF830DFA8}"
-	ProjectSection(ProjectDependencies) = postProject
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB} = {14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,22 +19,6 @@ Global
 		{9926C1F5-D07F-43FF-959C-7CD14594951D}.Release|Win32.Build.0 = Release|Win32
 		{9926C1F5-D07F-43FF-959C-7CD14594951D}.Release|x64.ActiveCfg = Release|x64
 		{9926C1F5-D07F-43FF-959C-7CD14594951D}.Release|x64.Build.0 = Release|x64
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Debug|Win32.ActiveCfg = Debug|Win32
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Debug|Win32.Build.0 = Debug|Win32
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Debug|x64.ActiveCfg = Debug|x64
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Debug|x64.Build.0 = Debug|x64
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Release|Win32.ActiveCfg = Release|Win32
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Release|Win32.Build.0 = Release|Win32
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Release|x64.ActiveCfg = Release|x64
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}.Release|x64.Build.0 = Release|x64
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Debug|Win32.ActiveCfg = Debug|Win32
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Debug|Win32.Build.0 = Debug|Win32
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Debug|x64.ActiveCfg = Debug|x64
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Debug|x64.Build.0 = Debug|x64
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Release|Win32.ActiveCfg = Release|Win32
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Release|Win32.Build.0 = Release|Win32
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Release|x64.ActiveCfg = Release|x64
-		{0335402D-5885-42F9-B8A4-9C3FF830DFA8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

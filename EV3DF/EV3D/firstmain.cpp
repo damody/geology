@@ -540,7 +540,6 @@ wxIcon FirstMain::GetIconResource( const wxString& name )
 void FirstMain::OnSize( wxSizeEvent& event )
 {
 	itemGLCanvas->SetCurrent();
-	m_mathCube.Resize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
 	m_Solid.ReSize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
 	RenderFrame();
 }
@@ -553,11 +552,6 @@ void FirstMain::OnSize( wxSizeEvent& event )
 void FirstMain::OnPaint( wxPaintEvent& event )
 {
 	itemGLCanvas->SetCurrent();
-	if (!m_init && m_hEvr)
-	{
-		m_mathCube.initWorld();
-		m_init = true;
-	}
 	// Init OpenGL once, but after SetCurrent
 	RenderFrame();
 	event.Skip();
@@ -649,27 +643,7 @@ void FirstMain::OnRightUp( wxMouseEvent& event )
 void FirstMain::OnMotion( wxMouseEvent& event )
 {
 	P= event.GetPosition();
-	if (m_bFixMove)
-	{
-		lastP = P;
-		m_bFixMove = false;
-	}
-	if (P != lastP)
-	{
-		wxPoint move = P-lastP;
-		if (event.ButtonIsDown(wxMOUSE_BTN_RIGHT))
-		{
-			if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
-				m_mathCube.SetEyeMove(move.x,move.y, true);
-			else
-				m_mathCube.SetEyeMove(move.x,move.y, false);
-		}
-		else if (event.ButtonIsDown(wxMOUSE_BTN_LEFT))
-		{
-			m_mathCube.SetRotate(move.x,move.y);
-			RenderFrame();
-		}
-	}
+	
 	lastP = P;
 }
 
@@ -680,8 +654,8 @@ void FirstMain::OnMotion( wxMouseEvent& event )
 
 void FirstMain::OnMouseWheel( wxMouseEvent& event )
 {
-	m_mathCube.SetDistance(event.GetWheelRotation());
 	RenderFrame();
+	event.Skip(false);
 }
 
 
@@ -887,12 +861,10 @@ void FirstMain::OpenFile()
 				}
 			}
 			m_ShowTypeCombo->SetSelection(0);
-			m_mathCube.ReleaseResources();
 			m_psjcF3d = m_hEvr->m_SJCSF3dMap[3].second;
 			m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 			m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
-			m_mathCube.SetData(m_psjcF3d, m_PreciseSpin->GetValue(), m_MarchCubeSet_spinctrl->GetValue()); // 設定第一順位的資料來顯示
-			m_Solid.SetData(m_psjcF3d);
+			m_Solid.SetData(m_psjcF3d); // 設定第一順位的資料來顯示
 			m_Solid.SetIsoSurface(m_PreciseSpin->GetValue());
 			m_XminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
 			m_XmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmax).c_str()));
@@ -1099,6 +1071,7 @@ void FirstMain::OnZmaxTextTextUpdated( wxCommandEvent& event )
 void FirstMain::OnSliderUpdated( wxCommandEvent& event )
 {
 	m_text_chipX->SetValue(wxString::FromAscii(ConvStr::GetStr(m_XSlider->GetValue()).c_str()));
+	m_Solid.SetSlice(Solid::USE_X, m_XSlider->GetValue()/10.0);
 	RenderFrame();
 	event.Skip(false); 
 }
@@ -1111,6 +1084,7 @@ void FirstMain::OnSliderUpdated( wxCommandEvent& event )
 void FirstMain::OnSlider1Updated( wxCommandEvent& event )
 {
 	m_text_chipY->SetValue(wxString::FromAscii(ConvStr::GetStr(m_YSlider->GetValue()).c_str()));
+	m_Solid.SetSlice(Solid::USE_Y, m_YSlider->GetValue()/10.0);
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1123,6 +1097,7 @@ void FirstMain::OnSlider1Updated( wxCommandEvent& event )
 void FirstMain::OnSlider2Updated( wxCommandEvent& event )
 {
 	m_text_chipZ->SetValue(wxString::FromAscii(ConvStr::GetStr(m_ZSlider->GetValue()).c_str()));
+	m_Solid.SetSlice(Solid::USE_Z, m_ZSlider->GetValue()/10.0);
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1140,6 +1115,7 @@ void FirstMain::OnTextChipXTextUpdated( wxCommandEvent& event )
 	if (n<0) n = 0;
 	if (n>1000) n = 1000;
 	m_XSlider->SetValue(n);
+	m_Solid.SetSlice(Solid::USE_X, n/10.0);
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1157,6 +1133,7 @@ void FirstMain::OnTextChipYTextUpdated( wxCommandEvent& event )
 	if (n<0) n = 0;
 	if (n>1000) n = 1000;
 	m_YSlider->SetValue(n);
+	m_Solid.SetSlice(Solid::USE_Y, n/10.0);
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1174,6 +1151,7 @@ void FirstMain::OnTextChipZTextUpdated( wxCommandEvent& event )
 	if (n<0) n = 0;
 	if (n>1000) n = 1000;
 	m_ZSlider->SetValue(n);
+	m_Solid.SetSlice(Solid::USE_Z, n/10.0);
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1181,51 +1159,11 @@ void FirstMain::OnTextChipZTextUpdated( wxCommandEvent& event )
 
 void FirstMain::RenderFrame()
 {
-	itemGLCanvas->SetCurrent();
-	if (!m_hEvr) return;
-	if (!m_init) 
-	{
-		m_mathCube.initWorld();
-		m_init = true;
-	}
-	if (m_LoadColor!= true && m_hEvr)
-	{
-		m_LoadColor = true;
-		ShowColorTable(m_mathCube.GetColorTable());
-	}
-	
-	// Init OpenGL once, but after SetCurrent
-	m_mathCube.RenderStart();
-	if (m_RenderAxis)
-		m_mathCube.RenderAxis();
 	if (m_hEvr)
 	{
-		if (m_useXchip)
-			m_mathCube.RenderChip(MathCube::USE_X, m_XSlider->GetValue());
-		if (m_useYchip)
-			m_mathCube.RenderChip(MathCube::USE_Y, m_YSlider->GetValue());
-		if (m_useZchip)
-			m_mathCube.RenderChip(MathCube::USE_Z, m_ZSlider->GetValue());
-		if (m_RenderCube)
-			m_mathCube.RenderCube();
-		if (m_RenderFace1)
-			m_mathCube.RenderFace(1);
-		if (m_RenderFace2)
-			m_mathCube.RenderFace(2);
-		if (m_RenderFace3)
-			m_mathCube.RenderFace(3);
-		if (m_RenderFace4)
-			m_mathCube.RenderFace(4);
-		if (m_RenderFace5)
-			m_mathCube.RenderFace(5);
-		if (m_RenderFace6)
-			m_mathCube.RenderFace(6);
-		if (m_RenderBondingBox)
-			m_mathCube.RenderBondingBox();
 		m_Solid.SetHwnd((HWND)itemGLCanvas->GetHandle());
-		m_Solid.Render();
+		m_Solid.Render(); 
 	}
-	itemGLCanvas->SwapBuffers();
 }
 
 
@@ -1298,7 +1236,6 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 	m_psjcF3d = m_hEvr->m_SJCSF3dMap[i].second;
 	m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 	m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
-	m_mathCube.SetData(m_psjcF3d, m_PreciseSpin->GetValue(), m_MarchCubeSet_spinctrl->GetValue()); // 設定第目前的資料來顯示
 	m_Solid.SetData(m_psjcF3d);
 	m_Solid.SetIsoSurface(m_PreciseSpin->GetValue());
 	RenderFrame();
@@ -1311,9 +1248,7 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
  */
 
 void FirstMain::OnSpinctrlUpdated( wxSpinEvent& event )
-{
-	m_mathCube.SetData(m_psjcF3d, m_PreciseSpin->GetValue(), m_MarchCubeSet_spinctrl->GetValue());
-	
+{	
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1417,7 +1352,6 @@ void FirstMain::OnMENUPreciseToolbarClick( wxCommandEvent& event )
 
 void FirstMain::OnMarchCubeSetSPINCTRLUpdated( wxSpinEvent& event )
 {
-	m_mathCube.ResetMarchCubeLevel(m_MarchCubeSet_spinctrl->GetValue());
 	m_Solid.SetIsoSurface(m_MarchCubeSet_spinctrl->GetValue());
 	event.Skip(false);
 }
@@ -1429,6 +1363,10 @@ void FirstMain::OnMarchCubeSetSPINCTRLUpdated( wxSpinEvent& event )
 void FirstMain::OnUseXchipClick( wxCommandEvent& event )
 {
 	m_useXchip = event.IsChecked();
+	if (m_useXchip)
+		m_Solid.EnableSlice(Solid::USE_X);
+	else
+		m_Solid.DisableSlice(Solid::USE_X);
 	event.Skip(false);
 }
 
@@ -1439,6 +1377,10 @@ void FirstMain::OnUseXchipClick( wxCommandEvent& event )
 void FirstMain::OnUseYchipClick( wxCommandEvent& event )
 {
 	m_useYchip = event.IsChecked();
+	if (m_useYchip)
+		m_Solid.EnableSlice(Solid::USE_Y);
+	else
+		m_Solid.DisableSlice(Solid::USE_Y);
 	event.Skip(false);
 }
 
@@ -1450,6 +1392,10 @@ void FirstMain::OnUseYchipClick( wxCommandEvent& event )
 void FirstMain::OnUseZchipClick( wxCommandEvent& event )
 {
 	m_useZchip = event.IsChecked();
+	if (m_useZchip)
+		m_Solid.EnableSlice(Solid::USE_Z);
+	else
+		m_Solid.DisableSlice(Solid::USE_Z);
 	event.Skip(false);
 }
 
