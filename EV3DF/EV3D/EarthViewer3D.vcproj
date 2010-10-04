@@ -577,6 +577,14 @@
 				RelativePath="firstmain.h"
 				>
 			</File>
+			<File
+				RelativePath=".\MyTreeCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Mytreectrl.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="DW"
@@ -797,42 +805,6 @@
 			</File>
 			<File
 				RelativePath=".\Lua\lualib.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Isosurface"
-			>
-			<File
-				RelativePath=".\Isosurface\FastMarching.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Isosurface\FastMarching.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Isosurface\LevelSet.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Isosurface\LevelSet.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Isosurface\MarchCube.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Isosurface\MarchCube.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Isosurface\Particle.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Isosurface\Particle.h"
 				>
 			</File>
 		</Filter>

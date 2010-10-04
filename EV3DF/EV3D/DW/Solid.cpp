@@ -62,9 +62,9 @@ Solid::Solid()
 
 	m_vertex_mapper->SetLookupTable(m_lut);
 	m_contour_mapper->SetLookupTable(m_lut);
-
+	m_vertex_actor->GetProperty()->SetPointSize(3);
 	m_Renderer->AddActor(m_outlineActor);
-	m_Renderer->AddActor(m_vertex_actor);
+	//m_Renderer->AddActor(m_vertex_actor);
 	m_Renderer->AddActor(m_contour_actor);
 	m_Renderer->SetBackground(.1, .2, .3);
 	m_RenderWindow->AddRenderer(m_Renderer);
@@ -172,17 +172,20 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 	m_planeWidgetZ->SetPlaneOrientationToZAxes();
 	
 	m_CompositeOpacity->AddPoint(0, 0.0);
-	m_CompositeOpacity->AddPoint(50.0, 0.5);
-	m_CompositeOpacity->AddPoint(85.0, 0.8);
-	m_CompositeOpacity->AddPoint(125, 1.0);
+	m_CompositeOpacity->AddPoint(62.0, 0.6);
+	m_CompositeOpacity->AddPoint(125.0, 1.0);
+	//m_CompositeOpacity->AddPoint(125, 1.5);
+	
 
 	m_ColorTransferFun->AddRGBPoint(0.0, 1.0,0.0,0.0);
-	m_ColorTransferFun->AddRGBPoint(50.0, 0.0,1.0,0.0);
-	m_ColorTransferFun->AddRGBPoint(85.0, 0.0,0.0,1.0);
-	m_ColorTransferFun->AddRGBPoint(125.0, 1.0,1.0,1.0);
+	m_ColorTransferFun->AddRGBPoint(62.0, 0.0,1.0,0.0);
+	m_ColorTransferFun->AddRGBPoint(125.0, 0.0,0.0,1.0);
+	//m_ColorTransferFun->AddRGBPoint(125.0, 1.0,1.0,1.0);
+	
+	m_ColorTransferFun->Build();
 
 	m_ImageShiftScale->SetInput(m_vol);
-	m_ImageShiftScale->SetScale(1);
+	m_ImageShiftScale->SetScale(2);
 	m_ImageShiftScale->SetOutputScalarTypeToUnsignedChar();
 	m_ImageShiftScale->Update();
 	m_volumeMapper->SetInputConnection(m_ImageShiftScale->GetOutputPort());
