@@ -22,6 +22,7 @@
 
 ////@begin includes
 #include "wx/imaglist.h"
+#include "Mytreectrl.h"
 ////@end includes
 
 #include "firstmain.h"
@@ -241,6 +242,8 @@ void FirstMain::Init()
     m_PreciseSpin = NULL;
     m_MarchCubeSet_spinctrl = NULL;
     m_ColorList = NULL;
+    m_treectrl = NULL;
+    m_grid = NULL;
 	////@end FirstMain member initialisation
 	m_hEvr = NULL;
 	m_psjcF3d = NULL;
@@ -410,18 +413,17 @@ void FirstMain::CreateControls()
 
     wxNotebook* itemNotebook75 = new wxNotebook( itemFrame1, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
 
-    wxTreeCtrl* itemTreeCtrl76 = new wxTreeCtrl( itemNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
+    m_treectrl = new MyTreeCtrl( itemNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
+    itemNotebook75->AddPage(m_treectrl, _("Render Object"));
 
-    itemNotebook75->AddPage(itemTreeCtrl76, _("Render Object"));
+    m_grid = new wxGrid( itemNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    m_grid->SetDefaultColSize(50);
+    m_grid->SetDefaultRowSize(25);
+    m_grid->SetColLabelSize(25);
+    m_grid->SetRowLabelSize(50);
+    m_grid->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
 
-    wxGrid* itemGrid77 = new wxGrid( itemNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
-    itemGrid77->SetDefaultColSize(50);
-    itemGrid77->SetDefaultRowSize(25);
-    itemGrid77->SetColLabelSize(25);
-    itemGrid77->SetRowLabelSize(50);
-    itemGrid77->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
-
-    itemNotebook75->AddPage(itemGrid77, _("attribute"));
+    itemNotebook75->AddPage(m_grid, _("attribute"));
 
     itemFrame1->GetAuiManager().AddPane(itemNotebook75, wxAuiPaneInfo()
         .Name(_T("Pane1")).MinSize(wxSize(200, 400)).BestSize(wxSize(200, 600)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(300, 600)));
@@ -558,17 +560,6 @@ void FirstMain::OnPaint( wxPaintEvent& event )
 }
 
 
-/*
-* wxEVT_LEFT_DOWN event handler for ID_GLCANVAS
-*/
-
-void FirstMain::OnLeftDown( wxMouseEvent& event )
-{
-	////@begin wxEVT_LEFT_DOWN event handler for ID_GLCANVAS in FirstMain.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-	////@end wxEVT_LEFT_DOWN event handler for ID_GLCANVAS in FirstMain. 
-}
 
 
 /*
@@ -1421,5 +1412,17 @@ void FirstMain::OnRenderBondingBoxClick( wxCommandEvent& event )
 {
 	m_RenderBondingBox = event.IsChecked();
 	event.Skip(false); 
+}
+
+/*
+ * wxEVT_LEFT_DOWN event handler for ID_GLCANVAS
+ */
+
+void FirstMain::OnLeftDown( wxMouseEvent& event )
+{
+////@begin wxEVT_LEFT_DOWN event handler for ID_GLCANVAS in FirstMain.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_LEFT_DOWN event handler for ID_GLCANVAS in FirstMain. 
 }
 

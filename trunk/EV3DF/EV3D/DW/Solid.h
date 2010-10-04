@@ -34,6 +34,7 @@
 #include <vtkUnsignedCharArray.h>
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
+#include <vtkProperty.h>
 
 // use vtk to implement function like mathcube
 
