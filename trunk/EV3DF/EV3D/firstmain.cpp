@@ -23,6 +23,7 @@
 ////@begin includes
 #include "wx/imaglist.h"
 #include "Mytreectrl.h"
+#include "mygrid.h"
 ////@end includes
 
 #include "firstmain.h"
@@ -416,13 +417,12 @@ void FirstMain::CreateControls()
     m_treectrl = new MyTreeCtrl( itemNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
     itemNotebook75->AddPage(m_treectrl, _("Render Object"));
 
-    m_grid = new wxGrid( itemNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    m_grid = new MyGrid( itemNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     m_grid->SetDefaultColSize(50);
     m_grid->SetDefaultRowSize(25);
     m_grid->SetColLabelSize(25);
     m_grid->SetRowLabelSize(50);
     m_grid->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
-
     itemNotebook75->AddPage(m_grid, _("attribute"));
 
     itemFrame1->GetAuiManager().AddPane(itemNotebook75, wxAuiPaneInfo()

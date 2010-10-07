@@ -578,8 +578,34 @@
 				>
 			</File>
 			<File
+				RelativePath=".\mygrid.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdwx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\mygrid.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MyTreeCtrl.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="stdwx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\Mytreectrl.h"
