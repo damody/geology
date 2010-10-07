@@ -412,21 +412,21 @@ void FirstMain::CreateControls()
     itemStatusBar74->SetFieldsCount(2);
     itemFrame1->SetStatusBar(itemStatusBar74);
 
-    wxNotebook* itemNotebook75 = new wxNotebook( itemFrame1, ID_NOTEBOOK, wxDefaultPosition, wxDefaultSize, wxBK_DEFAULT );
+    wxAuiNotebook* itemAuiNotebook75 = new wxAuiNotebook( itemFrame1, ID_AUINOTEBOOK, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE|wxAUI_NB_TOP );
 
-    m_treectrl = new MyTreeCtrl( itemNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_SINGLE );
-    itemNotebook75->AddPage(m_treectrl, _("Render Object"));
+    m_treectrl = new MyTreeCtrl( itemAuiNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
+    itemAuiNotebook75->AddPage(m_treectrl, _("Render Object"), false);
 
-    m_grid = new MyGrid( itemNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
-    m_grid->SetDefaultColSize(50);
+    m_grid = new MyGrid( itemAuiNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    m_grid->SetDefaultColSize(75);
     m_grid->SetDefaultRowSize(25);
     m_grid->SetColLabelSize(25);
-    m_grid->SetRowLabelSize(50);
-    m_grid->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
-    itemNotebook75->AddPage(m_grid, _("attribute"));
+    m_grid->SetRowLabelSize(100);
+    m_grid->CreateGrid(1, 1, wxGrid::wxGridSelectCells);
+    itemAuiNotebook75->AddPage(m_grid, _("attribute"), false);
 
-    itemFrame1->GetAuiManager().AddPane(itemNotebook75, wxAuiPaneInfo()
-        .Name(_T("Pane1")).MinSize(wxSize(200, 400)).BestSize(wxSize(200, 600)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(300, 600)));
+    itemFrame1->GetAuiManager().AddPane(itemAuiNotebook75, wxAuiPaneInfo()
+        .Name(_T("Pane2")).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(true).PaneBorder(false));
 
     GetAuiManager().Update();
 

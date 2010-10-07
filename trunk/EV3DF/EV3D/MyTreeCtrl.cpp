@@ -25,6 +25,8 @@
 ////@end includes
 
 #include "mytreectrl.h"
+#include "firstmain.h"
+#include "mygrid.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -47,6 +49,7 @@ BEGIN_EVENT_TABLE( MyTreeCtrl, wxTreeCtrl )
     EVT_TREE_SEL_CHANGED( ID_TREECTRL, MyTreeCtrl::OnTreectrlSelChanged )
     EVT_TREE_SEL_CHANGING( ID_TREECTRL, MyTreeCtrl::OnTreectrlSelChanging )
     EVT_TREE_DELETE_ITEM( ID_TREECTRL, MyTreeCtrl::OnTreectrlDeleteItem )
+    EVT_TREE_ITEM_ACTIVATED( ID_TREECTRL, MyTreeCtrl::OnTreectrlItemActivated )
     EVT_TREE_ITEM_COLLAPSED( ID_TREECTRL, MyTreeCtrl::OnTreectrlItemCollapsed )
     EVT_TREE_ITEM_COLLAPSING( ID_TREECTRL, MyTreeCtrl::OnTreectrlItemCollapsing )
     EVT_TREE_ITEM_EXPANDED( ID_TREECTRL, MyTreeCtrl::OnTreectrlItemExpanded )
@@ -144,32 +147,27 @@ void MyTreeCtrl::CreateControls()
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("vertex");
+	item_str = wxT("Isosurface Contour");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("isosurface contour");
+	item_str = wxT("Axes");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("axes");
+	item_str = wxT("Plane Chip");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("plane chip");
+	item_str = wxT("Contour Chip");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("contour chip");
-	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
-		new MyTreeItemData(item_str));
-	SetItemImage(id, TreeCtrlIcon_FolderOpened,
-		wxTreeItemIcon_Expanded);
-	item_str = wxT("volume render");
+	item_str = wxT("Volume Render");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
@@ -362,16 +360,12 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 		return;
 	}
 	wxString item_str = wxT("item");
-	
-	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(m_lastItem);
 	int i = GetChildrenCount( m_lastItem, false );
 	item_str << wxT(" ") << i;
 	wxTreeItemId id = AppendItem(m_lastItem, item_str, TreeCtrlIcon_File, TreeCtrlIcon_File+1,
 		new MyTreeItemData(item_str));
-	if (mti_data->GetDesc() == wxT("Vetex"))
-	{
-		
-	}
+	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(m_lastItem);
+	ChangeGrid(mti_data->GetDesc());
 	Expand(m_lastItem);
 }
 
@@ -394,6 +388,71 @@ void MyTreeCtrl::OnMenu_DeleteItem( wxCommandEvent& event )
 void MyTreeCtrl::OnTreectrlSelChanged( wxTreeEvent& event )
 {
 	SetLastItem(event.GetItem());
+	wxTreeItemId wxid = m_lastItem;
+	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(wxid);
+	while (!ChangeGrid(mti_data->GetDesc()) && wxid != GetRootItem())
+	{
+		wxid = GetItemParent(wxid);
+		mti_data = (MyTreeItemData*)GetItemData(wxid);
+	}
+	event.Skip();
+}
+
+bool MyTreeCtrl::ChangeGrid( const wxString& wxstr )
+{
+	if (wxstr == wxT("Bounding Box"))
+	{
+		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_BoundingBox();
+		return true;
+	}
+	else if (wxstr == wxT("Vetex"))
+	{
+		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_Vetex();
+		return true;
+	}
+	else if (wxstr == wxT("Isosurface Contour"))
+	{
+		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_IsosurfaceContour();
+		return true;
+	}
+	else if (wxstr == wxT("Axes"))
+	{
+		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_Axes();
+		return true;
+	}
+	else if (wxstr == wxT("Plane Chip"))
+	{
+		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_PlaneChip();
+		return true;
+	}
+	else if (wxstr == wxT("Contour Chip"))
+	{
+		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_ContourChip();
+		return true;
+	}
+	else if (wxstr == wxT("Volume Render"))
+	{
+		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_VolumeRender();
+		return true;
+	}
+	else
+		return false;
+}
+
+
+/*
+ * wxEVT_COMMAND_TREE_ITEM_ACTIVATED event handler for ID_TREECTRL
+ */
+
+void MyTreeCtrl::OnTreectrlItemActivated( wxTreeEvent& event )
+{
+	wxTreeItemId wxid = m_lastItem;
+	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(wxid);
+	while (!ChangeGrid(mti_data->GetDesc()) && wxid != GetRootItem())
+	{
+		wxid = GetItemParent(wxid);
+		mti_data = (MyTreeItemData*)GetItemData(wxid);
+	}
 	event.Skip();
 }
 
