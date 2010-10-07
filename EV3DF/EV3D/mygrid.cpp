@@ -108,9 +108,7 @@ void MyGrid::Init()
  */
 
 void MyGrid::CreateControls()
-{    
-////@begin MyGrid content construction
-////@end MyGrid content construction
+{
 }
 
 
@@ -175,5 +173,79 @@ void MyGrid::OnCellRightClick( wxGridEvent& event )
 ////@end wxEVT_GRID_CELL_RIGHT_CLICK event handler for ID_GRID in MyGrid. 
 }
 
+void MyGrid::ConvertTo_BoundingBox()
+{
+	ReCreateGrid(1,1);
+	SetColLabelValue(0, wxT("None"));
+	SetRowLabelValue(0, wxT("None"));
+}
 
+void MyGrid::ConvertTo_Vetex()
+{
+	ReCreateGrid(1,2);
+	SetColLabelValue(0, wxT("Value"));
+	SetRowLabelValue(0, wxT("Start"));
+	SetRowLabelValue(1, wxT("End"));
+}
 
+void MyGrid::ConvertTo_IsosurfaceContour()
+{
+	ReCreateGrid(1,1);
+	SetColLabelValue(0, wxT("Value"));
+	SetRowLabelValue(0, wxT("ContourValue"));
+}
+
+void MyGrid::ConvertTo_Axes()
+{
+	ReCreateGrid(1,1);
+	SetColLabelValue(0, wxT("None"));
+	SetRowLabelValue(0, wxT("None"));
+}
+
+void MyGrid::ConvertTo_PlaneChip()
+{
+	ReCreateGrid(1,1);
+	SetColLabelValue(0, wxT("None"));
+	SetRowLabelValue(0, wxT("None"));
+}
+
+void MyGrid::ConvertTo_ContourChip()
+{
+	ReCreateGrid(1,1);
+	SetColLabelValue(0, wxT("None"));
+	SetRowLabelValue(0, wxT("None"));
+}
+
+void MyGrid::ConvertTo_VolumeRender()
+{
+// 	ClearGrid();
+// 	CreateGrid(1, 1, wxGrid::wxGridSelectCells);
+	SetColLabelValue(0, wxT("None"));
+	SetRowLabelValue(0, wxT("None"));
+}
+
+void MyGrid::DeleteGrid()
+{
+	while (GetNumberRows())
+	{
+		DeleteRows();
+	}
+	while (GetNumberCols())
+	{
+		DeleteCols();
+	}
+}
+
+void MyGrid::AppendGrid( int Cols, int Rows )
+{
+	while (Cols--)
+		AppendCols();
+	while (Rows--)
+		AppendRows();
+}
+
+void MyGrid::ReCreateGrid( int Cols, int Rows )
+{
+	DeleteGrid();
+	AppendGrid( Cols, Rows );
+}

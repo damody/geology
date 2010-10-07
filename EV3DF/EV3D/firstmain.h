@@ -29,7 +29,7 @@
 #include "wx/spinctrl.h"
 #include "wx/listctrl.h"
 #include "wx/statusbr.h"
-#include "wx/notebook.h"
+#include "wx/aui/auibook.h"
 ////@end includes
 
 /*!
@@ -120,7 +120,7 @@ class MyGrid;
 #define ID_MarchCubeSet_SPINCTRL 10064
 #define ID_LISTCTRL 10051
 #define ID_STATUSBAR 10065
-#define ID_NOTEBOOK 10066
+#define ID_AUINOTEBOOK 10072
 #define SYMBOL_FIRSTMAIN_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMAXIMIZE|wxMAXIMIZE_BOX|wxCLOSE_BOX
 #define SYMBOL_FIRSTMAIN_TITLE _("FirstMain")
 #define SYMBOL_FIRSTMAIN_IDNAME ID_FIRSTMAIN

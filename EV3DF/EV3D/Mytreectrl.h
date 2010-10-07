@@ -35,7 +35,7 @@ class MyTreeCtrl;
 
 ////@begin control identifiers
 #define ID_TREECTRL 10067
-#define SYMBOL_MYTREECTRL_STYLE wxTR_SINGLE
+#define SYMBOL_MYTREECTRL_STYLE wxTR_EDIT_LABELS|wxTR_SINGLE
 #define SYMBOL_MYTREECTRL_IDNAME ID_TREECTRL
 #define SYMBOL_MYTREECTRL_SIZE wxDefaultSize
 #define SYMBOL_MYTREECTRL_POSITION wxDefaultPosition
@@ -91,6 +91,9 @@ public:
     /// wxEVT_COMMAND_TREE_DELETE_ITEM event handler for ID_TREECTRL
     void OnTreectrlDeleteItem( wxTreeEvent& event );
 
+    /// wxEVT_COMMAND_TREE_ITEM_ACTIVATED event handler for ID_TREECTRL
+    void OnTreectrlItemActivated( wxTreeEvent& event );
+
     /// wxEVT_COMMAND_TREE_ITEM_COLLAPSED event handler for ID_TREECTRL
     void OnTreectrlItemCollapsed( wxTreeEvent& event );
 
@@ -122,6 +125,7 @@ public:
 	void OnMenu_DeleteItem(wxCommandEvent& event);
 	void CreateImageList(int size = 16);
 	void ShowMenu(wxTreeItemId id, const wxPoint& pt);
+	bool ChangeGrid(const wxString& wxstr);
 ////@begin MyTreeCtrl member variables
 ////@end MyTreeCtrl member variables
 	int          m_imageSize;               // current size of images
@@ -136,7 +140,7 @@ public:
 	MyTreeItemData(const wxString& desc) : m_desc(desc) { }
 
 	void ShowInfo(wxTreeCtrl *tree);
-	const wxChar *GetDesc() const { return m_desc.c_str(); }
+	const wxString& GetDesc() const { return m_desc; }
 
 private:
 	wxString m_desc;
