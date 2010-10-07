@@ -3942,11 +3942,11 @@
               <string name="proxy-type">"wbTreeCtrlProxy"</string>
               <string name="event-handler-0">"wxEVT_COMMAND_TREE_SEL_CHANGED|OnTreectrlSelChanged|NONE||MyTreeCtrl"</string>
               <string name="event-handler-1">"wxEVT_COMMAND_TREE_SEL_CHANGING|OnTreectrlSelChanging|NONE||MyTreeCtrl"</string>
-              <string name="event-handler-2">"wxEVT_COMMAND_TREE_DELETE_ITEM|OnTreectrlDeleteItem|NONE||"</string>
-              <string name="event-handler-3">"wxEVT_COMMAND_TREE_ITEM_COLLAPSED|OnTreectrlItemCollapsed|NONE||"</string>
-              <string name="event-handler-4">"wxEVT_COMMAND_TREE_ITEM_COLLAPSING|OnTreectrlItemCollapsing|NONE||"</string>
-              <string name="event-handler-5">"wxEVT_COMMAND_TREE_ITEM_EXPANDED|OnTreectrlItemExpanded|NONE||"</string>
-              <string name="event-handler-6">"wxEVT_COMMAND_TREE_ITEM_EXPANDING|OnTreectrlItemExpanding|NONE||"</string>
+              <string name="event-handler-2">"wxEVT_COMMAND_TREE_DELETE_ITEM|OnTreectrlDeleteItem|NONE||MyTreeCtrl"</string>
+              <string name="event-handler-3">"wxEVT_COMMAND_TREE_ITEM_COLLAPSED|OnTreectrlItemCollapsed|NONE||MyTreeCtrl"</string>
+              <string name="event-handler-4">"wxEVT_COMMAND_TREE_ITEM_COLLAPSING|OnTreectrlItemCollapsing|NONE||MyTreeCtrl"</string>
+              <string name="event-handler-5">"wxEVT_COMMAND_TREE_ITEM_EXPANDED|OnTreectrlItemExpanded|NONE||MyTreeCtrl"</string>
+              <string name="event-handler-6">"wxEVT_COMMAND_TREE_ITEM_EXPANDING|OnTreectrlItemExpanding|NONE||MyTreeCtrl"</string>
               <string name="event-handler-7">"wxEVT_COMMAND_TREE_KEY_DOWN|OnTreectrlKeyDown|NONE||MyTreeCtrl"</string>
               <string name="event-handler-8">"wxEVT_COMMAND_TREE_ITEM_MENU|OnTreectrlItemMenu|NONE||MyTreeCtrl"</string>
               <string name="event-handler-9">"wxEVT_COMMAND_TREE_ITEM_RIGHT_CLICK|OnTreectrlItemRightClick|NONE||MyTreeCtrl"</string>
@@ -4022,7 +4022,7 @@
               <string name="proxy-Event sources">""</string>
             </document>
             <document>
-              <string name="title">"wxGrid: ID_GRID"</string>
+              <string name="title">"MyGrid: ID_GRID"</string>
               <string name="type">"dialog-control-document"</string>
               <string name="filename">""</string>
               <string name="icon-name">"grid"</string>
@@ -4031,15 +4031,17 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbGridProxy"</string>
+              <string name="event-handler-0">"wxEVT_GRID_CELL_LEFT_CLICK|OnCellLeftClick|NONE||MyGrid"</string>
+              <string name="event-handler-1">"wxEVT_GRID_CELL_RIGHT_CLICK|OnCellRightClick|NONE||MyGrid"</string>
               <string name="proxy-Id name">"ID_GRID"</string>
               <long name="proxy-Id value">10068</long>
               <string name="proxy-Name">""</string>
-              <string name="proxy-Class">"wxGrid"</string>
+              <string name="proxy-Class">"MyGrid"</string>
               <string name="proxy-Base class">"wxGrid"</string>
-              <bool name="proxy-External implementation">1</bool>
-              <bool name="proxy-Separate files">0</bool>
-              <string name="proxy-Implementation filename">""</string>
-              <string name="proxy-Header filename">""</string>
+              <bool name="proxy-External implementation">0</bool>
+              <bool name="proxy-Separate files">1</bool>
+              <string name="proxy-Implementation filename">"mygrid.cpp"</string>
+              <string name="proxy-Header filename">"mygrid.h"</string>
               <string name="proxy-Member variable name">"m_grid"</string>
               <string name="proxy-Tab label">"attribute"</string>
               <string name="proxy-Tab icon">""</string>

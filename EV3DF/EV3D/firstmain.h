@@ -30,7 +30,6 @@
 #include "wx/listctrl.h"
 #include "wx/statusbr.h"
 #include "wx/notebook.h"
-#include "wx/grid.h"
 ////@end includes
 
 /*!
@@ -43,7 +42,7 @@ class wxAuiToolBar;
 class wxSpinCtrl;
 class wxListCtrl;
 class MyTreeCtrl;
-class wxGrid;
+class MyGrid;
 ////@end forward declarations
 
 /*!
@@ -122,7 +121,6 @@ class wxGrid;
 #define ID_LISTCTRL 10051
 #define ID_STATUSBAR 10065
 #define ID_NOTEBOOK 10066
-#define ID_GRID 10068
 #define SYMBOL_FIRSTMAIN_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMAXIMIZE|wxMAXIMIZE_BOX|wxCLOSE_BOX
 #define SYMBOL_FIRSTMAIN_TITLE _("FirstMain")
 #define SYMBOL_FIRSTMAIN_IDNAME ID_FIRSTMAIN
@@ -438,7 +436,7 @@ public:
     wxSpinCtrl* m_MarchCubeSet_spinctrl;
     wxListCtrl* m_ColorList;
     MyTreeCtrl* m_treectrl;
-    wxGrid* m_grid;
+    MyGrid* m_grid;
     bool m_RenderFace1;
     bool m_RenderFace2;
     bool m_RenderFace3;
