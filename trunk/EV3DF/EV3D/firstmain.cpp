@@ -51,7 +51,6 @@ IMPLEMENT_CLASS( FirstMain, wxFrame )
 BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 
 ////@begin FirstMain event table entries
-    EVT_WINDOW_CREATE( FirstMain::OnCreate )
     EVT_WINDOW_DESTROY( FirstMain::OnDestroy )
 
     EVT_UPDATE_UI( ID_GLCANVAS, FirstMain::OnGlcanvasUpdate )
@@ -302,7 +301,7 @@ void FirstMain::CreateControls()
 
     itemGLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxDefaultSize, 0 );
     itemFrame1->GetAuiManager().AddPane(itemGLCanvas, wxAuiPaneInfo()
-        .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().TopDockable(false).BottomDockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).Floatable(false).FloatingSize(wxSize(800, 600)));
+        .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().TopDockable(false).BottomDockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(800, 800)));
 
     m_FileEditToolbar = new wxAuiToolBar( itemFrame1, ID_TOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     wxBitmap itemtool29Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
@@ -322,7 +321,7 @@ void FirstMain::CreateControls()
     m_FileEditToolbar->AddTool(ID_BTNPASTE, wxEmptyString, itemtool33Bitmap, itemtool33BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
     m_FileEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_FileEditToolbar, wxAuiPaneInfo()
-        .ToolbarPane().Name(_T("FileEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Gripper(true));
+        .ToolbarPane().Name(_T("FileEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
     m_XYZchipEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     wxCheckBox* itemCheckBox35 = new wxCheckBox( m_XYZchipEditToolbar, ID_USE_XCHIP, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
@@ -354,7 +353,7 @@ void FirstMain::CreateControls()
     m_XYZchipEditToolbar->AddControl(m_ShowTypeCombo);
     m_XYZchipEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_XYZchipEditToolbar, wxAuiPaneInfo()
-        .ToolbarPane().Name(_T("XYZchipEditToolbar")).Top().Row(1).Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Gripper(true));
+        .ToolbarPane().Name(_T("XYZchipEditToolbar")).Top().Row(1).Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
     m_BoundEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR1, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     m_BoundEditToolbar->AddLabel(ID_LABEL3, _("Xmin"), 30);
@@ -377,7 +376,7 @@ void FirstMain::CreateControls()
     m_BoundEditToolbar->AddControl(m_ZmaxText);
     m_BoundEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_BoundEditToolbar, wxAuiPaneInfo()
-        .ToolbarPane().Name(_T("BoundEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Gripper(true));
+        .ToolbarPane().Name(_T("BoundEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
     m_PositionEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR2, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     m_PositionEditToolbar->AddLabel(ID_LABEL9, _("MiddleX"), 40);
@@ -391,7 +390,7 @@ void FirstMain::CreateControls()
     m_PositionEditToolbar->AddControl(m_MiddleZText);
     m_PositionEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_PositionEditToolbar, wxAuiPaneInfo()
-        .ToolbarPane().Name(_T("PositionEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Gripper(true));
+        .ToolbarPane().Name(_T("PositionEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
     wxAuiToolBar* itemAuiToolBar68 = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR3, wxDefaultPosition, wxSize(80, -1), wxAUI_TB_GRIPPER );
     itemAuiToolBar68->AddLabel(ID_LABEL12, _("Precise"), 40);
@@ -406,33 +405,29 @@ void FirstMain::CreateControls()
 
     m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
-        .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(false).FloatingSize(wxSize(200, 400)));
+        .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
 
     wxStatusBar* itemStatusBar74 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar74->SetFieldsCount(2);
     itemFrame1->SetStatusBar(itemStatusBar74);
 
-    wxAuiNotebook* itemAuiNotebook75 = new wxAuiNotebook( itemFrame1, ID_AUINOTEBOOK, wxDefaultPosition, wxDefaultSize, wxAUI_NB_DEFAULT_STYLE|wxAUI_NB_TOP );
+    m_treectrl = new MyTreeCtrl( itemFrame1, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
+    itemFrame1->GetAuiManager().AddPane(m_treectrl, wxAuiPaneInfo()
+        .Name(_T("ID_TREECTRL")).Caption(_("Effect Tree")).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
 
-    m_treectrl = new MyTreeCtrl( itemAuiNotebook75, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
-    itemAuiNotebook75->AddPage(m_treectrl, _("Render Object"), false);
-
-    m_grid = new MyGrid( itemAuiNotebook75, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    m_grid = new MyGrid( itemFrame1, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     m_grid->SetDefaultColSize(75);
     m_grid->SetDefaultRowSize(25);
     m_grid->SetColLabelSize(25);
     m_grid->SetRowLabelSize(100);
     m_grid->CreateGrid(1, 1, wxGrid::wxGridSelectCells);
-    itemAuiNotebook75->AddPage(m_grid, _("attribute"), false);
-
-    itemFrame1->GetAuiManager().AddPane(itemAuiNotebook75, wxAuiPaneInfo()
-        .Name(_T("Pane2")).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(true).PaneBorder(false));
+    itemFrame1->GetAuiManager().AddPane(m_grid, wxAuiPaneInfo()
+        .Name(_T("ID_GRID")).Caption(_("Attribute")).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, -1)));
 
     GetAuiManager().Update();
 
     // Connect events and objects
     itemFrame1->Connect(ID_FIRSTMAIN, wxEVT_DESTROY, wxWindowDestroyEventHandler(FirstMain::OnDestroy), NULL, this);
-    itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_CREATE, wxWindowCreateEventHandler(FirstMain::OnCreate), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_DESTROY, wxWindowDestroyEventHandler(FirstMain::OnDestroy), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_SIZE, wxSizeEventHandler(FirstMain::OnSize), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_PAINT, wxPaintEventHandler(FirstMain::OnPaint), NULL, this);
@@ -444,21 +439,9 @@ void FirstMain::CreateControls()
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_RIGHT_UP, wxMouseEventHandler(FirstMain::OnRightUp), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_MOTION, wxMouseEventHandler(FirstMain::OnMotion), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_MOUSEWHEEL, wxMouseEventHandler(FirstMain::OnMouseWheel), NULL, this);
-    m_ColorList->Connect(ID_LISTCTRL, wxEVT_CREATE, wxWindowCreateEventHandler(FirstMain::OnCreate), NULL, this);
 	////@end FirstMain content construction
 } 
 
-/*
-* wxEVT_CREATE event handler for ID_FIRSTMAIN
-*/
-
-void FirstMain::OnCreate( wxWindowCreateEvent& event )
-{
-	////@begin wxEVT_CREATE event handler for ID_FIRSTMAIN in FirstMain.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-	////@end wxEVT_CREATE event handler for ID_FIRSTMAIN in FirstMain. 
-}
 
 
 /*

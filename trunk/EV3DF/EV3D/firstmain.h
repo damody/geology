@@ -29,7 +29,6 @@
 #include "wx/spinctrl.h"
 #include "wx/listctrl.h"
 #include "wx/statusbr.h"
-#include "wx/aui/auibook.h"
 ////@end includes
 
 /*!
@@ -120,7 +119,6 @@ class MyGrid;
 #define ID_MarchCubeSet_SPINCTRL 10064
 #define ID_LISTCTRL 10051
 #define ID_STATUSBAR 10065
-#define ID_AUINOTEBOOK 10072
 #define SYMBOL_FIRSTMAIN_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMAXIMIZE|wxMAXIMIZE_BOX|wxCLOSE_BOX
 #define SYMBOL_FIRSTMAIN_TITLE _("FirstMain")
 #define SYMBOL_FIRSTMAIN_IDNAME ID_FIRSTMAIN
@@ -164,9 +162,6 @@ public:
     void InsertColor(int i, double val, wxColour& iwc);
 
 ////@begin FirstMain event handler declarations
-
-    /// wxEVT_CREATE event handler for ID_FIRSTMAIN
-    void OnCreate( wxWindowCreateEvent& event );
 
     /// wxEVT_DESTROY event handler for ID_FIRSTMAIN
     void OnDestroy( wxWindowDestroyEvent& event );

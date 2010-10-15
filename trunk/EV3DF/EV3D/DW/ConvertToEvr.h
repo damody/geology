@@ -22,7 +22,8 @@ public:
 	int Save_EvrA(std::wstring path, std::wstring filename);
 	bool		isLoad;
 	dVector		m_dataVector;
-	double		Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ, Datamax, Datamin;
+	double		Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ;
+	dVector		m_Datamax, m_Datamin;
 	int		Xspan, Yspan, Zspan;
 	int		m_format_count;
 	strVector	m_format_name;

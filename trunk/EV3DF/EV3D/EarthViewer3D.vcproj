@@ -616,14 +616,6 @@
 			Name="DW"
 			>
 			<File
-				RelativePath=".\DW\bitmap3D.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DW\Color4.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DW\ColorTable.h"
 				>
 			</File>
@@ -644,14 +636,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DW\DW2DTexture.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DW\DW2DTexture.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DW\DWHistogram.cpp"
 				>
 			</File>
@@ -665,14 +649,6 @@
 			</File>
 			<File
 				RelativePath=".\DW\FindSpan.h"
-				>
-			</File>
-			<File
-				RelativePath=".\DW\FlaneMesh.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DW\FlaneMesh.h"
 				>
 			</File>
 			<File
