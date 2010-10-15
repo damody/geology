@@ -359,6 +359,14 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 		add_dialog.ShowModal();
 		return;
 	}
+	wxTreeItemId tmpid = GetItemParent(m_lastItem);
+	tmpid = GetItemParent(tmpid);
+	if (GetRootItem() == tmpid)
+	{
+		wxMessageDialog add_dialog(NULL, wxT("Set item can't add"), wxT("Failed"));
+		add_dialog.ShowModal();
+		return;
+	}
 	wxString item_str = wxT("item");
 	int i = GetChildrenCount( m_lastItem, false );
 	item_str << wxT(" ") << i;
@@ -402,37 +410,37 @@ bool MyTreeCtrl::ChangeGrid( const wxString& wxstr )
 {
 	if (wxstr == wxT("Bounding Box"))
 	{
-		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_BoundingBox();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_BoundingBox();
 		return true;
 	}
 	else if (wxstr == wxT("Vetex"))
 	{
-		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_Vetex();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_Vetex();
 		return true;
 	}
 	else if (wxstr == wxT("Isosurface Contour"))
 	{
-		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_IsosurfaceContour();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_IsosurfaceContour();
 		return true;
 	}
 	else if (wxstr == wxT("Axes"))
 	{
-		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_Axes();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_Axes();
 		return true;
 	}
 	else if (wxstr == wxT("Plane Chip"))
 	{
-		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_PlaneChip();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_PlaneChip();
 		return true;
 	}
 	else if (wxstr == wxT("Contour Chip"))
 	{
-		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_ContourChip();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_ContourChip();
 		return true;
 	}
 	else if (wxstr == wxT("Volume Render"))
 	{
-		((FirstMain*)GetGrandParent())->m_grid->ConvertTo_VolumeRender();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_VolumeRender();
 		return true;
 	}
 	else

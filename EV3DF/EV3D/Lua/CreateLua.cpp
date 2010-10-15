@@ -7,7 +7,6 @@ void CreateLua::AddInt( std::string name, int num )
 
 void CreateLua::AddDouble( std::string name, double num )
 {
-
 	sdv.push_back(std::make_pair(name,num));
 }
 

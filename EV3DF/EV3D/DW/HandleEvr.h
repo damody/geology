@@ -63,7 +63,8 @@ public:
 	void ExitFile();
 	typedef std::vector< std::pair<std::string, SJCScalarField3d*> > SJCSF3dMap;
 	SJCSF3dMap	m_SJCSF3dMap;
-	double		Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ, Datamin, Datamax;
+	double		Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ, DataAmount;
+	dVector		m_Datamax, m_Datamin;
 	int		Xspan, Yspan, Zspan;
 	int		m_format_count;
 	strVector	m_format_name;

@@ -177,7 +177,7 @@ void MyGrid::ConvertTo_BoundingBox()
 {
 	ReCreateGrid(1,1);
 	SetColLabelValue(0, wxT("None"));
-	SetRowLabelValue(0, wxT("None"));
+	SetRowLabelValue(0, wxT("Color"));
 }
 
 void MyGrid::ConvertTo_Vetex()
@@ -199,29 +199,40 @@ void MyGrid::ConvertTo_Axes()
 {
 	ReCreateGrid(1,1);
 	SetColLabelValue(0, wxT("None"));
-	SetRowLabelValue(0, wxT("None"));
+	SetRowLabelValue(0, wxT("Color"));
 }
 
 void MyGrid::ConvertTo_PlaneChip()
 {
-	ReCreateGrid(1,1);
-	SetColLabelValue(0, wxT("None"));
-	SetRowLabelValue(0, wxT("None"));
+	ReCreateGrid(1,2);
+	SetColLabelValue(0, wxT("Value"));
+	SetRowLabelValue(0, wxT("Axes"));
+	const wxString choices[] =
+	{
+		_T("X Axes"),
+		_T("Y Axes"),
+		_T("Z Axes"),
+	};
+	SetCellEditor(0, 0, new wxGridCellChoiceEditor(WXSIZEOF(choices), choices));
+	SetCellValue(0, 0, choices[0]);
+	SetRowLabelValue(1, wxT("Percent"));
+	SetCellValue(0, 0, wxT("0"));
 }
 
 void MyGrid::ConvertTo_ContourChip()
 {
-	ReCreateGrid(1,1);
-	SetColLabelValue(0, wxT("None"));
-	SetRowLabelValue(0, wxT("None"));
+	ReCreateGrid(1,3);
+	SetColLabelValue(0, wxT("Value"));
+	SetRowLabelValue(0, wxT("Axes"));
+	SetRowLabelValue(1, wxT("Percent"));
+	SetRowLabelValue(1, wxT("ContourValue"));
 }
 
 void MyGrid::ConvertTo_VolumeRender()
 {
-// 	ClearGrid();
-// 	CreateGrid(1, 1, wxGrid::wxGridSelectCells);
-	SetColLabelValue(0, wxT("None"));
-	SetRowLabelValue(0, wxT("None"));
+	ReCreateGrid(1,1);
+	SetColLabelValue(0, wxT("Value"));
+	SetRowLabelValue(0, wxT("Color"));
 }
 
 void MyGrid::DeleteGrid()

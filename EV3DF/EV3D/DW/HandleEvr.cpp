@@ -11,8 +11,12 @@
 
 int HandleEvr::InitLoad(const std::wstring& directoryPath)
 {
-	Datamin = m_cell.getLua_UsePath<double>("Datamin");
-	Datamax = m_cell.getLua_UsePath<double>("Datamax");
+	DataAmount = m_cell.getLua_UsePath<double>("DataAmount");
+	for (int i=0;i < DataAmount;i++)
+	{
+		m_Datamin.push_back(m_cell.getLua_UsePath<double>( ("Datamin" + ConvStr::GetStr(i+1)).c_str() ));
+		m_Datamax.push_back(m_cell.getLua_UsePath<double>( ("Datamax" + ConvStr::GetStr(i+1)).c_str() ));
+	}
 	Xmin = m_cell.getLua_UsePath<double>("Xmin");
 	Xmax = m_cell.getLua_UsePath<double>("Xmax");
 	deltaX = m_cell.getLua_UsePath<double>("deltaX");
@@ -144,8 +148,11 @@ int HandleEvr::Save_Evr(std::wstring Path, std::wstring filename)
 	m_CreateLua.AddRawString("format_name","{\"resistance\"}");
 	m_CreateLua.AddInt("format_count",1);
 	m_CreateLua.AddInt("total",m_total);
-	m_CreateLua.AddDouble("Datamin",Datamin);
-	m_CreateLua.AddDouble("Datamax",Datamax);
+	for (int j = 0;j < DataAmount-3;j++)
+	{
+		m_CreateLua.AddDouble("Datamin" + ConvStr::GetStr(j), m_Datamin[j]);
+		m_CreateLua.AddDouble("Datamax" + ConvStr::GetStr(j), m_Datamax[j]);
+	}
 	m_CreateLua.AddDouble("Xmin",Xmin);
 	m_CreateLua.AddDouble("Xmax",Xmax);
 	m_CreateLua.AddDouble("deltaX",deltaX);
@@ -198,8 +205,11 @@ int HandleEvr::Save_EvrA( std::wstring Path, std::wstring filename )
 	m_CreateLua.AddRawString("format_name","{\"resistance\"}");
 	m_CreateLua.AddInt("format_count",1);
 	m_CreateLua.AddInt("total",m_total);
-	m_CreateLua.AddDouble("Datamin",Datamin);
-	m_CreateLua.AddDouble("Datamax",Datamax);
+	for (int j = 0;j < DataAmount-3;j++)
+	{
+		m_CreateLua.AddDouble("Datamin" + ConvStr::GetStr(j), m_Datamin[j]);
+		m_CreateLua.AddDouble("Datamax" + ConvStr::GetStr(j), m_Datamax[j]);
+	}
 	m_CreateLua.AddDouble("Xmin",Xmin);
 	m_CreateLua.AddDouble("Xmax",Xmax);
 	m_CreateLua.AddDouble("deltaX",deltaX);
