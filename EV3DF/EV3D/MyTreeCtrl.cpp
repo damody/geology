@@ -142,7 +142,7 @@ void MyTreeCtrl::CreateControls()
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("Vetex");
+	item_str = wxT("Vertex");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
@@ -153,6 +153,11 @@ void MyTreeCtrl::CreateControls()
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
 	item_str = wxT("Axes");
+	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
+		new MyTreeItemData(item_str));
+	SetItemImage(id, TreeCtrlIcon_FolderOpened,
+		wxTreeItemIcon_Expanded);
+	item_str = wxT("Ruler");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
@@ -321,10 +326,9 @@ void MyTreeCtrl::OnTreectrlItemMenu( wxTreeEvent& event )
 {
 	SetLastItem(event.GetItem());
 	wxTreeItemId itemId = event.GetItem();
-	MyTreeItemData *item = itemId.IsOk() ? (MyTreeItemData *)GetItemData(itemId): NULL;
+	//MyTreeItemData *item = itemId.IsOk() ? (MyTreeItemData *)GetItemData(itemId): NULL;
 	wxPoint clientpt = event.GetPoint();
 	wxPoint screenpt = ClientToScreen(clientpt);
-
 	ShowMenu(itemId, clientpt);
 	event.Skip();
 }
@@ -375,6 +379,7 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(m_lastItem);
 	ChangeGrid(mti_data->GetDesc());
 	Expand(m_lastItem);
+	event.Skip();
 }
 
 void MyTreeCtrl::OnMenu_DeleteItem( wxCommandEvent& event )
@@ -386,6 +391,7 @@ void MyTreeCtrl::OnMenu_DeleteItem( wxCommandEvent& event )
 	}
 	else
 		Delete(m_lastItem);
+	event.Skip();
 }
 
 
@@ -413,9 +419,9 @@ bool MyTreeCtrl::ChangeGrid( const wxString& wxstr )
 		((FirstMain*)GetParent())->m_grid->ConvertTo_BoundingBox();
 		return true;
 	}
-	else if (wxstr == wxT("Vetex"))
+	else if (wxstr == wxT("Vertex"))
 	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_Vetex();
+		((FirstMain*)GetParent())->m_grid->ConvertTo_Vertex();
 		return true;
 	}
 	else if (wxstr == wxT("Isosurface Contour"))
@@ -426,6 +432,11 @@ bool MyTreeCtrl::ChangeGrid( const wxString& wxstr )
 	else if (wxstr == wxT("Axes"))
 	{
 		((FirstMain*)GetParent())->m_grid->ConvertTo_Axes();
+		return true;
+	}
+	else if (wxstr == wxT("Ruler"))
+	{
+		((FirstMain*)GetParent())->m_grid->ConvertTo_Ruler();
 		return true;
 	}
 	else if (wxstr == wxT("Plane Chip"))

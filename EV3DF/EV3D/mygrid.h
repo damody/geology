@@ -78,9 +78,10 @@ public:
 
 ////@end MyGrid event handler declarations
 	void ConvertTo_BoundingBox();
-	void ConvertTo_Vetex();
+	void ConvertTo_Vertex();
 	void ConvertTo_IsosurfaceContour();
 	void ConvertTo_Axes();
+	void ConvertTo_Ruler();
 	void ConvertTo_PlaneChip();
 	void ConvertTo_ContourChip();
 	void ConvertTo_VolumeRender();

@@ -464,7 +464,7 @@
           <bool name="proxy-wxSYSTEM_MENU">1</bool>
           <bool name="proxy-wxMINIMIZE">0</bool>
           <bool name="proxy-wxMAXIMIZE">1</bool>
-          <bool name="proxy-wxMINIMIZE_BOX">0</bool>
+          <bool name="proxy-wxMINIMIZE_BOX">1</bool>
           <bool name="proxy-wxMAXIMIZE_BOX">1</bool>
           <bool name="proxy-wxCLOSE_BOX">1</bool>
           <bool name="proxy-wxFRAME_TOOL_WINDOW">0</bool>
@@ -3849,8 +3849,6 @@
             <string name="proxy-Implementation filename">"MyTreeCtrl.cpp"</string>
             <string name="proxy-Header filename">"Mytreectrl.h"</string>
             <string name="proxy-Member variable name">"m_treectrl"</string>
-            <string name="proxy-Tab label">"Render Object"</string>
-            <string name="proxy-Tab icon">""</string>
             <string name="proxy-Help text">""</string>
             <string name="proxy-Tooltip text">""</string>
             <string name="proxy-Background colour">""</string>
@@ -3909,6 +3907,8 @@
             <string name="proxy-Custom arguments">""</string>
             <string name="proxy-Custom ctor arguments">""</string>
             <string name="proxy-Event sources">""</string>
+            <string name="proxy-Tab label">"Render Object"</string>
+            <string name="proxy-Tab icon">""</string>
             <bool name="proxy-AUI managed">1</bool>
             <string name="proxy-AUI name">"ID_TREECTRL"</string>
             <string name="proxy-AUI caption">"Effect Tree"</string>
@@ -3966,8 +3966,6 @@
             <string name="proxy-Implementation filename">"mygrid.cpp"</string>
             <string name="proxy-Header filename">"mygrid.h"</string>
             <string name="proxy-Member variable name">"m_grid"</string>
-            <string name="proxy-Tab label">"attribute"</string>
-            <string name="proxy-Tab icon">""</string>
             <long name="proxy-Rows">1</long>
             <long name="proxy-Columns">1</long>
             <long name="proxy-Column width">75</long>
@@ -4024,6 +4022,8 @@
             <string name="proxy-Custom arguments">""</string>
             <string name="proxy-Custom ctor arguments">""</string>
             <string name="proxy-Event sources">""</string>
+            <string name="proxy-Tab label">"attribute"</string>
+            <string name="proxy-Tab icon">""</string>
             <bool name="proxy-AUI managed">1</bool>
             <string name="proxy-AUI name">"ID_GRID"</string>
             <string name="proxy-AUI caption">"Attribute"</string>

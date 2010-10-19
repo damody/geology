@@ -12,7 +12,7 @@
 int HandleEvr::InitLoad(const std::wstring& directoryPath)
 {
 	DataAmount = m_cell.getLua_UsePath<double>("DataAmount");
-	for (int i=0;i < DataAmount;i++)
+	for (int i=0;i < DataAmount-3;i++)
 	{
 		m_Datamin.push_back(m_cell.getLua_UsePath<double>( ("Datamin" + ConvStr::GetStr(i+1)).c_str() ));
 		m_Datamax.push_back(m_cell.getLua_UsePath<double>( ("Datamax" + ConvStr::GetStr(i+1)).c_str() ));
@@ -30,22 +30,20 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 	deltaZ = m_cell.getLua_UsePath<double>("deltaZ");
 	Zspan = m_cell.getLua_UsePath<int>("Zspan");
 	m_format_count = m_cell.getLua_UsePath<int>("format_count");
-	char buf[260]={0};
 	m_format_name.push_back("x");
 	m_format_name.push_back("y");
 	m_format_name.push_back("z");
-	m_moveTable.push_back(0);
-	m_moveTable.push_back(sizeof(double));
-	m_moveTable.push_back(sizeof(double)*2);
-	for (int i=1;i<=m_format_count;i++)
+	for (int i=1;i<=DataAmount-3;i++)
 	{
-		sprintf(buf,"format_name/%d",i);
-		const char* pChar = m_cell.getLua_UsePath<const char*>(buf);
-		m_format_name.push_back(pChar);
-		m_moveTable.push_back(sizeof(double)*(2+i));
+		m_format_name.push_back(
+			m_cell.getLua_UsePath<const char*>("format_name/%d", i));
+	}
+	for (int i=0;i<DataAmount;i++)
+	{
+		m_moveTable.push_back(sizeof(double)*i);
 	}
 	m_format_count += 3; // add x,y,z col
-	m_dataSize = m_format_count*sizeof(double);
+	m_dataSize = DataAmount*sizeof(double);
 	m_total = m_cell.getLua_UsePath<int>("total");
 	m_totalSize = m_total * m_dataSize;
 	m_dataPath = m_cell.getLua_UsePath<const char*>("data");
@@ -100,7 +98,6 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 	std::vector<double*> dpvec;
 	for (int i=0;i<m_format_count;i++)
 	{
-		SJCVector3d origin, wstep, hstep;
 		SJCScalarField3d* pSF3d = new SJCScalarField3d(Xspan+1, Yspan+1, Zspan+1,
 			deltaX, deltaY, deltaZ,
 			BOUNDARY_WRAP,BOUNDARY_WRAP,BOUNDARY_WRAP,
