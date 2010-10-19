@@ -55,7 +55,7 @@ public:
 	int		getLua_Int_UsePath(const char* pathString);
 	double		getLua_Double_UsePath(const char* pathString);
 	const char*	getLua_String_UsePath(const char* pathString);
-	template <class T> T getLua_UsePath(const char* pathString);
+	template <class T> T getLua_UsePath(const char* pathString, ...);
 	void setLua_Int_UsePath(const char* pathString, int data);
 	void setLua_Double_UsePath(const char* pathString, float data);
 	void setLua_String_UsePath(const char* pathString, const char* data);
@@ -83,9 +83,9 @@ private:
 	static char buffer[10];
 };
 //要預先宣告偏特化才不會連結錯誤
-template int LuaCell::getLua_UsePath<int>(const char* pathString);
-template double LuaCell::getLua_UsePath<double>(const char* pathString);
-template const char* LuaCell::getLua_UsePath<const char*>(const char* pathString);
+template int LuaCell::getLua_UsePath<int>(const char* pathString, ...);
+template double LuaCell::getLua_UsePath<double>(const char* pathString, ...);
+template const char* LuaCell::getLua_UsePath<const char*>(const char* pathString, ...);
 template void LuaCell::setLua_UsePath(const char* pathString, int data);
 template void LuaCell::setLua_UsePath(const char* pathString, double data);
 template void LuaCell::setLua_UsePath(const char* pathString, const char* data);

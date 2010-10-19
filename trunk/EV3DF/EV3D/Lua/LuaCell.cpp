@@ -476,16 +476,32 @@ const char* LuaCell::getLua<const char*>()
 {
 	return lua_tostring(m_LuaState, -1);
 }
+void PrintFError (char * format, ...)
+{
+	char buffer[256];
+	va_list args;
+	va_start (args, format);
+	vsprintf (buffer,format, args);
+	perror (buffer);
+	va_end (args);
+}
 
 template <class T> 
-T LuaCell::getLua_UsePath(const char* pathString)
+T LuaCell::getLua_UsePath(const char* pathString, ...)
 {
+	int len = strlen(pathString);
+	// 預處理資料
+	char *buffer = (char*)malloc(len+1);
+	va_list args;
+	va_start (args, pathString);
+	vsprintf (buffer,pathString, args);
+	// 準備計算
 	T result;
 	char path[250] = {0};
 	const char *pos;
 	char *target = path;
 	int pathLayer = 0;
-	for (pos = pathString;;pos++)
+	for (pos = buffer;;pos++)
 	{
 		if (*pos == '\\' || *pos == '/') //get Layer string
 		{
@@ -525,8 +541,10 @@ T LuaCell::getLua_UsePath(const char* pathString)
 			*target = *pos;
 			++target;
 		}
-	}	
+	}
 	lua_pop(m_LuaState, pathLayer);
+	free(buffer);
+	va_end (args);
 	return result;
 }
 template <>

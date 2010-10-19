@@ -176,63 +176,90 @@ void MyGrid::OnCellRightClick( wxGridEvent& event )
 void MyGrid::ConvertTo_BoundingBox()
 {
 	ReCreateGrid(1,1);
-	SetColLabelValue(0, wxT("None"));
-	SetRowLabelValue(0, wxT("Color"));
+	SetColLabelValue(0, wxT("Value"));
+	int i=0;
+	SetRowLabelValue(i++, wxT("Color"));		// 框的顏色
+	SetRowLabelValue(i++, wxT("ThickDegree"));	// 框的粗細
 }
 
-void MyGrid::ConvertTo_Vetex()
+void MyGrid::ConvertTo_Vertex()
 {
-	ReCreateGrid(1,2);
+	ReCreateGrid(1,3);
 	SetColLabelValue(0, wxT("Value"));
-	SetRowLabelValue(0, wxT("Start"));
-	SetRowLabelValue(1, wxT("End"));
+	int i=0;
+	SetRowLabelValue(i++, wxT("MaxValue"));		// 大於這個值才顯示
+	SetRowLabelValue(i++, wxT("MinValue"));		// 小於這個值才顯示
+	SetRowLabelValue(i++, wxT("Size"));		// 點的顯示大小
 }
 
 void MyGrid::ConvertTo_IsosurfaceContour()
 {
-	ReCreateGrid(1,1);
+	ReCreateGrid(1,2);
 	SetColLabelValue(0, wxT("Value"));
-	SetRowLabelValue(0, wxT("ContourValue"));
+	int i=0;
+	SetRowLabelValue(i++, wxT("ContourValue"));	// 要做出切面的值
+	SetRowLabelValue(i++, wxT("Alpha"));		// 切面透明度的值
 }
 
 void MyGrid::ConvertTo_Axes()
 {
-	ReCreateGrid(1,1);
-	SetColLabelValue(0, wxT("None"));
-	SetRowLabelValue(0, wxT("Color"));
+	ReCreateGrid(1,4);
+	SetColLabelValue(0, wxT("Value"));
+	int i=0;
+	SetRowLabelValue(i++, wxT("ThickDegree"));	// 軸向的粗細
+	SetRowLabelValue(i++, wxT("XColor"));		// X軸向的顏色
+	SetRowLabelValue(i++, wxT("YColor"));		// Z軸向的顏色
+	SetRowLabelValue(i++, wxT("ZColor"));		// Z軸向的顏色
+}
+
+void MyGrid::ConvertTo_Ruler()
+{
+	ReCreateGrid(1,7);
+	SetColLabelValue(0, wxT("Value"));
+	int i=0;
+	SetRowLabelValue(i++, wxT("Target"));		// 量尺的對象
+	SetRowLabelValue(i++, wxT("TargetAxes"));		// 量尺的軸向
+	SetRowLabelValue(i++, wxT("StartPoint"));		// 起始點，調整後對象與軸向選項失效
+	SetRowLabelValue(i++, wxT("EndPoint"));		// 結束點，調整後對象與軸向選項失效
+	SetRowLabelValue(i++, wxT("Scalar"));		// 量尺的突出程度
+	SetRowLabelValue(i++, wxT("ThickDegree"));	// 量尺的粗細
+	SetRowLabelValue(i++, wxT("Color"));		// 量尺的顏色
 }
 
 void MyGrid::ConvertTo_PlaneChip()
 {
 	ReCreateGrid(1,2);
 	SetColLabelValue(0, wxT("Value"));
-	SetRowLabelValue(0, wxT("Axes"));
+	int i=0;
+	SetRowLabelValue(i, wxT("Axes"));
 	const wxString choices[] =
 	{
 		_T("X Axes"),
 		_T("Y Axes"),
 		_T("Z Axes"),
 	};
-	SetCellEditor(0, 0, new wxGridCellChoiceEditor(WXSIZEOF(choices), choices));
-	SetCellValue(0, 0, choices[0]);
-	SetRowLabelValue(1, wxT("Percent"));
-	SetCellValue(0, 0, wxT("0"));
+	SetCellEditor(i, 0, new wxGridCellChoiceEditor(WXSIZEOF(choices), choices));
+	SetCellValue(i, 0, choices[0]);
+	SetCellValue(i++, 0, wxT("0"));
+	SetRowLabelValue(i++, wxT("Percent"));
 }
 
 void MyGrid::ConvertTo_ContourChip()
 {
 	ReCreateGrid(1,3);
 	SetColLabelValue(0, wxT("Value"));
-	SetRowLabelValue(0, wxT("Axes"));
-	SetRowLabelValue(1, wxT("Percent"));
-	SetRowLabelValue(1, wxT("ContourValue"));
+	int i=0;
+	SetRowLabelValue(i++, wxT("Axes"));
+	SetRowLabelValue(i++, wxT("Percent"));
+	SetRowLabelValue(i++, wxT("ContourValue"));
 }
 
 void MyGrid::ConvertTo_VolumeRender()
 {
 	ReCreateGrid(1,1);
 	SetColLabelValue(0, wxT("Value"));
-	SetRowLabelValue(0, wxT("Color"));
+	int i=0;
+	SetRowLabelValue(i++, wxT("Color"));
 }
 
 void MyGrid::DeleteGrid()
