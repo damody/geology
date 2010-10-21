@@ -810,6 +810,30 @@
 				>
 			</File>
 		</Filter>
+		<File
+			RelativePath=".\DW\SolidCtrl.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\DW\SolidCtrl.h"
+			>
+		</File>
+		<File
+			RelativePath=".\DW\SolidDoc.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\DW\SolidDoc.h"
+			>
+		</File>
+		<File
+			RelativePath=".\DW\SolidView.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\DW\SolidView.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
