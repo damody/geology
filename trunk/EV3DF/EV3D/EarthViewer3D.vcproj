@@ -652,14 +652,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DW\EffectSet.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DW\EffectSet.h"
-				>
-			</File>
-			<File
 				RelativePath=".\DW\FindSpan.cpp"
 				>
 			</File>
@@ -681,6 +673,14 @@
 			</File>
 			<File
 				RelativePath=".\DW\SEffect.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SEffectSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SEffectSet.h"
 				>
 			</File>
 			<File
@@ -706,6 +706,10 @@
 			</File>
 			<File
 				RelativePath=".\DW\SolidCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SolidDefine.h"
 				>
 			</File>
 			<File
