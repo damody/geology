@@ -89,7 +89,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386"
-				AdditionalDependencies="wxmsw28u_aui.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkFilteringTCL.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib"
+				AdditionalDependencies="wxmsw28u_adv.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxmsw28u_dbgrid.lib wxmsw28u_gl.lib wxmsw28u_html.lib wxmsw28u_media.lib wxmsw28u_qa.lib wxmsw28u_richtext.lib wxmsw28u_xrc.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkFilteringTCL.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib"
 				OutputFile="..\runtime\EarthViewer3D.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
@@ -616,6 +616,14 @@
 			Name="DW"
 			>
 			<File
+				RelativePath=".\DW\BoxArea.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\BoxArea.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DW\ColorTable.h"
 				>
 			</File>
@@ -644,6 +652,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DW\EffectSet.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\EffectSet.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DW\FindSpan.cpp"
 				>
 			</File>
@@ -657,6 +673,14 @@
 			</File>
 			<File
 				RelativePath=".\DW\HandleEvr.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SEffect.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SEffect.h"
 				>
 			</File>
 			<File
@@ -677,6 +701,30 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DW\SolidCtrl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SolidCtrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SolidDoc.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SolidDoc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SolidView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\SolidView.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DW\StdVtk.cpp"
 				>
 				<FileConfiguration
@@ -691,6 +739,10 @@
 			</File>
 			<File
 				RelativePath=".\DW\StdVtk.h"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\TShape.hpp"
 				>
 			</File>
 		</Filter>
@@ -810,30 +862,6 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath=".\DW\SolidCtrl.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\DW\SolidCtrl.h"
-			>
-		</File>
-		<File
-			RelativePath=".\DW\SolidDoc.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\DW\SolidDoc.h"
-			>
-		</File>
-		<File
-			RelativePath=".\DW\SolidView.cpp"
-			>
-		</File>
-		<File
-			RelativePath=".\DW\SolidView.h"
-			>
-		</File>
 	</Files>
 	<Globals>
 	</Globals>

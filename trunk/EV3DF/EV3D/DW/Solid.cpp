@@ -1,4 +1,4 @@
-#include "StdVtk.h"
+ï»¿#include "StdVtk.h"
 #include "Solid.h"
 
 #include "ConvStr.h"
@@ -146,14 +146,14 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 	m_polydata->GetPointData()->SetScalars(m_colors);
 
 // 	m_pCtable->clear();
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(1),Color4(255, 0, 0,0));	// ¬õ
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.75),Color4(255, 128, 0,0));	// ¾í
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.625),Color4(255, 255, 0,0));	// ¶À
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0, 255, 0,0));	// ºñ
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.375),Color4(0, 255, 255,0));	// «C
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.25),Color4(0, 0, 255,0));	// ÂÅ
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.125),Color4(102, 0, 255,0));	// ÀQ
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0),Color4(167, 87, 168,0));	// µµ
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(1),Color4(255, 0, 0,0));	// ç´…
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.75),Color4(255, 128, 0,0));	// æ©™
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.625),Color4(255, 255, 0,0));	// é»ƒ
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0, 255, 0,0));	// ç¶ 
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.375),Color4(0, 255, 255,0));	// é’
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.25),Color4(0, 0, 255,0));	// è—
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.125),Color4(102, 0, 255,0));	// é›
+// 	m_pCtable->push_back(m_histogram.GetPersentValue(0),Color4(167, 87, 168,0));	// ç´«
 
 	// plane
 	m_planeWidgetX->SetInteractor(m_iren);

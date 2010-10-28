@@ -1,4 +1,7 @@
 #pragma once
+/**
+控制單元
+*/
 
 class SolidCtrl
 {
