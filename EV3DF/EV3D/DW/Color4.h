@@ -14,15 +14,6 @@
 #define _COLOR4_H
 #pragma warning(disable :4201)
 #include <memory>
-struct Pos
-{
-	union  {
-		struct  {
-			float x,y,z;
-		};
-		float c[3];
-	};	
-};
 
 struct Color4 {
 public:

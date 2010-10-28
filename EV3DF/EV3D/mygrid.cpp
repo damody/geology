@@ -218,8 +218,8 @@ void MyGrid::ConvertTo_Ruler()
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
 	SetRowLabelValue(i++, wxT("Target"));		// 量尺的對象
-	SetRowLabelValue(i++, wxT("TargetAxes"));		// 量尺的軸向
-	SetRowLabelValue(i++, wxT("StartPoint"));		// 起始點，調整後對象與軸向選項失效
+	SetRowLabelValue(i++, wxT("TargetAxes"));	// 量尺的軸向
+	SetRowLabelValue(i++, wxT("StartPoint"));	// 起始點，調整後對象與軸向選項失效
 	SetRowLabelValue(i++, wxT("EndPoint"));		// 結束點，調整後對象與軸向選項失效
 	SetRowLabelValue(i++, wxT("Scalar"));		// 量尺的突出程度
 	SetRowLabelValue(i++, wxT("ThickDegree"));	// 量尺的粗細

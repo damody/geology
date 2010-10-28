@@ -113,7 +113,7 @@ void MathCube::SetProjectionMatrix( Matrix4x4* wm /*= NULL*/ )
 	else
 	{
 		m_ProjectionMatrix = GutMatrixPerspectiveRH_OpenGL(45.0f, 1.0f, 0.1f, 10000.0f);
-		// ³]©wµø¨¤Âà´«¯x°}
+		// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 		glMatrixMode(GL_PROJECTION);
 		glLoadMatrixf( (float *) &m_ProjectionMatrix);
 	}
@@ -142,9 +142,9 @@ void MathCube::SetSize( int x, int y, int z )
 
 void MathCube::SetData( SJCScalarField3d* sf3d, int precise, double isolevel )
 {
-	// Àx¦s¸ê®Æ«ü¼Ğ
+	// å„²å­˜è³‡æ–™æŒ‡æ¨™
 	m_SJCScalarField3d = sf3d;
-	// §ó·sisosurface
+	// æ›´æ–°isosurface
 	if (m_pTriMesh)
 		delete m_pTriMesh;
 	m_pTriMesh = MarchCubes(sf3d, isolevel);
@@ -153,11 +153,11 @@ void MathCube::SetData( SJCScalarField3d* sf3d, int precise, double isolevel )
 	clen = 0.5f * m_pTriMesh->feature_size();
 	draw_curv = false;
 	m_pTriMesh->need_tstrips();
-	// ´_­ì¦ì²¾
+	// å¾©åŸä½ç§»
 	m_ObjectMatrix.TranslateX(-m_moveX);
 	m_ObjectMatrix.TranslateY(-m_moveY);
 	m_ObjectMatrix.TranslateZ(-m_moveZ);
-	// ¦ì²¾¦Ü¤¤¤ßÂI
+	// ä½ç§»è‡³ä¸­å¿ƒé»
 	m_moveX = -m_SJCScalarField3d->BoundMaxX()/2;
 	m_moveY = -m_SJCScalarField3d->BoundMaxY()/2;
 	m_moveZ = -m_SJCScalarField3d->BoundMaxZ()/2;
@@ -171,14 +171,14 @@ void MathCube::SetData( SJCScalarField3d* sf3d, int precise, double isolevel )
 	// add color
 	m_histogram = DWHistogram<double>(m_SJCScalarField3d->begin(), m_SJCScalarField3d->size());
 	m_pCtable->clear();
-	m_pCtable->push_back(m_histogram.GetPersentValue(1),Color4(255, 0, 0,0));	// ¬õ
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.75),Color4(255, 128, 0,0));	// ¾í
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.625),Color4(255, 255, 0,0));	// ¶À
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0, 255, 0,0));	// ºñ
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.375),Color4(0, 255, 255,0));	// «C
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.25),Color4(0, 0, 255,0));	// ÂÅ
-	m_pCtable->push_back(m_histogram.GetPersentValue(0.125),Color4(102, 0, 255,0));	// ÀQ
-	m_pCtable->push_back(m_histogram.GetPersentValue(0),Color4(167, 87, 168,0));	// µµ
+	m_pCtable->push_back(m_histogram.GetPersentValue(1),Color4(255, 0, 0,0));	// ç´…
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.75),Color4(255, 128, 0,0));	// æ©™
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.625),Color4(255, 255, 0,0));	// é»ƒ
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0, 255, 0,0));	// ç¶ 
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.375),Color4(0, 255, 255,0));	// é’
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.25),Color4(0, 0, 255,0));	// è—
+	m_pCtable->push_back(m_histogram.GetPersentValue(0.125),Color4(102, 0, 255,0));	// é›
+	m_pCtable->push_back(m_histogram.GetPersentValue(0),Color4(167, 87, 168,0));	// ç´«
 	int x = m_SJCScalarField3d->NumX()+1;
 	int y = m_SJCScalarField3d->NumY()+1;
 	int z = m_SJCScalarField3d->NumZ()+1;
@@ -216,7 +216,7 @@ void MathCube::RenderFace(int index)
 		double move;
 		switch (index)
 		{
-		case 0: // X¤Á­±
+		case 0: // Xåˆ‡é¢
 		case 1:
 			{
 				if (index==0)
@@ -245,7 +245,7 @@ void MathCube::RenderFace(int index)
 				m_faceFmesh[index].ConvertGetData(&(m_facedata[index][0]), (w+1)*(h+1));
 			}
 			break;
-		case 2: // Y¤Á­±
+		case 2: // Yåˆ‡é¢
 		case 3:
 			{
 				if (index==2)
@@ -274,7 +274,7 @@ void MathCube::RenderFace(int index)
 				m_faceFmesh[index].ConvertGetData(&(m_facedata[index][0]), (w+1)*(h+1));
 			}
 			break;
-		case 4: // Z¤Á­±
+		case 4: // Zåˆ‡é¢
 		case 5:
 			{
 				if (index==4)
@@ -330,7 +330,7 @@ void MathCube::RenderChip( const AXIS index, int persent)
 		double ZL = m_SJCScalarField3d->MaxZ() + m_SJCScalarField3d->DZ();
 		switch (index)
 		{
-		case USE_X: // X¤Á­±
+		case USE_X: // Xåˆ‡é¢
 			{
 				double move = XL*persent/1000;
 				int w = m_SJCScalarField3d->NumZ();
@@ -355,7 +355,7 @@ void MathCube::RenderChip( const AXIS index, int persent)
 				m_chipFmesh[0].ConvertGetData(&(m_chipdata[0][0]), (w+1)*(h+1));
 			}
 			break;
-		case USE_Y: // Y¤Á­±
+		case USE_Y: // Yåˆ‡é¢
 			{
 				double move = YL*persent/1000.0;
 				int w = m_SJCScalarField3d->NumZ();
@@ -380,7 +380,7 @@ void MathCube::RenderChip( const AXIS index, int persent)
 				m_chipFmesh[1].ConvertGetData(&(m_chipdata[1][0]), (w+1)*(h+1));
 			}
 			break;
-		case USE_Z: // Z¤Á­±
+		case USE_Z: // Zåˆ‡é¢
 			{
 				double move = ZL*persent/1000.0;
 				int w = m_SJCScalarField3d->NumX();
@@ -447,7 +447,7 @@ void MathCube::RenderAxis()
 	GLubyte draw_list;
 	draw_list = glGenLists(1);
 	glNewList(draw_list, GL_COMPILE);
-	{//µe¶êÀ@
+	{//ç•«åœ“éŒ
 		gluQuadricDrawStyle(quadObj1,GLU_FILL);
 		gluQuadricNormals(quadObj1,GL_FLAT);
 		gluQuadricOrientation(quadObj1,GLU_OUTSIDE);
@@ -482,7 +482,7 @@ void MathCube::RenderAxis()
 	glPopMatrix();
 	draw_list = glGenLists(1);
 	glNewList(draw_list, GL_COMPILE);
-	{//µe¶ê¬W
+	{//ç•«åœ“æŸ±
 		gluQuadricDrawStyle(quadObj3,GLU_FILL);
 		gluQuadricNormals(quadObj3,GL_FLAT);
 		gluQuadricOrientation(quadObj3,GLU_OUTSIDE);
@@ -548,27 +548,27 @@ void MathCube::SetDistance( float dis )
 
 void MathCube::Resize( int width, int height )
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(45.0f, aspect, 0.1f, 10000.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
 void MathCube::RenderStart()
 {
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glEnable(GL_TEXTURE_2D);
-	// ³]©w­nÅÜ§óGL_MODELVIEW¯x°}
+	// è¨­å®šè¦è®Šæ›´GL_MODELVIEWçŸ©é™£
 	glMatrixMode(GL_MODELVIEW);
-	// ³]©wÂà´«¯x°}
+	// è¨­å®šè½‰æ›çŸ©é™£
 
 	Matrix4x4 world_view_matrix = m_ObjectMatrix * m_ViewMatrix;
 	glLoadMatrixf( (float *) &world_view_matrix);

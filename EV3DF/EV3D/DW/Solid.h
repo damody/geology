@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "SJCVector3.h"
 #include "SJCScalarField3.h"
 #include "ColorTable.h"
@@ -35,8 +35,13 @@
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkProperty.h>
+#include <vtkActor.h>
+#include "SEffect.h"
 
 // use vtk to implement function like mathcube
+/**
+資料單元
+*/
 
 class Solid
 {
@@ -49,6 +54,7 @@ public:
 	void SetHwnd(HWND hwnd);
 	// set data to mathcube
 	void SetData(SJCScalarField3d* sf3d);
+	void AddEffect();
 	void SetIsoSurface(double isolevel, bool show = true);
 	void SetSlice(AXIS axes, double percent);
 	void EnableSlice(AXIS axes);

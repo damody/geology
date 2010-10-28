@@ -6,13 +6,13 @@
 
 //============================================================================
 //
-// «G°a, ©Ò¥H§Ú­Ìªºdata file¤¤À³¸Ó­n¯à©w¸q¤U­±´X­Ó­È
+// äº®è»’, æ‰€ä»¥æˆ‘å€‘çš„data fileä¸­æ‡‰è©²è¦èƒ½å®šç¾©ä¸‹é¢å¹¾å€‹å€¼
 // 1. Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ
-// 2. Nx = (Xmax - Xmin) / deltaX : x ¶b¤W cut´X¦¸
+// 2. Nx = (Xmax - Xmin) / deltaX : x è»¸ä¸Š cutå¹¾æ¬¡
 //
 //============================================================================
 
-// ¤G­Ódoubleªº­È¬O§_¬Ûµ¥ => Remove this when you go through the code,
+// äºŒå€‹doubleçš„å€¼æ˜¯å¦ç›¸ç­‰ => Remove this when you go through the code,
 //****************************************************************************
 //
 // * Two double are the same if their difference is smaller then a
@@ -27,7 +27,7 @@ inline bool IsEqual(double x1, double x2, double sigma)
 		return false;
 }
 
-// §ä¥X³o²Õ¼Æ¦r¤¤ªºdelta­È¸òÁ`¦@¤Á´X¶ô
+// æ‰¾å‡ºé€™çµ„æ•¸å­—ä¸­çš„deltaå€¼è·Ÿç¸½å…±åˆ‡å¹¾å¡Š
 //****************************************************************************
 //
 // * Find how many cuts in this set of numbers and also the delta and also find

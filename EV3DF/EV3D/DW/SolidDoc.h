@@ -1,5 +1,7 @@
 #pragma once
-
+/**
+資料單元
+*/
 class SolidDoc
 {
 public:

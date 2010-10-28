@@ -41,11 +41,11 @@ void FlaneMesh::DrawFace() {
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_COLOR_ARRAY);
 		glDisableClientState(GL_NORMAL_ARRAY);
-		// `³]©wGPU­n¥h­şÅª¨ú³»ÂI®y¼Ğ¸ê®Æ`
+		// `è¨­å®šGPUè¦å»å“ªè®€å–é ‚é»åº§æ¨™è³‡æ–™`
 		glVertexPointer(3, GL_FLOAT, sizeof(float)*3, &m_pVertexData[0]);
-		// `³]©wGPU­n¥h­şÅª¨ú³»ÂIÃC¦â¸ê®Æ`
+		// `è¨­å®šGPUè¦å»å“ªè®€å–é ‚é»é¡è‰²è³‡æ–™`
 		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Color4), &m_pColor[0]);
-		// `µe¥X¦aªO`
+		// `ç•«å‡ºåœ°æ¿`
 		glDrawElements (GL_TRIANGLE_STRIP, m_num_indices, GL_UNSIGNED_INT, &m_psIndices[0]);
 		break;
 	case USE_TEXTURE:
@@ -58,7 +58,7 @@ void FlaneMesh::SetDrawMethod(int enumx)
 	m_DrawType = enumx;
 }
 
-// `²£¥Íx_grids * y_grids­Ó®æ¤lªº´Ñ½L®æ¼Ò«¬`
+// `ç”¢ç”Ÿx_grids * y_gridså€‹æ ¼å­çš„æ£‹ç›¤æ ¼æ¨¡å‹`
 bool FlaneMesh::GenerateGrids(int x_grids, int y_grids, Vector4& source, Vector4& w_length, Vector4& h_length)
 {
 	static int last_num_vertices = INT_MAX;
@@ -84,7 +84,7 @@ bool FlaneMesh::GenerateGrids(int x_grids, int y_grids, Vector4& source, Vector4
 	m_num_indices = indices_per_row * y_grids;
 	m_psIndices.resize(m_num_indices);
 	last_num_indices = m_num_indices;
-	//` ¨Ï¥Îtriangle strip®É, ¤T¨¤§Î¼Æ¥Ø¥Ã»·µ¥©ó¯Á¤Ş­È¼Æ¥Ø´î¥h2`
+	//` ä½¿ç”¨triangle stripæ™‚, ä¸‰è§’å½¢æ•¸ç›®æ°¸é ç­‰æ–¼ç´¢å¼•å€¼æ•¸ç›®æ¸›å»2`
 	m_num_triangles = m_num_indices-2;
 	Vector4 tmp = source;
 
@@ -108,7 +108,7 @@ bool FlaneMesh::GenerateGrids(int x_grids, int y_grids, Vector4& source, Vector4
 	{
 		if ( from_left_to_right )
 		{
-			// `¦b©_¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥ª±Æ¨ì¥k.`
+			// `åœ¨å¥‡æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å·¦æ’åˆ°å³.`
 			m_psIndices[index_index++] = unsigned int(y * vertices_per_row);
 			m_psIndices[index_index++] = unsigned int(y * vertices_per_row + vertices_per_row);
 
@@ -121,7 +121,7 @@ bool FlaneMesh::GenerateGrids(int x_grids, int y_grids, Vector4& source, Vector4
 		}
 		else
 		{
-			// `¦b°¸¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥k±Æ¨ì¥ª.`
+			// `åœ¨å¶æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å³æ’åˆ°å·¦.`
 			m_psIndices[index_index++] = unsigned int(y * vertices_per_row + x_grids);
 			m_psIndices[index_index++] = unsigned int((y+1) * vertices_per_row + x_grids);
 

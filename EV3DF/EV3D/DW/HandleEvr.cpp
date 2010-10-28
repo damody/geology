@@ -7,7 +7,7 @@
 #include <algorithm>
 
 
-// directoryPath¬°lua¸ô®| luaÀÉ®×¦³evr¸ô®|
+// directoryPathç‚ºluaè·¯å¾‘ luaæª”æ¡ˆæœ‰evrè·¯å¾‘
 
 int HandleEvr::InitLoad(const std::wstring& directoryPath)
 {
@@ -65,7 +65,7 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 		fIn.seekg(0,ios_base::beg);
 
 		if (m_totalSize != ulSize)
-			MessageBox(NULL, L"m_totalSize != ulSize", L"ª`·N", MB_OK|MB_ICONASTERISK);
+			MessageBox(NULL, L"m_totalSize != ulSize", L"æ³¨æ„", MB_OK|MB_ICONASTERISK);
 		// Allocate some space
 		// Check and clear pDat, just in case
 		m_pData.resize(ulSize);
