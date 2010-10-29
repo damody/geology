@@ -1,4 +1,4 @@
-#ifndef LINEQN_H
+﻿#ifndef LINEQN_H
 #define LINEQN_H
 /*
 Szymon Rusinkiewicz

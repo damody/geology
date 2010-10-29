@@ -1,4 +1,4 @@
-#ifndef _VECTOR4_
+﻿#ifndef _VECTOR4_
 #define _VECTOR4_
 #define _GENERAL_CPU_
 // GENERAL CPU Version, reference code.

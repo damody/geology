@@ -1,4 +1,4 @@
-#ifndef __MARCH_CUBE_H__
+﻿#ifndef __MARCH_CUBE_H__
 #define __MARCH_CUBE_H__
 
 #include <functional>

@@ -1,4 +1,4 @@
-#ifndef _FASTMATH_WIN32_
+﻿#ifndef _FASTMATH_WIN32_
 #define _FASTMATH_WIN32_
 #pragma warning( push,0 )
 #pragma warning( disable:4725)

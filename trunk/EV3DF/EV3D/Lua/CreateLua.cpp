@@ -1,4 +1,4 @@
-#include "CreateLua.h"
+﻿#include "CreateLua.h"
 
 void CreateLua::AddInt( std::string name, int num )
 {

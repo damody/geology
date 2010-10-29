@@ -1,4 +1,4 @@
-#ifndef GLCAMERA_H
+﻿#ifndef GLCAMERA_H
 #define GLCAMERA_H
 /*
 Szymon Rusinkiewicz

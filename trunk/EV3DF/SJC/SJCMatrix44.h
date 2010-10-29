@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** $Header: /p/graphics/CVS/yu-chi/SJCMatrix44.h,v 1.1.1.1 2006/04/25 20:21:43 yu-chi Exp $
 **
 ** (c) 2002 - 2005 Stephen Chenney

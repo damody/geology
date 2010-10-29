@@ -1,4 +1,4 @@
-
+﻿
 #include "HandleEvr.h"
 #include <iostream>
 #include <iomanip>
@@ -7,7 +7,7 @@
 #include <algorithm>
 
 
-// directoryPath為lua路徑 lua檔案有evr路徑
+// directoryPath?槌ua頝臬? lua瑼??vr頝臬?
 
 int HandleEvr::InitLoad(const std::wstring& directoryPath)
 {
@@ -65,7 +65,7 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 		fIn.seekg(0,ios_base::beg);
 
 		if (m_totalSize != ulSize)
-			MessageBox(NULL, L"m_totalSize != ulSize", L"注意", MB_OK|MB_ICONASTERISK);
+			MessageBox(NULL, L"m_totalSize != ulSize", L"瘜冽?", MB_OK|MB_ICONASTERISK);
 		// Allocate some space
 		// Check and clear pDat, just in case
 		m_pData.resize(ulSize);

@@ -1,4 +1,4 @@
-#include "SJCJointTransform.h"
+﻿#include "SJCJointTransform.h"
 
 /********** SJCJointTransform Constructor(s)/Deconstructor(s) **********/
 // Also see inlined methods in header

@@ -1,4 +1,4 @@
-
+﻿
 #include "FindSpan.h"
 #include <vector>
 #include <cmath>
@@ -6,13 +6,13 @@
 
 //============================================================================
 //
-// 亮軒, 所以我們的data file中應該要能定義下面幾個值
+// 鈭株?, ?隞交???data file銝剜?閰脰??賢?蝢拐??Ｗ嗾??
 // 1. Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ
-// 2. Nx = (Xmax - Xmin) / deltaX : x 軸上 cut幾次
+// 2. Nx = (Xmax - Xmin) / deltaX : x 頠訾? cut撟暹活
 //
 //============================================================================
 
-// 二個double的值是否相等 => Remove this when you go through the code,
+// 鈭ouble?潭?衣蝑?=> Remove this when you go through the code,
 //****************************************************************************
 //
 // * Two double are the same if their difference is smaller then a
@@ -27,7 +27,7 @@ inline bool IsEqual(double x1, double x2, double sigma)
 		return false;
 }
 
-// 找出這組數字中的delta值跟總共切幾塊
+// ?曉???詨?銝剔?delta?潸?蝮賢?嗾憛?
 //****************************************************************************
 //
 // * Find how many cuts in this set of numbers and also the delta and also find

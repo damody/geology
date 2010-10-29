@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////
+ï»¿/////////////////////////////////////////////////////////////////////////////
 // Name:        mygrid.cpp
 // Purpose:     
 // Author:      damody
@@ -178,8 +178,8 @@ void MyGrid::ConvertTo_BoundingBox()
 	ReCreateGrid(1,1);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
-	SetRowLabelValue(i++, wxT("Color"));		// ®ØªºÃC¦â
-	SetRowLabelValue(i++, wxT("ThickDegree"));	// ®Øªº²Ê²Ó
+	SetRowLabelValue(i++, wxT("Color"));		// æ¡†çš„é¡è‰²
+	SetRowLabelValue(i++, wxT("ThickDegree"));	// æ¡†çš„ç²—ç´°
 }
 
 void MyGrid::ConvertTo_Vertex()
@@ -187,9 +187,9 @@ void MyGrid::ConvertTo_Vertex()
 	ReCreateGrid(1,3);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
-	SetRowLabelValue(i++, wxT("MaxValue"));		// ¤j©ó³o­Ó­È¤~Åã¥Ü
-	SetRowLabelValue(i++, wxT("MinValue"));		// ¤p©ó³o­Ó­È¤~Åã¥Ü
-	SetRowLabelValue(i++, wxT("Size"));		// ÂIªºÅã¥Ü¤j¤p
+	SetRowLabelValue(i++, wxT("MaxValue"));		// å¤§æ–¼é€™å€‹å€¼æ‰é¡¯ç¤º
+	SetRowLabelValue(i++, wxT("MinValue"));		// å°æ–¼é€™å€‹å€¼æ‰é¡¯ç¤º
+	SetRowLabelValue(i++, wxT("Size"));		// é»çš„é¡¯ç¤ºå¤§å°
 }
 
 void MyGrid::ConvertTo_IsosurfaceContour()
@@ -197,8 +197,8 @@ void MyGrid::ConvertTo_IsosurfaceContour()
 	ReCreateGrid(1,2);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
-	SetRowLabelValue(i++, wxT("ContourValue"));	// ­n°µ¥X¤Á­±ªº­È
-	SetRowLabelValue(i++, wxT("Alpha"));		// ¤Á­±³z©ú«×ªº­È
+	SetRowLabelValue(i++, wxT("ContourValue"));	// è¦åšå‡ºåˆ‡é¢çš„å€¼
+	SetRowLabelValue(i++, wxT("Alpha"));		// åˆ‡é¢é€æ˜åº¦çš„å€¼
 }
 
 void MyGrid::ConvertTo_Axes()
@@ -206,10 +206,10 @@ void MyGrid::ConvertTo_Axes()
 	ReCreateGrid(1,4);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
-	SetRowLabelValue(i++, wxT("ThickDegree"));	// ¶b¦Vªº²Ê²Ó
-	SetRowLabelValue(i++, wxT("XColor"));		// X¶b¦VªºÃC¦â
-	SetRowLabelValue(i++, wxT("YColor"));		// Z¶b¦VªºÃC¦â
-	SetRowLabelValue(i++, wxT("ZColor"));		// Z¶b¦VªºÃC¦â
+	SetRowLabelValue(i++, wxT("ThickDegree"));	// è»¸å‘çš„ç²—ç´°
+	SetRowLabelValue(i++, wxT("XColor"));		// Xè»¸å‘çš„é¡è‰²
+	SetRowLabelValue(i++, wxT("YColor"));		// Zè»¸å‘çš„é¡è‰²
+	SetRowLabelValue(i++, wxT("ZColor"));		// Zè»¸å‘çš„é¡è‰²
 }
 
 void MyGrid::ConvertTo_Ruler()
@@ -217,13 +217,13 @@ void MyGrid::ConvertTo_Ruler()
 	ReCreateGrid(1,7);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
-	SetRowLabelValue(i++, wxT("Target"));		// ¶q¤Øªº¹ï¶H
-	SetRowLabelValue(i++, wxT("TargetAxes"));	// ¶q¤Øªº¶b¦V
-	SetRowLabelValue(i++, wxT("StartPoint"));	// °_©lÂI¡A½Õ¾ã«á¹ï¶H»P¶b¦V¿ï¶µ¥¢®Ä
-	SetRowLabelValue(i++, wxT("EndPoint"));		// µ²§ôÂI¡A½Õ¾ã«á¹ï¶H»P¶b¦V¿ï¶µ¥¢®Ä
-	SetRowLabelValue(i++, wxT("Scalar"));		// ¶q¤Øªº¬ğ¥Xµ{«×
-	SetRowLabelValue(i++, wxT("ThickDegree"));	// ¶q¤Øªº²Ê²Ó
-	SetRowLabelValue(i++, wxT("Color"));		// ¶q¤ØªºÃC¦â
+	SetRowLabelValue(i++, wxT("Target"));		// é‡å°ºçš„å°è±¡
+	SetRowLabelValue(i++, wxT("TargetAxes"));	// é‡å°ºçš„è»¸å‘
+	SetRowLabelValue(i++, wxT("StartPoint"));	// èµ·å§‹é»ï¼Œèª¿æ•´å¾Œå°è±¡èˆ‡è»¸å‘é¸é …å¤±æ•ˆ
+	SetRowLabelValue(i++, wxT("EndPoint"));		// çµæŸé»ï¼Œèª¿æ•´å¾Œå°è±¡èˆ‡è»¸å‘é¸é …å¤±æ•ˆ
+	SetRowLabelValue(i++, wxT("Scalar"));		// é‡å°ºçš„çªå‡ºç¨‹åº¦
+	SetRowLabelValue(i++, wxT("ThickDegree"));	// é‡å°ºçš„ç²—ç´°
+	SetRowLabelValue(i++, wxT("Color"));		// é‡å°ºçš„é¡è‰²
 }
 
 void MyGrid::ConvertTo_PlaneChip()

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <iomanip>
 #include <vector>
 #include <cstring>

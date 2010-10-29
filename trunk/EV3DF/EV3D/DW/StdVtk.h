@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <vtkSmartPointer.h>
 #include <vtkXMLPolyDataReader.h>

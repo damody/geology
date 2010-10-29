@@ -1,4 +1,4 @@
-#ifndef BSPHERE_H
+﻿#ifndef BSPHERE_H
 #define BSPHERE_H
 /*
 Szymon Rusinkiewicz

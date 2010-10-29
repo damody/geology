@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 /**
-資料單元
+鞈??桀?
 */
 class SolidDoc
 {

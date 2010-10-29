@@ -1,4 +1,4 @@
-#include "ConvertToEvr.h"
+﻿#include "ConvertToEvr.h"
 #include <memory>
 #include <wx\msgdlg.h>
 #include <limits>
@@ -39,7 +39,7 @@ int ConvertToEvr::Load_Dat( std::wstring Path )
 		split >> linedata;
 		i++;
 	}
-	// i = item's amount 算出有幾種屬性
+	// i = item's amount 蝞?嗾蝔桀惇??
 	const int amount = i;
 	m_format_count = amount;
 	m_CreateLua.clear();
@@ -52,9 +52,9 @@ int ConvertToEvr::Load_Dat( std::wstring Path )
 	}
 	m_CreateLua.AddRawString("format_name", "{" + formatstring + "}");
 	m_CreateLua.AddInt("format_count", amount-3);
-	 // 算出每一組資料的大小
+	 // 蝞瘥?蝯???憭批?
 	m_dataSize = sizeof(double) * amount;
-	// 讀出檔案
+	// 霈?箸?獢?
 	std::ifstream loader;
 	loader.open(Path.c_str());
 	double tdata;
@@ -68,25 +68,25 @@ int ConvertToEvr::Load_Dat( std::wstring Path )
 	m_total = m_dataVector.size()/amount;
 	m_totalSize = m_dataVector.size() * sizeof(double);
 	m_CreateLua.AddInt("total",m_total);
-	// 儲存指標
+	// ?脣???
 	m_pData = (unsigned char*)&(*m_dataVector.begin());
-	// 儲存大小改變
+	// ?脣?憭批??寡?
 	m_Datamin.resize(amount-3);
 	m_Datamax.resize(amount-3);
 	for (int j = 0;j < amount-3;j++)
 	{
 		FindDeltaAndSpan(&(*(m_dataVector.begin()+j+3)),
 			m_dataVector.size()-1, amount, 0.01, m_Datamin[j], m_Datamax[j], deltaZ, Zspan);
-		// deltaZ, Zspan 是無意義的
+		// deltaZ, Zspan ?舐?儔??
 	}
-	// 計算xyz的最大最小跟間距
+	// 閮?xyz??憭扳?撠???
 	FindDeltaAndSpan(&(*m_dataVector.begin()),
 		m_dataVector.size()-1, amount, 0.01, Xmin, Xmax, deltaX, Xspan);
 	FindDeltaAndSpan(&(*(m_dataVector.begin()+1)),
 		m_dataVector.size()-1, amount, 0.01, Ymin, Ymax, deltaY, Yspan);
 	FindDeltaAndSpan(&(*(m_dataVector.begin()+2)),
 		m_dataVector.size()-1, amount, 0.01, Zmin, Zmax, deltaZ, Zspan);
-	// 讀入資料的最大最小值
+	// 霈?亥????憭扳?撠?
 	for (int j = 0;j < amount-3;j++)
 	{
 		m_CreateLua.AddDouble("Datamin" + ConvStr::GetStr(j), m_Datamin[j]);

@@ -1,4 +1,4 @@
-#ifdef WIN32
+﻿#ifdef WIN32
 // 4996 is warning for the  sprintf, 4244 is conversion from double to float
 // 4305 is truncation from double to float
 #	pragma warning (disable: 4267 4251 4065 4102 4996)

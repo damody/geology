@@ -1,11 +1,11 @@
-#pragma once
+﻿#pragma once
 #include <vtkActor.h>
 #include <vtkLookupTable.h>
 #include <vtkPolyDataMapper.h>
 #include <vtkSmartPointer.h>
 #include <vtkRenderer.h>
 /**
-��ܳ椸
+顯示單元
 */
 class SolidView
 {

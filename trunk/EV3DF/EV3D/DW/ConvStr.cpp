@@ -1,4 +1,4 @@
-#include "ConvStr.h"
+﻿#include "ConvStr.h"
 #include <windows.h>
 #pragma warning(disable : 4996) // use sprintf
 

@@ -1,6 +1,6 @@
-#pragma once
+﻿#pragma once
 /**
-控制單元
+?批?桀?
 */
 
 class SolidCtrl

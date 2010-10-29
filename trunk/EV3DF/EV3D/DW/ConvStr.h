@@ -1,4 +1,4 @@
-#ifndef _ConvertStr_H_
+﻿#ifndef _ConvertStr_H_
 #define _ConvertStr_H_
 #include <vector>
 #include <cstring>

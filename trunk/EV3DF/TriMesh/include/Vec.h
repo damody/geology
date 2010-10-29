@@ -1,4 +1,4 @@
-#ifndef VEC_H
+﻿#ifndef VEC_H
 #define VEC_H
 /*
 Szymon Rusinkiewicz

@@ -1,4 +1,4 @@
-#ifndef _MATRIX4x4_GENERAL_
+﻿#ifndef _MATRIX4x4_GENERAL_
 #define _MATRIX4x4_GENERAL_
 #pragma warning( push,0 )
 #if !defined(_ENABLE_GENERALCPU_)

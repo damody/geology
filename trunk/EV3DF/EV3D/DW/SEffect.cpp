@@ -1,4 +1,4 @@
-#include "SEffect.h"
+﻿#include "SEffect.h"
 
 SEffect::SEffect(void)
 {

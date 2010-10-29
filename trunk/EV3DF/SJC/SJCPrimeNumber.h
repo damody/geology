@@ -1,4 +1,4 @@
-#ifndef __SJC_PRIME_NUMBERS_H__
+﻿#ifndef __SJC_PRIME_NUMBERS_H__
 #define __SJC_PRIME_NUBMERS_H__
 
 const uint g_uSJCNumPrimes = 9552;
