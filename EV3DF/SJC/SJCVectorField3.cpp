@@ -1,4 +1,4 @@
-/************************************************************************
+ï»¿/************************************************************************
 Main File:
 
 File:        SJCVectorField3.cpp
@@ -26,7 +26,7 @@ Functions:
 //
 // * Contructor to set up all value
 // * step on use for increasing not 1
-// * step ¥Î¦b«D1»¼¼Wªº¦ì²¾¤¤¡A¤@¦¸¸õ¤@­Ódoubleªº¤j¤p
+// * step ç”¨åœ¨é1éå¢çš„ä½ç§»ä¸­ï¼Œä¸€æ¬¡è·³ä¸€å€‹doubleçš„å¤§å°
 //============================================================================
 SJCVectorField3d::
 SJCVectorField3d(const uint nx,        const uint ny,       const uint nz,

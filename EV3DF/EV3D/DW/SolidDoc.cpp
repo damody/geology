@@ -1,4 +1,4 @@
-#include "SolidDoc.h"
+﻿#include "SolidDoc.h"
 
 SolidDoc::SolidDoc(void)
 {

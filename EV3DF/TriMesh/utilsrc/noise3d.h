@@ -1,4 +1,4 @@
-#ifndef NOISE3D_H
+﻿#ifndef NOISE3D_H
 #define NOISE3D_H
 /*
 Szymon Rusinkiewicz

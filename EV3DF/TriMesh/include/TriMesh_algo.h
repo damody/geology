@@ -1,4 +1,4 @@
-#ifndef TRIMESH_ALGO_H
+﻿#ifndef TRIMESH_ALGO_H
 #define TRIMESH_ALGO_H
 /*
 Szymon Rusinkiewicz

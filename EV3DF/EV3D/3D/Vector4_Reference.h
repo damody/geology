@@ -1,4 +1,4 @@
-#ifndef _VECTOR4_GENERAL_
+ï»¿#ifndef _VECTOR4_GENERAL_
 #define _VECTOR4_GENERAL_
 #pragma warning( push,0 )
 #if !defined(_ENABLE_GENERALCPU_)
@@ -699,7 +699,7 @@ inline Vector4CPU MirrorPoint(Vector4CPU &point, Vector4CPU &plane)
 	return mirrored_point;
 }
 
-// ­pºâVector¹ïplane¥­­±Ãè®g«áªº3D¤è¦V
+// è¨ˆç®—Vectorå°planeå¹³é¢é¡å°„å¾Œçš„3Dæ–¹å‘
 inline Vector4CPU MirrorVector(Vector4CPU &Vector, Vector4CPU &plane)
 {
 	Vector4CPU mirrored_a, mirrored_b, mirrored_Vector;

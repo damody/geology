@@ -1,4 +1,4 @@
-#ifndef TIMESTAMP_H
+﻿#ifndef TIMESTAMP_H
 #define TIMESTAMP_H
 /*
 Szymon Rusinkiewicz

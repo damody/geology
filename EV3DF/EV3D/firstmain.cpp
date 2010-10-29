@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////
+ï»¿/////////////////////////////////////////////////////////////////////////////
 // Name:        firstmain.cpp
 // Purpose:     
 // Author:      damody
@@ -838,7 +838,7 @@ void FirstMain::OpenFile()
 			m_psjcF3d = m_hEvr->m_SJCSF3dMap[3].second;
 			m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 			m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
-			m_Solid.SetData(m_psjcF3d); // ³]©w²Ä¤@¶¶¦ìªº¸ê®Æ¨ÓÅã¥Ü
+			m_Solid.SetData(m_psjcF3d); // è¨­å®šç¬¬ä¸€é †ä½çš„è³‡æ–™ä¾†é¡¯ç¤º
 			m_Solid.SetIsoSurface(m_PreciseSpin->GetValue());
 			m_XminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
 			m_XmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmax).c_str()));
@@ -1083,7 +1083,7 @@ void FirstMain::OnSlider2Updated( wxCommandEvent& event )
 //text_chipX
 void FirstMain::OnTextChipXTextUpdated( wxCommandEvent& event )
 {
-	if (!m_init) return; // ½T©w¦³ªì©l¤Æ¤F¤~°õ¦æ
+	if (!m_init) return; // ç¢ºå®šæœ‰åˆå§‹åŒ–äº†æ‰åŸ·è¡Œ
 	long n;
 	m_text_chipX->GetValue().ToLong(&n);
 	if (n<0) n = 0;
@@ -1101,7 +1101,7 @@ void FirstMain::OnTextChipXTextUpdated( wxCommandEvent& event )
 //text_chipY
 void FirstMain::OnTextChipYTextUpdated( wxCommandEvent& event )
 {
-	if (!m_init) return; // ½T©w¦³ªì©l¤Æ¤F¤~°õ¦æ
+	if (!m_init) return; // ç¢ºå®šæœ‰åˆå§‹åŒ–äº†æ‰åŸ·è¡Œ
 	long n;
 	m_text_chipY->GetValue().ToLong(&n);
 	if (n<0) n = 0;
@@ -1119,7 +1119,7 @@ void FirstMain::OnTextChipYTextUpdated( wxCommandEvent& event )
 //text_chipZ
 void FirstMain::OnTextChipZTextUpdated( wxCommandEvent& event )
 {
-	if (!m_init) return; // ½T©w¦³ªì©l¤Æ¤F¤~°õ¦æ
+	if (!m_init) return; // ç¢ºå®šæœ‰åˆå§‹åŒ–äº†æ‰åŸ·è¡Œ
 	long n;
 	m_text_chipZ->GetValue().ToLong(&n);
 	if (n<0) n = 0;
@@ -1177,7 +1177,7 @@ void FirstMain::ShowColorTable(ColorTable* ict)
 void FirstMain::InsertColor( int i, double val, wxColour& iwc )
 {
 	wxString buf;
-	buf.Printf(_T("¡´%f"), val);
+	buf.Printf(_T("â—%f"), val);
 	long tmp = m_ColorList->InsertItem(i, buf, 0);
 	m_ColorList->SetItemData(tmp, i);
 

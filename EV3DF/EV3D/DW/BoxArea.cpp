@@ -1,4 +1,4 @@
-#include "BoxArea.h"
+﻿#include "BoxArea.h"
 
 BoxArea::BoxArea(void)
 {

@@ -1,4 +1,4 @@
-/*
+﻿/*
 ** $Header: /p/graphics/CVS/yu-chi/SJC/SJCCubicPolynomial.h,v 1.1.1.1 2006/04/25 20:21:50 yu-chi Exp $
 **
 ** (c) 2003-2005 Stephen Chenney

@@ -1,4 +1,4 @@
-#ifndef _GUT_H_
+ï»¿#ifndef _GUT_H_
 #define _GUT_H_
 
 #include "Matrix4x4.h"
@@ -26,9 +26,9 @@ Matrix4x4 GutMatrixLookAtLH(Vector4 &eye, Vector4 &lookat, Vector4 &up)
 }
 
 // right hand coord system
-// eye = `ÃèÀY¦ì¸m`
-// lookat = `ÃèÀY¹ï·Çªº¦ì¸m`
-// up = `ÃèÀY¥¿¤W¤èªº¤è¦V`
+// eye = `é¡é ­ä½ç½®`
+// lookat = `é¡é ­å°æº–çš„ä½ç½®`
+// up = `é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘`
 Matrix4x4 GutMatrixLookAtRH(Vector4 &eye, Vector4 &lookat, Vector4 &up)
 {
 	Vector4 up_normalized = VectorNormalize(up);
@@ -50,10 +50,10 @@ Matrix4x4 GutMatrixLookAtRH(Vector4 &eye, Vector4 &lookat, Vector4 &up)
 }
 
 // Direct3D native left hand system
-// fovy = ««ª½¤è¦Vªºµø¨¤
-// aspect = ¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È
-// z_hear = ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷
-// z_far = ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷
+// fovy = å‚ç›´æ–¹å‘çš„è¦–è§’
+// aspect = æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼
+// z_hear = é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢
+// z_far = é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢
 Matrix4x4 GutMatrixPerspective_DirectX(float fovy, float aspect, float z_near, float z_far)
 {
 	Matrix4x4 matrix;
@@ -73,10 +73,10 @@ Matrix4x4 GutMatrixPerspective_DirectX(float fovy, float aspect, float z_near, f
 	return matrix;
 }
 
-// w = `ÃèÀY¤ô¥­¤è¦V¥i¥H¬İ¨ìªº½d³ò`
-// h = `ÃèÀY««ª½¤è¦V¥i¥H¬İ¨ìªº½d³ò`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far  = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// w = `é¡é ­æ°´å¹³æ–¹å‘å¯ä»¥çœ‹åˆ°çš„ç¯„åœ`
+// h = `é¡é ­å‚ç›´æ–¹å‘å¯ä»¥çœ‹åˆ°çš„ç¯„åœ`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far  = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixOrthoRH_DirectX(float w, float h, float z_near, float z_far)
 {
 	Matrix4x4 matrix;
@@ -90,10 +90,10 @@ Matrix4x4 GutMatrixOrthoRH_DirectX(float w, float h, float z_near, float z_far)
 	return matrix;
 }
 
-// fovy = ««ª½¤è¦Vªºµø¨¤
-// aspect = `¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// fovy = å‚ç›´æ–¹å‘çš„è¦–è§’
+// aspect = `æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixPerspectiveRH_DirectX(float fovy, float aspect, 
 					 float z_near, float z_far)
 {
@@ -115,10 +115,10 @@ Matrix4x4 GutMatrixPerspectiveRH_DirectX(float fovy, float aspect,
 }
 
 // OpenGL native right hand system
-// fovy = `««ª½¤è¦Vªºµø¨¤`
-// aspect = `¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// fovy = `å‚ç›´æ–¹å‘çš„è¦–è§’`
+// aspect = `æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixOrthoRH_OpenGL(float w, float h, float z_near, float z_far)
 {
 	Matrix4x4 matrix;
@@ -139,10 +139,10 @@ Matrix4x4 GutMatrixOrtho_OpenGL(float w, float h, float z_near, float z_far)
 }
 
 // OpenGL native right hand system
-// fovy = `««ª½¤è¦Vªºµø¨¤`
-// aspect = `¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// fovy = `å‚ç›´æ–¹å‘çš„è¦–è§’`
+// aspect = `æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixPerspectiveRH_OpenGL(float fovy, float aspect, 
 					float z_near, float z_far)
 {

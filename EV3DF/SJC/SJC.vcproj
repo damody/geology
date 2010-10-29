@@ -22,7 +22,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="../Debug"
-			IntermediateDirectory="../objs"
+			IntermediateDirectory="../Debug"
 			ConfigurationType="4"
 			CharacterSet="1"
 			>

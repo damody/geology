@@ -1,4 +1,4 @@
-#ifndef ICP_H
+﻿#ifndef ICP_H
 #define ICP_H
 /*
 Szymon Rusinkiewicz

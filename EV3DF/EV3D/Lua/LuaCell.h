@@ -1,5 +1,5 @@
-/*
-Copyright (C) 2009  ¹CÀ¸¤Ñ«G¬É
+ï»¿/*
+Copyright (C) 2009  éŠæˆ²å¤©äº®ç•Œ
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as published by
@@ -15,8 +15,8 @@ You should have received a copy of the GNU Lesser General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 /*
-¨Ï¥Î¤Fvoid*»Ptemplate°µ¤F¦P¼Ëªº¥\¯à
-¹ïlua°µªº¥]¸Ë¡A¥Îªk¤j­P¦p¤U
+ä½¿ç”¨äº†void*èˆ‡templateåšäº†åŒæ¨£çš„åŠŸèƒ½
+å°luaåšçš„åŒ…è£ï¼Œç”¨æ³•å¤§è‡´å¦‚ä¸‹
 const char* a = cell.getLua_String_UsePath("table2\\table23\\table2\\1");
 cell.setLua_Int_UsePath("table2\\table23\\table2\\1",100);
 cell.setLua_String("sssi","20","table2","table23","table2",1);
@@ -82,7 +82,7 @@ private:
 	lua_State* m_LuaState;
 	static char buffer[10];
 };
-//­n¹w¥ı«Å§i°¾¯S¤Æ¤~¤£·|³sµ²¿ù»~
+//è¦é å…ˆå®£å‘Šåç‰¹åŒ–æ‰ä¸æœƒé€£çµéŒ¯èª¤
 template int LuaCell::getLua_UsePath<int>(const char* pathString, ...);
 template double LuaCell::getLua_UsePath<double>(const char* pathString, ...);
 template const char* LuaCell::getLua_UsePath<const char*>(const char* pathString, ...);

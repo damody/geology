@@ -1,4 +1,4 @@
-#ifndef KDTREE_H
+﻿#ifndef KDTREE_H
 #define KDTREE_H
 /*
 Szymon Rusinkiewicz

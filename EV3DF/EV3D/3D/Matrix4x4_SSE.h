@@ -1,4 +1,4 @@
-#ifndef _MATRIX4x4_SSE_
+﻿#ifndef _MATRIX4x4_SSE_
 #define _MATRIX4x4_SSE_
 #pragma warning( push,0 )
 

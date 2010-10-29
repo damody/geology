@@ -1,7 +1,7 @@
-#pragma once
+ο»Ώ#pragma once
 #pragma warning(disable:4201)
 /**
-­­¨ξ­nΕγ¥άªΊ½d³ς¥ΞªΊbox
+ι™ε¶θ¦ι΅―η¤Ίη„η―„εη”¨η„box
 */
 class BoxArea
 {

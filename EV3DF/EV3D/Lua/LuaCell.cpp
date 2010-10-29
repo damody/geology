@@ -1,5 +1,5 @@
-/*
-Copyright (C) 2009  ¹CÀ¸¤Ñ«G¬É
+ï»¿/*
+Copyright (C) 2009  éŠæˆ²å¤©äº®ç•Œ
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the Lesser GNU General Public License as published by
@@ -51,7 +51,7 @@ bool LuaCell::callLua_Function(const char* functionName)
 	}
 	return false;
 }
-//format¡G callLua_Function("GetTime", "fis>ii", 1.0f, 2, "3", *int, *int);
+//formatï¼š callLua_Function("GetTime", "fis>ii", 1.0f, 2, "3", *int, *int);
 bool LuaCell::callLua_Function( const char* functionName, const char* signString, ... )
 {
 	va_list v1;
@@ -127,7 +127,7 @@ bool LuaCell::InputLuaFile(const char* path)
 // 	return result;
 // }
 
-//format¡G getLua_Int("is", 2, "3");
+//formatï¼š getLua_Int("is", 2, "3");
 int LuaCell::getLua_Int( const char* signString, ... )
 {
 	va_list vlist;
@@ -155,7 +155,7 @@ const char* LuaCell::getLua_String( const char* signString, ... )
 	return result;
 }
 
-//±q table1\table2\table3\varableName ³o¼Ëªº¸ô®|¤¤±o¨ì¸ê®Æªº¨ç¼Æ
+//å¾ table1\table2\table3\varableName é€™æ¨£çš„è·¯å¾‘ä¸­å¾—åˆ°è³‡æ–™çš„å‡½æ•¸
 int LuaCell::getLua_Int_UsePath( const char* pathString )
 {
 	int result = *(int*)getLua_Value_UsePath(pathString,BackType(INTEGER));
@@ -490,12 +490,12 @@ template <class T>
 T LuaCell::getLua_UsePath(const char* pathString, ...)
 {
 	int len = strlen(pathString);
-	// ¹w³B²z¸ê®Æ
+	// é è™•ç†è³‡æ–™
 	char *buffer = (char*)malloc(len+1);
 	va_list args;
 	va_start (args, pathString);
 	vsprintf (buffer,pathString, args);
-	// ·Ç³Æ­pºâ
+	// æº–å‚™è¨ˆç®—
 	T result;
 	char path[250] = {0};
 	const char *pos;

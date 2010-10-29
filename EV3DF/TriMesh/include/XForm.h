@@ -1,4 +1,4 @@
-#ifndef XFORM_H
+﻿#ifndef XFORM_H
 #define XFORM_H
 /*
 Szymon Rusinkiewicz

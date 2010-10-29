@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "BoxArea.h"
 #include "Color4.h"
 #include "TShape.hpp"
@@ -6,7 +6,7 @@
 #include "SEffectSet.h"
 #include <string>
 /**
-Àx¦s»P³]©w®ÄªG¥ÎªºÃþ§O
+å„²å­˜èˆ‡è¨­å®šæ•ˆæžœç”¨çš„é¡žåˆ¥
 */
 
 
