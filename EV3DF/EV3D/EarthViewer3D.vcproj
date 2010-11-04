@@ -89,12 +89,12 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386"
-				AdditionalDependencies="wxmsw28u_adv.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxmsw28u_dbgrid.lib wxmsw28u_gl.lib wxmsw28u_html.lib wxmsw28u_media.lib wxmsw28u_qa.lib wxmsw28u_richtext.lib wxmsw28u_xrc.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkFilteringTCL.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib"
+				AdditionalDependencies="wxmsw28u_adv.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxmsw28u_dbgrid.lib wxmsw28u_gl.lib wxmsw28u_html.lib wxmsw28u_media.lib wxmsw28u_qa.lib wxmsw28u_richtext.lib wxmsw28u_xrc.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib"
 				OutputFile="..\runtime\EarthViewer3D.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../lib;E:\clibrary\VTK\bin\Release"
-				IgnoreDefaultLibraryNames=""
+				AdditionalLibraryDirectories="..\lib;E:\clibrary\VTK\Win32\bin\Release"
+				IgnoreDefaultLibraryNames="libcmtd.lib"
 				GenerateDebugInformation="true"
 				AssemblyDebug="0"
 				ProgramDatabaseFile="VCProjectRelease\EarthViewer3D.pdb"
@@ -294,11 +294,11 @@
 				Name="VCLinkerTool"
 				UseLibraryDependencyInputs="false"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386 /DEBUG"
-				AdditionalDependencies="wxmsw28ud_aui.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkFilteringTCL.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib  SJCd.lib"
+				AdditionalDependencies="wxmsw28ud_aui.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJCd.lib"
 				OutputFile="..\runtime\EarthViewer3Dd.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="../lib;E:\clibrary\VTK\bin\Debug"
+				AdditionalLibraryDirectories="../lib;E:\clibrary\VTK\Win32\bin\Debug"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -676,11 +676,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\DW\SEffectSet.cpp"
+				RelativePath=".\DW\SEffectSetting.cpp"
 				>
 			</File>
 			<File
-				RelativePath=".\DW\SEffectSet.h"
+				RelativePath=".\DW\SEffectSetting.h"
 				>
 			</File>
 			<File
@@ -703,18 +703,36 @@
 			<File
 				RelativePath=".\DW\SolidCtrl.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtk.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\DW\SolidCtrl.h"
 				>
 			</File>
 			<File
-				RelativePath=".\SolidDefine.h"
+				RelativePath=".\DW\SolidDefine.h"
 				>
 			</File>
 			<File
 				RelativePath=".\DW\SolidDoc.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtk.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\DW\SolidDoc.h"
@@ -723,6 +741,15 @@
 			<File
 				RelativePath=".\DW\SolidView.cpp"
 				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtk.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\DW\SolidView.h"

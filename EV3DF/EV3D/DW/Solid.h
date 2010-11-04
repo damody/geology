@@ -1,4 +1,5 @@
 ﻿#pragma once
+
 #include "SJCVector3.h"
 #include "SJCScalarField3.h"
 #include "ColorTable.h"
