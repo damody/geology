@@ -133,7 +133,6 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 				{
 					color[j] = static_cast<unsigned char>(255.0 * dcolor[j]);
 				}
-				//OutputDebugString( (ConvStr::GetWstr(color[0])+L" "+ConvStr::GetWstr(color[1])+L" "+ConvStr::GetWstr(color[2])+L"\n").c_str() );
 				m_colors->InsertNextTupleValue(color);
 			}
 		}

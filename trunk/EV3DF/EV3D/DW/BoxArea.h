@@ -19,15 +19,18 @@ public:
 	~BoxArea(void);
 	union
 	{
-		float m_up;
-		float m_down;
-		float m_left;
-		float m_right;
-		float m_ahead;
-		float m_back;
 		struct 
 		{
-			float limits[6];
+			float m_up;
+			float m_down;
+			float m_left;
+			float m_right;
+			float m_ahead;
+			float m_back;
+		};
+		struct 
+		{
+			float m_limits[6];
 		};
 	};
 	

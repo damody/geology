@@ -1,10 +1,18 @@
 ﻿#pragma once
+#include "SolidDefine.h"
 /**
-鞈??桀?
+
 */
 class SolidDoc
 {
 public:
-	SolidDoc(void);
+	SolidDoc*	GetParentDoc();
+	SolidCtrl*	GetParentCtrl();
 	virtual ~SolidDoc(void);
+private:
+	SolidDoc(const BoxArea* area);
+	SolidDoc*	m_ParentDoc;
+	SolidCtrl*	m_ParentCtrl;
+	friend SolidCtrl;
+	friend SolidView;
 };

@@ -1,6 +1,7 @@
-﻿#include "SolidDoc.h"
+﻿#include "StdVtk.h"
+#include "SolidDoc.h"
 
-SolidDoc::SolidDoc(void)
+SolidDoc::SolidDoc(const BoxArea* area)
 {
 }
 
