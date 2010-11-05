@@ -15,7 +15,8 @@
 #include <map>
 #include "Color4.h"
 
-struct ColorTable {
+class ColorTable 
+{
 public:
 	typedef std::map<float,Color4> ctMap;
 	int size;

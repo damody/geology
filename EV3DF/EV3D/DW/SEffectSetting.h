@@ -3,6 +3,7 @@
 #include "Color4.h"
 #include "TShape.hpp"
 #include "ColorTable.h"
+#include "SEffect.h"
 #pragma warning(disable:4201)
 
 class SEffect_Setting
@@ -19,15 +20,21 @@ public:
 	{
 		return m_TargetName.c_str();
 	}
+	bool m_visable;	///< 能見度
+	int  m_Type;	///< effect種類
+
+private:
+	
 	/*! 對象名稱
 	*/
-private:
 	std::string	m_TargetName;
 };
 
 struct Bounding_Box_Setting : public SEffect_Setting
 {
-	Bounding_Box_Setting(std::string name):SEffect_Setting(name){}
+	Bounding_Box_Setting(std::string name):SEffect_Setting(name),
+	m_Color(Color4(255,255,255,255)),
+	m_ThickDegree(1){}
 	Color4		m_Color;
 	float		m_ThickDegree;
 };
