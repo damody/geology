@@ -1,43 +1,10 @@
 ﻿#pragma once
-
 #include "SJCVector3.h"
 #include "SJCScalarField3.h"
 #include "ColorTable.h"
 #include "DWHistogram.h"
 #include <windows.h>
-
-#include <vtkFloatArray.h>
-#include <vtkCellData.h>
-#include <vtkScalarsToColors.h>
-#include <vtkLookupTable.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkPolyData.h>
-#include <vtkSmartPointer.h>
-#include <vtkImageData.h>
-#include <vtkAxesActor.h>
-#include <vtkOrientationMarkerWidget.h>
-#include <vtkRenderer.h>
-#include <vtkRenderWindow.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkSmartPointer.h>
-#include <vtkPointData.h>
-#include <vtkVertexGlyphFilter.h>
-#include <vtkContourFilter.h>
-#include <vtkSmartVolumeMapper.h>
-#include <vtkRenderWindowInteractor.h>
-#include <vtkRenderer.h>
-#include <vtkVolume.h>
-#include <vtkVolumeProperty.h>
-#include <vtkOutlineFilter.h>
-#include <vtkImagePlaneWidget.h>
-#include <vtkCamera.h>
-#include <vtkImageShiftScale.h>
-#include <vtkUnsignedCharArray.h>
-#include <vtkPiecewiseFunction.h>
-#include <vtkColorTransferFunction.h>
-#include <vtkProperty.h>
-#include <vtkActor.h>
-#include "SEffect.h"
+#include "SolidDefine.h"
 
 // use vtk to implement function like mathcube
 /**
@@ -51,7 +18,6 @@ public:
 		USE_X, USE_Y, USE_Z 
 	};
 	Solid();
-	~Solid();
 	void SetHwnd(HWND hwnd);
 	// set data to mathcube
 	void SetData(SJCScalarField3d* sf3d);
@@ -64,10 +30,11 @@ public:
 	void SetVolume();
 	void ReSize(int w, int h);
 	void Render();
-	void SetColorTable(ColorTable* ct);
-	ColorTable* GetColorTable() {return m_pCtable;}
+	void SetColorTable(ColorTable_Sptr colorTable);
+	ColorTable_Sptr GetColorTable() {return m_pCtable;}
 private:
-	ColorTable*	m_pCtable;
+	ColorTable_Sptr	m_pCtable;
+	SolidCtrl_Sptr	m_SolidCtrl;
 	SJCScalarField3d* m_SJCScalarField3d;
 	DWHistogram<double>	m_histogram;
 	// vtk classm

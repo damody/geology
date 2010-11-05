@@ -4,7 +4,7 @@
 #include "Color4.h"
 #include "TShape.hpp"
 #include "ColorTable.h"
-#include "SEffectSetting.h"
+#include "SolidDefine.h"
 #include <string>
 /**
 儲存與設定效果用的類別

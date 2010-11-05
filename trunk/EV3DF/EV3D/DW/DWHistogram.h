@@ -45,4 +45,8 @@ public:
 	void addData(T* dst, int size, int step=1);
 	void clear();
 };
+typedef DWHistogram<double> Histogramd;
+typedef DWHistogram<float> Histogramf;
+typedef DWHistogram<int> Histogrami;
+
 #endif  //_DWHISTOGRAM_H

@@ -2,6 +2,7 @@
 #include "Solid.h"
 
 #include "ConvStr.h"
+#include "SolidCtrl.h"
 
 
 Solid::Solid()
@@ -45,7 +46,7 @@ Solid::Solid()
 	m_chiplut->Build();
 	m_volumeMapper->SetBlendModeToComposite(); // composite first
 	// ofher init
-	m_pCtable = new ColorTable();
+	m_pCtable = ColorTable_Sptr(new ColorTable);
 	// contour flow
 	m_contour->SetInput(m_ImageData);
 	m_contour_mapper->SetInputConnection(m_contour->GetOutputPort());
@@ -63,7 +64,7 @@ Solid::Solid()
 	m_vertex_mapper->SetLookupTable(m_lut);
 	m_contour_mapper->SetLookupTable(m_lut);
 	m_vertex_actor->GetProperty()->SetPointSize(3);
-	m_Renderer->AddActor(m_outlineActor);
+	//m_Renderer->AddActor(m_outlineActor);
 	//m_Renderer->AddActor(m_vertex_actor);
 	m_Renderer->AddActor(m_contour_actor);
 	m_Renderer->SetBackground(.1, .2, .3);
@@ -94,6 +95,8 @@ Solid::Solid()
 
 void Solid::SetData( SJCScalarField3d* sf3d )
 {
+	m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_Renderer));
+	m_SolidCtrl->SetData(sf3d);
 	// backup to use
 	m_SJCScalarField3d = sf3d;
 	// color
@@ -241,18 +244,11 @@ void Solid::Render()
 	m_RenderWindow->Render();
 }
 
-void Solid::SetColorTable( ColorTable* ct )
+void Solid::SetColorTable( ColorTable_Sptr ct )
 {
-	if (m_pCtable == NULL && m_pCtable != ct)
-		delete m_pCtable;
 	m_pCtable = ct;
 }
 
-Solid::~Solid()
-{
-	if (m_pCtable)
-		delete m_pCtable;
-}
 
 void Solid::SetVolume()
 {

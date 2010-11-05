@@ -1,10 +1,4 @@
 ﻿#pragma once
-
-#include <vtkActor.h>
-#include <vtkLookupTable.h>
-#include <vtkPolyDataMapper.h>
-#include <vtkSmartPointer.h>
-#include <vtkRenderer.h>
 #include "SolidDefine.h"
 /**
 顯示單元
@@ -16,23 +10,41 @@ public:
 		CHANGE_OK,	///< 改變渲染對象成功
 		CHANGE_FAIL	///< 改變渲染對象失敗
 	};
-	vtkSmartPointer<vtkActor>		m_actor;
-	vtkSmartPointer<vtkLookupTable>		m_ltable;
-	vtkSmartPointer<vtkPolyDataMapper>	m_polydataMapper;
-	bool	m_visable;
 	
-	virtual ~SolidView(void);
-	void SetDoc()
+public:	
+	SolidView()
 	{
+		vtkSmartNew(m_actor);
+		vtkSmartNew(m_Renderer);
+		vtkSmartNew(m_actor);
+		vtkSmartNew(m_actor);
 		
 	}
-	SolidDoc*	GetParentDoc();
-	SolidCtrl*	GetParentCtrl();
-	void SetVisable(bool show);
-	void SetRenderTarget(vtkSmartPointer<vtkRenderer> renderer);
+	virtual ~SolidView(void);
+	int		SetDoc(SolidDoc* doc);
+	void		SetType(int type) {m_Type = type;}
+	int		GetType() {return m_Type;}
+	void		SetVisable(bool show);
+	int		GetVisable() {return m_Type;}
+	SolidDoc_Sptr	GetParentDoc(){return m_ParentDoc;}
+	SolidCtrl_Sptr	GetParentCtrl(){return m_ParentCtrl;}
+	void		SetSetting(SEffect_Setting_Sptr setting);
+	void		SetRenderTarget(vtkRenderer_Sptr renderer);
+	void		Update();
+	void		SetColorTable();
 private:
-	vtkSmartPointer<vtkRenderer>		m_Renderer;
-	SolidView(SolidDoc* Doc);
+	SolidView(SolidDoc_Sptr& Doc);
+private:
+	SolidDoc_Sptr		m_ParentDoc;
+	SolidCtrl_Sptr		m_ParentCtrl;
+	bool			m_visable;	///< 能見度
+	int			m_Type;		///< effect種類
+	vtkRenderer_Sptr	m_Renderer;
+	vtkActor_Sptr		m_actor;
+	vtkLookupTable_Sptr	m_ltable;
+	vtkPolyDataMapper_Sptr	m_polydataMapper;
+	SEffect_Setting_Sptr	m_SEffect_Setting;
+private:	
 	friend SolidCtrl;
 	friend SolidDoc;
 };
