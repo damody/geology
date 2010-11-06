@@ -151,7 +151,7 @@ int ConvertToEvr::Save_EvrA( std::wstring Path, std::wstring filename )
 	}
 	fOut << std::endl;
 	fOut.setf(ios_base::scientific);
-	for (unsigned int i=0;i<m_total;i++)
+	for (int i=0;i<m_total;i++)
 	{		
 		for (int j=0;j<m_format_count;j++)
 		{

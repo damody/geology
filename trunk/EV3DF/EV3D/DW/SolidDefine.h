@@ -4,7 +4,6 @@ class SolidDoc;
 class SolidView;
 class SolidCtrl;
 class SEffect;
-class SEffect_Setting;
 class BoxArea;
 class ColorTable;
 
@@ -32,7 +31,7 @@ SHARE_PTR(SolidDoc)
 SHARE_PTR(SolidView)
 SHARE_PTR(SolidCtrl)
 SHARE_PTR(BoxArea)
-SHARE_PTR(SEffect_Setting)
+SHARE_PTR(SEffect)
 SHARE_PTR(ColorTable)
 
 enum {
@@ -103,14 +102,18 @@ VTK_SMART_POINTER(vtkPoints)
 template <class T>
 void vtkSmartNew(vtkSmartPointer<T>& Ptr)
 {
-	Ptr = T::New();
+	Ptr = vtkSmartPointer<T>::New();
 	assert(Ptr.GetPointer() != 0);
 }
 
 template <class T>
 void vtkSmartNew_Initialize(vtkSmartPointer<T>& Ptr)
 {
-	Ptr = T::New();
+	Ptr = vtkSmartPointer<T>::New();
 	assert(Ptr.GetPointer() != 0);
 	Ptr->Initialize();
 }
+#include <windows.h>
+#include <tchar.h>
+#define MESSAGE(x) MessageBox(NULL, _T(x), _T("MESSAGE"), 0);
+

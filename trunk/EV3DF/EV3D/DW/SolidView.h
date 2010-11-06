@@ -27,8 +27,8 @@ public:
 	void		SetVisable(bool show);
 	int		GetVisable() {return m_Type;}
 	SolidDoc_Sptr	GetParentDoc(){return m_ParentDoc;}
-	SolidCtrl_Sptr	GetParentCtrl(){return m_ParentCtrl;}
-	void		SetSetting(SEffect_Setting_Sptr setting);
+	SolidCtrl*	GetParentCtrl(){return m_ParentCtrl;}
+	void		SetEffect(SEffect_Sptr setting);
 	void		SetRenderTarget(vtkRenderer_Sptr renderer);
 	void		Update();
 	void		SetColorTable();
@@ -36,14 +36,14 @@ private:
 	SolidView(SolidDoc_Sptr& Doc);
 private:
 	SolidDoc_Sptr		m_ParentDoc;
-	SolidCtrl_Sptr		m_ParentCtrl;
+	SolidCtrl		*m_ParentCtrl;
 	bool			m_visable;	///< 能見度
 	int			m_Type;		///< effect種類
 	vtkRenderer_Sptr	m_Renderer;
 	vtkActor_Sptr		m_actor;
 	vtkLookupTable_Sptr	m_ltable;
 	vtkPolyDataMapper_Sptr	m_polydataMapper;
-	SEffect_Setting_Sptr	m_SEffect_Setting;
+	SEffect_Sptr		m_SEffect;
 private:	
 	friend SolidCtrl;
 	friend SolidDoc;

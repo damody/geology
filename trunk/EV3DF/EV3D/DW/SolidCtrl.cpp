@@ -2,26 +2,36 @@
 #include "SolidCtrl.h"
 #include "SolidDoc.h"
 #include "SolidView.h"
-#include "SEffectSetting.h"
+#include "SEffect.h"
 
 SolidDoc_Sptr	SolidCtrl::NewDoc()
 {
-	SolidDoc_Sptr tmpPtr(new SolidDoc());
+	BoxArea_Sptr area(new BoxArea);
+	area->m_rangeX = m_sf3d->m_dLengthX;
+	area->m_rangeY = m_sf3d->m_dLengthY;
+	area->m_rangeZ = m_sf3d->m_dLengthZ;
+	area->m_numX = m_sf3d->NumX();
+	area->m_numY = m_sf3d->NumY();
+	area->m_numZ = m_sf3d->NumZ();
+	SolidDoc_Sptr tmpPtr(new SolidDoc(area));
 	m_SolidDocPtrs.push_back(tmpPtr);
+	tmpPtr->m_WindowInteractor->SetRenderWindow(m_RenderWindow);
 	return tmpPtr;
 }
 
-SolidView_Sptr	SolidCtrl::NewView( SEffect_Setting_Sptr& effect, SolidDoc_Sptr& doc )
+SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc )
 {
 	SolidView_Sptr tmpPtr(new SolidView(doc));
 	tmpPtr->SetRenderTarget(m_Renderer);
-	tmpPtr->SetSetting(effect);
+	tmpPtr->SetEffect(effect);
+	tmpPtr->m_ParentCtrl = this;
 	m_SolidViewPtrs.push_back(tmpPtr);
 	return tmpPtr;
 }
 
 int SolidCtrl::SetData( SJCScalarField3d* sf3d )
 {
+	m_sf3d = sf3d;
 	// 先載入資料
 	vtkPolyData_Sptr polydata;
 	vtkSmartNew_Initialize(polydata);
@@ -65,9 +75,7 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d )
 	polydata->SetPoints(points);
 	polydata->GetPointData()->SetScalars(point_array);
 	// 把資料跟bounding box建出來
-	SEffect_Setting_Sptr Setting(new SEffect_Setting("vertex"));
-	Setting->m_Type = SEffect::VERTEX;
-	Setting->m_visable = true;
+	
 	SolidDoc_Sptr spDoc = NewDoc();
 	int res = spDoc->SetPolyData(polydata);
 	assert(res == SET_OK);
@@ -77,8 +85,12 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d )
 		assert(res == SET_OK);
 	}
 	spDoc->m_histogram = Histogramd(sf3d->begin(), sf3d->size());
+
+	SEffect_Sptr Setting = SEffect::New(SEffect::VERTEX);
 	SolidView_Sptr spView = NewView(Setting, spDoc);
-
-
+	SEffect_Sptr Setting2 = SEffect::New(SEffect::BOUNDING_BOX);
+	SolidView_Sptr spView2 = NewView(Setting2, spDoc);
+	SEffect_Sptr Setting3 = SEffect::New(SEffect::PLANE_CHIP);
+	//SolidView_Sptr spView3 = NewView(Setting3, spDoc);
 	return 0;
 }

@@ -1,7 +1,8 @@
 ﻿#include "StdVtk.h"
 #include "SolidView.h"
 #include "SolidDoc.h"
-#include "SEffectSetting.h"
+#include "SEffect.h"
+#include "BoxArea.h"
 
 SolidView::SolidView(SolidDoc_Sptr& Doc)
 :m_visable(true)
@@ -32,10 +33,10 @@ void SolidView::SetVisable( bool show )
 		m_Renderer->RemoveActor(m_actor);
 }
 
-void SolidView::SetSetting( SEffect_Setting_Sptr setting )
+void SolidView::SetEffect( SEffect_Sptr effect )
 {
-	m_SEffect_Setting = setting;
-	switch (m_SEffect_Setting->m_Type)
+	m_SEffect = effect;
+	switch (m_SEffect->GetType())
 	{
 	case SEffect::BOUNDING_BOX:
 		{
@@ -86,6 +87,67 @@ void SolidView::SetSetting( SEffect_Setting_Sptr setting )
 			m_actor->SetMapper(m_polydataMapper);
 		}
 		break;
+	case SEffect::CONTOUR:
+		{
+			vtkContourFilter_Sptr ContourFilter;
+			vtkSmartNew(ContourFilter);
+			ContourFilter->SetInput(GetParentDoc()->m_ImageData);
+			m_polydataMapper->SetInputConnection(ContourFilter->GetOutputPort());
+			m_actor->SetMapper(m_polydataMapper);
+		}
+		break;
+	case SEffect::AXES:
+		{
+			MESSAGE("not Implementation");
+		}
+		break;
+	case SEffect::PLANE_CHIP:
+		{
+			vtkImagePlaneWidget_Sptr ImagePlane;
+			vtkSmartNew(ImagePlane);
+// 			ImagePlane->SetLeftButtonAction(-1);
+// 			ImagePlane->SetMiddleButtonAction(-1);
+// 			ImagePlane->SetRightButtonAction(-1);
+			ImagePlane->SetInteractor(GetParentDoc()->m_WindowInteractor);
+			ImagePlane->RestrictPlaneToVolumeOn();
+			ImagePlane->SetInput(GetParentDoc()->m_ImageData);
+			ImagePlane->SetPlaneOrientationToXAxes();
+			ImagePlane->SetSlicePosition(10*GetParentDoc()->m_area->m_rangeX/100.0);
+			ImagePlane->On();
+		}
+		break;
+	case SEffect::RULER:
+		{
+			MESSAGE("not Implementation");
+		}
+		break;
+	case SEffect::CONTOUR_CHIP:
+		{
+			MESSAGE("not Implementation");
+		}
+		break;
+	case SEffect::VOLUME_RENDER:
+		{
+			MESSAGE("not Implementation");
+			vtkPiecewiseFunction_Sptr PiecewiseFunction;
+			vtkSmartNew(PiecewiseFunction);
+			vtkColorTransferFunction_Sptr ColorTransferFunction;
+			vtkSmartNew(ColorTransferFunction);
+			vtkImageShiftScale_Sptr ImageShiftScale;
+			vtkSmartNew(ImageShiftScale);
+			vtkSmartVolumeMapper_Sptr SmartVolumeMapper;
+			vtkSmartNew(SmartVolumeMapper);
+			vtkVolumeProperty_Sptr VolumeProperty;
+			vtkSmartNew(VolumeProperty);
+			vtkVolume_Sptr Volume;
+			vtkSmartNew(Volume);
+		}
+		break;
 	}
 	SetVisable(m_visable);
+}
+
+void SolidView::Update()
+{
+
 }
