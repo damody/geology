@@ -1,22 +1,26 @@
 ﻿#include "StdVtk.h"
 #include "SolidDoc.h"
+#include "SolidCtrl.h"
 
-SolidDoc::SolidDoc()
+SolidDoc::SolidDoc(BoxArea_Sptr area):
+m_area(area)
 {
+	vtkSmartNew(m_WindowInteractor);
 }
 
 SolidDoc::~SolidDoc(void)
 {
 }
 
-int SolidDoc::SetPolyData( vtkPolyData_Sptr& polyData )
+int SolidDoc::SetPolyData( vtkPolyData_Sptr polyData )
 {
 	m_PolyData = polyData;
 	return SET_OK;
 }
 
-int SolidDoc::SetImageData( vtkImageData_Sptr& imageData )
+int SolidDoc::SetImageData( vtkImageData_Sptr imageData )
 {
 	m_ImageData = imageData;
 	return SET_OK;
 }
+

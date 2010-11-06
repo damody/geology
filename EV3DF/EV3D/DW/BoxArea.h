@@ -15,8 +15,6 @@ public:
 		AHEAD,
 		BACK
 	};
-	BoxArea(void);
-	~BoxArea(void);
 	union
 	{
 		struct 
@@ -33,5 +31,10 @@ public:
 			float m_limits[6];
 		};
 	};
-	
+	float	m_rangeX,
+		m_rangeY,
+		m_rangeZ;
+	int	m_numX,
+		m_numY,
+		m_numZ;
 };

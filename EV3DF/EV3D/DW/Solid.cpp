@@ -66,7 +66,7 @@ Solid::Solid()
 	m_vertex_actor->GetProperty()->SetPointSize(3);
 	//m_Renderer->AddActor(m_outlineActor);
 	//m_Renderer->AddActor(m_vertex_actor);
-	m_Renderer->AddActor(m_contour_actor);
+	//m_Renderer->AddActor(m_contour_actor);
 	m_Renderer->SetBackground(.1, .2, .3);
 	m_RenderWindow->AddRenderer(m_Renderer);
 	m_iren->SetRenderWindow(m_RenderWindow);
@@ -77,9 +77,9 @@ Solid::Solid()
 	m_axes_widget->SetInteractor( m_iren );
 	m_axes_widget->On();
 
-	m_planeWidgetX->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-	m_planeWidgetX->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-	m_planeWidgetX->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+	m_planeWidgetX->SetLeftButtonAction(-1);
+	m_planeWidgetX->SetMiddleButtonAction(-1);
+	m_planeWidgetX->SetRightButtonAction(-1);
 	m_planeWidgetY->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetY->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetY->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
@@ -96,6 +96,7 @@ Solid::Solid()
 void Solid::SetData( SJCScalarField3d* sf3d )
 {
 	m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_Renderer));
+	m_SolidCtrl->m_RenderWindow = m_RenderWindow;
 	m_SolidCtrl->SetData(sf3d);
 	// backup to use
 	m_SJCScalarField3d = sf3d;

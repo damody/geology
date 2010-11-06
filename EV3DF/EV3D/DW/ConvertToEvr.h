@@ -32,7 +32,7 @@ public:
 	std::wstring	m_dataWPath;
 	CreateLua	m_CreateLua;
 private:
-	unsigned int	m_dataSize, m_total;
+	int	m_dataSize, m_total;
 	unsigned long	m_totalSize;
 	unsigned char*	m_pData;
 };
