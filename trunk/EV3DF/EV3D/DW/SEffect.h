@@ -20,14 +20,14 @@ public:
 		VOLUME_RENDER
 	};
 public:
-	bool GetVisable() {return m_visable;}
+	bool GetVisable() {return m_Visable;}
 	int  GetType() {return m_Type;}
 public:
 	static SEffect_Sptr New( int type );
 protected:
-	bool		m_visable;	///< 能見度
-	int		m_Type;	///< effect種類
-	SEffect():m_visable(true){}
+	bool	m_Visable;	///< 能見度
+	int	m_Type;		///< effect種類
+	SEffect():m_Visable(true){}
 protected:
 	friend SolidDoc;
 	friend SolidView;

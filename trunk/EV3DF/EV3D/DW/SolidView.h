@@ -12,38 +12,23 @@ public:
 	};
 	
 public:	
-	SolidView()
-	{
-		vtkSmartNew(m_actor);
-		vtkSmartNew(m_Renderer);
-		vtkSmartNew(m_actor);
-		vtkSmartNew(m_actor);
-		
-	}
-	virtual ~SolidView(void);
-	int		SetDoc(SolidDoc* doc);
-	void		SetType(int type) {m_Type = type;}
-	int		GetType() {return m_Type;}
+	int		GetType();
 	void		SetVisable(bool show);
-	int		GetVisable() {return m_Type;}
+	int		GetVisable();
 	SolidDoc_Sptr	GetParentDoc(){return m_ParentDoc;}
 	SolidCtrl*	GetParentCtrl(){return m_ParentCtrl;}
 	void		SetEffect(SEffect_Sptr setting);
-	void		SetRenderTarget(vtkRenderer_Sptr renderer);
 	void		Update();
 	void		SetColorTable();
 private:
-	SolidView(SolidDoc_Sptr& Doc);
+	SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc);
 private:
 	SolidDoc_Sptr		m_ParentDoc;
 	SolidCtrl		*m_ParentCtrl;
-	bool			m_visable;	///< 能見度
-	int			m_Type;		///< effect種類
-	vtkRenderer_Sptr	m_Renderer;
 	vtkActor_Sptr		m_actor;
-	vtkLookupTable_Sptr	m_ltable;
 	vtkPolyDataMapper_Sptr	m_polydataMapper;
 	SEffect_Sptr		m_SEffect;
+	vtkCamera_Sptr		m_Camera;
 private:	
 	friend SolidCtrl;
 	friend SolidDoc;

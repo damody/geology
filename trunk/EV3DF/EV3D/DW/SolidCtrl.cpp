@@ -14,23 +14,27 @@ SolidDoc_Sptr	SolidCtrl::NewDoc()
 	area->m_numY = m_sf3d->NumY();
 	area->m_numZ = m_sf3d->NumZ();
 	SolidDoc_Sptr tmpPtr(new SolidDoc(area));
+	tmpPtr->m_ParentCtrl = this;
 	m_SolidDocPtrs.push_back(tmpPtr);
-	tmpPtr->m_WindowInteractor->SetRenderWindow(m_RenderWindow);
 	return tmpPtr;
 }
 
 SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc )
 {
-	SolidView_Sptr tmpPtr(new SolidView(doc));
-	tmpPtr->SetRenderTarget(m_Renderer);
+	SolidView_Sptr tmpPtr(new SolidView(this, doc));
 	tmpPtr->SetEffect(effect);
-	tmpPtr->m_ParentCtrl = this;
 	m_SolidViewPtrs.push_back(tmpPtr);
 	return tmpPtr;
 }
 
 int SolidCtrl::SetData( SJCScalarField3d* sf3d )
 {
+// 	vtkSmartNew(m_Axes_widget);
+// 	vtkSmartNew(m_Axes);
+// 	m_Axes_widget->SetOutlineColor( 0.9300, 0.5700, 0.1300 );
+// 	m_Axes_widget->SetOrientationMarker( m_Axes );
+// 	m_Axes_widget->SetInteractor( m_WindowInteractor );
+// 	m_Axes_widget->On();
 	m_sf3d = sf3d;
 	// 先載入資料
 	vtkPolyData_Sptr polydata;
@@ -91,6 +95,6 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d )
 	SEffect_Sptr Setting2 = SEffect::New(SEffect::BOUNDING_BOX);
 	SolidView_Sptr spView2 = NewView(Setting2, spDoc);
 	SEffect_Sptr Setting3 = SEffect::New(SEffect::PLANE_CHIP);
-	//SolidView_Sptr spView3 = NewView(Setting3, spDoc);
+	SolidView_Sptr spView3 = NewView(Setting3, spDoc);
 	return 0;
 }

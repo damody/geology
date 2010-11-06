@@ -20,7 +20,7 @@
 #include "DW/ConvStr.h"
 #include "DW/HandleEvr.h"
 #include "DW/ConvertToEvr.h"
-#include "DW/Solid.h"
+#include "DW/SolidCtrl.h"
 ////@begin includes
 #include "wx/aui/framemanager.h"
 #include "wx/frame.h"
@@ -452,10 +452,10 @@ public:
     bool m_RenderBondingBox;
 ////@end FirstMain member variables
     private:
-	    HandleEvr*	m_hEvr;
-	    ConvertToEvr   m_ConvEvr;
-	    Solid	m_Solid;
-	    SJCScalarField3d* m_psjcF3d;
+	    HandleEvr*		m_hEvr;
+	    ConvertToEvr	m_ConvEvr;
+	    SolidCtrl_Sptr	m_SolidCtrl;
+	    SJCScalarField3d*	m_psjcF3d;
 };
 
 #endif    // _FIRSTMAIN_H_

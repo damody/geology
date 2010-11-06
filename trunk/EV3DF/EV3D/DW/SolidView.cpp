@@ -1,41 +1,34 @@
 ﻿#include "StdVtk.h"
 #include "SolidView.h"
 #include "SolidDoc.h"
+#include "SolidCtrl.h"
 #include "SEffect.h"
 #include "BoxArea.h"
 
-SolidView::SolidView(SolidDoc_Sptr& Doc)
-:m_visable(true)
+SolidView::SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc):m_ParentCtrl(ParentCtrl)
 {
 	vtkSmartNew(m_actor);
-	vtkSmartNew(m_ltable);
 	vtkSmartNew(m_polydataMapper);
+	vtkSmartNew(m_Camera);
+	GetParentCtrl()->m_Renderer->SetActiveCamera(m_Camera);
 	m_ParentDoc = Doc;
-	
-}
-
-SolidView::~SolidView(void)
-{
-}
-
-
-void SolidView::SetRenderTarget( vtkRenderer_Sptr renderer )
-{
-	m_Renderer = renderer;
 }
 
 void SolidView::SetVisable( bool show )
 {
-	m_visable = show;
+	m_SEffect->m_Visable = show;
 	if (show)
-		m_Renderer->AddActor(m_actor);
+		GetParentCtrl()->m_Renderer->AddActor(m_actor);
 	else
-		m_Renderer->RemoveActor(m_actor);
+		GetParentCtrl()->m_Renderer->RemoveActor(m_actor);
 }
 
 void SolidView::SetEffect( SEffect_Sptr effect )
 {
 	m_SEffect = effect;
+	BoxArea_Sptr area = GetParentDoc()->m_area;
+	m_Camera->SetPosition(0, 0, (area->m_numX+area->m_numY+area->m_numZ)/3.0);
+	m_Camera->SetFocalPoint(area->m_numX/2.0, area->m_numY/2.0, area->m_numZ/2.0);
 	switch (m_SEffect->GetType())
 	{
 	case SEffect::BOUNDING_BOX:
@@ -108,11 +101,17 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 // 			ImagePlane->SetLeftButtonAction(-1);
 // 			ImagePlane->SetMiddleButtonAction(-1);
 // 			ImagePlane->SetRightButtonAction(-1);
-			ImagePlane->SetInteractor(GetParentDoc()->m_WindowInteractor);
+			ImagePlane->SetInteractor(GetParentCtrl()->m_WindowInteractor);
 			ImagePlane->RestrictPlaneToVolumeOn();
 			ImagePlane->SetInput(GetParentDoc()->m_ImageData);
 			ImagePlane->SetPlaneOrientationToXAxes();
-			ImagePlane->SetSlicePosition(10*GetParentDoc()->m_area->m_rangeX/100.0);
+			vtkLookupTable_Sptr lut;
+			vtkSmartNew(lut);
+			lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
+				GetParentDoc()->m_histogram.GetPersentValue(0.99));
+			lut->Build();
+			ImagePlane->SetLookupTable(lut);
+			ImagePlane->SetSlicePosition(10*GetParentDoc()->m_area->m_numX/100.0);
 			ImagePlane->On();
 		}
 		break;
@@ -144,10 +143,20 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 		}
 		break;
 	}
-	SetVisable(m_visable);
+	SetVisable(m_SEffect->m_Visable);
 }
 
 void SolidView::Update()
 {
 
+}
+
+int SolidView::GetVisable()
+{
+	return m_SEffect->m_Visable;
+}
+
+int SolidView::GetType()
+{
+	return m_SEffect->m_Type;
 }

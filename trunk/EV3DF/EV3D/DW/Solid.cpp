@@ -68,18 +68,23 @@ Solid::Solid()
 	//m_Renderer->AddActor(m_vertex_actor);
 	//m_Renderer->AddActor(m_contour_actor);
 	m_Renderer->SetBackground(.1, .2, .3);
+	vtkRenderer_Sptr Renderer;
+	vtkSmartNew(Renderer);
+	m_RenderWindow->AddRenderer(Renderer);
+	Renderer->AddActor(m_vertex_actor);
 	m_RenderWindow->AddRenderer(m_Renderer);
 	m_iren->SetRenderWindow(m_RenderWindow);
 	m_Renderer->SetActiveCamera(m_camera);
+	Renderer->SetActiveCamera(m_camera);
 
 	m_axes_widget->SetOutlineColor( 0.9300, 0.5700, 0.1300 );
 	m_axes_widget->SetOrientationMarker( m_axes );
 	m_axes_widget->SetInteractor( m_iren );
 	m_axes_widget->On();
 
-	m_planeWidgetX->SetLeftButtonAction(-1);
-	m_planeWidgetX->SetMiddleButtonAction(-1);
-	m_planeWidgetX->SetRightButtonAction(-1);
+// 	m_planeWidgetX->SetLeftButtonAction(-1);
+// 	m_planeWidgetX->SetMiddleButtonAction(-1);
+// 	m_planeWidgetX->SetRightButtonAction(-1);
 	m_planeWidgetY->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetY->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetY->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
@@ -95,9 +100,9 @@ Solid::Solid()
 
 void Solid::SetData( SJCScalarField3d* sf3d )
 {
-	m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_Renderer));
-	m_SolidCtrl->m_RenderWindow = m_RenderWindow;
-	m_SolidCtrl->SetData(sf3d);
+	m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_RenderWindow, m_iren));
+	//m_SolidCtrl->m_Renderer = m_Renderer;
+	//m_SolidCtrl->SetData(sf3d);
 	// backup to use
 	m_SJCScalarField3d = sf3d;
 	// color
