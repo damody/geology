@@ -8,15 +8,13 @@ m_area(area)
 {
 }
 
-int SolidDoc::SetPolyData( vtkPolyData_Sptr polyData )
+void SolidDoc::SetPolyData( vtkPolyData_Sptr polyData )
 {
 	m_PolyData = polyData;
-	return SET_OK;
 }
 
-int SolidDoc::SetImageData( vtkImageData_Sptr imageData )
+void SolidDoc::SetImageData( vtkImageData_Sptr imageData )
 {
 	m_ImageData = imageData;
-	return SET_OK;
 }
 

@@ -27,6 +27,7 @@
 #include "mytreectrl.h"
 #include "firstmain.h"
 #include "mygrid.h"
+#include "DW/SEffect.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -377,6 +378,48 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 	wxTreeItemId id = AppendItem(m_lastItem, item_str, TreeCtrlIcon_File, TreeCtrlIcon_File+1,
 		new MyTreeItemData(item_str));
 	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(m_lastItem);
+	SolidCtrl_Sptr& sc = ((FirstMain*)GetParent())->m_SolidCtrl;
+	wxString wxstr = mti_data->GetDesc();
+	if (wxstr == wxT("Bounding Box"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::BOUNDING_BOX);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
+	else if (wxstr == wxT("Vertex"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::VERTEX);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
+	else if (wxstr == wxT("Isosurface Contour"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
+	else if (wxstr == wxT("Axes"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
+	else if (wxstr == wxT("Ruler"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::AXES);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
+	else if (wxstr == wxT("Plane Chip"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::PLANE_CHIP);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
+	else if (wxstr == wxT("Contour Chip"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR_CHIP);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
+	else if (wxstr == wxT("Volume Render"))
+	{
+		SEffect_Sptr Setting = SEffect::New(SEffect::VOLUME_RENDER);
+		SolidView_Sptr spView = sc->NewSEffect(Setting);
+	}
 	ChangeGrid(mti_data->GetDesc());
 	Expand(m_lastItem);
 	event.Skip();

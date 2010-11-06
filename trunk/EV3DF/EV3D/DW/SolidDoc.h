@@ -12,8 +12,8 @@ public:
 	bool		HasImageData() const;
 	void		RmAllView();
 	SolidView_Sptrs	GetViewList() const;
-	int		SetPolyData(vtkPolyData_Sptr polyData);
-	int		SetImageData(vtkImageData_Sptr imageData);
+	void		SetPolyData(vtkPolyData_Sptr polyData);
+	void		SetImageData(vtkImageData_Sptr imageData);
 	int		GridingData(const BoxArea_Sptr area);
 private:
 	SolidDoc(BoxArea_Sptr area);
@@ -24,8 +24,7 @@ private:
 	vtkPolyData_Sptr	m_PolyData;	/// 離散 data
 	vtkImageData_Sptr	m_ImageData;	/// griding data
 	BoxArea_Sptr		m_area;		/// 範圍
-	vtkAxesActor_Sptr	m_Axes;
-	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
+	
 	friend SolidCtrl;
 	friend SolidView;
 };
