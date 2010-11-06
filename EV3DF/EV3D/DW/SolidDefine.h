@@ -20,6 +20,12 @@ std::vector<t_Sptr> y_Sptrs;
 #define SHARE_PTR(x) \
 	typedef boost::shared_ptr< x >	x##_Sptr; \
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
+template <class T>
+void shareNew(boost::shared_ptr<T>& Ptr)
+{
+	Ptr = boost::shared_ptr<T>(new T);
+	assert(Ptr.get() != 0);
+}
 
 
 /*!

@@ -6,9 +6,8 @@
 class SolidDoc
 {
 public:
-	virtual ~SolidDoc(void);
 	SolidDoc_Sptr	GetParentDoc() const {return m_ParentDoc;}
-	SolidCtrl_Sptr	GetParentCtrl() const {return m_ParentCtrl;}
+	SolidCtrl*	GetParentCtrl() const {return m_ParentCtrl;}
 	bool		HasPolyData() const;
 	bool		HasImageData() const;
 	void		RmAllView();
@@ -20,12 +19,13 @@ private:
 	SolidDoc(BoxArea_Sptr area);
 	Histogramd		m_histogram;
 	SolidDoc_Sptr		m_ParentDoc;
-	SolidCtrl_Sptr		m_ParentCtrl;
+	SolidCtrl		*m_ParentCtrl;
 	SolidView_Sptrs		m_SolidViews;	/// 所有相關的views
 	vtkPolyData_Sptr	m_PolyData;	/// 離散 data
 	vtkImageData_Sptr	m_ImageData;	/// griding data
 	BoxArea_Sptr		m_area;		/// 範圍
-	vtkRenderWindowInteractor_Sptr m_WindowInteractor;
+	vtkAxesActor_Sptr	m_Axes;
+	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
 	friend SolidCtrl;
 	friend SolidView;
 };

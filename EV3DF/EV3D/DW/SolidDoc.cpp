@@ -2,13 +2,9 @@
 #include "SolidDoc.h"
 #include "SolidCtrl.h"
 
+
 SolidDoc::SolidDoc(BoxArea_Sptr area):
 m_area(area)
-{
-	vtkSmartNew(m_WindowInteractor);
-}
-
-SolidDoc::~SolidDoc(void)
 {
 }
 
