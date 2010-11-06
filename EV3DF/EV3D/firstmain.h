@@ -21,6 +21,7 @@
 #include "DW/HandleEvr.h"
 #include "DW/ConvertToEvr.h"
 #include "DW/SolidCtrl.h"
+#include "DW/Solid.h"
 ////@begin includes
 #include "wx/aui/framemanager.h"
 #include "wx/frame.h"
@@ -454,8 +455,9 @@ public:
     private:
 	    HandleEvr*		m_hEvr;
 	    ConvertToEvr	m_ConvEvr;
-	    SolidCtrl_Sptr	m_SolidCtrl;
 	    SJCScalarField3d*	m_psjcF3d;
+    public:
+	    SolidCtrl_Sptr	m_SolidCtrl;
 };
 
 #endif    // _FIRSTMAIN_H_

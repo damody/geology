@@ -29,6 +29,7 @@ private:
 	vtkPolyDataMapper_Sptr	m_polydataMapper;
 	SEffect_Sptr		m_SEffect;
 	vtkCamera_Sptr		m_Camera;
+	vtkImagePlaneWidget_Sptr m_ImagePlane;
 private:	
 	friend SolidCtrl;
 	friend SolidDoc;

@@ -96,23 +96,21 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 		break;
 	case SEffect::PLANE_CHIP:
 		{
-			vtkImagePlaneWidget_Sptr ImagePlane;
-			vtkSmartNew(ImagePlane);
-// 			ImagePlane->SetLeftButtonAction(-1);
-// 			ImagePlane->SetMiddleButtonAction(-1);
-// 			ImagePlane->SetRightButtonAction(-1);
-			ImagePlane->SetInteractor(GetParentCtrl()->m_WindowInteractor);
-			ImagePlane->RestrictPlaneToVolumeOn();
-			ImagePlane->SetInput(GetParentDoc()->m_ImageData);
-			ImagePlane->SetPlaneOrientationToXAxes();
+			vtkSmartNew(m_ImagePlane);
+			m_ImagePlane->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+			m_ImagePlane->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+			m_ImagePlane->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+			m_ImagePlane->SetInteractor(GetParentCtrl()->m_WindowInteractor);
+			m_ImagePlane->RestrictPlaneToVolumeOn();
+			m_ImagePlane->SetInput(GetParentDoc()->m_ImageData);
+			m_ImagePlane->SetPlaneOrientationToXAxes();
 			vtkLookupTable_Sptr lut;
 			vtkSmartNew(lut);
 			lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
 				GetParentDoc()->m_histogram.GetPersentValue(0.99));
 			lut->Build();
-			ImagePlane->SetLookupTable(lut);
-			ImagePlane->SetSlicePosition(10*GetParentDoc()->m_area->m_numX/100.0);
-			ImagePlane->On();
+			m_ImagePlane->SetLookupTable(lut);
+			m_ImagePlane->On();
 		}
 		break;
 	case SEffect::RULER:
