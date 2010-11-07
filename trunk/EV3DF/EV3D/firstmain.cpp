@@ -107,26 +107,6 @@ BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 
     EVT_MENU( ID_BTNPASTE, FirstMain::OnBtnpasteClick )
 
-    EVT_CHECKBOX( ID_USE_XCHIP, FirstMain::OnUseXchipClick )
-
-    EVT_TEXT( ID_text_chipX, FirstMain::OnTextChipXTextUpdated )
-
-    EVT_SLIDER( ID_SLIDER, FirstMain::OnSliderUpdated )
-
-    EVT_CHECKBOX( ID_USE_YCHIP, FirstMain::OnUseYchipClick )
-
-    EVT_TEXT( ID_text_chipY, FirstMain::OnTextChipYTextUpdated )
-
-    EVT_SLIDER( ID_SLIDER1, FirstMain::OnSlider1Updated )
-
-    EVT_CHECKBOX( ID_USE_ZCHIP, FirstMain::OnUseZchipClick )
-
-    EVT_TEXT( ID_text_chipZ, FirstMain::OnTextChipZTextUpdated )
-
-    EVT_SLIDER( ID_SLIDER2, FirstMain::OnSlider2Updated )
-
-    EVT_COMBOBOX( ID_ShowTypeCombo, FirstMain::OnShowTypeComboSelected )
-
     EVT_TEXT( ID_XminText, FirstMain::OnXminTextTextUpdated )
 
     EVT_TEXT( ID_XmaxText, FirstMain::OnXmaxTextTextUpdated )
@@ -139,9 +119,7 @@ BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 
     EVT_TEXT( ID_ZmaxText, FirstMain::OnZmaxTextTextUpdated )
 
-    EVT_SPINCTRL( ID_SPINCTRL, FirstMain::OnSpinctrlUpdated )
-
-    EVT_SPINCTRL( ID_MarchCubeSet_SPINCTRL, FirstMain::OnMarchCubeSetSPINCTRLUpdated )
+    EVT_COMBOBOX( ID_ShowTypeCombo, FirstMain::OnShowTypeComboSelected )
 
 ////@end FirstMain event table entries
 
@@ -220,14 +198,6 @@ void FirstMain::Init()
     m_RenderBondingBox = true;
     itemGLCanvas = NULL;
     m_FileEditToolbar = NULL;
-    m_XYZchipEditToolbar = NULL;
-    m_text_chipX = NULL;
-    m_XSlider = NULL;
-    m_text_chipY = NULL;
-    m_YSlider = NULL;
-    m_text_chipZ = NULL;
-    m_ZSlider = NULL;
-    m_ShowTypeCombo = NULL;
     m_BoundEditToolbar = NULL;
     m_XminText = NULL;
     m_XmaxText = NULL;
@@ -235,12 +205,7 @@ void FirstMain::Init()
     m_YmaxText = NULL;
     m_ZminText = NULL;
     m_ZmaxText = NULL;
-    m_PositionEditToolbar = NULL;
-    m_MiddleXText = NULL;
-    m_MiddleYText = NULL;
-    m_MiddleZText = NULL;
-    m_PreciseSpin = NULL;
-    m_MarchCubeSet_spinctrl = NULL;
+    m_ShowTypeCombo = NULL;
     m_ColorList = NULL;
     m_treectrl = NULL;
     m_grid = NULL;
@@ -324,38 +289,6 @@ void FirstMain::CreateControls()
     itemFrame1->GetAuiManager().AddPane(m_FileEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("FileEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
-    m_XYZchipEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
-    wxCheckBox* itemCheckBox35 = new wxCheckBox( m_XYZchipEditToolbar, ID_USE_XCHIP, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox35->SetValue(false);
-    m_XYZchipEditToolbar->AddControl(itemCheckBox35);
-    m_XYZchipEditToolbar->AddLabel(ID_LABEL, _("X"), 10);
-    m_text_chipX = new wxTextCtrl( m_XYZchipEditToolbar, ID_text_chipX, _("0"), wxDefaultPosition, wxSize(40, -1), 0 );
-    m_XYZchipEditToolbar->AddControl(m_text_chipX);
-    m_XSlider = new wxSlider( m_XYZchipEditToolbar, ID_SLIDER, 0, 0, 1000, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
-    m_XYZchipEditToolbar->AddControl(m_XSlider);
-    wxCheckBox* itemCheckBox39 = new wxCheckBox( m_XYZchipEditToolbar, ID_USE_YCHIP, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox39->SetValue(false);
-    m_XYZchipEditToolbar->AddControl(itemCheckBox39);
-    m_XYZchipEditToolbar->AddLabel(ID_LABEL1, _("Y"), 10);
-    m_text_chipY = new wxTextCtrl( m_XYZchipEditToolbar, ID_text_chipY, _("0"), wxDefaultPosition, wxSize(40, -1), 0 );
-    m_XYZchipEditToolbar->AddControl(m_text_chipY);
-    m_YSlider = new wxSlider( m_XYZchipEditToolbar, ID_SLIDER1, 0, 0, 1000, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
-    m_XYZchipEditToolbar->AddControl(m_YSlider);
-    wxCheckBox* itemCheckBox43 = new wxCheckBox( m_XYZchipEditToolbar, ID_USE_ZCHIP, _("Checkbox"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox43->SetValue(false);
-    m_XYZchipEditToolbar->AddControl(itemCheckBox43);
-    m_XYZchipEditToolbar->AddLabel(ID_LABEL2, _("Z"), 10);
-    m_text_chipZ = new wxTextCtrl( m_XYZchipEditToolbar, ID_text_chipZ, _("0"), wxDefaultPosition, wxSize(40, -1), 0 );
-    m_XYZchipEditToolbar->AddControl(m_text_chipZ);
-    m_ZSlider = new wxSlider( m_XYZchipEditToolbar, ID_SLIDER2, 0, 0, 1000, wxDefaultPosition, wxDefaultSize, wxSL_HORIZONTAL );
-    m_XYZchipEditToolbar->AddControl(m_ZSlider);
-    wxArrayString m_ShowTypeComboStrings;
-    m_ShowTypeCombo = new wxComboBox( m_XYZchipEditToolbar, ID_ShowTypeCombo, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_ShowTypeComboStrings, wxCB_READONLY );
-    m_XYZchipEditToolbar->AddControl(m_ShowTypeCombo);
-    m_XYZchipEditToolbar->Realize();
-    itemFrame1->GetAuiManager().AddPane(m_XYZchipEditToolbar, wxAuiPaneInfo()
-        .ToolbarPane().Name(_T("XYZchipEditToolbar")).Top().Row(1).Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
-
     m_BoundEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR1, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     m_BoundEditToolbar->AddLabel(ID_LABEL3, _("Xmin"), 30);
     m_XminText = new wxTextCtrl( m_BoundEditToolbar, ID_XminText, wxEmptyString, wxDefaultPosition, wxSize(50, -1), 0 );
@@ -375,42 +308,20 @@ void FirstMain::CreateControls()
     m_BoundEditToolbar->AddLabel(ID_LABEL7, _("Zmax"), 30);
     m_ZmaxText = new wxTextCtrl( m_BoundEditToolbar, ID_ZmaxText, wxEmptyString, wxDefaultPosition, wxSize(50, -1), 0 );
     m_BoundEditToolbar->AddControl(m_ZmaxText);
+    wxArrayString m_ShowTypeComboStrings;
+    m_ShowTypeCombo = new wxComboBox( m_BoundEditToolbar, ID_ShowTypeCombo, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_ShowTypeComboStrings, wxCB_READONLY );
+    m_BoundEditToolbar->AddControl(m_ShowTypeCombo);
     m_BoundEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_BoundEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("BoundEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
-
-    m_PositionEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR2, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
-    m_PositionEditToolbar->AddLabel(ID_LABEL9, _("MiddleX"), 40);
-    m_MiddleXText = new wxTextCtrl( m_PositionEditToolbar, ID_MiddleXText, wxEmptyString, wxDefaultPosition, wxSize(50, -1), 0 );
-    m_PositionEditToolbar->AddControl(m_MiddleXText);
-    m_PositionEditToolbar->AddLabel(ID_LABEL10, _("MiddleY"), 40);
-    m_MiddleYText = new wxTextCtrl( m_PositionEditToolbar, ID_MiddleYText, wxEmptyString, wxDefaultPosition, wxSize(50, -1), 0 );
-    m_PositionEditToolbar->AddControl(m_MiddleYText);
-    m_PositionEditToolbar->AddLabel(ID_LABEL11, _("MiddleZ"), 40);
-    m_MiddleZText = new wxTextCtrl( m_PositionEditToolbar, ID_MiddleZText, wxEmptyString, wxDefaultPosition, wxSize(50, -1), 0 );
-    m_PositionEditToolbar->AddControl(m_MiddleZText);
-    m_PositionEditToolbar->Realize();
-    itemFrame1->GetAuiManager().AddPane(m_PositionEditToolbar, wxAuiPaneInfo()
-        .ToolbarPane().Name(_T("PositionEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
-
-    wxAuiToolBar* itemAuiToolBar68 = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR3, wxDefaultPosition, wxSize(80, -1), wxAUI_TB_GRIPPER );
-    itemAuiToolBar68->AddLabel(ID_LABEL12, _("Precise"), 40);
-    m_PreciseSpin = new wxSpinCtrl( itemAuiToolBar68, ID_SPINCTRL, _T("1"), wxDefaultPosition, wxSize(40, -1), wxSP_ARROW_KEYS, 1, 9, 1 );
-    itemAuiToolBar68->AddControl(m_PreciseSpin);
-    itemAuiToolBar68->AddLabel(ID_LABEL13, _("MarchCubeSet"), 80);
-    m_MarchCubeSet_spinctrl = new wxSpinCtrl( itemAuiToolBar68, ID_MarchCubeSet_SPINCTRL, _T("0"), wxDefaultPosition, wxSize(50, -1), wxSP_ARROW_KEYS, 0, 100, 0 );
-    itemAuiToolBar68->AddControl(m_MarchCubeSet_spinctrl);
-    itemAuiToolBar68->Realize();
-    itemFrame1->GetAuiManager().AddPane(itemAuiToolBar68, wxAuiPaneInfo()
-        .ToolbarPane().Name(_T("PreciseToolbar")).Top().Row(1).Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
     m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
         .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
 
-    wxStatusBar* itemStatusBar74 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar74->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar74);
+    wxStatusBar* itemStatusBar49 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar49->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar49);
 
     m_treectrl = new MyTreeCtrl( itemFrame1, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
     itemFrame1->GetAuiManager().AddPane(m_treectrl, wxAuiPaneInfo()
@@ -838,8 +749,6 @@ void FirstMain::OpenFile()
 			}
 			m_ShowTypeCombo->SetSelection(0);
 			m_psjcF3d = m_hEvr->m_SJCSF3dMap[3].second;
-			m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
-			m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 			m_SolidCtrl->SetData(m_psjcF3d); // 設定第一順位的資料來顯示
 			m_XminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
 			m_XmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmax).c_str()));
@@ -847,10 +756,6 @@ void FirstMain::OpenFile()
 			m_YmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymax).c_str()));
 			m_ZminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmin).c_str()));
 			m_ZmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmax).c_str()));
-
-			m_MiddleXText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
-			m_MiddleYText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymin).c_str()));
-			m_MiddleZText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmin).c_str()));
 			break;
 		case 1:
 			{
@@ -1039,98 +944,6 @@ void FirstMain::OnZmaxTextTextUpdated( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL5 in FirstMain. 
 }
 
-/*
- * wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER
- */
-
-void FirstMain::OnSliderUpdated( wxCommandEvent& event )
-{
-	m_text_chipX->SetValue(wxString::FromAscii(ConvStr::GetStr(m_XSlider->GetValue()).c_str()));
-	//m_SolidCtrl.SetSlice(Solid::USE_X, m_XSlider->GetValue()/10.0);
-	RenderFrame();
-	event.Skip(false); 
-}
-
-
-/*
- * wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER1
- */
-
-void FirstMain::OnSlider1Updated( wxCommandEvent& event )
-{
-	m_text_chipY->SetValue(wxString::FromAscii(ConvStr::GetStr(m_YSlider->GetValue()).c_str()));
-	//m_SolidCtrl.SetSlice(Solid::USE_Y, m_YSlider->GetValue()/10.0);
-	RenderFrame();
-	event.Skip(false);
-}
-
-
-/*
- * wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER2
- */
-
-void FirstMain::OnSlider2Updated( wxCommandEvent& event )
-{
-	m_text_chipZ->SetValue(wxString::FromAscii(ConvStr::GetStr(m_ZSlider->GetValue()).c_str()));
-	//m_SolidCtrl.SetSlice(Solid::USE_Z, m_ZSlider->GetValue()/10.0);
-	RenderFrame();
-	event.Skip(false);
-}
-
-
-/*
- * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL9
- */
-//text_chipX
-void FirstMain::OnTextChipXTextUpdated( wxCommandEvent& event )
-{
-	if (!m_init) return; // 確定有初始化了才執行
-	long n;
-	m_text_chipX->GetValue().ToLong(&n);
-	if (n<0) n = 0;
-	if (n>1000) n = 1000;
-	m_XSlider->SetValue(n);
-	//m_SolidCtrl.SetSlice(Solid::USE_X, n/10.0);
-	RenderFrame();
-	event.Skip(false);
-}
-
-
-/*
- * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL10
- */
-//text_chipY
-void FirstMain::OnTextChipYTextUpdated( wxCommandEvent& event )
-{
-	if (!m_init) return; // 確定有初始化了才執行
-	long n;
-	m_text_chipY->GetValue().ToLong(&n);
-	if (n<0) n = 0;
-	if (n>1000) n = 1000;
-	m_YSlider->SetValue(n);
-	//m_SolidCtrl.SetSlice(Solid::USE_Y, n/10.0);
-	RenderFrame();
-	event.Skip(false);
-}
-
-
-/*
- * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL11
- */
-//text_chipZ
-void FirstMain::OnTextChipZTextUpdated( wxCommandEvent& event )
-{
-	if (!m_init) return; // 確定有初始化了才執行
-	long n;
-	m_text_chipZ->GetValue().ToLong(&n);
-	if (n<0) n = 0;
-	if (n>1000) n = 1000;
-	m_ZSlider->SetValue(n);
-	//m_SolidCtrl.SetSlice(Solid::USE_Z, n/10.0);
-	RenderFrame();
-	event.Skip(false);
-}
-
 
 void FirstMain::RenderFrame()
 {
@@ -1209,21 +1022,10 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 	assert(i!=m_hEvr->m_SJCSF3dMap.size());
 	if (i==m_hEvr->m_SJCSF3dMap.size())  return;
 	m_psjcF3d = m_hEvr->m_SJCSF3dMap[i].second;
-	m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
-	m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
+// 	m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
+// 	m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 	m_SolidCtrl->SetData(m_psjcF3d);
 	//m_SolidCtrl.SetIsoSurface(m_PreciseSpin->GetValue());
-	RenderFrame();
-	event.Skip(false);
-}
-
-
-/*
- * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL
- */
-
-void FirstMain::OnSpinctrlUpdated( wxSpinEvent& event )
-{	
 	RenderFrame();
 	event.Skip(false);
 }
@@ -1317,63 +1119,6 @@ void FirstMain::OnMENUPreciseToolbarClick( wxCommandEvent& event )
 	this->GetAuiManager().Update();
 	event.Skip(false);
 }
-
-
-
-
-/*
- * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_MarchCubeSet_SPINCTRL
- */
-
-void FirstMain::OnMarchCubeSetSPINCTRLUpdated( wxSpinEvent& event )
-{
-	//m_SolidCtrl.SetIsoSurface(m_MarchCubeSet_spinctrl->GetValue());
-	event.Skip(false);
-}
-
-/*
-* wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
-*/
-
-void FirstMain::OnUseXchipClick( wxCommandEvent& event )
-{
-	m_useXchip = event.IsChecked();
-// 	if (m_useXchip)
-// 		m_Solid.EnableSlice(Solid::USE_X);
-// 	else
-// 		m_Solid.DisableSlice(Solid::USE_X);
-	event.Skip(false);
-}
-
-/*
- * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_YCHIP
- */
-
-void FirstMain::OnUseYchipClick( wxCommandEvent& event )
-{
-	m_useYchip = event.IsChecked();
-// 	if (m_useYchip)
-// 		m_Solid.EnableSlice(Solid::USE_Y);
-// 	else
-// 		m_Solid.DisableSlice(Solid::USE_Y);
-	event.Skip(false);
-}
-
-
-/*
- * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_ZCHIP
- */
-
-void FirstMain::OnUseZchipClick( wxCommandEvent& event )
-{
-	m_useZchip = event.IsChecked();
-// 	if (m_useZchip)
-// 		m_Solid.EnableSlice(Solid::USE_Z);
-// 	else
-// 		m_Solid.DisableSlice(Solid::USE_Z);
-	event.Skip(false);
-}
-
 
 /*
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip

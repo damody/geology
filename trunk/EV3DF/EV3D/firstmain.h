@@ -27,7 +27,6 @@
 #include "wx/frame.h"
 #include "wx/glcanvas.h"
 #include "wx/aui/auibar.h"
-#include "wx/spinctrl.h"
 #include "wx/listctrl.h"
 #include "wx/statusbr.h"
 ////@end includes
@@ -39,7 +38,6 @@
 ////@begin forward declarations
 class wxGLCanvas;
 class wxAuiToolBar;
-class wxSpinCtrl;
 class wxListCtrl;
 class MyTreeCtrl;
 class MyGrid;
@@ -79,20 +77,6 @@ class MyGrid;
 #define ID_BTNCOPY 10003
 #define ID_BTNCUT 10005
 #define ID_BTNPASTE 10006
-#define ID_AUITOOLBAR 10011
-#define ID_USE_XCHIP 10007
-#define ID_LABEL 10012
-#define ID_text_chipX 10048
-#define ID_SLIDER 10004
-#define ID_USE_YCHIP 10069
-#define ID_LABEL1 10013
-#define ID_text_chipY 10049
-#define ID_SLIDER1 10014
-#define ID_USE_ZCHIP 10070
-#define ID_LABEL2 10015
-#define ID_text_chipZ 10050
-#define ID_SLIDER2 10016
-#define ID_ShowTypeCombo 10047
 #define ID_AUITOOLBAR1 10008
 #define ID_LABEL3 10009
 #define ID_XminText 10010
@@ -106,18 +90,7 @@ class MyGrid;
 #define ID_ZminText 10033
 #define ID_LABEL7 10032
 #define ID_ZmaxText 10034
-#define ID_AUITOOLBAR2 10040
-#define ID_LABEL9 10036
-#define ID_MiddleXText 10037
-#define ID_LABEL10 10038
-#define ID_MiddleYText 10039
-#define ID_LABEL11 10041
-#define ID_MiddleZText 10042
-#define ID_AUITOOLBAR3 10057
-#define ID_LABEL12 10058
-#define ID_SPINCTRL 10059
-#define ID_LABEL13 10063
-#define ID_MarchCubeSet_SPINCTRL 10064
+#define ID_ShowTypeCombo 10047
 #define ID_LISTCTRL 10051
 #define ID_STATUSBAR 10065
 #define SYMBOL_FIRSTMAIN_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMAXIMIZE|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
@@ -278,36 +251,6 @@ public:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_BTNPASTE
     void OnBtnpasteClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_XCHIP
-    void OnUseXchipClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_text_chipX
-    void OnTextChipXTextUpdated( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER
-    void OnSliderUpdated( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_YCHIP
-    void OnUseYchipClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_text_chipY
-    void OnTextChipYTextUpdated( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER1
-    void OnSlider1Updated( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_USE_ZCHIP
-    void OnUseZchipClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_text_chipZ
-    void OnTextChipZTextUpdated( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_SLIDER_UPDATED event handler for ID_SLIDER2
-    void OnSlider2Updated( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_ShowTypeCombo
-    void OnShowTypeComboSelected( wxCommandEvent& event );
-
     /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_XminText
     void OnXminTextTextUpdated( wxCommandEvent& event );
 
@@ -326,11 +269,8 @@ public:
     /// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_ZmaxText
     void OnZmaxTextTextUpdated( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL
-    void OnSpinctrlUpdated( wxSpinEvent& event );
-
-    /// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_MarchCubeSet_SPINCTRL
-    void OnMarchCubeSetSPINCTRLUpdated( wxSpinEvent& event );
+    /// wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_ShowTypeCombo
+    void OnShowTypeComboSelected( wxCommandEvent& event );
 
 ////@end FirstMain event handler declarations
 
@@ -409,14 +349,6 @@ public:
     wxAuiManager m_auiManager;
     wxGLCanvas* itemGLCanvas;
     wxAuiToolBar* m_FileEditToolbar;
-    wxAuiToolBar* m_XYZchipEditToolbar;
-    wxTextCtrl* m_text_chipX;
-    wxSlider* m_XSlider;
-    wxTextCtrl* m_text_chipY;
-    wxSlider* m_YSlider;
-    wxTextCtrl* m_text_chipZ;
-    wxSlider* m_ZSlider;
-    wxComboBox* m_ShowTypeCombo;
     wxAuiToolBar* m_BoundEditToolbar;
     wxTextCtrl* m_XminText;
     wxTextCtrl* m_XmaxText;
@@ -424,12 +356,7 @@ public:
     wxTextCtrl* m_YmaxText;
     wxTextCtrl* m_ZminText;
     wxTextCtrl* m_ZmaxText;
-    wxAuiToolBar* m_PositionEditToolbar;
-    wxTextCtrl* m_MiddleXText;
-    wxTextCtrl* m_MiddleYText;
-    wxTextCtrl* m_MiddleZText;
-    wxSpinCtrl* m_PreciseSpin;
-    wxSpinCtrl* m_MarchCubeSet_spinctrl;
+    wxComboBox* m_ShowTypeCombo;
     wxListCtrl* m_ColorList;
     MyTreeCtrl* m_treectrl;
     MyGrid* m_grid;
