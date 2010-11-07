@@ -9,8 +9,6 @@ SolidView::SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc):m_ParentCtrl(Pare
 {
 	vtkSmartNew(m_actor);
 	vtkSmartNew(m_polydataMapper);
-	vtkSmartNew(m_Camera);
-	GetParentCtrl()->m_Renderer->SetActiveCamera(m_Camera);
 	m_ParentDoc = Doc;
 }
 
@@ -27,66 +25,21 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 {
 	m_SEffect = effect;
 	BoxArea_Sptr area = GetParentDoc()->m_area;
-	m_Camera->SetPosition(0, 0, (area->m_numX+area->m_numY+area->m_numZ)/3.0);
-	m_Camera->SetFocalPoint(area->m_numX/2.0, area->m_numY/2.0, area->m_numZ/2.0);
 	switch (m_SEffect->GetType())
 	{
 	case SEffect::BOUNDING_BOX:
 		{
-			vtkOutlineFilter_Sptr bounding_box;
-			vtkSmartNew(bounding_box);
-			bounding_box->SetInput(GetParentDoc()->m_ImageData);
-			m_polydataMapper->SetInputConnection(bounding_box->GetOutputPort());
-			m_actor->SetMapper(m_polydataMapper);
+			Init_BoundingBox();
 		}
 		break;
 	case SEffect::VERTEX:
 		{
-			vtkUnsignedCharArray_Sptr colors;
-			vtkSmartNew_Initialize(colors);
-			colors->SetNumberOfComponents(3);
-			colors->SetName("Colors");
-			vtkLookupTable_Sptr lut;
-			vtkSmartNew(lut);
-			lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
-				GetParentDoc()->m_histogram.GetPersentValue(0.99));
-			lut->Build();
-			int point_size = GetParentDoc()->m_PolyData->GetNumberOfPoints();
-			vtkFloatArray* data_ary = (vtkFloatArray*)(GetParentDoc()->m_PolyData->GetPointData()->GetScalars("value"));
-			for (int i = 0;i < point_size;i++)
-			{
-				double dcolor[3];
-				lut->GetColor(data_ary->GetValue(i), dcolor);
-				unsigned char color[3];
-				for(unsigned int j = 0; j < 3; j++)
-				{
-					color[j] = static_cast<unsigned char>(255.0 * dcolor[j]);
-				}
-				colors->InsertNextTupleValue(color);
-			}
-			
-			vtkVertexGlyphFilter_Sptr vertexGlyphFilter;
-			vtkSmartNew(vertexGlyphFilter);
-			vtkPolyData_Sptr colorpolydata;
-			vtkSmartNew(colorpolydata);
-			colorpolydata->SetPoints(GetParentDoc()->m_PolyData->GetPoints());
-			colorpolydata->GetPointData()->SetScalars(colors);
-
-			vertexGlyphFilter->SetInput(colorpolydata);
-			vertexGlyphFilter->Update();
-			m_polydataMapper->SetInputConnection(vertexGlyphFilter->GetOutputPort());
-			
-			m_polydataMapper->SetLookupTable(lut);
-			m_actor->SetMapper(m_polydataMapper);
+			Init_Vertex();
 		}
 		break;
 	case SEffect::CONTOUR:
 		{
-			vtkContourFilter_Sptr ContourFilter;
-			vtkSmartNew(ContourFilter);
-			ContourFilter->SetInput(GetParentDoc()->m_ImageData);
-			m_polydataMapper->SetInputConnection(ContourFilter->GetOutputPort());
-			m_actor->SetMapper(m_polydataMapper);
+			Init_Contour();
 		}
 		break;
 	case SEffect::AXES:
@@ -96,21 +49,7 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 		break;
 	case SEffect::PLANE_CHIP:
 		{
-			vtkSmartNew(m_ImagePlane);
-			m_ImagePlane->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-			m_ImagePlane->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-			m_ImagePlane->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-			m_ImagePlane->SetInteractor(GetParentCtrl()->m_WindowInteractor);
-			m_ImagePlane->RestrictPlaneToVolumeOn();
-			m_ImagePlane->SetInput(GetParentDoc()->m_ImageData);
-			m_ImagePlane->SetPlaneOrientationToXAxes();
-			vtkLookupTable_Sptr lut;
-			vtkSmartNew(lut);
-			lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
-				GetParentDoc()->m_histogram.GetPersentValue(0.99));
-			lut->Build();
-			m_ImagePlane->SetLookupTable(lut);
-			m_ImagePlane->On();
+			Init_PlaneChip();
 		}
 		break;
 	case SEffect::RULER:
@@ -123,21 +62,9 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 			MESSAGE("not Implementation");
 		}
 		break;
-	case SEffect::VOLUME_RENDER:
+	case SEffect::VOLUME_RENDERING:
 		{
-			MESSAGE("not Implementation");
-			vtkPiecewiseFunction_Sptr PiecewiseFunction;
-			vtkSmartNew(PiecewiseFunction);
-			vtkColorTransferFunction_Sptr ColorTransferFunction;
-			vtkSmartNew(ColorTransferFunction);
-			vtkImageShiftScale_Sptr ImageShiftScale;
-			vtkSmartNew(ImageShiftScale);
-			vtkSmartVolumeMapper_Sptr SmartVolumeMapper;
-			vtkSmartNew(SmartVolumeMapper);
-			vtkVolumeProperty_Sptr VolumeProperty;
-			vtkSmartNew(VolumeProperty);
-			vtkVolume_Sptr Volume;
-			vtkSmartNew(Volume);
+			Init_VolumeRendering();
 		}
 		break;
 	}
@@ -157,4 +84,109 @@ int SolidView::GetVisable()
 int SolidView::GetType()
 {
 	return m_SEffect->m_Type;
+}
+
+void SolidView::Init_BoundingBox()
+{
+	vtkOutlineFilter_Sptr bounding_box;
+	vtkSmartNew(bounding_box);
+	bounding_box->SetInput(GetParentDoc()->m_ImageData);
+	m_polydataMapper->SetInputConnection(bounding_box->GetOutputPort());
+	m_actor->SetMapper(m_polydataMapper);
+}
+
+void SolidView::Init_Vertex()
+{
+	vtkUnsignedCharArray_Sptr colors;
+	vtkSmartNew_Initialize(colors);
+	colors->SetNumberOfComponents(3);
+	colors->SetName("Colors");
+	vtkLookupTable_Sptr lut;
+	vtkSmartNew(lut);
+	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
+		GetParentDoc()->m_histogram.GetPersentValue(0.99));
+	lut->Build();
+	int point_size = GetParentDoc()->m_PolyData->GetNumberOfPoints();
+	vtkFloatArray* data_ary = (vtkFloatArray*)(GetParentDoc()->m_PolyData->GetPointData()->GetScalars("value"));
+	for (int i = 0;i < point_size;i++)
+	{
+		double dcolor[3];
+		lut->GetColor(data_ary->GetValue(i), dcolor);
+		unsigned char color[3];
+		for(unsigned int j = 0; j < 3; j++)
+		{
+			color[j] = static_cast<unsigned char>(255.0 * dcolor[j]);
+		}
+		colors->InsertNextTupleValue(color);
+	}
+	vtkVertexGlyphFilter_Sptr vertexGlyphFilter;
+	vtkSmartNew(vertexGlyphFilter);
+	vtkPolyData_Sptr colorpolydata;
+	vtkSmartNew(colorpolydata);
+	colorpolydata->SetPoints(GetParentDoc()->m_PolyData->GetPoints());
+	colorpolydata->GetPointData()->SetScalars(colors);
+	vertexGlyphFilter->SetInput(colorpolydata);
+	vertexGlyphFilter->Update();
+	m_polydataMapper->SetInputConnection(vertexGlyphFilter->GetOutputPort());			
+	m_polydataMapper->SetLookupTable(lut);
+	m_actor->SetMapper(m_polydataMapper);
+}
+
+void SolidView::Init_Contour()
+{
+	vtkContourFilter_Sptr ContourFilter;
+	vtkSmartNew(ContourFilter);
+	ContourFilter->SetInput(GetParentDoc()->m_ImageData);
+	m_polydataMapper->SetInputConnection(ContourFilter->GetOutputPort());
+	m_actor->SetMapper(m_polydataMapper);
+}
+
+void SolidView::Init_Axes()
+{
+
+}
+
+void SolidView::Init_PlaneChip()
+{
+	vtkSmartNew(m_ImagePlane);
+	m_ImagePlane->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+	m_ImagePlane->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+	m_ImagePlane->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+	m_ImagePlane->SetInteractor(GetParentCtrl()->m_WindowInteractor);
+	m_ImagePlane->RestrictPlaneToVolumeOn();
+	m_ImagePlane->SetInput(GetParentDoc()->m_ImageData);
+	m_ImagePlane->SetPlaneOrientationToXAxes();
+	vtkLookupTable_Sptr lut;
+	vtkSmartNew(lut);
+	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
+		GetParentDoc()->m_histogram.GetPersentValue(0.99));
+	lut->Build();
+	m_ImagePlane->SetLookupTable(lut);
+	m_ImagePlane->On();
+}
+
+void SolidView::Init_Ruler()
+{
+
+}
+
+void SolidView::Init_ContourChip()
+{
+
+}
+
+void SolidView::Init_VolumeRendering()
+{
+	vtkPiecewiseFunction_Sptr PiecewiseFunction;
+	vtkSmartNew(PiecewiseFunction);
+	vtkColorTransferFunction_Sptr ColorTransferFunction;
+	vtkSmartNew(ColorTransferFunction);
+	vtkImageShiftScale_Sptr ImageShiftScale;
+	vtkSmartNew(ImageShiftScale);
+	vtkSmartVolumeMapper_Sptr SmartVolumeMapper;
+	vtkSmartNew(SmartVolumeMapper);
+	vtkVolumeProperty_Sptr VolumeProperty;
+	vtkSmartNew(VolumeProperty);
+	vtkVolume_Sptr Volume;
+	vtkSmartNew(Volume);
 }

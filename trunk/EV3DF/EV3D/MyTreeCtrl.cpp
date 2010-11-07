@@ -417,7 +417,7 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 	}
 	else if (wxstr == wxT("Volume Render"))
 	{
-		SEffect_Sptr Setting = SEffect::New(SEffect::VOLUME_RENDER);
+		SEffect_Sptr Setting = SEffect::New(SEffect::VOLUME_RENDERING);
 		SolidView_Sptr spView = sc->NewSEffect(Setting);
 	}
 	ChangeGrid(mti_data->GetDesc());
