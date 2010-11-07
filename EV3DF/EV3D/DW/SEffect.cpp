@@ -20,7 +20,7 @@ SEffect_Sptr SEffect::New( int type )
 		res = SEffect_Sptr(new PlaneChip_Setting);		
 	case CONTOUR_CHIP:
 		res = SEffect_Sptr(new ContourChip_Setting);		
-	case VOLUME_RENDER:
+	case VOLUME_RENDERING:
 		res = SEffect_Sptr(new VolumeRender_Setting);		
 	}
 	res->m_Type = type;

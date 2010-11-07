@@ -137,7 +137,6 @@ class SJCField3d {
   // Output operator  
   friend std::ostream& operator<<(std::ostream &o, const SJCField3d &vf);
 
- protected:
   uint    	m_uNX;       // Actual data size. Addressable might differ.
   uint    	m_uNY;       // Which is the actual sample points in each
   uint    	m_uNZ;       // Dimension

@@ -20,6 +20,14 @@ public:
 	void		SetEffect(SEffect_Sptr setting);
 	void		Update();
 	void		SetColorTable();
+	void		Init_BoundingBox();
+	void		Init_Vertex();
+	void		Init_Contour();
+	void		Init_Axes();
+	void		Init_PlaneChip();
+	void		Init_Ruler();
+	void		Init_ContourChip();
+	void		Init_VolumeRendering();
 private:
 	SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc);
 private:
@@ -28,7 +36,6 @@ private:
 	vtkActor_Sptr		m_actor;
 	vtkPolyDataMapper_Sptr	m_polydataMapper;
 	SEffect_Sptr		m_SEffect;
-	vtkCamera_Sptr		m_Camera;
 	vtkImagePlaneWidget_Sptr m_ImagePlane;
 private:	
 	friend SolidCtrl;

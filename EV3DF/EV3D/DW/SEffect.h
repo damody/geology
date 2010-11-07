@@ -17,7 +17,7 @@ public:
 		PLANE_CHIP,
 		RULER,
 		CONTOUR_CHIP,
-		VOLUME_RENDER
+		VOLUME_RENDERING
 	};
 public:
 	bool GetVisable() {return m_Visable;}

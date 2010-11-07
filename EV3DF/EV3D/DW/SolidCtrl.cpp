@@ -4,15 +4,11 @@
 #include "SolidView.h"
 #include "SEffect.h"
 
-SolidDoc_Sptr	SolidCtrl::NewDoc()
+SolidDoc_Sptr	SolidCtrl::NewDoc() // 新資料集
 {
-	BoxArea_Sptr area(new BoxArea);
-	area->m_rangeX = m_sf3d->m_dLengthX;
-	area->m_rangeY = m_sf3d->m_dLengthY;
-	area->m_rangeZ = m_sf3d->m_dLengthZ;
-	area->m_numX = m_sf3d->NumX();
-	area->m_numY = m_sf3d->NumY();
-	area->m_numZ = m_sf3d->NumZ();
+	BoxArea_Sptr area;
+	shareNew(area);
+	*area = *m_area;
 	SolidDoc_Sptr tmpPtr(new SolidDoc(area));
 	tmpPtr->SetPolyData(m_polydata);
 	if (m_imagedata.GetPointer() != 0)
@@ -25,7 +21,7 @@ SolidDoc_Sptr	SolidCtrl::NewDoc()
 	return tmpPtr;
 }
 
-SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc )
+SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc ) // 新的資料虛擬化View
 {
 	SolidView_Sptr tmpPtr(new SolidView(this, doc));
 	tmpPtr->SetEffect(effect);
@@ -33,15 +29,16 @@ SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc )
 	return tmpPtr;
 }
 
-int SolidCtrl::SetData( SJCScalarField3d* sf3d )
+int SolidCtrl::SetData( SJCScalarField3d* sf3d ) // 設定來源資料
 {
-	vtkSmartNew(m_Axes_widget);
-	vtkSmartNew(m_Axes);
-	m_Axes_widget->SetOutlineColor( 0.8300, 0.6700, 0.5300 );
-	m_Axes_widget->SetOrientationMarker( m_Axes );
-	m_Axes_widget->SetInteractor( m_WindowInteractor );
-	m_Axes_widget->On();
 	m_sf3d = sf3d;
+	shareNew(m_area);
+	m_area->m_rangeX = m_sf3d->m_dLengthX;
+	m_area->m_rangeY = m_sf3d->m_dLengthY;
+	m_area->m_rangeZ = m_sf3d->m_dLengthZ;
+	m_area->m_numX = m_sf3d->NumX();
+	m_area->m_numY = m_sf3d->NumY();
+	m_area->m_numZ = m_sf3d->NumZ();
 	// 先載入資料
 	vtkSmartNew_Initialize(m_polydata);
 	vtkSmartNew_Initialize(m_imagedata);
@@ -83,7 +80,6 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d )
 	m_polydata->SetPoints(points);
 	m_polydata->GetPointData()->SetScalars(point_array);
 	// 把資料跟bounding box建出來
-	
 	SolidDoc_Sptr spDoc = NewDoc();
 	spDoc->SetPolyData(m_polydata);
 	if (isGrided)
@@ -91,6 +87,8 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d )
 		spDoc->SetImageData(m_imagedata);
 	}
 	spDoc->m_histogram = Histogramd(sf3d->begin(), sf3d->size());
+	m_Camera->SetPosition(0, 0, (m_area->m_numX+m_area->m_numY+m_area->m_numZ)/3.0);
+	m_Camera->SetFocalPoint(m_area->m_numX/2.0, m_area->m_numY/2.0, m_area->m_numZ/2.0);
 	return 0;
 }
 
@@ -104,4 +102,10 @@ SolidView_Sptr SolidCtrl::NewSEffect( SEffect_Sptr effect )
 	}
 	SolidView_Sptr spView = NewView(effect, spDoc);
 	return spView;
+}
+
+void SolidCtrl::ReSetViewDirection()
+{
+	m_Camera->SetPosition(0, 0, (m_area->m_numX+m_area->m_numY+m_area->m_numZ)/3.0);
+	m_Camera->SetFocalPoint(m_area->m_numX/2.0, m_area->m_numY/2.0, m_area->m_numZ/2.0);
 }
