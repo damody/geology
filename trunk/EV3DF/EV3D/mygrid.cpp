@@ -19,7 +19,7 @@
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
 #endif
-
+#include "DW/SolidDefine.h"
 ////@begin includes
 ////@end includes
 
@@ -43,8 +43,9 @@ IMPLEMENT_DYNAMIC_CLASS( MyGrid, wxGrid )
 BEGIN_EVENT_TABLE( MyGrid, wxGrid )
 
 ////@begin MyGrid event table entries
-    EVT_GRID_CELL_LEFT_CLICK( MyGrid::OnCellLeftClick )
-    EVT_GRID_CELL_RIGHT_CLICK( MyGrid::OnCellRightClick )
+    EVT_GRID_CELL_CHANGE( MyGrid::OnCellChange )
+    EVT_GRID_CMD_CELL_CHANGE( ID_GRID, MyGrid::OnGridCellChange )
+    EVT_KEY_DOWN( MyGrid::OnKeyDown )
 
 ////@end MyGrid event table entries
 
@@ -148,30 +149,8 @@ wxIcon MyGrid::GetIconResource( const wxString& name )
 }
 
 
-/*
- * wxEVT_GRID_CELL_LEFT_CLICK event handler for ID_GRID
- */
-
-void MyGrid::OnCellLeftClick( wxGridEvent& event )
-{
-////@begin wxEVT_GRID_CELL_LEFT_CLICK event handler for ID_GRID in MyGrid.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_GRID_CELL_LEFT_CLICK event handler for ID_GRID in MyGrid. 
-}
 
 
-/*
- * wxEVT_GRID_CELL_RIGHT_CLICK event handler for ID_GRID
- */
-
-void MyGrid::OnCellRightClick( wxGridEvent& event )
-{
-////@begin wxEVT_GRID_CELL_RIGHT_CLICK event handler for ID_GRID in MyGrid.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_GRID_CELL_RIGHT_CLICK event handler for ID_GRID in MyGrid. 
-}
 
 void MyGrid::ConvertTo_BoundingBox()
 {
@@ -287,3 +266,45 @@ void MyGrid::ReCreateGrid( int Cols, int Rows )
 	DeleteGrid();
 	AppendGrid( Cols, Rows );
 }
+
+
+/*
+ * wxEVT_GRID_CELL_CHANGED event handler for ID_GRID
+ */
+
+void MyGrid::OnCellChange( wxGridEvent& event )
+{
+////@begin wxEVT_GRID_CELL_CHANGED event handler for ID_GRID in MyGrid.
+    // Before editing this code, remove the block markers.
+	MESSAGE("OnCellChange");
+    event.Skip();
+////@end wxEVT_GRID_CELL_CHANGED event handler for ID_GRID in MyGrid. 
+}
+
+
+/*
+ * wxEVT_KEY_DOWN event handler for ID_GRID
+ */
+
+void MyGrid::OnKeyDown( wxKeyEvent& event )
+{
+////@begin wxEVT_KEY_DOWN event handler for ID_GRID in MyGrid.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_KEY_DOWN event handler for ID_GRID in MyGrid. 
+}
+
+
+/*
+ * wxEVT_GRID_CMD_CELL_CHANGE event handler for ID_GRID
+ */
+
+void MyGrid::OnGridCellChange( wxGridEvent& event )
+{
+////@begin wxEVT_GRID_CMD_CELL_CHANGE event handler for ID_GRID in MyGrid.
+    // Before editing this code, remove the block markers.
+	MESSAGE("OnGridCellChange");
+    event.Skip();
+////@end wxEVT_GRID_CMD_CELL_CHANGE event handler for ID_GRID in MyGrid. 
+}
+
