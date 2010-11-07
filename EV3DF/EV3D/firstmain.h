@@ -385,6 +385,7 @@ public:
 	    SJCScalarField3d*	m_psjcF3d;
     public:
 	    SolidCtrl_Sptr	m_SolidCtrl;
+	    SolidView_Sptr	m_ActiveView;
 };
 
 #endif    // _FIRSTMAIN_H_

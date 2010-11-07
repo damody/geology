@@ -70,11 +70,14 @@ public:
 
 ////@begin MyGrid event handler declarations
 
-    /// wxEVT_GRID_CELL_LEFT_CLICK event handler for ID_GRID
-    void OnCellLeftClick( wxGridEvent& event );
+    /// wxEVT_GRID_CELL_CHANGE event handler for ID_GRID
+    void OnCellChange( wxGridEvent& event );
 
-    /// wxEVT_GRID_CELL_RIGHT_CLICK event handler for ID_GRID
-    void OnCellRightClick( wxGridEvent& event );
+    /// wxEVT_GRID_CMD_CELL_CHANGE event handler for ID_GRID
+    void OnGridCellChange( wxGridEvent& event );
+
+    /// wxEVT_KEY_DOWN event handler for ID_GRID
+    void OnKeyDown( wxKeyEvent& event );
 
 ////@end MyGrid event handler declarations
 	void ConvertTo_BoundingBox();
