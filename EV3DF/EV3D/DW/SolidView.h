@@ -18,6 +18,7 @@ public:
 	SolidDoc_Sptr	GetParentDoc(){return m_ParentDoc;}
 	SolidCtrl*	GetParentCtrl(){return m_ParentCtrl;}
 	void		SetEffect(SEffect_Sptr setting);
+	SEffect_Sptr	GetEffect() {return m_SEffect;}
 	void		Update();
 	void		SetColorTable();
 	void		Init_BoundingBox();
@@ -37,6 +38,7 @@ private:
 	vtkPolyDataMapper_Sptr	m_polydataMapper;
 	SEffect_Sptr		m_SEffect;
 	vtkImagePlaneWidget_Sptr m_ImagePlane;
+	vtkContourFilter_Sptr	m_ContourFilter;
 private:	
 	friend SolidCtrl;
 	friend SolidDoc;

@@ -99,7 +99,69 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 
 void SolidView::Update()
 {
-
+	switch (m_SEffect->GetType())
+	{
+	case SEffect::BOUNDING_BOX:
+		{
+			Init_BoundingBox();
+		}
+		break;
+	case SEffect::VERTEX:
+		{
+			Init_Vertex();
+		}
+		break;
+	case SEffect::CONTOUR:
+		{
+			Init_Contour();
+		}
+		break;
+	case SEffect::AXES:
+		{
+			MESSAGE("not Implementation");
+		}
+		break;
+	case SEffect::PLANE_CHIP:
+		{
+			double numvalue;
+			PlaneChip_Setting* setting = (PlaneChip_Setting*)m_SEffect.get();
+			switch (setting->m_Axes)
+			{
+			case 0:
+				numvalue = GetParentDoc()->m_area->m_numX;
+				m_ImagePlane->SetPlaneOrientationToXAxes();
+				break;
+			case 1:
+				numvalue = GetParentDoc()->m_area->m_numY;
+				m_ImagePlane->SetPlaneOrientationToYAxes();
+				break;
+			case 2:
+				numvalue = GetParentDoc()->m_area->m_numZ;
+				m_ImagePlane->SetPlaneOrientationToZAxes();
+				break;
+			}
+			m_ImagePlane->SetSlicePosition(setting->m_Percent * numvalue / 100.0);
+			setting->m_Percent = m_ImagePlane->GetSlicePosition()/numvalue*100.0;
+		}
+		break;
+	case SEffect::RULER:
+		{
+			MESSAGE("not Implementation");
+		}
+		break;
+	case SEffect::CONTOUR_CHIP:
+		{
+			MESSAGE("not Implementation");
+		}
+		break;
+	case SEffect::VOLUME_RENDERING:
+		{
+			Init_VolumeRendering();
+		}
+		break;
+	}
+	SetVisable(m_SEffect->m_Visable);
+	GetParentCtrl()->Render();
 }
 
 int SolidView::GetVisable()
@@ -160,10 +222,9 @@ void SolidView::Init_Vertex()
 
 void SolidView::Init_Contour()
 {
-	vtkContourFilter_Sptr ContourFilter;
-	vtkSmartNew(ContourFilter);
-	ContourFilter->SetInput(GetParentDoc()->m_ImageData);
-	m_polydataMapper->SetInputConnection(ContourFilter->GetOutputPort());
+	vtkSmartNew(m_ContourFilter);
+	m_ContourFilter->SetInput(GetParentDoc()->m_ImageData);
+	m_polydataMapper->SetInputConnection(m_ContourFilter->GetOutputPort());
 	m_actor->SetMapper(m_polydataMapper);
 }
 

@@ -150,7 +150,7 @@ void MyTreeCtrl::CreateControls()
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("Isosurface Contour");
+	item_str = wxT(" Contour");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
@@ -268,7 +268,17 @@ void MyTreeCtrl::CreateImageList( int size /*= 16*/ )
 void MyTreeCtrl::OnTreectrlSelChanging( wxTreeEvent& event )
 {
 	SetLastItem(event.GetItem());
-	event.Skip();
+	wxTreeItemId wxid = m_lastItem;
+	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(wxid);
+	if (mti_data->GetView().get() != 0) // 如果點的選項有view的話設定m_ActiveView
+		((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
+	while (!ChangeGrid() && wxid != GetRootItem())
+	{
+		wxid = GetItemParent(wxid);
+		mti_data = (MyTreeItemData*)GetItemData(wxid);
+		if (mti_data->GetView().get() != 0) // 如果點的選項有view的話設定m_ActiveView
+			((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
+	}
 }
 
 
@@ -394,19 +404,19 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 		SEffect_Sptr Setting = SEffect::New(SEffect::VERTEX);
 		spView = sc->NewSEffect(Setting);
 	}
-	else if (wxstr == wxT("Isosurface Contour"))
+	else if (wxstr == wxT(" Contour"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR);
 		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Axes"))
 	{
-		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR);
+		SEffect_Sptr Setting = SEffect::New(SEffect::AXES);
 		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Ruler"))
 	{
-		SEffect_Sptr Setting = SEffect::New(SEffect::AXES);
+		SEffect_Sptr Setting = SEffect::New(SEffect::RULER);
 		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Plane Chip"))
@@ -427,9 +437,11 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 	MyTreeItemData* new_data = (MyTreeItemData*)GetItemData(id);
 	new_data->SetView(spView);
 	((FirstMain*)GetParent())->m_ActiveView = spView;
-	ChangeGrid(mti_data->GetDesc());
-	Expand(m_lastItem);
-	event.Skip();
+	wxTreeItemId expandid = m_lastItem;
+	m_lastItem = id;
+	ChangeGrid();
+	Expand(expandid);
+	spView->Update();
 }
 
 void MyTreeCtrl::OnMenu_DeleteItem( wxCommandEvent& event )
@@ -461,59 +473,25 @@ void MyTreeCtrl::OnTreectrlSelChanged( wxTreeEvent& event )
 	SetLastItem(event.GetItem());
 	wxTreeItemId wxid = m_lastItem;
 	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(wxid);
-	while (!ChangeGrid(mti_data->GetDesc()) && wxid != GetRootItem())
+	if (mti_data->GetView().get() != 0) // 如果點的選項有view的話設定m_ActiveView
+		((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
+	while (!ChangeGrid() && wxid != GetRootItem())
 	{
 		wxid = GetItemParent(wxid);
 		mti_data = (MyTreeItemData*)GetItemData(wxid);
-		((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
+		if (mti_data->GetView().get() != 0) // 如果點的選項有view的話設定m_ActiveView
+			((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
 	}
-	event.Skip();
+	ChangeGrid();
 }
 
-bool MyTreeCtrl::ChangeGrid( const wxString& wxstr )
+bool MyTreeCtrl::ChangeGrid()
 {
-	if (wxstr == wxT("Bounding Box"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_BoundingBox();
-		return true;
-	}
-	else if (wxstr == wxT("Vertex"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_Vertex();
-		return true;
-	}
-	else if (wxstr == wxT("Isosurface Contour"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_IsosurfaceContour();
-		return true;
-	}
-	else if (wxstr == wxT("Axes"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_Axes();
-		return true;
-	}
-	else if (wxstr == wxT("Ruler"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_Ruler();
-		return true;
-	}
-	else if (wxstr == wxT("Plane Chip"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_PlaneChip();
-		return true;
-	}
-	else if (wxstr == wxT("Contour Chip"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_ContourChip();
-		return true;
-	}
-	else if (wxstr == wxT("Volume Render"))
-	{
-		((FirstMain*)GetParent())->m_grid->ConvertTo_VolumeRender();
-		return true;
-	}
-	else
-		return false;
+	FirstMain* mainframe = (FirstMain*)GetParent();
+	wxTreeItemId itemid = GetItemParent(m_lastItem);
+	if (itemid) // 有item的話才做
+		MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(itemid);
+	return ((FirstMain*)GetParent())->m_grid->ChangeGrid(mainframe->m_ActiveView);
 }
 
 
@@ -523,15 +501,18 @@ bool MyTreeCtrl::ChangeGrid( const wxString& wxstr )
 
 void MyTreeCtrl::OnTreectrlItemActivated( wxTreeEvent& event )
 {
+	SetLastItem(event.GetItem());
 	wxTreeItemId wxid = m_lastItem;
 	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(wxid);
-	while (!ChangeGrid(mti_data->GetDesc()) && wxid != GetRootItem())
+	if (mti_data->GetView().get() != 0) // 如果點的選項有view的話設定m_ActiveView
+		((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
+	while (!ChangeGrid() && wxid != GetRootItem())
 	{
 		wxid = GetItemParent(wxid);
 		mti_data = (MyTreeItemData*)GetItemData(wxid);
-		((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
+		if (mti_data->GetView().get() != 0) // 如果點的選項有view的話設定m_ActiveView
+			((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
 	}
-	event.Skip();
 }
 
 void MyTreeCtrl::RmAllAddItem()
@@ -554,3 +535,6 @@ void MyTreeItemData::RmView()
 	SolidView_Sptr tmp;
 	tmp.swap(m_View);
 }
+
+
+

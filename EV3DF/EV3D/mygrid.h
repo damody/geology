@@ -82,7 +82,7 @@ public:
 ////@end MyGrid event handler declarations
 	void ConvertTo_BoundingBox();
 	void ConvertTo_Vertex();
-	void ConvertTo_IsosurfaceContour();
+	void ConvertTo_Contour();
 	void ConvertTo_Axes();
 	void ConvertTo_Ruler();
 	void ConvertTo_PlaneChip();
@@ -91,6 +91,8 @@ public:
 	void DeleteGrid();
 	void AppendGrid(int Cols, int Rows);
 	void ReCreateGrid(int Cols, int Rows);
+	void ChangeToView(int col, int row, const wxString& data);
+	bool ChangeGrid(SolidView_Sptr& view);
 ////@begin MyGrid member function declarations
 
     /// Retrieves bitmap resources
