@@ -23,11 +23,13 @@
 ////@begin includes
 #include "wx/imaglist.h"
 ////@end includes
-
+#include <algorithm>
 #include "mytreectrl.h"
 #include "firstmain.h"
 #include "mygrid.h"
 #include "DW/SEffect.h"
+#include "DW/SolidView.h"
+#include "DW/SolidDefine.h"
 
 ////@begin XPM images
 ////@end XPM images
@@ -375,51 +377,56 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 	wxString item_str = wxT("item");
 	int i = GetChildrenCount( m_lastItem, false );
 	item_str << wxT(" ") << i;
-	wxTreeItemId id = AppendItem(m_lastItem, item_str, TreeCtrlIcon_File, TreeCtrlIcon_File+1,
+	const wxTreeItemId id = AppendItem(m_lastItem, item_str, TreeCtrlIcon_File, TreeCtrlIcon_File+1,
 		new MyTreeItemData(item_str));
+	m_newIds.push_back(id);
 	MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(m_lastItem);
 	SolidCtrl_Sptr& sc = ((FirstMain*)GetParent())->m_SolidCtrl;
 	wxString wxstr = mti_data->GetDesc();
+	SolidView_Sptr spView;
 	if (wxstr == wxT("Bounding Box"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::BOUNDING_BOX);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Vertex"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::VERTEX);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Isosurface Contour"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Axes"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Ruler"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::AXES);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Plane Chip"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::PLANE_CHIP);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Contour Chip"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR_CHIP);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Volume Render"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::VOLUME_RENDERING);
-		SolidView_Sptr spView = sc->NewSEffect(Setting);
+		spView = sc->NewSEffect(Setting);
 	}
+	MyTreeItemData* new_data = (MyTreeItemData*)GetItemData(id);
+	new_data->SetView(spView);
+	((FirstMain*)GetParent())->m_ActiveView = spView;
 	ChangeGrid(mti_data->GetDesc());
 	Expand(m_lastItem);
 	event.Skip();
@@ -433,7 +440,14 @@ void MyTreeCtrl::OnMenu_DeleteItem( wxCommandEvent& event )
 		add_dialog.ShowModal();
 	}
 	else
+	{
+		wxTreeItemIds::iterator it =  find(m_newIds.begin(), m_newIds.end(), m_lastItem);
+		m_newIds.erase(it);
+		MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(m_lastItem);
+		((FirstMain*)GetParent())->m_SolidCtrl->RmView(mti_data->GetView());
+		mti_data->RmView();
 		Delete(m_lastItem);
+	}
 	event.Skip();
 }
 
@@ -451,6 +465,7 @@ void MyTreeCtrl::OnTreectrlSelChanged( wxTreeEvent& event )
 	{
 		wxid = GetItemParent(wxid);
 		mti_data = (MyTreeItemData*)GetItemData(wxid);
+		((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
 	}
 	event.Skip();
 }
@@ -514,7 +529,28 @@ void MyTreeCtrl::OnTreectrlItemActivated( wxTreeEvent& event )
 	{
 		wxid = GetItemParent(wxid);
 		mti_data = (MyTreeItemData*)GetItemData(wxid);
+		((FirstMain*)GetParent())->m_ActiveView = mti_data->GetView();
 	}
 	event.Skip();
 }
 
+void MyTreeCtrl::RmAllAddItem()
+{
+	for (wxTreeItemIds::iterator it = m_newIds.begin();
+		it != m_newIds.end();
+		it++)
+	{
+		MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(*it);
+		mti_data->GetView()->SetVisable(false);
+		Delete(*it);
+	}
+	m_newIds.clear();
+}
+
+
+void MyTreeItemData::RmView()
+{
+	m_View->SetVisable(false);
+	SolidView_Sptr tmp;
+	tmp.swap(m_View);
+}

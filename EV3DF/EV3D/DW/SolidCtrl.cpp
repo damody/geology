@@ -31,6 +31,7 @@ SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc ) //
 
 int SolidCtrl::SetData( SJCScalarField3d* sf3d ) // 設定來源資料
 {
+	RmAllView();
 	m_sf3d = sf3d;
 	shareNew(m_area);
 	m_area->m_rangeX = m_sf3d->m_dLengthX;
@@ -108,4 +109,51 @@ void SolidCtrl::ReSetViewDirection()
 {
 	m_Camera->SetPosition(0, 0, (m_area->m_numX+m_area->m_numY+m_area->m_numZ)/3.0);
 	m_Camera->SetFocalPoint(m_area->m_numX/2.0, m_area->m_numY/2.0, m_area->m_numZ/2.0);
+}
+
+void SolidCtrl::RmView( SolidView_Sptr view )
+{
+	for (SolidView_Sptrs::iterator it = m_SolidViewPtrs.begin();
+		it != m_SolidViewPtrs.end();
+		it++)
+	{
+		if (*it == view)
+		{
+			(*it)->SetVisable(false);
+			m_SolidViewPtrs.erase(it);
+			SolidView_Sptr tmp;
+			tmp.swap(view);
+			break;
+		}
+	}
+}
+
+void SolidCtrl::RmDoc( SolidDoc_Sptr doc )
+{
+	for (SolidDoc_Sptrs::iterator it = m_SolidDocPtrs.begin();
+		it != m_SolidDocPtrs.end();
+		it++)
+	{
+		if (*it == doc)
+		{
+			m_SolidDocPtrs.erase(it);
+			doc->RmAllView();
+			SolidDoc_Sptr tmp;
+			tmp.swap(doc);
+			break;
+		}
+	}
+}
+
+void SolidCtrl::RmAllView()
+{
+	for (SolidView_Sptrs::iterator it = m_SolidViewPtrs.begin();
+		it != m_SolidViewPtrs.end();
+		it++)
+	{
+		(*it)->SetVisable(false);
+		SolidView_Sptr tmp;
+		tmp.swap(*it);
+	}
+	m_SolidViewPtrs.clear();
 }
