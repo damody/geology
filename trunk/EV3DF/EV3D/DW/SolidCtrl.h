@@ -47,9 +47,10 @@ public:
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
 	SJCScalarField3d	*m_sf3d;
 public:
-	int SetData(SJCScalarField3d* sf3d);
-	int RmView(SolidView_Sptr& view);
-	int RmDoc(SolidDoc_Sptr& doc);
+	int  SetData(SJCScalarField3d* sf3d);
+	void RmAllView();
+	void RmView(SolidView_Sptr view);
+	void RmDoc(SolidDoc_Sptr doc);
 	void ReSetViewDirection();
 	void Render()
 	{

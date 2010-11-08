@@ -626,6 +626,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DW\Color4.h"
+				>
+			</File>
+			<File
 				RelativePath=".\DW\ColorTable.h"
 				>
 			</File>

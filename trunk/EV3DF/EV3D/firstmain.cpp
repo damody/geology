@@ -749,6 +749,7 @@ void FirstMain::OpenFile()
 			}
 			m_ShowTypeCombo->SetSelection(0);
 			m_psjcF3d = m_hEvr->m_SJCSF3dMap[3].second;
+			m_treectrl->RmAllAddItem();
 			m_SolidCtrl->SetData(m_psjcF3d); // 設定第一順位的資料來顯示
 			m_XminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
 			m_XmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmax).c_str()));

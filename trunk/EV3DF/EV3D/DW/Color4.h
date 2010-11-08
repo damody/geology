@@ -15,24 +15,5 @@
 #pragma warning(disable :4201)
 #include <memory>
 
-struct Color4 {
-public:
-	union  {
-		struct  {
-			unsigned char r,g,b,a;
-		};
-		unsigned char c[4];
-	};
-	Color4(){}
-	Color4(unsigned char ir,unsigned char ig,unsigned char ib,unsigned char ia):a(ia),r(ir),g(ig),b(ib){}
-	Color4 GetMixColor(const Color4 & ic, float percent ) // this*(1-percent) + input*percent
-	{
-		Color4 res = Color4((unsigned char)(ic.r*percent+r*(1-percent)),
-			unsigned char(ic.g*percent+g*(1-percent)),
-			unsigned char(ic.b*percent+b*(1-percent)),
-			unsigned char(ic.a*percent+a*(1-percent)));
-		return res;
-	}
-};
 
 #endif  //_COLOR4_H

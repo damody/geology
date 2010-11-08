@@ -16,7 +16,8 @@
 /*!
  * Includes
  */
-
+#include <vector>
+#include "DW\SolidDefine.h"
 ////@begin includes
 #include "wx/treectrl.h"
 ////@end includes
@@ -126,12 +127,15 @@ public:
 	void CreateImageList(int size = 16);
 	void ShowMenu(wxTreeItemId id, const wxPoint& pt);
 	bool ChangeGrid(const wxString& wxstr);
+	void RmAllAddItem();
 ////@begin MyTreeCtrl member variables
 ////@end MyTreeCtrl member variables
 	int          m_imageSize;               // current size of images
 	bool         m_reverseSort;             // flag for OnCompareItems
 	wxTreeItemId m_lastItem,                // for OnEnsureVisible()
 		m_draggedItem;             // item being dragged right now
+	typedef std::vector<wxTreeItemId> wxTreeItemIds;
+	wxTreeItemIds m_newIds;
 };
 
 class MyTreeItemData : public wxTreeItemData
@@ -141,9 +145,16 @@ public:
 
 	void ShowInfo(wxTreeCtrl *tree);
 	const wxString& GetDesc() const { return m_desc; }
-
+	SolidView_Sptr GetView() {return m_View;}
+	void SetView(SolidView_Sptr _view) 
+	{
+		assert(_view.get() != 0);
+		m_View = _view;
+	}
+	void RmView();
 private:
-	wxString m_desc;
+	wxString	m_desc;
+	SolidView_Sptr	m_View;
 };
 
 /* XPM */

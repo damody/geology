@@ -16,9 +16,35 @@ void SolidView::SetVisable( bool show )
 {
 	m_SEffect->m_Visable = show;
 	if (show)
-		GetParentCtrl()->m_Renderer->AddActor(m_actor);
+	{
+		switch (m_SEffect->GetType())
+		{
+		case SEffect::PLANE_CHIP:
+			m_ImagePlane->On();
+			break;
+		case SEffect::RULER:
+			break;
+		case SEffect::VOLUME_RENDERING:
+			break;
+		default:
+			GetParentCtrl()->m_Renderer->AddActor(m_actor);
+		}
+	}
 	else
-		GetParentCtrl()->m_Renderer->RemoveActor(m_actor);
+	{
+		switch (m_SEffect->GetType())
+		{
+		case SEffect::PLANE_CHIP:
+			m_ImagePlane->Off();
+			break;
+		case SEffect::RULER:
+			break;
+		case SEffect::VOLUME_RENDERING:
+			break;
+		default:
+			GetParentCtrl()->m_Renderer->RemoveActor(m_actor);
+		}
+	}
 }
 
 void SolidView::SetEffect( SEffect_Sptr effect )
