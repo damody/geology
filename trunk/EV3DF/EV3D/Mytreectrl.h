@@ -126,7 +126,7 @@ public:
 	void OnMenu_DeleteItem(wxCommandEvent& event);
 	void CreateImageList(int size = 16);
 	void ShowMenu(wxTreeItemId id, const wxPoint& pt);
-	bool ChangeGrid(const wxString& wxstr);
+	bool ChangeGrid();
 	void RmAllAddItem();
 ////@begin MyTreeCtrl member variables
 ////@end MyTreeCtrl member variables

@@ -199,7 +199,7 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 	
 }
 
-void Solid::SetIsoSurface( double isolevel, bool show /*= true*/ )
+void Solid::Set( double isolevel, bool show /*= true*/ )
 {
 	// set data
 	m_contour->SetInput(m_ImageData);

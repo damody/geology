@@ -22,7 +22,7 @@ public:
 	// set data to mathcube
 	void SetData(SJCScalarField3d* sf3d);
 	void AddEffect();
-	void SetIsoSurface(double isolevel, bool show = true);
+	void Set(double isolevel, bool show = true);
 	void SetSlice(AXIS axes, double percent);
 	void EnableSlice(AXIS axes);
 	void DisableSlice(AXIS axes);
@@ -45,7 +45,7 @@ private:
 	vtkSmartPointer<vtkRenderWindow>	m_RenderWindow; // use by flow
 	vtkSmartPointer<vtkRenderWindowInteractor> m_iren; // use by flow
 	vtkSmartPointer<vtkVertexGlyphFilter>	m_VertexFilter; // show vertex
-	vtkSmartPointer<vtkContourFilter>	m_contour; // show isosurface
+	vtkSmartPointer<vtkContourFilter>	m_contour; // show 
 	vtkSmartPointer<vtkPolyDataMapper>	m_contour_mapper, m_vertex_mapper, m_outlineMapper;
 	vtkSmartPointer<vtkActor>		m_contour_actor, m_vertex_actor, m_outlineActor;
 	vtkSmartPointer<vtkLookupTable>		m_lut, m_chiplut;

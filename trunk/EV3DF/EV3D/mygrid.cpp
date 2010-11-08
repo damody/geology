@@ -20,11 +20,13 @@
 #include "wx/wx.h"
 #endif
 #include "DW/SolidDefine.h"
+#include "DW/SEffect.h"
+#include "DW/SolidView.h"
+#include "firstmain.h"
 ////@begin includes
 ////@end includes
 
 #include "mygrid.h"
-
 ////@begin XPM images
 ////@end XPM images
 
@@ -163,7 +165,7 @@ void MyGrid::ConvertTo_BoundingBox()
 
 void MyGrid::ConvertTo_Vertex()
 {
-	ReCreateGrid(1,3);
+	ReCreateGrid(3,1);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
 	SetRowLabelValue(i++, wxT("MaxValue"));		// 大於這個值才顯示
@@ -171,9 +173,9 @@ void MyGrid::ConvertTo_Vertex()
 	SetRowLabelValue(i++, wxT("Size"));		// 點的顯示大小
 }
 
-void MyGrid::ConvertTo_IsosurfaceContour()
+void MyGrid::ConvertTo_Contour()
 {
-	ReCreateGrid(1,2);
+	ReCreateGrid(2,1);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
 	SetRowLabelValue(i++, wxT("ContourValue"));	// 要做出切面的值
@@ -182,7 +184,7 @@ void MyGrid::ConvertTo_IsosurfaceContour()
 
 void MyGrid::ConvertTo_Axes()
 {
-	ReCreateGrid(1,4);
+	ReCreateGrid(4,1);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
 	SetRowLabelValue(i++, wxT("ThickDegree"));	// 軸向的粗細
@@ -193,7 +195,7 @@ void MyGrid::ConvertTo_Axes()
 
 void MyGrid::ConvertTo_Ruler()
 {
-	ReCreateGrid(1,7);
+	ReCreateGrid(7,1);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
 	SetRowLabelValue(i++, wxT("Target"));		// 量尺的對象
@@ -207,7 +209,7 @@ void MyGrid::ConvertTo_Ruler()
 
 void MyGrid::ConvertTo_PlaneChip()
 {
-	ReCreateGrid(1,2);
+	ReCreateGrid(2,1);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
 	SetRowLabelValue(i, wxT("Axes"));
@@ -218,14 +220,14 @@ void MyGrid::ConvertTo_PlaneChip()
 		_T("Z Axes"),
 	};
 	SetCellEditor(i, 0, new wxGridCellChoiceEditor(WXSIZEOF(choices), choices));
-	SetCellValue(i, 0, choices[0]);
+	SetCellValue(i++, 0, choices[0]);
+	SetRowLabelValue(i, wxT("Percent"));
 	SetCellValue(i++, 0, wxT("0"));
-	SetRowLabelValue(i++, wxT("Percent"));
 }
 
 void MyGrid::ConvertTo_ContourChip()
 {
-	ReCreateGrid(1,3);
+	ReCreateGrid(3,1);
 	SetColLabelValue(0, wxT("Value"));
 	int i=0;
 	SetRowLabelValue(i++, wxT("Axes"));
@@ -253,7 +255,7 @@ void MyGrid::DeleteGrid()
 	}
 }
 
-void MyGrid::AppendGrid( int Cols, int Rows )
+void MyGrid::AppendGrid(int Rows, int Cols)
 {
 	while (Cols--)
 		AppendCols();
@@ -261,10 +263,10 @@ void MyGrid::AppendGrid( int Cols, int Rows )
 		AppendRows();
 }
 
-void MyGrid::ReCreateGrid( int Cols, int Rows )
+void MyGrid::ReCreateGrid(int Rows, int Cols)
 {
 	DeleteGrid();
-	AppendGrid( Cols, Rows );
+	AppendGrid( Rows, Cols );
 }
 
 
@@ -274,11 +276,11 @@ void MyGrid::ReCreateGrid( int Cols, int Rows )
 
 void MyGrid::OnCellChange( wxGridEvent& event )
 {
-////@begin wxEVT_GRID_CELL_CHANGED event handler for ID_GRID in MyGrid.
-    // Before editing this code, remove the block markers.
-	MESSAGE("OnCellChange");
-    event.Skip();
-////@end wxEVT_GRID_CELL_CHANGED event handler for ID_GRID in MyGrid. 
+	//MESSAGE("OnCellChange");
+	int col = event.GetCol();
+	int row = event.GetRow();
+	wxString Value = GetCellValue(row, col);
+	ChangeToView(col, row, Value);
 }
 
 
@@ -288,10 +290,7 @@ void MyGrid::OnCellChange( wxGridEvent& event )
 
 void MyGrid::OnKeyDown( wxKeyEvent& event )
 {
-////@begin wxEVT_KEY_DOWN event handler for ID_GRID in MyGrid.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_KEY_DOWN event handler for ID_GRID in MyGrid. 
+	int key = event.GetKeyCode();
 }
 
 
@@ -301,10 +300,132 @@ void MyGrid::OnKeyDown( wxKeyEvent& event )
 
 void MyGrid::OnGridCellChange( wxGridEvent& event )
 {
-////@begin wxEVT_GRID_CMD_CELL_CHANGE event handler for ID_GRID in MyGrid.
-    // Before editing this code, remove the block markers.
-	MESSAGE("OnGridCellChange");
-    event.Skip();
-////@end wxEVT_GRID_CMD_CELL_CHANGE event handler for ID_GRID in MyGrid. 
+	//MESSAGE("OnGridCellChange");
+	int col = event.GetCol();
+	int row = event.GetRow();
+	wxString Value = GetCellValue(row, col);
+	ChangeToView(col, row, Value);
 }
+
+void MyGrid::ChangeToView( int col, int row, const wxString& data )
+{
+	SolidView_Sptr view = ((FirstMain*)GetParent())->m_ActiveView;
+	SEffect_Sptr SuperSetting = view->GetEffect();
+	double number;
+	if (data.IsNumber())
+	{
+		data.ToDouble(&number);
+	}
+	switch (view->GetType())
+	{
+	case SEffect::BOUNDING_BOX:
+		break;
+	case SEffect::VERTEX:
+		break;
+	case SEffect::CONTOUR:
+		break;
+	case SEffect::AXES:
+		break;
+	case SEffect::PLANE_CHIP:
+		{
+			PlaneChip_Setting* setting = (PlaneChip_Setting*)SuperSetting.get();
+			if (0 == col && 0 == row)
+			{
+				if (data == _T("X Axes"))
+					setting->m_Axes = 0;
+				else if (data == _T("Y Axes"))
+					setting->m_Axes = 1;
+				else if (data == _T("Z Axes"))
+					setting->m_Axes = 2;
+				setting->m_Percent = 0;
+			}
+			else if (1 == row && 0 == col)
+			{
+				setting->m_Percent = number;
+			}
+		}
+		break;
+	case SEffect::RULER:
+		break;
+	case SEffect::CONTOUR_CHIP:
+		break;
+	case SEffect::VOLUME_RENDERING:
+		break;
+	}
+	view->Update();
+}
+
+bool MyGrid::ChangeGrid( SolidView_Sptr& view )
+{
+	if (view.get() == 0) // 點錯選項
+		return false;
+	switch (view->GetType())
+	{
+	case SEffect::BOUNDING_BOX:
+		{
+			ConvertTo_BoundingBox();
+			return true;
+		}
+		break;
+	case SEffect::VERTEX:
+		{
+			ConvertTo_Vertex();
+			return true;
+		}
+		break;
+	case SEffect::CONTOUR:
+		{
+			ConvertTo_Contour();
+			return true;
+		}
+		break;
+	case SEffect::AXES:
+		{
+			ConvertTo_Axes();
+			return true;
+		}
+		break;
+	case SEffect::PLANE_CHIP:
+		{
+			ConvertTo_PlaneChip();
+			const PlaneChip_Setting* seffect = (PlaneChip_Setting*)(view->GetEffect().get());
+			switch (seffect->m_Axes)
+			{
+			case 0:
+				SetCellValue(0, 0, _T("X Axes"));
+				break;
+			case 1:
+				SetCellValue(0, 0, _T("Y Axes"));
+				break;
+			case 2:
+				SetCellValue(0, 0, _T("Z Axes"));
+				break;
+			}
+			wxString setvalue;
+			setvalue << seffect->m_Percent;
+			SetCellValue(1, 0, setvalue);
+			return true;
+		}
+	case SEffect::RULER:
+		{
+			ConvertTo_Ruler();
+			return true;
+		}
+		break;
+	case SEffect::CONTOUR_CHIP:
+		{
+			ConvertTo_ContourChip();
+			return true;
+		}
+		break;
+	case SEffect::VOLUME_RENDERING:
+		{
+			ConvertTo_VolumeRender();
+			return true;
+		}
+		break;
+	}
+	return false;
+}
+
 

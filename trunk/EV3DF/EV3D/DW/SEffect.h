@@ -50,6 +50,7 @@ struct Vertex_Setting : public SEffect
 };
 struct Contour_Setting : public SEffect
 {
+	Contour_Setting():m_ContourValue(0){}
 	float		m_ContourValue;
 	Color4		m_Color;
 };
@@ -70,8 +71,10 @@ struct Ruler_Setting : public SEffect
 };
 struct PlaneChip_Setting : public SEffect
 {
+	PlaneChip_Setting():m_Percent(0),m_Axes(0){}
 	int		m_Axes;
 	float		m_Percent;
+	float		m_Alpha;
 };
 struct ContourChip_Setting : public SEffect
 {

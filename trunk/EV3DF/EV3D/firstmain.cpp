@@ -1026,7 +1026,7 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 // 	m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 // 	m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 	m_SolidCtrl->SetData(m_psjcF3d);
-	//m_SolidCtrl.SetIsoSurface(m_PreciseSpin->GetValue());
+	//m_SolidCtrl.Set(m_PreciseSpin->GetValue());
 	RenderFrame();
 	event.Skip(false);
 }
