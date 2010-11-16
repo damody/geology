@@ -18,14 +18,14 @@ SEffect_Sptr SEffect::New( int type )
 	case AXES:
 		res = SEffect_Sptr(new Axes_Setting);
 		break;
-	case PLANE_CHIP:
-		res = SEffect_Sptr(new PlaneChip_Setting);
+	case CLIP_PLANE:
+		res = SEffect_Sptr(new ClipPlane_Setting);
 		break;
 	case RULER:
 		res = SEffect_Sptr(new Ruler_Setting);
 		break;
-	case CONTOUR_CHIP:
-		res = SEffect_Sptr(new ContourChip_Setting);
+	case CLIP_CONTOUR:
+		res = SEffect_Sptr(new ClipContour_Setting);
 		break;
 	case VOLUME_RENDERING:
 		res = SEffect_Sptr(new VolumeRender_Setting);

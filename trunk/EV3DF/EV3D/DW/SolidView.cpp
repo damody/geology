@@ -19,7 +19,7 @@ void SolidView::SetVisable( bool show )
 	{
 		switch (m_SEffect->GetType())
 		{
-		case SEffect::PLANE_CHIP:
+		case SEffect::CLIP_PLANE:
 			m_ImagePlane->On();
 			break;
 		case SEffect::RULER:
@@ -34,7 +34,7 @@ void SolidView::SetVisable( bool show )
 	{
 		switch (m_SEffect->GetType())
 		{
-		case SEffect::PLANE_CHIP:
+		case SEffect::CLIP_PLANE:
 			m_ImagePlane->Off();
 			break;
 		case SEffect::RULER:
@@ -73,9 +73,9 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 			MESSAGE("not Implementation");
 		}
 		break;
-	case SEffect::PLANE_CHIP:
+	case SEffect::CLIP_PLANE:
 		{
-			Init_PlaneChip();
+			Init_ClipPlane();
 		}
 		break;
 	case SEffect::RULER:
@@ -83,7 +83,7 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 			MESSAGE("not Implementation");
 		}
 		break;
-	case SEffect::CONTOUR_CHIP:
+	case SEffect::CLIP_CONTOUR:
 		{
 			MESSAGE("not Implementation");
 		}
@@ -113,7 +113,9 @@ void SolidView::Update()
 		break;
 	case SEffect::CONTOUR:
 		{
-			Init_Contour();
+			Contour_Setting* setting = (Contour_Setting*)m_SEffect.get();
+			m_ContourFilter->SetValue(1, setting->m_ContourValue);
+			m_ContourFilter->Update();
 		}
 		break;
 	case SEffect::AXES:
@@ -121,10 +123,10 @@ void SolidView::Update()
 			MESSAGE("not Implementation");
 		}
 		break;
-	case SEffect::PLANE_CHIP:
+	case SEffect::CLIP_PLANE:
 		{
 			double numvalue;
-			PlaneChip_Setting* setting = (PlaneChip_Setting*)m_SEffect.get();
+			ClipPlane_Setting* setting = (ClipPlane_Setting*)m_SEffect.get();
 			switch (setting->m_Axes)
 			{
 			case 0:
@@ -149,7 +151,7 @@ void SolidView::Update()
 			MESSAGE("not Implementation");
 		}
 		break;
-	case SEffect::CONTOUR_CHIP:
+	case SEffect::CLIP_CONTOUR:
 		{
 			MESSAGE("not Implementation");
 		}
@@ -222,9 +224,15 @@ void SolidView::Init_Vertex()
 
 void SolidView::Init_Contour()
 {
+	vtkLookupTable_Sptr lut;
+	vtkSmartNew(lut);
+	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
+		GetParentDoc()->m_histogram.GetPersentValue(0.99));
+	lut->Build();
 	vtkSmartNew(m_ContourFilter);
 	m_ContourFilter->SetInput(GetParentDoc()->m_ImageData);
 	m_polydataMapper->SetInputConnection(m_ContourFilter->GetOutputPort());
+	m_polydataMapper->SetLookupTable(lut);
 	m_actor->SetMapper(m_polydataMapper);
 }
 
@@ -233,11 +241,11 @@ void SolidView::Init_Axes()
 
 }
 
-void SolidView::Init_PlaneChip()
+void SolidView::Init_ClipPlane()
 {
 	vtkSmartNew(m_ImagePlane);
 	m_ImagePlane->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-	m_ImagePlane->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
+	//m_ImagePlane->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_ImagePlane->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_ImagePlane->SetInteractor(GetParentCtrl()->m_WindowInteractor);
 	m_ImagePlane->RestrictPlaneToVolumeOn();
@@ -257,7 +265,7 @@ void SolidView::Init_Ruler()
 
 }
 
-void SolidView::Init_ContourChip()
+void SolidView::Init_ClipContour()
 {
 
 }

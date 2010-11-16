@@ -85,8 +85,8 @@ public:
 	void ConvertTo_Contour();
 	void ConvertTo_Axes();
 	void ConvertTo_Ruler();
-	void ConvertTo_PlaneChip();
-	void ConvertTo_ContourChip();
+	void ConvertTo_ClipPlane();
+	void ConvertTo_ClipContour();
 	void ConvertTo_VolumeRender();
 	void DeleteGrid();
 	void AppendGrid(int Cols, int Rows);

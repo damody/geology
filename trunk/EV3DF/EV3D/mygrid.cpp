@@ -207,7 +207,7 @@ void MyGrid::ConvertTo_Ruler()
 	SetRowLabelValue(i++, wxT("Color"));		// 量尺的顏色
 }
 
-void MyGrid::ConvertTo_PlaneChip()
+void MyGrid::ConvertTo_ClipPlane()
 {
 	ReCreateGrid(2,1);
 	SetColLabelValue(0, wxT("Value"));
@@ -225,7 +225,7 @@ void MyGrid::ConvertTo_PlaneChip()
 	SetCellValue(i++, 0, wxT("0"));
 }
 
-void MyGrid::ConvertTo_ContourChip()
+void MyGrid::ConvertTo_ClipContour()
 {
 	ReCreateGrid(3,1);
 	SetColLabelValue(0, wxT("Value"));
@@ -323,12 +323,23 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 	case SEffect::VERTEX:
 		break;
 	case SEffect::CONTOUR:
+		{
+			Contour_Setting* setting = (Contour_Setting*)SuperSetting.get();
+			if (0 == col && 0 == row)
+			{
+				setting->m_ContourValue = number;
+			}
+			else if (1 == row && 0 == col)
+			{
+				setting->m_alpha = number;
+			}
+		}
 		break;
 	case SEffect::AXES:
 		break;
-	case SEffect::PLANE_CHIP:
+	case SEffect::CLIP_PLANE:
 		{
-			PlaneChip_Setting* setting = (PlaneChip_Setting*)SuperSetting.get();
+			ClipPlane_Setting* setting = (ClipPlane_Setting*)SuperSetting.get();
 			if (0 == col && 0 == row)
 			{
 				if (data == _T("X Axes"))
@@ -347,7 +358,7 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 		break;
 	case SEffect::RULER:
 		break;
-	case SEffect::CONTOUR_CHIP:
+	case SEffect::CLIP_CONTOUR:
 		break;
 	case SEffect::VOLUME_RENDERING:
 		break;
@@ -376,6 +387,13 @@ bool MyGrid::ChangeGrid( SolidView_Sptr& view )
 	case SEffect::CONTOUR:
 		{
 			ConvertTo_Contour();
+			const Contour_Setting* seffect = (Contour_Setting*)(view->GetEffect().get());
+			wxString setvalue;
+			setvalue << seffect->m_ContourValue;
+			SetCellValue(0, 0, setvalue);
+			setvalue.Clear();
+			setvalue << seffect->m_alpha;
+			SetCellValue(1, 0, setvalue);
 			return true;
 		}
 		break;
@@ -385,10 +403,10 @@ bool MyGrid::ChangeGrid( SolidView_Sptr& view )
 			return true;
 		}
 		break;
-	case SEffect::PLANE_CHIP:
+	case SEffect::CLIP_PLANE:
 		{
-			ConvertTo_PlaneChip();
-			const PlaneChip_Setting* seffect = (PlaneChip_Setting*)(view->GetEffect().get());
+			ConvertTo_ClipPlane();
+			const ClipPlane_Setting* seffect = (ClipPlane_Setting*)(view->GetEffect().get());
 			switch (seffect->m_Axes)
 			{
 			case 0:
@@ -412,9 +430,9 @@ bool MyGrid::ChangeGrid( SolidView_Sptr& view )
 			return true;
 		}
 		break;
-	case SEffect::CONTOUR_CHIP:
+	case SEffect::CLIP_CONTOUR:
 		{
-			ConvertTo_ContourChip();
+			ConvertTo_ClipContour();
 			return true;
 		}
 		break;

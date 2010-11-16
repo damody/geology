@@ -2424,8 +2424,6 @@
             <string name="proxy-Custom arguments">""</string>
             <string name="proxy-Custom ctor arguments">""</string>
             <string name="proxy-Event sources">""</string>
-            <string name="proxy-Tab label">"Render Object"</string>
-            <string name="proxy-Tab icon">""</string>
             <bool name="proxy-AUI managed">1</bool>
             <string name="proxy-AUI name">"ID_TREECTRL"</string>
             <string name="proxy-AUI caption">"Effect Tree"</string>
@@ -2471,7 +2469,7 @@
             <long name="title-mode">0</long>
             <long name="locked">0</long>
             <string name="proxy-type">"wbGridProxy"</string>
-            <string name="event-handler-0">"wxEVT_GRID_CELL_CHANGE|OnCellChange|NONE||"</string>
+            <string name="event-handler-0">"wxEVT_GRID_CELL_CHANGE|OnCellChange|NONE||MyGrid"</string>
             <string name="event-handler-1">"wxEVT_GRID_CMD_CELL_CHANGE|OnGridCellChange|NONE||MyGrid"</string>
             <string name="event-handler-2">"wxEVT_KEY_DOWN|OnKeyDown|NONE||"</string>
             <string name="proxy-Id name">"ID_GRID"</string>

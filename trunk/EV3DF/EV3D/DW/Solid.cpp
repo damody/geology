@@ -24,7 +24,7 @@ Solid::Solid()
 	m_contour_actor = vtkSmartPointer<vtkActor>::New();
 	m_vertex_actor = vtkSmartPointer<vtkActor>::New();
 	m_lut = vtkSmartPointer<vtkLookupTable>::New();
-	m_chiplut = vtkSmartPointer<vtkLookupTable>::New();
+	m_Cliplut = vtkSmartPointer<vtkLookupTable>::New();
 	m_volumeMapper = vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	m_volumeProperty = vtkSmartPointer<vtkVolumeProperty>::New();
 	m_volume = vtkSmartPointer<vtkVolume>::New();
@@ -43,7 +43,7 @@ Solid::Solid()
 	m_CompositeOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
 	m_ColorTransferFun = vtkSmartPointer<vtkColorTransferFunction>::New();
 
-	m_chiplut->Build();
+	m_Cliplut->Build();
 	m_volumeMapper->SetBlendModeToComposite(); // composite first
 	// ofher init
 	m_pCtable = ColorTable_Sptr(new ColorTable);
@@ -86,9 +86,9 @@ Solid::Solid()
 	m_planeWidgetZ->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetZ->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetZ->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-	m_planeWidgetX->SetLookupTable(m_chiplut);
-	m_planeWidgetY->SetLookupTable(m_chiplut);
-	m_planeWidgetZ->SetLookupTable(m_chiplut);
+	m_planeWidgetX->SetLookupTable(m_Cliplut);
+	m_planeWidgetY->SetLookupTable(m_Cliplut);
+	m_planeWidgetZ->SetLookupTable(m_Cliplut);
 	m_volumeProperty->SetScalarOpacity(m_CompositeOpacity);
 	m_volumeProperty->SetColor(m_ColorTransferFun);
 }
