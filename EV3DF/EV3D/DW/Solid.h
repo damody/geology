@@ -48,7 +48,7 @@ private:
 	vtkSmartPointer<vtkContourFilter>	m_contour; // show 
 	vtkSmartPointer<vtkPolyDataMapper>	m_contour_mapper, m_vertex_mapper, m_outlineMapper;
 	vtkSmartPointer<vtkActor>		m_contour_actor, m_vertex_actor, m_outlineActor;
-	vtkSmartPointer<vtkLookupTable>		m_lut, m_chiplut;
+	vtkSmartPointer<vtkLookupTable>		m_lut, m_Cliplut;
 	vtkSmartPointer<vtkSmartVolumeMapper>	m_volumeMapper;
 	vtkSmartPointer<vtkVolumeProperty>	m_volumeProperty;
 	vtkSmartPointer<vtkVolume>		m_volume;

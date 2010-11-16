@@ -165,12 +165,12 @@ void MyTreeCtrl::CreateControls()
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("Plane Chip");
+	item_str = wxT("ClipPlane");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT("Contour Chip");
+	item_str = wxT("ClipContour");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
@@ -419,14 +419,14 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 		SEffect_Sptr Setting = SEffect::New(SEffect::RULER);
 		spView = sc->NewSEffect(Setting);
 	}
-	else if (wxstr == wxT("Plane Chip"))
+	else if (wxstr == wxT("ClipPlane"))
 	{
-		SEffect_Sptr Setting = SEffect::New(SEffect::PLANE_CHIP);
+		SEffect_Sptr Setting = SEffect::New(SEffect::CLIP_PLANE);
 		spView = sc->NewSEffect(Setting);
 	}
-	else if (wxstr == wxT("Contour Chip"))
+	else if (wxstr == wxT("ClipContour"))
 	{
-		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR_CHIP);
+		SEffect_Sptr Setting = SEffect::New(SEffect::CLIP_CONTOUR);
 		spView = sc->NewSEffect(Setting);
 	}
 	else if (wxstr == wxT("Volume Render"))

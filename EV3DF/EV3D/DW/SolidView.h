@@ -25,9 +25,9 @@ public:
 	void		Init_Vertex();
 	void		Init_Contour();
 	void		Init_Axes();
-	void		Init_PlaneChip();
+	void		Init_ClipPlane();
 	void		Init_Ruler();
-	void		Init_ContourChip();
+	void		Init_ClipContour();
 	void		Init_VolumeRendering();
 private:
 	SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc);

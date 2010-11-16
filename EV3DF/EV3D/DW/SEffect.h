@@ -14,9 +14,9 @@ public:
 		VERTEX,
 		CONTOUR,
 		AXES,
-		PLANE_CHIP,
+		CLIP_PLANE,
 		RULER,
-		CONTOUR_CHIP,
+		CLIP_CONTOUR,
 		VOLUME_RENDERING
 	};
 public:
@@ -50,9 +50,9 @@ struct Vertex_Setting : public SEffect
 };
 struct Contour_Setting : public SEffect
 {
-	Contour_Setting():m_ContourValue(0){}
+	Contour_Setting():m_ContourValue(0),m_alpha(0){}
 	float		m_ContourValue;
-	Color4		m_Color;
+	float		m_alpha;
 };
 struct Axes_Setting : public SEffect
 {
@@ -69,14 +69,14 @@ struct Ruler_Setting : public SEffect
 	Posf		m_StartPoint,
 			m_EndPoint;
 };
-struct PlaneChip_Setting : public SEffect
+struct ClipPlane_Setting : public SEffect
 {
-	PlaneChip_Setting():m_Percent(0),m_Axes(0){}
+	ClipPlane_Setting():m_Percent(0),m_Axes(0){}
 	int		m_Axes;
 	float		m_Percent;
 	float		m_Alpha;
 };
-struct ContourChip_Setting : public SEffect
+struct ClipContour_Setting : public SEffect
 {
 	int		m_Axes;
 	float		m_Percent,
