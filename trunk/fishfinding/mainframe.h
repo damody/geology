@@ -30,6 +30,8 @@
  */
 
 ////@begin forward declarations
+class wxFilePickerCtrl;
+class wxGLCanvas;
 ////@end forward declarations
 
 /*!
@@ -81,6 +83,21 @@ public:
 
 ////@begin mainframe event handler declarations
 
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE1
+    void OnChoice1Selected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE
+    void OnChoiceSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
+    void OnButtonClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1
+    void OnButton1Click( wxCommandEvent& event );
+
+    /// wxEVT_FILEPICKER_CHANGED event handler for ID_FILECTRL
+    void OnFilectrlFilePickerChanged( wxFileDirPickerEvent& event );
+
 ////@end mainframe event handler declarations
 
 ////@begin mainframe member function declarations
@@ -96,6 +113,13 @@ public:
     static bool ShowToolTips();
 
 ////@begin mainframe member variables
+    wxChoice* m_BoundRate;
+    wxChoice* m_Combo_ComPort;
+    wxButton* m_BtnStartGet;
+    wxTextCtrl* m_OutputText;
+    wxButton* m_BtnStopGet;
+    wxFilePickerCtrl* m_Browse;
+    wxGLCanvas* m_GLCanvas;
 ////@end mainframe member variables
 };
 

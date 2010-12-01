@@ -27,7 +27,6 @@ void shareNew(boost::shared_ptr<T>& Ptr)
 	assert(Ptr.get() != 0);
 }
 
-
 /*!
 typedef boost::shared_ptr<SolidDoc>		SolidDoc_Sptr;
 typedef std::vector<SolidDoc_Sptr>		SolidDoc_Sptrs;

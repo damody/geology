@@ -11,8 +11,8 @@
 #include "Windows.h"
 #include "SJCScalarField3.h"
 #include "SJCVector3.h"
-
-template <class T> void DependenceSort(T* beg, const uint total, std::vector<T*> depVector );
+template <class T, class DT>
+void DependenceSort( T* beg, const uint total, std::vector<DT*>& depVector );
 
 template <class T>
 struct ptr_value_cmp
