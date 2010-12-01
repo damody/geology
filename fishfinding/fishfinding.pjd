@@ -663,6 +663,7 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbChoiceProxy"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_CHOICE_SELECTED|OnChoice1Selected|NONE||mainframe"</string>
               <string name="proxy-Id name">"ID_CHOICE1"</string>
               <long name="proxy-Id value">10002</long>
               <string name="proxy-Name">""</string>
@@ -726,6 +727,7 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbChoiceProxy"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_CHOICE_SELECTED|OnChoiceSelected|NONE||mainframe"</string>
               <string name="proxy-Id name">"ID_CHOICE"</string>
               <long name="proxy-Id value">10001</long>
               <string name="proxy-Name">""</string>
@@ -937,6 +939,7 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbButtonProxy"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButtonClick|NONE||mainframe"</string>
               <string name="proxy-Id name">"ID_BUTTON"</string>
               <long name="proxy-Id value">10003</long>
               <string name="proxy-Name">""</string>
@@ -1092,6 +1095,7 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbButtonProxy"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnButton1Click|NONE||mainframe"</string>
               <string name="proxy-Id name">"ID_BUTTON1"</string>
               <long name="proxy-Id value">10004</long>
               <string name="proxy-Name">""</string>
@@ -1161,6 +1165,7 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbFilePickerCtrlProxy"</string>
+              <string name="event-handler-0">"wxEVT_FILEPICKER_CHANGED|OnFilectrlFilePickerChanged|NONE||mainframe"</string>
               <string name="proxy-Id name">"ID_FILECTRL"</string>
               <long name="proxy-Id value">10007</long>
               <string name="proxy-Name">""</string>

@@ -288,8 +288,8 @@ bool HandleEvr::IsLoad()
 	return m_isload;
 }
 
-template <class T>
-void DependenceSort( T* beg, const uint total, std::vector<T*> depVector )
+template <class T, class DT>
+void DependenceSort( T* beg, const uint total, std::vector<DT*>& depVector )
 {
 	T **ppAry = new T*[total];
 	for (uint i=0;i<total;i++)
@@ -302,11 +302,11 @@ void DependenceSort( T* beg, const uint total, std::vector<T*> depVector )
 	{
 		iAry[i] = ppAry[i]-beg;
 	}
-	T *Ary = new T[total];
+	DT *Ary = new DT[total];
 	for (uint num=0;num<depVector.size();num++)
 	{
 		std::copy(depVector[num], depVector[num]+total, Ary);
-		T* dst = depVector[num];
+		DT* dst = depVector[num];
 		for (uint i=0;i<total;i++)
 		{
 			dst[i] = Ary[iAry[i]];

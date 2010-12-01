@@ -43,6 +43,16 @@ IMPLEMENT_CLASS( mainframe, wxFrame )
 BEGIN_EVENT_TABLE( mainframe, wxFrame )
 
 ////@begin mainframe event table entries
+    EVT_CHOICE( ID_CHOICE1, mainframe::OnChoice1Selected )
+
+    EVT_CHOICE( ID_CHOICE, mainframe::OnChoiceSelected )
+
+    EVT_BUTTON( ID_BUTTON, mainframe::OnButtonClick )
+
+    EVT_BUTTON( ID_BUTTON1, mainframe::OnButton1Click )
+
+    EVT_FILEPICKER_CHANGED( ID_FILECTRL, mainframe::OnFilectrlFilePickerChanged )
+
 ////@end mainframe event table entries
 
 END_EVENT_TABLE()
@@ -98,6 +108,13 @@ mainframe::~mainframe()
 void mainframe::Init()
 {
 ////@begin mainframe member initialisation
+    m_BoundRate = NULL;
+    m_Combo_ComPort = NULL;
+    m_BtnStartGet = NULL;
+    m_OutputText = NULL;
+    m_BtnStopGet = NULL;
+    m_Browse = NULL;
+    m_GLCanvas = NULL;
 ////@end mainframe member initialisation
 }
 
@@ -120,43 +137,43 @@ void mainframe::CreateControls()
     itemGridBagSizer2->SetEmptyCellSize(wxSize(10, 20));
     itemFrame1->SetSizer(itemGridBagSizer2);
 
-    wxArrayString itemChoice3Strings;
-    itemChoice3Strings.Add(_("110"));
-    itemChoice3Strings.Add(_("300"));
-    itemChoice3Strings.Add(_("600"));
-    itemChoice3Strings.Add(_("1200"));
-    itemChoice3Strings.Add(_("2400"));
-    itemChoice3Strings.Add(_("4800"));
-    itemChoice3Strings.Add(_("9600"));
-    itemChoice3Strings.Add(_("19200"));
-    itemChoice3Strings.Add(_("38400"));
-    itemChoice3Strings.Add(_("57600"));
-    itemChoice3Strings.Add(_("115200"));
-    itemChoice3Strings.Add(_("128000"));
-    itemChoice3Strings.Add(_("256000"));
-    wxChoice* itemChoice3 = new wxChoice( itemFrame1, ID_CHOICE1, wxDefaultPosition, wxDefaultSize, itemChoice3Strings, 0 );
-    itemChoice3->SetStringSelection(_("38400"));
-    itemGridBagSizer2->Add(itemChoice3, wxGBPosition(0, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxArrayString m_BoundRateStrings;
+    m_BoundRateStrings.Add(_("110"));
+    m_BoundRateStrings.Add(_("300"));
+    m_BoundRateStrings.Add(_("600"));
+    m_BoundRateStrings.Add(_("1200"));
+    m_BoundRateStrings.Add(_("2400"));
+    m_BoundRateStrings.Add(_("4800"));
+    m_BoundRateStrings.Add(_("9600"));
+    m_BoundRateStrings.Add(_("19200"));
+    m_BoundRateStrings.Add(_("38400"));
+    m_BoundRateStrings.Add(_("57600"));
+    m_BoundRateStrings.Add(_("115200"));
+    m_BoundRateStrings.Add(_("128000"));
+    m_BoundRateStrings.Add(_("256000"));
+    m_BoundRate = new wxChoice( itemFrame1, ID_CHOICE1, wxDefaultPosition, wxDefaultSize, m_BoundRateStrings, 0 );
+    m_BoundRate->SetStringSelection(_("38400"));
+    itemGridBagSizer2->Add(m_BoundRate, wxGBPosition(0, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxArrayString itemChoice4Strings;
-    itemChoice4Strings.Add(_("1"));
-    itemChoice4Strings.Add(_("2"));
-    itemChoice4Strings.Add(_("3"));
-    itemChoice4Strings.Add(_("4"));
-    itemChoice4Strings.Add(_("5"));
-    itemChoice4Strings.Add(_("6"));
-    itemChoice4Strings.Add(_("7"));
-    itemChoice4Strings.Add(_("8"));
-    itemChoice4Strings.Add(_("9"));
-    itemChoice4Strings.Add(_("10"));
-    itemChoice4Strings.Add(_("11"));
-    itemChoice4Strings.Add(_("12"));
-    itemChoice4Strings.Add(_("13"));
-    itemChoice4Strings.Add(_("14"));
-    itemChoice4Strings.Add(_("15"));
-    wxChoice* itemChoice4 = new wxChoice( itemFrame1, ID_CHOICE, wxDefaultPosition, wxDefaultSize, itemChoice4Strings, 0 );
-    itemChoice4->SetStringSelection(_("1"));
-    itemGridBagSizer2->Add(itemChoice4, wxGBPosition(1, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    wxArrayString m_Combo_ComPortStrings;
+    m_Combo_ComPortStrings.Add(_("1"));
+    m_Combo_ComPortStrings.Add(_("2"));
+    m_Combo_ComPortStrings.Add(_("3"));
+    m_Combo_ComPortStrings.Add(_("4"));
+    m_Combo_ComPortStrings.Add(_("5"));
+    m_Combo_ComPortStrings.Add(_("6"));
+    m_Combo_ComPortStrings.Add(_("7"));
+    m_Combo_ComPortStrings.Add(_("8"));
+    m_Combo_ComPortStrings.Add(_("9"));
+    m_Combo_ComPortStrings.Add(_("10"));
+    m_Combo_ComPortStrings.Add(_("11"));
+    m_Combo_ComPortStrings.Add(_("12"));
+    m_Combo_ComPortStrings.Add(_("13"));
+    m_Combo_ComPortStrings.Add(_("14"));
+    m_Combo_ComPortStrings.Add(_("15"));
+    m_Combo_ComPort = new wxChoice( itemFrame1, ID_CHOICE, wxDefaultPosition, wxDefaultSize, m_Combo_ComPortStrings, 0 );
+    m_Combo_ComPort->SetStringSelection(_("1"));
+    itemGridBagSizer2->Add(m_Combo_ComPort, wxGBPosition(1, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText5 = new wxStaticText( itemFrame1, wxID_STATIC, _("BoundRate"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer2->Add(itemStaticText5, wxGBPosition(0, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -164,17 +181,17 @@ void mainframe::CreateControls()
     wxStaticText* itemStaticText6 = new wxStaticText( itemFrame1, wxID_STATIC, _("ComPort"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer2->Add(itemStaticText6, wxGBPosition(1, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton7 = new wxButton( itemFrame1, ID_BUTTON, _("StartGet"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridBagSizer2->Add(itemButton7, wxGBPosition(2, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_BtnStartGet = new wxButton( itemFrame1, ID_BUTTON, _("StartGet"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridBagSizer2->Add(m_BtnStartGet, wxGBPosition(2, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxTextCtrl* itemTextCtrl8 = new wxTextCtrl( itemFrame1, ID_TEXTCTRL, wxEmptyString, wxDefaultPosition, wxSize(600, 100), wxTE_MULTILINE );
-    itemGridBagSizer2->Add(itemTextCtrl8, wxGBPosition(14, 0), wxGBSpan(2, 3), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_OutputText = new wxTextCtrl( itemFrame1, ID_TEXTCTRL, wxEmptyString, wxDefaultPosition, wxSize(600, 100), wxTE_MULTILINE );
+    itemGridBagSizer2->Add(m_OutputText, wxGBPosition(14, 0), wxGBSpan(2, 3), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxButton* itemButton9 = new wxButton( itemFrame1, ID_BUTTON1, _("StopGet"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemGridBagSizer2->Add(itemButton9, wxGBPosition(2, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_BtnStopGet = new wxButton( itemFrame1, ID_BUTTON1, _("StopGet"), wxDefaultPosition, wxDefaultSize, 0 );
+    itemGridBagSizer2->Add(m_BtnStopGet, wxGBPosition(2, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxFilePickerCtrl* itemFilePickerCtrl10 = new wxFilePickerCtrl( itemFrame1, ID_FILECTRL, wxEmptyString, wxEmptyString, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
-    itemGridBagSizer2->Add(itemFilePickerCtrl10, wxGBPosition(12, 0), wxGBSpan(1, 2), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_Browse = new wxFilePickerCtrl( itemFrame1, ID_FILECTRL, wxEmptyString, wxEmptyString, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxFLP_DEFAULT_STYLE );
+    itemGridBagSizer2->Add(m_Browse, wxGBPosition(12, 0), wxGBSpan(1, 2), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText11 = new wxStaticText( itemFrame1, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x8CC7 + (wxChar) 0x6599 + (wxChar) 0x500B + (wxChar) 0x6578), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer2->Add(itemStaticText11, wxGBPosition(3, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -209,8 +226,8 @@ void mainframe::CreateControls()
     wxStaticText* itemStaticText21 = new wxStaticText( itemFrame1, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6A94 + (wxChar) 0x6848 + (wxChar) 0x5927 + (wxChar) 0x5C0F), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer2->Add(itemStaticText21, wxGBPosition(10, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    wxGLCanvas* itemGLCanvas22 = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxSize(400, 400), 0 );
-    itemGridBagSizer2->Add(itemGLCanvas22, wxGBPosition(0, 2), wxGBSpan(14, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+    m_GLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxSize(500, 400), 0 );
+    itemGridBagSizer2->Add(m_GLCanvas, wxGBPosition(0, 2), wxGBSpan(14, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStatusBar* itemStatusBar25 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar25->SetFieldsCount(2);
@@ -254,3 +271,69 @@ wxIcon mainframe::GetIconResource( const wxString& name )
     return wxNullIcon;
 ////@end mainframe icon retrieval
 }
+
+
+/*
+ * wxEVT_FILEPICKER_CHANGED event handler for ID_FILECTRL
+ */
+
+void mainframe::OnFilectrlFilePickerChanged( wxFileDirPickerEvent& event )
+{
+////@begin wxEVT_FILEPICKER_CHANGED event handler for ID_FILECTRL in mainframe.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_FILEPICKER_CHANGED event handler for ID_FILECTRL in mainframe. 
+}
+
+
+/*
+ * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
+ */
+
+void mainframe::OnButtonClick( wxCommandEvent& event )
+{
+////@begin wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON in mainframe.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON in mainframe. 
+}
+
+
+/*
+ * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1
+ */
+
+void mainframe::OnButton1Click( wxCommandEvent& event )
+{
+////@begin wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1 in mainframe.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1 in mainframe. 
+}
+
+
+/*
+ * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE1
+ */
+
+void mainframe::OnChoice1Selected( wxCommandEvent& event )
+{
+////@begin wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE1 in mainframe.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE1 in mainframe. 
+}
+
+
+/*
+ * wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE
+ */
+
+void mainframe::OnChoiceSelected( wxCommandEvent& event )
+{
+////@begin wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE in mainframe.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE in mainframe. 
+}
+
