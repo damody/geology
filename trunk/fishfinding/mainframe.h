@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////
 // Name:        mainframe.h
 // Purpose:     
 // Author:      damody
@@ -22,7 +22,6 @@
 #include "wx/gbsizer.h"
 #include "wx/filepicker.h"
 #include "wx/glcanvas.h"
-#include "wx/statusbr.h"
 ////@end includes
 
 /*!
@@ -47,7 +46,6 @@ class wxGLCanvas;
 #define ID_BUTTON1 10004
 #define ID_FILECTRL 10007
 #define ID_GLCANVAS 10009
-#define ID_STATUSBAR 10006
 #define SYMBOL_MAINFRAME_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
 #define SYMBOL_MAINFRAME_TITLE _("fishfinding")
 #define SYMBOL_MAINFRAME_IDNAME ID_MAINFRAME

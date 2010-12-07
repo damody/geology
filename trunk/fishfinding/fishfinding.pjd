@@ -673,7 +673,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_BoundRate"</string>
               <string name="proxy-Strings">"110|300|600|1200|2400|4800|9600|19200|38400|57600|115200|128000|256000"</string>
               <string name="proxy-Initial value">"38400"</string>
               <string name="proxy-Help text">""</string>
@@ -737,7 +737,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_Combo_ComPort"</string>
               <string name="proxy-Strings">"1|2|3|4|5|6|7|8|9|10|11|12|13|14|15"</string>
               <string name="proxy-Initial value">"1"</string>
               <string name="proxy-Help text">""</string>
@@ -949,7 +949,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_BtnStartGet"</string>
               <string name="proxy-Label">"StartGet"</string>
               <bool name="proxy-Default">0</bool>
               <string name="proxy-Help text">""</string>
@@ -1018,7 +1018,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_OutputText"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -1065,7 +1065,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">600</long>
+              <long name="proxy-Width">780</long>
               <long name="proxy-Height">100</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -1105,7 +1105,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_BtnStopGet"</string>
               <string name="proxy-Label">"StopGet"</string>
               <bool name="proxy-Default">0</bool>
               <string name="proxy-Help text">""</string>
@@ -1175,7 +1175,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_Browse"</string>
               <string name="proxy-Default filename">""</string>
               <string name="proxy-Message">""</string>
               <string name="proxy-Wildcard">""</string>
@@ -2066,7 +2066,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_GLCanvas"</string>
               <string name="proxy-Attributes">""</string>
               <string name="proxy-Help text">""</string>
               <string name="proxy-Tooltip text">""</string>
@@ -2088,8 +2088,8 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">400</long>
-              <long name="proxy-Height">400</long>
+              <long name="proxy-Width">570</long>
+              <long name="proxy-Height">420</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
               <long name="proxy-Stretch factor">0</long>
@@ -2122,7 +2122,6 @@
             <string name="proxy-type">"wbMenuBarProxy"</string>
             <string name="proxy-Id name">"ID_MENUBAR"</string>
             <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-            <long name="proxy-Id value">10005</long>
             <document>
               <string name="title">"File"</string>
               <string name="type">"dialog-control-document"</string>
@@ -2138,73 +2137,6 @@
               <string name="proxy-Member variable name">""</string>
               <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
             </document>
-          </document>
-          <document>
-            <string name="title">"wxStatusBar: ID_STATUSBAR"</string>
-            <string name="type">"dialog-control-document"</string>
-            <string name="filename">""</string>
-            <string name="icon-name">"statusbar"</string>
-            <long name="is-transient">0</long>
-            <long name="owns-file">1</long>
-            <long name="title-mode">0</long>
-            <long name="locked">0</long>
-            <string name="proxy-type">"wbStatusBarProxy"</string>
-            <string name="proxy-Id name">"ID_STATUSBAR"</string>
-            <long name="proxy-Id value">10006</long>
-            <string name="proxy-Name">""</string>
-            <string name="proxy-Class">"wxStatusBar"</string>
-            <string name="proxy-Base class">"wxStatusBar"</string>
-            <bool name="proxy-External implementation">1</bool>
-            <bool name="proxy-Separate files">0</bool>
-            <string name="proxy-Implementation filename">""</string>
-            <string name="proxy-Header filename">""</string>
-            <string name="proxy-Member variable name">""</string>
-            <string name="proxy-Help text">""</string>
-            <string name="proxy-Tooltip text">""</string>
-            <string name="proxy-Background colour">""</string>
-            <string name="proxy-Foreground colour">""</string>
-            <string name="proxy-Font">""</string>
-            <bool name="proxy-Hidden">0</bool>
-            <bool name="proxy-Enabled">1</bool>
-            <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
-            <long name="proxy-Field count">2</long>
-            <string name="proxy-Field text">""</string>
-            <string name="proxy-Field widths">""</string>
-            <bool name="proxy-wxST_SIZEGRIP">1</bool>
-            <bool name="proxy-wxNO_BORDER">1</bool>
-            <bool name="proxy-wxSIMPLE_BORDER">0</bool>
-            <bool name="proxy-wxDOUBLE_BORDER">0</bool>
-            <bool name="proxy-wxBORDER_THEME">0</bool>
-            <bool name="proxy-wxSUNKEN_BORDER">0</bool>
-            <bool name="proxy-wxRAISED_BORDER">0</bool>
-            <bool name="proxy-wxSTATIC_BORDER">0</bool>
-            <bool name="proxy-wxWANTS_CHARS">0</bool>
-            <bool name="proxy-wxNO_FULL_REPAINT_ON_RESIZE">0</bool>
-            <bool name="proxy-wxFULL_REPAINT_ON_RESIZE">0</bool>
-            <bool name="proxy-wxCLIP_CHILDREN">0</bool>
-            <string name="proxy-Custom styles">""</string>
-            <long name="proxy-X">-1</long>
-            <long name="proxy-Y">-1</long>
-            <long name="proxy-Width">-1</long>
-            <long name="proxy-Height">-1</long>
-            <string name="proxy-AlignH">"Centre"</string>
-            <string name="proxy-AlignV">"Centre"</string>
-            <long name="proxy-Stretch factor">0</long>
-            <long name="proxy-Border">5</long>
-            <bool name="proxy-wxLEFT">1</bool>
-            <bool name="proxy-wxRIGHT">1</bool>
-            <bool name="proxy-wxTOP">1</bool>
-            <bool name="proxy-wxBOTTOM">1</bool>
-            <bool name="proxy-wxSHAPED">0</bool>
-            <bool name="proxy-wxADJUST_MINSIZE">0</bool>
-            <bool name="proxy-wxFIXED_MINSIZE">0</bool>
-            <string name="proxy-Custom arguments">""</string>
-            <string name="proxy-Custom ctor arguments">""</string>
-            <string name="proxy-Event sources">""</string>
-            <long name="proxy-Grid x">2</long>
-            <long name="proxy-Grid y">0</long>
-            <long name="proxy-Span x">1</long>
-            <long name="proxy-Span y">1</long>
           </document>
         </document>
       </document>

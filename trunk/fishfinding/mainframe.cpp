@@ -1,4 +1,4 @@
-/////////////////////////////////////////////////////////////////////////////
+﻿/////////////////////////////////////////////////////////////////////////////
 // Name:        mainframe.cpp
 // Purpose:     
 // Author:      damody
@@ -184,7 +184,7 @@ void mainframe::CreateControls()
     m_BtnStartGet = new wxButton( itemFrame1, ID_BUTTON, _("StartGet"), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer2->Add(m_BtnStartGet, wxGBPosition(2, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_OutputText = new wxTextCtrl( itemFrame1, ID_TEXTCTRL, wxEmptyString, wxDefaultPosition, wxSize(600, 100), wxTE_MULTILINE );
+    m_OutputText = new wxTextCtrl( itemFrame1, ID_TEXTCTRL, wxEmptyString, wxDefaultPosition, wxSize(780, 100), wxTE_MULTILINE );
     itemGridBagSizer2->Add(m_OutputText, wxGBPosition(14, 0), wxGBSpan(2, 3), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     m_BtnStopGet = new wxButton( itemFrame1, ID_BUTTON1, _("StopGet"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -226,12 +226,8 @@ void mainframe::CreateControls()
     wxStaticText* itemStaticText21 = new wxStaticText( itemFrame1, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6A94 + (wxChar) 0x6848 + (wxChar) 0x5927 + (wxChar) 0x5C0F), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer2->Add(itemStaticText21, wxGBPosition(10, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-    m_GLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxSize(500, 400), 0 );
+    m_GLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxSize(570, 420), 0 );
     itemGridBagSizer2->Add(m_GLCanvas, wxGBPosition(0, 2), wxGBSpan(14, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
-
-    wxStatusBar* itemStatusBar25 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar25->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar25);
 
 ////@end mainframe content construction
 }
