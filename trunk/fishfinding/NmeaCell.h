@@ -15,11 +15,12 @@ public:
 	const nmeaINFOs& GetDataList();
 	const nmeaINFO& GetLastData();
 	bool InfoChange(nmeaINFO& info1, nmeaINFO& info2);
-	
+	void SaveFile(const std::wstring str);
 private:
 	bool InputLine(char* str);
 	bool CheckNewInfo();
 	void NewInfo();
+	std::string	m_buffer_str;
 	char		m_Type[5];
 	char		m_CheckInput[NMEA_TYPE_TOTAL];
 	nmeaINFOs	m_infos;
