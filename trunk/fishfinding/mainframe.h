@@ -23,7 +23,7 @@
 #include "wx/filepicker.h"
 #include "wx/glcanvas.h"
 ////@end includes
-
+#include "NmeaCell.h"
 /*!
  * Forward declarations
  */
@@ -43,6 +43,7 @@ class wxGLCanvas;
 #define ID_CHOICE 10001
 #define ID_BUTTON 10003
 #define ID_TEXTCTRL 10008
+#define ID_CHECKBOX 10005
 #define ID_BUTTON1 10004
 #define ID_FILECTRL 10007
 #define ID_GLCANVAS 10009
@@ -88,10 +89,13 @@ public:
     void OnChoiceSelected( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
-    void OnButtonClick( wxCommandEvent& event );
+    void OnStartGetClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
+    void OnCheckboxClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1
-    void OnButton1Click( wxCommandEvent& event );
+    void OnStopGetClick( wxCommandEvent& event );
 
     /// wxEVT_FILEPICKER_CHANGED event handler for ID_FILECTRL
     void OnFilectrlFilePickerChanged( wxFileDirPickerEvent& event );
@@ -117,8 +121,15 @@ public:
     wxTextCtrl* m_OutputText;
     wxButton* m_BtnStopGet;
     wxFilePickerCtrl* m_Browse;
+    wxStaticText* m_WaterDepth;
+    wxStaticText* m_Longitude;
+    wxStaticText* m_Latitude;
+    wxStaticText* m_DataTotal;
     wxGLCanvas* m_GLCanvas;
 ////@end mainframe member variables
+    long m_port;
+    bool m_open;
+    NmeaCell m_nCell;
 };
 
 #endif

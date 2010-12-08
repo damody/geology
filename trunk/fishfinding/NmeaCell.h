@@ -16,6 +16,7 @@ public:
 	const nmeaINFO& GetLastData();
 	bool InfoChange(nmeaINFO& info1, nmeaINFO& info2);
 	void SaveFile(const std::wstring str);
+	int  GetTotal();
 private:
 	bool InputLine(char* str);
 	bool CheckNewInfo();

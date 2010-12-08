@@ -10,6 +10,8 @@ NmeaCell::NmeaCell()
 
 bool NmeaCell::InputLine( std::string str )
 {
+	if (str.length()<6)
+		return false;
 	m_buffer_str += str;
 	for (int i=0;i<5;i++)
 		m_Type[i] = str[i+1];
@@ -114,6 +116,11 @@ void NmeaCell::SaveFile( const std::wstring str )
 		m_buffer_str = "";
 	}
 	fIn.close();
+}
+
+int NmeaCell::GetTotal()
+{
+	return m_infos.size();
 }
 
 
