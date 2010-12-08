@@ -214,6 +214,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\DrawView.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DrawView.h"
+				>
+			</File>
+			<File
 				RelativePath="fishfinding.rc"
 				>
 			</File>
@@ -223,6 +231,10 @@
 			</File>
 			<File
 				RelativePath=".\NmeaCell.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NmeaCell.h"
 				>
 			</File>
 		</Filter>
@@ -238,15 +250,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\NmeaCell.h"
-				>
-			</File>
-			<File
 				RelativePath=".\rs232.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\rs232.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TShape.hpp"
 				>
 			</File>
 		</Filter>

@@ -10,6 +10,7 @@ NmeaCell::NmeaCell()
 
 bool NmeaCell::InputLine( std::string str )
 {
+	m_buffer_str += str;
 	for (int i=0;i<5;i++)
 		m_Type[i] = str[i+1];
 	if (CheckNewInfo())
@@ -100,6 +101,19 @@ bool NmeaCell::InfoChange( nmeaINFO& info1, nmeaINFO& info2 )
 	if (info1.depthinfo.depth_M !=0 && info2.depthinfo.depth_M != 0 && info1.depthinfo.depth_M != info2.depthinfo.depth_M)
 		return true;
 	return false;
+}
+
+void NmeaCell::SaveFile( const std::wstring str )
+{
+	std::fstream fIn;
+	fIn.open(str.c_str(), std::ios_base::in | std::ios_base::out);
+	if (fIn.good())
+	{
+		fIn.seekp(0,std::ios_base::end);
+		fIn << m_buffer_str;
+		m_buffer_str = "";
+	}
+	fIn.close();
 }
 
 
