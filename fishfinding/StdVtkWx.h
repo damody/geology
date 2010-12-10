@@ -9,6 +9,7 @@
 	MESSAGE(res);
 
 #include <vtkSmartPointer.h>
+#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkAppendPolyData.h>
 #include <vtkLine.h>
 #include <vtkFloatArray.h>
@@ -44,6 +45,7 @@
 	typedef vtkSmartPointer< x >	x##_Sptr; \
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
 
+VTK_SMART_POINTER(vtkInteractorStyleTrackballCamera)
 VTK_SMART_POINTER(vtkAppendPolyData)
 VTK_SMART_POINTER(vtkLine)
 VTK_SMART_POINTER(vtkFloatArray)

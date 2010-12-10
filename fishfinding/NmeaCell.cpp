@@ -23,6 +23,7 @@ bool NmeaCell::InputLine( std::string str )
 	nmeaPARSER parser;
 	nmea_parser_init(&parser);
 	nmea_parse(&parser, str.c_str(), (int)str.length(), &m_lastinfo);
+	nmea_parser_destroy(&parser);
 	m_infos.back() = m_lastinfo;
 	return true;
 }
@@ -40,6 +41,7 @@ bool NmeaCell::InputLine( char* str )
 	nmeaPARSER parser;
 	nmea_parser_init(&parser);
 	nmea_parse(&parser, str, len+2, &m_lastinfo);
+	nmea_parser_destroy(&parser);
 	m_infos.back() = m_lastinfo;
 	return true;
 }

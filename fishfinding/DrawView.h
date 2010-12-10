@@ -71,4 +71,5 @@ private:
 					m_de_colors;
 	vtkRenderWindowInteractor_Sptr	m_WindowInteractor;
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
+	vtkInteractorStyleTrackballCamera_Sptr	m_style;
 };

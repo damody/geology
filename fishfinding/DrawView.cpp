@@ -14,7 +14,6 @@ DrawView::DrawView()
 	vtkSmartNew_Initialize(m_hs_colors);
 	vtkSmartNew_Initialize(m_de_colors);
 
-	
 	vtkSmartNew(m_hs_lines);
 	vtkSmartNew(m_de_lines);
 	vtkSmartNew(m_hs_Mapper);
@@ -29,9 +28,11 @@ DrawView::DrawView()
 	vtkSmartNew(m_Append_depth);
 	vtkSmartNew(m_WindowInteractor);
 	vtkSmartNew(m_Axes_widget);
+	vtkSmartNew(m_style);
 
 	m_RenderWindow->AddRenderer(m_Renderer);
 	m_WindowInteractor->SetRenderWindow(m_RenderWindow);
+	m_WindowInteractor->SetInteractorStyle( m_style );
 	m_Renderer->SetActiveCamera(m_Camera);
 	m_Renderer->SetBackground(.1, .2, .3);
 	m_Axes_widget->SetOutlineColor( 0.8300, 0.6700, 0.5300 );
@@ -110,7 +111,11 @@ void DrawView::AddData( const nmeaINFO& info )
 		line->GetPointIds()->SetId(0, len-2);
 		line->GetPointIds()->SetId(1, len-1);
 		m_hs_lines->InsertNextCell(line);
-		m_de_lines->InsertNextCell(line);
+		vtkLine_Sptr line2;
+		vtkSmartNew(line2);
+		line2->GetPointIds()->SetId(0, len-2);
+		line2->GetPointIds()->SetId(1, len-1);
+		m_de_lines->InsertNextCell(line2);
 	}
 }
 
@@ -188,7 +193,7 @@ void DrawView::FocusLast()
 		m_Camera->SetPosition(data.E, data.N, m_focus_height/10.0);
 		double pos[3];
 		m_Camera->GetPosition(pos);
-		m_Camera->SetFocalPoint(pos[0], pos[1], pos[2]-1);
+		m_Camera->SetFocalPoint(pos[0], pos[1], -data.depth);
 		m_Camera->SetFocalDisk(data.depth+1);
 		m_Camera->UpdateViewport(m_Renderer);
 	}
@@ -200,7 +205,7 @@ void DrawView::NormalLook( double angle )
 	m_Camera->SetViewUp(0, 1, 0);
 	m_Camera->GetPosition(pos);
 	m_Camera->SetPosition(pos[0], pos[1], m_focus_height/10.0);
-	m_Camera->SetFocalPoint(pos[0], pos[1], pos[2]-1);
+	m_Camera->SetFocalPoint(pos[0], pos[1], pos[2]-10);
 	m_Camera->SetFocalDisk(pos[2]+1);
 }
 
