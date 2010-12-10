@@ -95,7 +95,8 @@ Solid::Solid()
 
 void Solid::SetData( SJCScalarField3d* sf3d )
 {
-	m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_RenderWindow, m_iren));
+	// m_SolidCtrl舊函式需要
+	//m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_RenderWindow, m_iren));
 	m_SolidCtrl->m_Renderer = m_Renderer;
 	m_SolidCtrl->SetData(sf3d);
 	// backup to use

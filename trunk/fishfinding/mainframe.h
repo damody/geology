@@ -164,7 +164,7 @@ public:
 	wxStaticText* m_Longitude;
 	wxStaticText* m_Latitude;
 	wxStaticText* m_DataTotal;
-	wxColourPickerCtrl* m_DeepColor;
+	wxColourPickerCtrl* m_deColor;
 	wxColourPickerCtrl* m_hsColor;
 	wxGLCanvas* m_GLCanvas;
 	wxTextCtrl* m_OutputText;

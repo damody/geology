@@ -132,7 +132,7 @@ void mainframe::Init()
 	m_Longitude = NULL;
 	m_Latitude = NULL;
 	m_DataTotal = NULL;
-	m_DeepColor = NULL;
+	m_deColor = NULL;
 	m_hsColor = NULL;
 	m_GLCanvas = NULL;
 	m_OutputText = NULL;
@@ -261,10 +261,10 @@ void mainframe::CreateControls()
 	wxStaticText* itemStaticText24 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6A94 + (wxChar) 0x6848 + (wxChar) 0x8DEF + (wxChar) 0x5F91), wxDefaultPosition, wxDefaultSize, 0 );
 	itemGridBagSizer3->Add(itemStaticText24, wxGBPosition(11, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	m_DeepColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURCTRL, wxColour(255, 128, 64), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	itemGridBagSizer3->Add(m_DeepColor, wxGBPosition(7, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	m_deColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURCTRL, wxColour(243, 75, 105), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	itemGridBagSizer3->Add(m_deColor, wxGBPosition(7, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	m_hsColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURPICKERCTRL, wxColour(), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	m_hsColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURPICKERCTRL, wxColour(49, 249, 169), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	itemGridBagSizer3->Add(m_hsColor, wxGBPosition(8, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	wxStaticText* itemStaticText27 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
@@ -445,6 +445,10 @@ VOID CALLBACK TimerProc ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer 
 
 void mainframe::OnStartGetClick( wxCommandEvent& event )
 {
+	wxColour color = m_hsColor->GetColour();
+	m_DrawView.SetHSColor(color.Red(), color.Green(), color.Blue());
+	color = m_deColor->GetColour();
+	m_DrawView.SetDEColor(color.Red(), color.Green(), color.Blue());
 	if (m_open)
 	{
 		CloseComport(m_port-1);
@@ -490,17 +494,17 @@ void mainframe::OnStopGetClick( wxCommandEvent& event )
 {
 	if (m_open)
 	{
-		wxString mess;
-		mess << wxT("close port:") << m_port;
-		wxMessageDialog dialog(NULL, mess, wxT("found"));
-		dialog.ShowModal();
-		CloseComport(m_port-1);
-		m_open = false;
 		if (m_timer_go)
 		{
 			m_timer_go = false;
 			KillTimer(NULL, DRAW_TIMER1); 
 		}
+		CloseComport(m_port-1);
+		m_open = false;
+		wxString mess;
+		mess << wxT("close port:") << m_port;
+		wxMessageDialog dialog(NULL, mess, wxT("found"));
+		dialog.ShowModal();
 	}
 	m_DrawView.AddTest();
 }
@@ -607,7 +611,7 @@ void mainframe::OnCheckbox2Click( wxCommandEvent& event )
 void mainframe::OnDeepColorChanged( wxColourPickerEvent& event )
 {
 	wxColour color = event.GetColour();
-	//m_DrawView.SetDepth_Color(color.Red()/255.0, color.Green()/255.0, color.Blue()/255.0);
+	m_DrawView.SetDEColor(color.Red(), color.Green(), color.Blue());
 	event.Skip();
 }
 
@@ -619,7 +623,7 @@ void mainframe::OnDeepColorChanged( wxColourPickerEvent& event )
 void mainframe::OnhsColorChanged( wxColourPickerEvent& event )
 {
 	wxColour color = event.GetColour();
-	//m_DrawView.SetHS_Color(color.Red()/255.0, color.Green()/255.0, color.Blue()/255.0);
+	m_DrawView.SetHSColor(color.Red(), color.Green(), color.Blue());
 	event.Skip();
 }
 
