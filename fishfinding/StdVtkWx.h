@@ -10,6 +10,7 @@
 
 #include <vtkSmartPointer.h>
 #include <vtkAppendPolyData.h>
+#include <vtkLine.h>
 #include <vtkFloatArray.h>
 #include <vtkCellArray.h>
 #include <vtkCellData.h>
@@ -44,6 +45,7 @@
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
 
 VTK_SMART_POINTER(vtkAppendPolyData)
+VTK_SMART_POINTER(vtkLine)
 VTK_SMART_POINTER(vtkFloatArray)
 VTK_SMART_POINTER(vtkCellArray)
 VTK_SMART_POINTER(vtkCellData)

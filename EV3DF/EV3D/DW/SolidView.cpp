@@ -216,7 +216,6 @@ void SolidView::Init_Vertex()
 	colorpolydata->SetPoints(GetParentDoc()->m_PolyData->GetPoints());
 	colorpolydata->GetPointData()->SetScalars(colors);
 	vertexGlyphFilter->SetInput(colorpolydata);
-	vertexGlyphFilter->Update();
 	m_polydataMapper->SetInputConnection(vertexGlyphFilter->GetOutputPort());			
 	m_polydataMapper->SetLookupTable(lut);
 	m_actor->SetMapper(m_polydataMapper);

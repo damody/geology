@@ -28,12 +28,13 @@ public:
 		m_Axes_widget->SetInteractor( m_WindowInteractor );
 		m_Axes_widget->On();
 	}
-	SolidCtrl(vtkRenderWindow_Sptr rw, vtkRenderWindowInteractor_Sptr iren)
-	{
-		m_RenderWindow = rw;
-		vtkSmartNew(m_WindowInteractor);
-		m_WindowInteractor->SetRenderWindow(m_RenderWindow);
-	}
+// Solid需要
+// 	SolidCtrl(vtkRenderWindow_Sptr rw, vtkRenderWindowInteractor_Sptr iren)
+// 	{
+// 		m_RenderWindow = rw;
+// 		vtkSmartNew(m_WindowInteractor);
+// 		m_WindowInteractor->SetRenderWindow(m_RenderWindow);
+// 	}
 	SolidView_Sptrs		m_SolidViewPtrs;
 	SolidDoc_Sptrs		m_SolidDocPtrs;
 	vtkRenderWindow_Sptr	m_RenderWindow;
