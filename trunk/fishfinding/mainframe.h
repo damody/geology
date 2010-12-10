@@ -57,6 +57,7 @@ class wxGLCanvas;
 #define ID_FILECTRL 10007
 #define ID_COLOURCTRL 10013
 #define ID_COLOURPICKERCTRL 10014
+#define ID_SPINCTRL1 10015
 #define ID_GLCANVAS 10009
 #define ID_TEXTCTRL 10008
 #define SYMBOL_MAINFRAME_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
@@ -68,7 +69,8 @@ class wxGLCanvas;
 
 enum
 {
-	DRAW_TIMER1 = 1
+	DRAW_TIMER = 1,
+	CHECK_NORMAL_TIMER
 };
 /*!
 * mainframe class declaration
@@ -107,7 +109,7 @@ public:
 	void OnStartGetClick( wxCommandEvent& event );
 
 	/// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
-	void OnCheckboxClick( wxCommandEvent& event );
+	void OnOutputTextVisable( wxCommandEvent& event );
 
 	/// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2
 	void OnCheckbox2Click( wxCommandEvent& event );
@@ -133,6 +135,9 @@ public:
 	/// wxEVT_PAINT event handler for ID_GLCANVAS
 	void OnPaint( wxPaintEvent& event );
 
+	/// wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL
+	void OnTimerUpdated( wxCommandEvent& event );
+
 	////@end mainframe event handler declarations
 
 	////@begin mainframe member function declarations
@@ -155,6 +160,7 @@ public:
 	wxChoice* m_BoundRate;
 	wxChoice* m_Combo_ComPort;
 	wxButton* m_BtnStartGet;
+	wxCheckBox* m_CanOutput;
 	wxCheckBox* m_NormalLook;
 	wxSpinCtrl* m_spinctrl_height;
 	wxCheckBox* m_FocusLast;
@@ -166,13 +172,16 @@ public:
 	wxStaticText* m_DataTotal;
 	wxColourPickerCtrl* m_deColor;
 	wxColourPickerCtrl* m_hsColor;
+	wxSpinCtrl* m_UpdateInterval;
 	wxGLCanvas* m_GLCanvas;
 	wxTextCtrl* m_OutputText;
 	////@end mainframe member variables
-	long m_port;
-	bool m_open, m_timer_go;
-	NmeaCell m_nCell;
-	DrawView m_DrawView;
+	long		m_port;
+	bool		m_open,
+			m_timer_go;
+	NmeaCell	m_nCell;
+	DrawView	m_DrawView;
+	int		m_lastUpdateTime;
 };
 
 #endif

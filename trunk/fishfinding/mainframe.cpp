@@ -50,7 +50,7 @@ BEGIN_EVENT_TABLE( mainframe, wxFrame )
 
 	EVT_BUTTON( ID_BUTTON, mainframe::OnStartGetClick )
 
-	EVT_CHECKBOX( ID_CHECKBOX, mainframe::OnCheckboxClick )
+	EVT_CHECKBOX( ID_CHECKBOX, mainframe::OnOutputTextVisable )
 
 	EVT_CHECKBOX( ID_CHECKBOX2, mainframe::OnCheckbox2Click )
 
@@ -63,6 +63,8 @@ BEGIN_EVENT_TABLE( mainframe, wxFrame )
 	EVT_COLOURPICKER_CHANGED( ID_COLOURCTRL, mainframe::OnDeepColorChanged )
 
 	EVT_COLOURPICKER_CHANGED( ID_COLOURPICKERCTRL, mainframe::OnhsColorChanged )
+
+	EVT_TEXT( ID_TEXTCTRL, mainframe::OnTimerUpdated )
 
 ////@end mainframe event table entries
 
@@ -112,6 +114,11 @@ mainframe::~mainframe()
 ////@end mainframe destruction
 }
 
+mainframe* mf;
+VOID CALLBACK TimerProc2 ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer )
+{
+	mf->RenderFrame();
+}
 
 /*
  * Member initialisation
@@ -123,6 +130,7 @@ void mainframe::Init()
 	m_BoundRate = NULL;
 	m_Combo_ComPort = NULL;
 	m_BtnStartGet = NULL;
+	m_CanOutput = NULL;
 	m_NormalLook = NULL;
 	m_spinctrl_height = NULL;
 	m_FocusLast = NULL;
@@ -134,12 +142,13 @@ void mainframe::Init()
 	m_DataTotal = NULL;
 	m_deColor = NULL;
 	m_hsColor = NULL;
+	m_UpdateInterval = NULL;
 	m_GLCanvas = NULL;
 	m_OutputText = NULL;
 ////@end mainframe member initialisation
-    m_port = NULL;
-    m_open = false;
-    m_timer_go = false;
+	m_port = NULL;
+	m_open = false;
+	m_timer_go = false;
 }
 
 
@@ -209,16 +218,19 @@ void mainframe::CreateControls()
 	m_BtnStartGet = new wxButton( itemPanel2, ID_BUTTON, _("StartGet"), wxDefaultPosition, wxDefaultSize, 0 );
 	itemGridBagSizer3->Add(m_BtnStartGet, wxGBPosition(2, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxCheckBox* itemCheckBox9 = new wxCheckBox( itemPanel2, ID_CHECKBOX, wxGetTranslation(wxString() + (wxChar) 0x6587 + (wxChar) 0x5B57 + (wxChar) 0x8F38 + (wxChar) 0x51FA), wxDefaultPosition, wxDefaultSize, 0 );
-	itemCheckBox9->SetValue(true);
-	itemGridBagSizer3->Add(itemCheckBox9, wxGBPosition(10, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	m_CanOutput = new wxCheckBox( itemPanel2, ID_CHECKBOX, wxGetTranslation(wxString() + (wxChar) 0x6587 + (wxChar) 0x5B57 + (wxChar) 0x8F38 + (wxChar) 0x51FA), wxDefaultPosition, wxDefaultSize, 0 );
+	m_CanOutput->SetValue(true);
+	itemGridBagSizer3->Add(m_CanOutput, wxGBPosition(10, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	wxStaticText* itemStaticText10 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x66F4 + (wxChar) 0x65B0 + (wxChar) 0x901F + (wxChar) 0x5EA6), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText10, wxGBPosition(13, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	m_NormalLook = new wxCheckBox( itemPanel2, ID_CHECKBOX2, wxGetTranslation(wxString() + (wxChar) 0x5782 + (wxChar) 0x76F4 + (wxChar) 0x4FEF + (wxChar) 0x8996), wxDefaultPosition, wxDefaultSize, 0 );
 	m_NormalLook->SetValue(true);
 	itemGridBagSizer3->Add(m_NormalLook, wxGBPosition(11, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText11 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x89C0 + (wxChar) 0x770B + (wxChar) 0x9AD8 + (wxChar) 0x5EA6), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText11, wxGBPosition(9, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText12 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x89C0 + (wxChar) 0x770B + (wxChar) 0x9AD8 + (wxChar) 0x5EA6), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText12, wxGBPosition(9, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	m_spinctrl_height = new wxSpinCtrl( itemPanel2, ID_SPINCTRL, _T("3"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, -32760, 32760, 3 );
 	itemGridBagSizer3->Add(m_spinctrl_height, wxGBPosition(9, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -234,23 +246,23 @@ void mainframe::CreateControls()
 	m_Browse->SetBackgroundColour(wxColour(158, 198, 155));
 	itemGridBagSizer3->Add(m_Browse, wxGBPosition(12, 0), wxGBSpan(1, 2), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText16 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x8CC7 + (wxChar) 0x6599 + (wxChar) 0x500B + (wxChar) 0x6578), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText16, wxGBPosition(3, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText17 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x8CC7 + (wxChar) 0x6599 + (wxChar) 0x500B + (wxChar) 0x6578), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText17, wxGBPosition(3, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText17 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x7D93 + (wxChar) 0x5EA6 + wxT("E")), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText17, wxGBPosition(5, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText18 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x7D93 + (wxChar) 0x5EA6 + wxT("E")), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText18, wxGBPosition(5, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	m_WaterDepth = new wxStaticText( itemPanel2, wxID_STATIC, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
 	itemGridBagSizer3->Add(m_WaterDepth, wxGBPosition(4, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText19 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6C34 + (wxChar) 0x6DF1), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText19, wxGBPosition(4, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText20 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6C34 + (wxChar) 0x6DF1), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText20, wxGBPosition(4, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	m_Longitude = new wxStaticText( itemPanel2, wxID_STATIC, _("0.0"), wxDefaultPosition, wxDefaultSize, 0 );
 	itemGridBagSizer3->Add(m_Longitude, wxGBPosition(5, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText21 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x7DEF + (wxChar) 0x5EA6 + wxT("N")), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText21, wxGBPosition(6, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText22 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x7DEF + (wxChar) 0x5EA6 + wxT("N")), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText22, wxGBPosition(6, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	m_Latitude = new wxStaticText( itemPanel2, wxID_STATIC, _("0.0"), wxDefaultPosition, wxDefaultSize, 0 );
 	itemGridBagSizer3->Add(m_Latitude, wxGBPosition(6, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -258,8 +270,8 @@ void mainframe::CreateControls()
 	m_DataTotal = new wxStaticText( itemPanel2, wxID_STATIC, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
 	itemGridBagSizer3->Add(m_DataTotal, wxGBPosition(3, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText24 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6A94 + (wxChar) 0x6848 + (wxChar) 0x8DEF + (wxChar) 0x5F91), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText24, wxGBPosition(11, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText25 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6A94 + (wxChar) 0x6848 + (wxChar) 0x8DEF + (wxChar) 0x5F91), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText25, wxGBPosition(11, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	m_deColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURCTRL, wxColour(243, 75, 105), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	itemGridBagSizer3->Add(m_deColor, wxGBPosition(7, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
@@ -267,11 +279,14 @@ void mainframe::CreateControls()
 	m_hsColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURPICKERCTRL, wxColour(49, 249, 169), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
 	itemGridBagSizer3->Add(m_hsColor, wxGBPosition(8, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText27 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText27, wxGBPosition(7, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText28 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText28, wxGBPosition(7, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
-	wxStaticText* itemStaticText28 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6C34 + (wxChar) 0x9762 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText28, wxGBPosition(8, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxStaticText* itemStaticText29 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6C34 + (wxChar) 0x9762 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText29, wxGBPosition(8, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	m_UpdateInterval = new wxSpinCtrl( itemPanel2, ID_SPINCTRL1, _T("500"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, 100, 5000, 500 );
+	itemGridBagSizer3->Add(m_UpdateInterval, wxGBPosition(13, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
 	// Fit to content
 	itemFrame1->GetAuiManager().GetPane(_T("Pane1")).BestSize(itemPanel2->GetSizer()->Fit(itemPanel2)).MinSize(itemPanel2->GetSizer()->GetMinSize());
@@ -290,6 +305,8 @@ void mainframe::CreateControls()
 	m_GLCanvas->Connect(ID_GLCANVAS, wxEVT_SIZE, wxSizeEventHandler(mainframe::OnCanvasSize), NULL, this);
 	m_GLCanvas->Connect(ID_GLCANVAS, wxEVT_PAINT, wxPaintEventHandler(mainframe::OnPaint), NULL, this);
 ////@end mainframe content construction
+	SetTimer ( (HWND)(m_GLCanvas->GetHandle()), CHECK_NORMAL_TIMER, 1000, TimerProc2 );
+	mf = this;
 }
 
 
@@ -340,9 +357,10 @@ void mainframe::OnFilectrlFilePickerChanged( wxFileDirPickerEvent& event )
 	event.Skip();
 ////@end wxEVT_FILEPICKER_CHANGED event handler for ID_FILECTRL in mainframe. 
 }
-mainframe* mf;
+
 VOID CALLBACK TimerProc ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer )
 {
+	assert(mf->m_timer_go);
 	if (mf->m_open)
 	{
 		char buffer[4100];
@@ -384,7 +402,7 @@ VOID CALLBACK TimerProc ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer 
 					{
 						
 						xbuf[i-1] = '\r';
-						xbuf[i] = '\n';
+						xbuf[i+0] = '\n';
 						xbuf[i+1] = '\0';
 					}
 					mf->m_nCell.InputLine(std::string(xbuf));
@@ -438,7 +456,6 @@ VOID CALLBACK TimerProc ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer 
 	mf->RenderFrame();
 }
 
-
 /*
  * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
  */
@@ -473,16 +490,16 @@ void mainframe::OnStartGetClick( wxCommandEvent& event )
 		if (!m_timer_go)
 		{
 			m_timer_go = true;
-			SetTimer ( NULL, DRAW_TIMER1, 500, TimerProc );
+			SetTimer ( (HWND)(m_GLCanvas->GetHandle()), DRAW_TIMER, m_UpdateInterval->GetValue(), TimerProc );
+			m_lastUpdateTime = m_UpdateInterval->GetValue();
 		}
-		if (!m_Browse->CheckPath(m_Browse->GetTextCtrlValue()))
+		if (m_Browse->GetTextCtrlValue().size() == 0 || !m_Browse->CheckPath(m_Browse->GetTextCtrlValue()))
 		{
 			wxString mess;
 			mess << wxT("you don't have valid filepath to save!!!");
 			wxMessageDialog dialog(NULL, mess, wxT("found"));
 			dialog.ShowModal();
 		}
-		mf = this;
 	}
 }
 
@@ -497,7 +514,7 @@ void mainframe::OnStopGetClick( wxCommandEvent& event )
 		if (m_timer_go)
 		{
 			m_timer_go = false;
-			KillTimer(NULL, DRAW_TIMER1); 
+			KillTimer((HWND)(m_GLCanvas->GetHandle()), DRAW_TIMER); 
 		}
 		CloseComport(m_port-1);
 		m_open = false;
@@ -537,12 +554,14 @@ void mainframe::OnChoiceSelected( wxCommandEvent& event )
  * wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
  */
 
-void mainframe::OnCheckboxClick( wxCommandEvent& event )
+void mainframe::OnOutputTextVisable( wxCommandEvent& event )
 {
-////@begin wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX in mainframe.
-	// Before editing this code, remove the block markers.
+	if (m_CanOutput->GetValue())
+		GetAuiManager().GetPane(wxT("ID_TEXTCTRL")).Show();
+	else
+		GetAuiManager().GetPane(wxT("ID_TEXTCTRL")).Hide();
+	GetAuiManager().Update();
 	event.Skip();
-////@end wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX in mainframe. 
 }
 
 /*
@@ -624,6 +643,24 @@ void mainframe::OnhsColorChanged( wxColourPickerEvent& event )
 {
 	wxColour color = event.GetColour();
 	m_DrawView.SetHSColor(color.Red(), color.Green(), color.Blue());
+	event.Skip();
+}
+
+
+/*
+ * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL
+ */
+
+void mainframe::OnTimerUpdated( wxCommandEvent& event )
+{
+	if (m_timer_go && m_lastUpdateTime != m_UpdateInterval->GetValue())
+	{
+		m_timer_go = false;
+		KillTimer((HWND)(m_GLCanvas->GetHandle()), DRAW_TIMER);
+		SetTimer ((HWND)(m_GLCanvas->GetHandle()), DRAW_TIMER, m_UpdateInterval->GetValue(), TimerProc);
+		m_timer_go = true;
+		m_lastUpdateTime = m_UpdateInterval->GetValue();
+	}
 	event.Skip();
 }
 
