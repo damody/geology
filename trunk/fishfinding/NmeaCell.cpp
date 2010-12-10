@@ -6,18 +6,20 @@
 NmeaCell::NmeaCell()
 {
 	NewInfo();
+	m_output_index = 0;
 }
 
 bool NmeaCell::InputLine( std::string str )
 {
-	if (str.length()<6)
+	if (str.length()<10)
 		return false;
 	m_buffer_str += str;
 	for (int i=0;i<5;i++)
 		m_Type[i] = str[i+1];
+	if (!CheckInfoCorrect())
+		return false;
 	if (CheckNewInfo())
 		NewInfo();
-	str += "\r\n";
 	nmeaPARSER parser;
 	nmea_parser_init(&parser);
 	nmea_parse(&parser, str.c_str(), (int)str.length(), &m_lastinfo);
@@ -86,6 +88,17 @@ bool NmeaCell::CheckNewInfo()
 	}
 	return false;
 }
+bool NmeaCell::CheckInfoCorrect()
+{
+	for (int i = 0;i < g_TypeTotal; i++)
+	{
+		if (0 == memcmp(m_Type, &(g_nmeaheads[i]), 5))
+		{
+			return true;
+		}
+	}
+	return false;
+}
 bool NmeaCell::InfoChange( nmeaINFO& info1, nmeaINFO& info2 )
 {
 	if (info1.lon !=0 && info2.lon != 0 && info1.lon != info2.lon)
@@ -107,8 +120,8 @@ bool NmeaCell::InfoChange( nmeaINFO& info1, nmeaINFO& info2 )
 
 void NmeaCell::SaveFile( const std::wstring str )
 {
-	std::fstream fIn;
-	fIn.open(str.c_str(), std::ios_base::in | std::ios_base::out);
+	std::ofstream fIn;
+	fIn.open(str.c_str(), std::ios_base::out | std::ios_base::app);
 	if (fIn.good())
 	{
 		fIn.seekp(0,std::ios_base::end);
@@ -121,6 +134,21 @@ void NmeaCell::SaveFile( const std::wstring str )
 int NmeaCell::GetTotal()
 {
 	return m_infos.size();
+}
+
+void NmeaCell::ReSetGetOne()
+{
+	m_output_index = 0;
+}
+
+int NmeaCell::GetOneIndex()
+{
+	return m_output_index;
+}
+
+const nmeaINFO& NmeaCell::GetOne()
+{
+	return m_infos[m_output_index++];
 }
 
 

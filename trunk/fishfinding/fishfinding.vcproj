@@ -21,6 +21,7 @@
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -75,11 +76,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386 /DEBUG"
-				AdditionalDependencies=" wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_media.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib nmea_d.lib"
+				AdditionalDependencies="wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_media.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib nmea_d.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib"
 				OutputFile="VCProjectUnicodeDebug\fishfinding.exe"
-				LinkIncremental="0"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="E:\clibrary\wx/lib/vc_lib,C:\Program Files\Microsoft SDKs\Windows\v6.0A\lib,C:\Program Files (x86)\Microsoft Visual Studio 9.0\vc\lib"
+				AdditionalLibraryDirectories="E:\clibrary\VTK\Win32\bin\Debug"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="VCProjectUnicodeDebug\fishfinding.pdb"
 				SubSystem="2"
@@ -89,6 +90,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -115,6 +117,7 @@
 			ConfigurationType="1"
 			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -170,11 +173,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386"
-				AdditionalDependencies=" wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxbase28u_odbc.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib opengl32.lib nmea.lib"
+				AdditionalDependencies="wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxbase28u_odbc.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib odbc32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib"
 				OutputFile="VCProjectUnicodeRelease\fishfinding.exe"
-				LinkIncremental="0"
+				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="E:\clibrary\wx/lib/vc_lib,C:\Program Files\Microsoft SDKs\Windows\v6.0A\lib,C:\Program Files (x86)\Microsoft Visual Studio 9.0\vc\lib"
+				AdditionalLibraryDirectories="E:\clibrary\VTK\Win32\bin\Release"
 				ProgramDatabaseFile="VCProjectUnicodeRelease\fishfinding.pdb"
 				SubSystem="2"
 			/>
@@ -183,6 +186,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -212,14 +216,24 @@
 			<File
 				RelativePath="app.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\DrawView.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\DrawView.h"
-				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
 			</File>
 			<File
 				RelativePath="fishfinding.rc"
@@ -228,14 +242,24 @@
 			<File
 				RelativePath="mainframe.cpp"
 				>
-			</File>
-			<File
-				RelativePath=".\NmeaCell.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\NmeaCell.h"
-				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
 			</File>
 		</Filter>
 		<Filter
@@ -249,12 +273,76 @@
 				RelativePath="mainframe.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="myclass"
+			>
+			<File
+				RelativePath=".\DrawView.cpp"
+				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="2"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\DrawView.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NmeaCell.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\NmeaCell.h"
+				>
+			</File>
 			<File
 				RelativePath=".\rs232.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\rs232.h"
+				>
+			</File>
+			<File
+				RelativePath=".\StdVtkWx.cpp"
+				>
+				<FileConfiguration
+					Name="Unicode Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Unicode Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+						PrecompiledHeaderThrough="StdVtkWx.h"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\StdVtkWx.h"
 				>
 			</File>
 			<File
