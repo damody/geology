@@ -9,6 +9,7 @@ class DrawView
 public:
 	struct DataPoint
 	{
+		DataPoint():N(0), E(0), depth(0){}
 		union
 		{
 			struct
@@ -38,6 +39,9 @@ public:
 	void NormalLook(double angle = 0);
  	void SetHSColor(unsigned char r, unsigned char g, unsigned char b);
  	void SetDEColor(unsigned char r, unsigned char g, unsigned char b);
+	void SetPointSize(int size);
+	DataPoint GetLastData();
+	int  GetTotal();
 private:
 	DataPoints	m_raw_points;
 	Rectf		m_area;
@@ -64,7 +68,7 @@ private:
 	vtkCamera_Sptr		m_Camera;
 	vtkAxesActor_Sptr	m_Axes;
 	vtkAppendPolyData_Sptr	m_Append_hs,
-				m_Append_depth;
+				m_Append_de;
 	vtkLookupTable_Sptr	m_hs_lut,
 				m_depth_lut;
 	vtkUnsignedCharArray_Sptr	m_hs_colors,

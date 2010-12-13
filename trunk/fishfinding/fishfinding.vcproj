@@ -78,12 +78,15 @@
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386 /DEBUG"
 				AdditionalDependencies="wxmsw28ud_richtext.lib wxmsw28ud_aui.lib wxmsw28ud_media.lib wxmsw28ud_html.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib nmea_d.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib"
 				OutputFile="VCProjectUnicodeDebug\fishfinding.exe"
-				LinkIncremental="2"
+				LinkIncremental="1"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="E:\clibrary\VTK\Win32\bin\Debug"
 				GenerateDebugInformation="true"
 				ProgramDatabaseFile="VCProjectUnicodeDebug\fishfinding.pdb"
 				SubSystem="2"
+				StackReserveSize="32768"
+				StackCommitSize="32768"
+				LargeAddressAware="2"
 			/>
 			<Tool
 				Name="VCALinkTool"

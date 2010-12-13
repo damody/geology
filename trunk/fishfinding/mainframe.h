@@ -50,6 +50,7 @@ class wxGLCanvas;
 #define ID_CHOICE 10001
 #define ID_BUTTON 10003
 #define ID_CHECKBOX 10005
+#define ID_SPINCTRL2 10016
 #define ID_CHECKBOX2 10012
 #define ID_SPINCTRL 10011
 #define ID_CHECKBOX1 10010
@@ -58,6 +59,8 @@ class wxGLCanvas;
 #define ID_COLOURCTRL 10013
 #define ID_COLOURPICKERCTRL 10014
 #define ID_SPINCTRL1 10015
+#define ID_BUTTON2 10017
+#define ID_BUTTON3 10018
 #define ID_GLCANVAS 10009
 #define ID_TEXTCTRL 10008
 #define SYMBOL_MAINFRAME_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
@@ -111,6 +114,9 @@ public:
 	/// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX
 	void OnOutputTextVisable( wxCommandEvent& event );
 
+	/// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
+	void OnPointSizeUpdated( wxSpinEvent& event );
+
 	/// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2
 	void OnCheckbox2Click( wxCommandEvent& event );
 
@@ -128,6 +134,12 @@ public:
 
 	/// wxEVT_COLOURPICKER_CHANGED event handler for ID_COLOURPICKERCTRL
 	void OnhsColorChanged( wxColourPickerEvent& event );
+
+	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON2
+	void OnLoadFileDataClick( wxCommandEvent& event );
+
+	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON3
+	void OnClearDataClick( wxCommandEvent& event );
 
 	/// wxEVT_SIZE event handler for ID_GLCANVAS
 	void OnCanvasSize( wxSizeEvent& event );
@@ -155,12 +167,15 @@ public:
 	/// Should we show tooltips?
 	static bool ShowToolTips();
 	void RenderFrame();
+	void UpdateDataToUI();
+	void ColorLine();
 	////@begin mainframe member variables
 	wxAuiManager m_auiManager;
 	wxChoice* m_BoundRate;
 	wxChoice* m_Combo_ComPort;
 	wxButton* m_BtnStartGet;
 	wxCheckBox* m_CanOutput;
+	wxSpinCtrl* m_point_size;
 	wxCheckBox* m_NormalLook;
 	wxSpinCtrl* m_spinctrl_height;
 	wxCheckBox* m_FocusLast;
