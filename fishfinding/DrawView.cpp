@@ -66,27 +66,6 @@ DrawView::DrawView()
 
 void DrawView::Clear()
 {
-	vtkSmartNew_Initialize(m_hs_points);
-	vtkSmartNew_Initialize(m_de_points);
-	vtkSmartNew_Initialize(m_hs_vertices);
-	vtkSmartNew_Initialize(m_de_vertices);
-	vtkSmartNew_Initialize(m_hs_colors);
-	vtkSmartNew_Initialize(m_de_colors);
-	vtkSmartNew_Initialize(m_hs_lines);
-	vtkSmartNew_Initialize(m_de_lines);
-	vtkSmartNew_Initialize(m_hs_poly);
-	vtkSmartNew_Initialize(m_de_poly);
-	m_hs_poly->SetPoints(m_hs_points);
-	m_hs_poly->SetVerts(m_hs_vertices);
-	m_hs_poly->SetLines(m_hs_lines);
-	m_de_poly->SetPoints(m_de_points);
-	m_de_poly->SetVerts(m_de_vertices);
-	m_de_poly->SetLines(m_de_lines);
-	m_hs_colors->SetNumberOfComponents(3);
-	m_hs_colors->SetName ("Colors");
-	m_de_colors->SetNumberOfComponents(3);
-	m_de_colors->SetName ("Colors");
-
 	m_hs_points->Initialize();
 	m_de_points->Initialize();
 	m_hs_vertices->Initialize();
@@ -96,27 +75,10 @@ void DrawView::Clear()
 	m_hs_lines->Initialize();
 	m_de_lines->Initialize();
 	m_raw_points.clear();
-	m_Renderer->RemoveActor(m_hs_Actor);
-	m_Renderer->RemoveActor(m_de_Actor);
-	vtkSmartNew(m_Append_hs);
-	vtkSmartNew(m_Append_de);
-	vtkSmartNew(m_hs_Mapper);
-	vtkSmartNew(m_de_Mapper);
-	vtkSmartNew(m_hs_Actor);
-	vtkSmartNew(m_de_Actor);
-	vtkSmartNew(m_Renderer);
-	m_Append_hs->SetInput(m_hs_poly);
-	m_hs_Mapper->SetInputConnection(m_Append_hs->GetOutputPort());
-	m_hs_Actor->SetMapper(m_hs_Mapper);
-
-	m_Append_de->SetInput(m_de_poly);
-	m_de_Mapper->SetInputConnection(m_Append_de->GetOutputPort());
-	m_de_Actor->SetMapper(m_de_Mapper);
-	m_Renderer->AddActor(m_hs_Actor);
-	m_Renderer->AddActor(m_de_Actor);
-	m_RenderWindow->AddRenderer(m_Renderer);
-	m_Renderer->SetActiveCamera(m_Camera);
-	m_Renderer->SetBackground(.1, .2, .3);
+	m_Append_hs->RemoveAllInputs();
+ 	m_Append_hs->AddInput(m_hs_poly);
+	m_Append_de->RemoveAllInputs();
+ 	m_Append_de->AddInput(m_de_poly);
 }
 
 void DrawView::AddDataList( const nmeaINFOs& infos )
@@ -186,10 +148,15 @@ void DrawView::ReSize( int w, int h )
 
 void DrawView::AddTest()
 {
+// 	m_hs_points->Initialize();
+// 	m_hs_vertices->Initialize();
+// 	m_hs_lines->Initialize();
 // 	int i, j, k,  kOffset, jOffset, offset;
-// 	const int x_len = 5,
-// 		y_len = 5,
-// 		z_len = 5;
+// 	static int q=10;
+// 	q--;
+// 	const int x_len = 3+q,
+// 		y_len = 3+q,
+// 		z_len = 3+q;
 // 	for(k=0;k<z_len;k++)
 // 	{
 // 		kOffset = k*y_len*x_len;
@@ -214,6 +181,7 @@ void DrawView::AddTest()
 // 	}
 // 	m_hs_poly->SetLines(m_hs_lines);
 // 	m_hs_poly->GetPointData()->SetScalars(m_hs_colors);
+// 	m_Append_hs->RemoveAllInputs();
 // 	m_Append_hs->AddInput(m_hs_poly);
 }
 
