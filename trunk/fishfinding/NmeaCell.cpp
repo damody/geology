@@ -172,6 +172,7 @@ void NmeaCell::Clear()
 	m_infos.clear();
 	m_last_str = "";
 	m_buffer_str = "";
+	m_output_index = 0;
 	memset(m_Type, 0, 5);
 }
 
