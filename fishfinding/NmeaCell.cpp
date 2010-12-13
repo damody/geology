@@ -5,7 +5,7 @@
 
 NmeaCell::NmeaCell()
 {
-	NewInfo();
+	nmea_zero_INFO(&m_lastinfo);
 	m_output_index = 0;
 }
 
@@ -16,7 +16,7 @@ bool NmeaCell::InputLine( std::string str )
 	m_buffer_str += str;
 	for (int i=0;i<5;i++)
 		m_Type[i] = str[i+1];
-	if (!CheckInfoCorrect())
+	if (!CheckLastInfoCorrect())
 		return false;
 	if (CheckNewInfo())
 		NewInfo();
@@ -24,12 +24,15 @@ bool NmeaCell::InputLine( std::string str )
 	nmea_parser_init(&parser);
 	nmea_parse(&parser, str.c_str(), (int)str.length(), &m_lastinfo);
 	nmea_parser_destroy(&parser);
+	if (m_infos.empty())
+		NewInfo();
 	m_infos.back() = m_lastinfo;
 	return true;
 }
 
 bool NmeaCell::InputLine( char* str )
 {
+	m_buffer_str += str;
 	int len = (int)strlen(str);
 	for (int i=0;i<5;i++)
 		m_Type[i] = str[i+1];
@@ -39,9 +42,11 @@ bool NmeaCell::InputLine( char* str )
 	str[len+1] = '\n';
 	str[len+2] = '\0';
 	nmeaPARSER parser;
-	nmea_parser_init(&parser);
-	nmea_parse(&parser, str, len+2, &m_lastinfo);
-	nmea_parser_destroy(&parser);
+ 	nmea_parser_init(&parser);
+ 	nmea_parse(&parser, str, len+2, &m_lastinfo);
+ 	nmea_parser_destroy(&parser);
+	if (m_infos.empty())
+		NewInfo();
 	m_infos.back() = m_lastinfo;
 	return true;
 }
@@ -53,6 +58,7 @@ bool NmeaCell::InputFile( const std::wstring str )
 	char buffer[1024];
 	while (!is.eof())
 	{
+		memset(buffer, 0, sizeof(buffer));
 		is.getline(buffer, 1024);
 		InputLine(buffer);
 	}
@@ -67,7 +73,15 @@ const nmeaINFOs& NmeaCell::GetDataList()
 
 const nmeaINFO& NmeaCell::GetLastData()
 {
-	return m_lastinfo;
+	if (m_lastinfo.lat!=0)
+		return m_lastinfo;
+	else
+	{
+		if (m_infos.size()>1)
+			return *(m_infos.end()-2);
+		else
+			return m_lastinfo;
+	}
 }
 
 void NmeaCell::NewInfo()
@@ -90,7 +104,7 @@ bool NmeaCell::CheckNewInfo()
 	}
 	return false;
 }
-bool NmeaCell::CheckInfoCorrect()
+bool NmeaCell::CheckLastInfoCorrect()
 {
 	for (int i = 0;i < g_TypeTotal; i++)
 	{
@@ -151,6 +165,81 @@ int NmeaCell::GetOneIndex()
 const nmeaINFO& NmeaCell::GetOne()
 {
 	return m_infos[m_output_index++];
+}
+
+void NmeaCell::Clear()
+{
+	m_infos.clear();
+	m_last_str = "";
+	m_buffer_str = "";
+	memset(m_Type, 0, 5);
+}
+
+void NmeaCell::InputRawData( const char* data, const int size )
+{
+	const int b_size = size+m_last_str.length()+10;
+	char *buffer = (char*)malloc(sizeof(char)*b_size);
+	memset(buffer, 0, sizeof(char)*b_size);
+	memcpy(buffer, m_last_str.c_str(), m_last_str.length());
+	memcpy(buffer + m_last_str.length(), data, size);
+	// 增加文字到OutputText
+	char xbuf[200];
+	memset(xbuf, 0, sizeof(char)*200);
+	int len = strlen(buffer);
+	for (;len>10;)
+	{
+		for (int i=0;i<len;i++)
+		{
+			if (i!=0 && buffer[i]=='$')
+			{
+				int ok_offset;
+				for (ok_offset=0;ok_offset<i;ok_offset++)
+				{
+					if (buffer[ok_offset] != -52)
+						break;
+				}
+				i -= ok_offset;
+				//assert(i-1>=0 && i+1<200);
+				memcpy(xbuf, buffer+ok_offset, i);
+				memcpy(buffer, buffer+ok_offset+i, len-ok_offset-i+1);
+				bool has_rn = false;
+				for (int offset=1;offset<5;offset++)
+				{
+					if ('\r' == xbuf[i-offset])
+					{
+						xbuf[i-offset] = '\r';
+						xbuf[i-offset+1] = '\n';
+						xbuf[i-offset+2] = '\0';
+						has_rn = true;
+					}
+				}
+				if (!has_rn)
+				{
+					xbuf[i-1] = '\r';
+					xbuf[i+0] = '\n';
+					xbuf[i+1] = '\0';
+				}
+				InputLine(xbuf);
+				break;
+			}
+			else if (i == len-1)
+			{
+				int ok_offset;
+				// 解決測試程式的bug字串有0xcc
+				for (ok_offset=strlen(buffer)-1;ok_offset>0;ok_offset--)
+				{
+					if (buffer[ok_offset] == -52)
+						buffer[ok_offset] = '\0';
+				}
+				buffer[len] = '\0';
+				m_last_str = buffer;
+				assert(m_last_str.length()<100);
+				buffer[0] = '\0';
+			}
+		}
+		len = strlen(buffer);
+	}
+	free(buffer);
 }
 
 
