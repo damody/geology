@@ -33,6 +33,7 @@ DrawView::DrawView()
 	vtkSmartNew(m_RenderWindow);
 	vtkSmartNew(m_Camera);
 	vtkSmartNew(m_Axes);
+	vtkSmartNew(m_legendScaleActor);
 	vtkSmartNew(m_WindowInteractor);
 	vtkSmartNew(m_Axes_widget);
 	vtkSmartNew(m_style);
@@ -40,6 +41,7 @@ DrawView::DrawView()
 	m_RenderWindow->AddRenderer(m_Renderer);
 	m_WindowInteractor->SetRenderWindow(m_RenderWindow);
 	m_WindowInteractor->SetInteractorStyle( m_style );
+	m_Renderer->AddActor(m_legendScaleActor);
 	m_Renderer->SetActiveCamera(m_Camera);
 	m_Renderer->SetBackground(.1, .2, .3);
 	m_Axes_widget->SetOutlineColor( 0.8300, 0.6700, 0.5300 );

@@ -73,6 +73,7 @@ private:
 				m_depth_lut;
 	vtkUnsignedCharArray_Sptr	m_hs_colors,
 					m_de_colors;
+	vtkLegendScaleActor_Sptr	m_legendScaleActor;
 	vtkRenderWindowInteractor_Sptr	m_WindowInteractor;
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
 	vtkInteractorStyleTrackballCamera_Sptr	m_style;
