@@ -103,14 +103,53 @@ VTK_SMART_POINTER(vtkColorTransferFunction)
 VTK_SMART_POINTER(vtkProperty)
 VTK_SMART_POINTER(vtkActor)
 VTK_SMART_POINTER(vtkPoints)
-
-template <class T>
-void vtkSmartNew(vtkSmartPointer<T>& Ptr)
+template <typename T, typename U>
+class has_member_Initialize_tester
 {
-	Ptr = vtkSmartPointer<T>::New();
-	assert(Ptr.GetPointer() != 0);
-}
+private:
+	template <U> struct helper;
+	template <typename T> static char check(helper<&T::Initialize> *);
+	template <typename T> static char (&check(...))[2];
+public:	
+	enum { value = (sizeof(check<T>(0)) == sizeof(char)) };
+};
 
+template <char Doit, class T>
+struct static_Check_To_Initialize
+{
+	static void Do(T& ic){ic;}
+};
+template<class T>
+struct static_Check_To_Initialize<1, T>
+{
+	static void Do(T& ic){ic->Initialize();}
+};
+
+static struct
+{
+	template <class T>
+	operator vtkSmartPointer<T>()
+	{
+		vtkSmartPointer<T> ptr = vtkSmartPointer<T>::New();
+		static_Check_To_Initialize
+			<
+				has_member_Initialize_tester< T, void (T::*)()>::value, 
+				vtkSmartPointer<T>
+			>::Do(ptr);
+		return ptr;
+	}
+}vtkSmartNew;
+
+static struct
+{
+	template <class T>
+	operator vtkSmartPointer<T>()
+	{
+		return vtkSmartPointer<T>::New();
+	}
+}vtkOnlyNew;
+
+/* old vtkSmartNew
 template <class T>
 void vtkSmartNew_Initialize(vtkSmartPointer<T>& Ptr)
 {
@@ -118,6 +157,8 @@ void vtkSmartNew_Initialize(vtkSmartPointer<T>& Ptr)
 	assert(Ptr.GetPointer() != 0);
 	Ptr->Initialize();
 }
+*/
+
 #include <windows.h>
 #include <tchar.h>
 #define MESSAGE(x) MessageBox(NULL, _T(x), _T("MESSAGE"), 0);

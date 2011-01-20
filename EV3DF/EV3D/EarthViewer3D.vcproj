@@ -774,6 +774,14 @@
 				RelativePath=".\DW\TShape.hpp"
 				>
 			</File>
+			<File
+				RelativePath=".\DW\VarStr.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\DW\VarStr.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="3D"

@@ -290,7 +290,7 @@ void MyGrid::OnCellChange( wxGridEvent& event )
 
 void MyGrid::OnKeyDown( wxKeyEvent& event )
 {
-	int key = event.GetKeyCode();
+	//int key = event.GetKeyCode();
 }
 
 
@@ -311,7 +311,7 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 {
 	SolidView_Sptr view = ((FirstMain*)GetParent())->m_ActiveView;
 	SEffect_Sptr SuperSetting = view->GetEffect();
-	double number;
+	double number = 0;
 	if (data.IsNumber())
 	{
 		data.ToDouble(&number);
