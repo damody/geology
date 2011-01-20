@@ -41,12 +41,10 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d ) // 設定來源資料
 	m_area->m_numY = m_sf3d->NumY();
 	m_area->m_numZ = m_sf3d->NumZ();
 	// 先載入資料
-	vtkSmartNew_Initialize(m_polydata);
-	vtkSmartNew_Initialize(m_imagedata);
-	vtkPoints_Sptr points;
-	vtkSmartNew_Initialize(points);
- 	vtkFloatArray_Sptr point_array;
- 	vtkSmartNew_Initialize(point_array);
+	m_polydata = vtkSmartNew;
+	m_imagedata = vtkSmartNew;
+	vtkPoints_Sptr points = vtkSmartNew;
+ 	vtkFloatArray_Sptr point_array = vtkSmartNew;
 	point_array->SetName("value");
 	const uint x_len = sf3d->NumX(),
 		y_len = sf3d->NumY(),

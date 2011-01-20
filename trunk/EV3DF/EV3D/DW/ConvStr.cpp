@@ -1,87 +1,82 @@
 ﻿#include "ConvStr.h"
-#include <windows.h>
-#pragma warning(disable : 4996) // use sprintf
 
-void ConvStr::WcharToChar(const wchar_t *unicode, char *ansi)
-{
-	int n;
-	n = WideCharToMultiByte(CP_ACP, 0, unicode, -1, ansi, 0, NULL, FALSE);
-	WideCharToMultiByte(CP_ACP, 0, unicode, -1, ansi, n, NULL, FALSE);
-}
+#pragma warning(disable : 4996) // use sprintf
 
 void ConvStr::CharToWchar(wchar_t *unicode, const char *ansi)
 {
-	int n;
-	n = MultiByteToWideChar(CP_ACP, 0, ansi, -1, 0, 0);
-	MultiByteToWideChar(CP_ACP, 0, ansi, -1, unicode, n);
-} 
+	mbstowcs(unicode, ansi, INT_MAX);
+}
+void ConvStr::WcharToChar(const wchar_t *unicode, char *ansi)
+{
+	wcstombs(ansi, unicode, INT_MAX);
+}
 
 std::wstring ConvStr::GetWstr( int number )
 {
-	wchar_t data[MAX_PATH];
-	wsprintf(data, L"%d", number);
+	wchar_t data[32];
+	swprintf(data, L"%d", number);
 	return std::wstring(data);
 }
 
 std::wstring ConvStr::GetWstr( unsigned int number )
 {
-	wchar_t data[MAX_PATH];
-	wsprintf(data, L"%d", number);
+	wchar_t data[32];
+	swprintf(data, L"%d", number);
 	return std::wstring(data);
 }
 
 std::wstring ConvStr::GetWstr( long long number )
 {
-	wchar_t data[MAX_PATH];
-	wsprintf(data, L"%ld", number);
+	wchar_t data[32];
+	swprintf(data, L"%ld", number);
 	return std::wstring(data);
 }
 
 std::wstring ConvStr::GetWstr( float number )
 {
-	wchar_t data[MAX_PATH];
-	wsprintf(data, L"%f", number);
+	wchar_t data[32];
+	swprintf(data, L"%f", number);
 	return std::wstring(data);
 }
 
 std::wstring ConvStr::GetWstr( double number )
 {
-	wchar_t data[MAX_PATH];
-	wsprintf(data, L"%lf", number);
+	wchar_t data[32];
+	swprintf(data, L"%lf", number);
 	return std::wstring(data);
 }
 
 std::string ConvStr::GetStr( int number )
 {
-	char data[MAX_PATH];
+	char data[32];
 	sprintf(data, "%d", number);
 	return std::string(data);
 }
 
 std::string ConvStr::GetStr( unsigned int number )
 {
-	char data[MAX_PATH];
+	char data[32];
 	sprintf(data, "%d", number);
 	return std::string(data);
 }
 
 std::string ConvStr::GetStr( long long number )
 {
-	char data[MAX_PATH];
+	char data[32];
 	sprintf(data, "%ld", number);
 	return std::string(data);
 }
 
 std::string ConvStr::GetStr( float number )
 {
-	char data[MAX_PATH];
+	char data[32];
 	sprintf(data, "%f", number);
 	return std::string(data);
 }
 
 std::string ConvStr::GetStr( double number )
 {
-	char data[MAX_PATH];
+	char data[32];
 	sprintf(data, "%lf", number);
 	return std::string(data);
 }
@@ -110,4 +105,3 @@ std::string ConvStr::GetStr( std::string ansi )
 {
 	return std::string(ansi);
 }
-

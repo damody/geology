@@ -2,6 +2,7 @@
 #define _ConvertStr_H_
 #include <vector>
 #include <cstring>
+#include <string>
 
 class ConvStr
 {

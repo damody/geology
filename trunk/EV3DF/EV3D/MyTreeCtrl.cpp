@@ -150,7 +150,7 @@ void MyTreeCtrl::CreateControls()
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
 		wxTreeItemIcon_Expanded);
-	item_str = wxT(" Contour");
+	item_str = wxT("Contour");
 	id = AppendItem(rootId, item_str, TreeCtrlIcon_Folder, TreeCtrlIcon_Folder+1,
 		new MyTreeItemData(item_str));
 	SetItemImage(id, TreeCtrlIcon_FolderOpened,
@@ -489,8 +489,8 @@ bool MyTreeCtrl::ChangeGrid()
 {
 	FirstMain* mainframe = (FirstMain*)GetParent();
 	wxTreeItemId itemid = GetItemParent(m_lastItem);
-	if (itemid) // 有item的話才做
-		MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(itemid);
+// 	if (itemid) // 有item的話才做
+// 		MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(itemid);
 	return ((FirstMain*)GetParent())->m_grid->ChangeGrid(mainframe->m_ActiveView);
 }
 

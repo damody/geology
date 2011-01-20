@@ -13,16 +13,16 @@ class SolidCtrl
 public:
 	SolidCtrl()
 	{
-		vtkSmartNew(m_RenderWindow);
-		vtkSmartNew(m_Renderer);
-		vtkSmartNew(m_WindowInteractor);
-		vtkSmartNew(m_Camera);
+		m_RenderWindow = vtkSmartNew;
+		m_Renderer = vtkSmartNew;
+		m_WindowInteractor = vtkOnlyNew;
+		m_Camera = vtkSmartNew;
+		m_Axes_widget = vtkSmartNew;
+		m_Axes = vtkSmartNew;
 		m_RenderWindow->AddRenderer(m_Renderer);
 		m_WindowInteractor->SetRenderWindow(m_RenderWindow);
 		m_Renderer->SetActiveCamera(m_Camera);
 		m_Renderer->SetBackground(.1, .2, .3);
-		vtkSmartNew(m_Axes_widget);
-		vtkSmartNew(m_Axes);
 		m_Axes_widget->SetOutlineColor( 0.8300, 0.6700, 0.5300 );
 		m_Axes_widget->SetOrientationMarker( m_Axes );
 		m_Axes_widget->SetInteractor( m_WindowInteractor );
@@ -32,7 +32,7 @@ public:
 // 	SolidCtrl(vtkRenderWindow_Sptr rw, vtkRenderWindowInteractor_Sptr iren)
 // 	{
 // 		m_RenderWindow = rw;
-// 		vtkSmartNew(m_WindowInteractor);
+// 		m_WindowInteractor);
 // 		m_WindowInteractor->SetRenderWindow(m_RenderWindow);
 // 	}
 	SolidView_Sptrs		m_SolidViewPtrs;

@@ -7,8 +7,8 @@
 
 SolidView::SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc):m_ParentCtrl(ParentCtrl)
 {
-	vtkSmartNew(m_actor);
-	vtkSmartNew(m_polydataMapper);
+	m_actor = vtkSmartNew;
+	m_polydataMapper = vtkSmartNew;
 	m_ParentDoc = Doc;
 }
 
@@ -141,6 +141,8 @@ void SolidView::Update()
 				numvalue = GetParentDoc()->m_area->m_numZ;
 				m_ImagePlane->SetPlaneOrientationToZAxes();
 				break;
+			default:
+				assert(0 && "setting->m_Axes");
 			}
 			m_ImagePlane->SetSlicePosition(setting->m_Percent * numvalue / 100.0);
 			setting->m_Percent = m_ImagePlane->GetSlicePosition()/numvalue*100.0;
@@ -178,8 +180,7 @@ int SolidView::GetType()
 
 void SolidView::Init_BoundingBox()
 {
-	vtkOutlineFilter_Sptr bounding_box;
-	vtkSmartNew(bounding_box);
+	vtkOutlineFilter_Sptr bounding_box = vtkSmartNew;
 	bounding_box->SetInput(GetParentDoc()->m_ImageData);
 	m_polydataMapper->SetInputConnection(bounding_box->GetOutputPort());
 	m_actor->SetMapper(m_polydataMapper);
@@ -187,12 +188,10 @@ void SolidView::Init_BoundingBox()
 
 void SolidView::Init_Vertex()
 {
-	vtkUnsignedCharArray_Sptr colors;
-	vtkSmartNew_Initialize(colors);
+	vtkUnsignedCharArray_Sptr colors = vtkSmartNew;
 	colors->SetNumberOfComponents(3);
 	colors->SetName("Colors");
-	vtkLookupTable_Sptr lut;
-	vtkSmartNew(lut);
+	vtkLookupTable_Sptr lut = vtkSmartNew;
 	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
 		GetParentDoc()->m_histogram.GetPersentValue(0.99));
 	lut->Build();
@@ -209,10 +208,8 @@ void SolidView::Init_Vertex()
 		}
 		colors->InsertNextTupleValue(color);
 	}
-	vtkVertexGlyphFilter_Sptr vertexGlyphFilter;
-	vtkSmartNew(vertexGlyphFilter);
-	vtkPolyData_Sptr colorpolydata;
-	vtkSmartNew(colorpolydata);
+	vtkVertexGlyphFilter_Sptr vertexGlyphFilter = vtkSmartNew;
+	vtkPolyData_Sptr colorpolydata = vtkSmartNew;
 	colorpolydata->SetPoints(GetParentDoc()->m_PolyData->GetPoints());
 	colorpolydata->GetPointData()->SetScalars(colors);
 	vertexGlyphFilter->SetInput(colorpolydata);
@@ -223,12 +220,11 @@ void SolidView::Init_Vertex()
 
 void SolidView::Init_Contour()
 {
-	vtkLookupTable_Sptr lut;
-	vtkSmartNew(lut);
+	vtkLookupTable_Sptr lut = vtkSmartNew;
 	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
 		GetParentDoc()->m_histogram.GetPersentValue(0.99));
 	lut->Build();
-	vtkSmartNew(m_ContourFilter);
+	m_ContourFilter = vtkSmartNew;
 	m_ContourFilter->SetInput(GetParentDoc()->m_ImageData);
 	m_polydataMapper->SetInputConnection(m_ContourFilter->GetOutputPort());
 	m_polydataMapper->SetLookupTable(lut);
@@ -242,7 +238,7 @@ void SolidView::Init_Axes()
 
 void SolidView::Init_ClipPlane()
 {
-	vtkSmartNew(m_ImagePlane);
+	m_ImagePlane = vtkSmartNew;
 	m_ImagePlane->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	//m_ImagePlane->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_ImagePlane->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
@@ -250,8 +246,7 @@ void SolidView::Init_ClipPlane()
 	m_ImagePlane->RestrictPlaneToVolumeOn();
 	m_ImagePlane->SetInput(GetParentDoc()->m_ImageData);
 	m_ImagePlane->SetPlaneOrientationToXAxes();
-	vtkLookupTable_Sptr lut;
-	vtkSmartNew(lut);
+	vtkLookupTable_Sptr lut= vtkSmartNew;
 	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
 		GetParentDoc()->m_histogram.GetPersentValue(0.99));
 	lut->Build();
@@ -271,16 +266,10 @@ void SolidView::Init_ClipContour()
 
 void SolidView::Init_VolumeRendering()
 {
-	vtkPiecewiseFunction_Sptr PiecewiseFunction;
-	vtkSmartNew(PiecewiseFunction);
-	vtkColorTransferFunction_Sptr ColorTransferFunction;
-	vtkSmartNew(ColorTransferFunction);
-	vtkImageShiftScale_Sptr ImageShiftScale;
-	vtkSmartNew(ImageShiftScale);
-	vtkSmartVolumeMapper_Sptr SmartVolumeMapper;
-	vtkSmartNew(SmartVolumeMapper);
-	vtkVolumeProperty_Sptr VolumeProperty;
-	vtkSmartNew(VolumeProperty);
-	vtkVolume_Sptr Volume;
-	vtkSmartNew(Volume);
+	vtkPiecewiseFunction_Sptr PiecewiseFunction = vtkSmartNew;
+	vtkColorTransferFunction_Sptr ColorTransferFunction = vtkSmartNew;
+	vtkImageShiftScale_Sptr ImageShiftScale = vtkSmartNew;
+	vtkSmartVolumeMapper_Sptr SmartVolumeMapper = vtkOnlyNew;
+	vtkVolumeProperty_Sptr VolumeProperty = vtkSmartNew;
+	vtkVolume_Sptr Volume = vtkSmartNew;
 }

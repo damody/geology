@@ -27,7 +27,7 @@ int ConvertToEvr::Load_Dat( std::wstring Path )
 	std::ifstream loaderx;
 	loaderx.open(Path.c_str());
 	std::string linedata;
-	loaderx.ignore(std::numeric_limits<int>::max(), loaderx.widen('\n'));
+	loaderx.ignore(INT_MAX, loaderx.widen('\n'));
 	char ch[100];
 	int i=0;
 	loaderx.getline(ch, 100);
