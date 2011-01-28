@@ -6,7 +6,7 @@
 #include <vtkClipPolyData.h>
 #include <vtkCleanPolyData.h>
 #include <vtkContourFilter.h>
-#include <vtkFloatArray.h>
+#include <vtkDoubleArray.h>
 #include <vtkCellData.h>
 #include <vtkPointData.h>
 #include <vtkScalarsToColors.h>
@@ -20,7 +20,7 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkVertexGlyphFilter.h>
-#include <vtkFloatArray.h>
+#include <vtkDoubleArray.h>
 #include <vtkPolyDataPointSampler.h>
 #include <vtkPolyDataToPolyDataFilter.h>
 #include <vtkGraphLayoutFilter.h>

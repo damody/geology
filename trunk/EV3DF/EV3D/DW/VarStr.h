@@ -37,8 +37,10 @@ public:
 	VarStr(float num);
 	VarStr(int num);
 
-	operator std::string() {return m_string;}
-	operator std::wstring() {return m_wstring;}
+	std::string	GetStr() {return m_string;}
+	std::wstring	GetWstr() {return m_wstring;}
+	operator const char*() {return m_string.c_str();}
+	operator const wchar_t*() {return m_wstring.c_str();}
 	operator double()
 	{
 		switch (m_orgin_type)

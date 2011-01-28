@@ -790,10 +790,6 @@
 				Name="DW"
 				>
 				<File
-					RelativePath=".\DW\BoxArea.h"
-					>
-				</File>
-				<File
 					RelativePath=".\DW\Color4.h"
 					>
 				</File>

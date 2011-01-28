@@ -740,7 +740,7 @@ void FirstMain::OpenFile()
 		case 0:
 			if (m_hEvr)
 				delete m_hEvr;
-			m_hEvr = new HandleEvr(ConvStr::GetStr(dialog.GetPath().c_str()).c_str() );
+			m_hEvr = new HandleEvr(VarStr(dialog.GetPath().c_str()));
 			m_hEvr->InitLoad(dialog.GetDirectory().wc_str());
 			m_ShowTypeCombo->Clear();
 			{
@@ -754,9 +754,12 @@ void FirstMain::OpenFile()
 				}
 			}
 			m_ShowTypeCombo->SetSelection(0);
-			m_psjcF3d = m_hEvr->m_SJCSF3dMap[3].second;
 			m_treectrl->RmAllAddItem();
-			m_SolidCtrl->SetData(m_psjcF3d); // 設定第一順位的資料來顯示
+			m_psjcF3d = m_hEvr->m_SJCSF3dMap[3].second;
+			if (m_psjcF3d)
+				m_SolidCtrl->SetGridedData(m_psjcF3d); // 設定第一順位的資料來顯示
+			else
+				m_SolidCtrl->SetUnGridData(m_hEvr->m_SJCSF3dMap[3].second.m_polydata);
 			m_XminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
 			m_XmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmax).c_str()));
 			m_YminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymin).c_str()));
@@ -1026,12 +1029,16 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 	uint i=0;
 	for (;i<m_hEvr->m_SJCSF3dMap.size();i++)
 		if (m_hEvr->m_SJCSF3dMap[i].first == str)
+	// 保證取得的資料是對的，不對就不選擇
 	assert(i!=m_hEvr->m_SJCSF3dMap.size());
 	if (i==m_hEvr->m_SJCSF3dMap.size())  return;
 	m_psjcF3d = m_hEvr->m_SJCSF3dMap[i].second;
+	if (m_psjcF3d)
+		m_SolidCtrl->SetGridedData(m_psjcF3d); // 設定第一順位的資料來顯示
+	else
+		m_SolidCtrl->SetUnGridData(m_hEvr->m_SJCSF3dMap[i].second.m_polydata); // 需要griding一下
 // 	m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 // 	m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
-	m_SolidCtrl->SetData(m_psjcF3d);
 	//m_SolidCtrl.Set(m_PreciseSpin->GetValue());
 	RenderFrame();
 	event.Skip(false);

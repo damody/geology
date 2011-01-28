@@ -41,7 +41,7 @@ DrawView::DrawView()
 	m_RenderWindow->AddRenderer(m_Renderer);
 	m_WindowInteractor->SetRenderWindow(m_RenderWindow);
 	m_WindowInteractor->SetInteractorStyle( m_style );
-	m_Renderer->AddActor(m_legendScaleActor);
+	//m_Renderer->AddActor(m_legendScaleActor);
 	m_Renderer->SetActiveCamera(m_Camera);
 	m_Renderer->SetBackground(.1, .2, .3);
 	m_Axes_widget->SetOutlineColor( 0.8300, 0.6700, 0.5300 );
@@ -103,8 +103,8 @@ void DrawView::AddData( const nmeaINFO& info )
 
 	m_raw_points.push_back(data);
 	int len = m_raw_points.size();
-	const float phs[3] = {data.E, data.N, 0};
-	const float pdep[3] = {data.E, data.N, -data.depth};
+	const double phs[3] = {data.E, data.N, 0};
+	const double pdep[3] = {data.E, data.N, -data.depth};
 	vtkIdType pid[1];
 	pid[0] = m_hs_points->InsertNextPoint(phs);
 	m_hs_vertices->InsertNextCell(1,pid);

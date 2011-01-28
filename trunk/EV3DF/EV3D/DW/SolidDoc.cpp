@@ -4,8 +4,8 @@
 #include "SolidView.h"
 
 
-SolidDoc::SolidDoc(BoxArea_Sptr area):
-m_area(area)
+SolidDoc::SolidDoc(vtkBounds bound):
+m_bounds(bound)
 {
 }
 

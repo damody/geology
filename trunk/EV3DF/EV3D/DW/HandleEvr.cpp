@@ -95,19 +95,44 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 		}
 		fIn.close();
 	}
-	std::vector<double*> dpvec;
-	for (int i=0;i<m_format_count;i++)
+	vector<double*> dpvec;
+	
+	bool isGrided = (Xspan+1)* (Yspan+1)* (Zspan+1) == (int)m_total;
+	if (isGrided)
 	{
-		SJCScalarField3d* pSF3d = new SJCScalarField3d(Xspan+1, Yspan+1, Zspan+1,
-			deltaX, deltaY, deltaZ,
-			BOUNDARY_WRAP,BOUNDARY_WRAP,BOUNDARY_WRAP,
-			(double*)(&m_pData[0])+i, m_format_count);
-		dpvec.push_back(pSF3d->begin());
-		m_SJCSF3dMap.push_back(std::make_pair(m_format_name[i] , pSF3d));
+		for (int i=0;i<m_format_count;i++)
+		{
+			SJCScalarField3d* pSF3d = new SJCScalarField3d(Xspan+1, Yspan+1, Zspan+1,
+				deltaX, deltaY, deltaZ,
+				BOUNDARY_WRAP,BOUNDARY_WRAP,BOUNDARY_WRAP,
+				(double*)(&m_pData[0])+i, m_format_count);
+			dpvec.push_back(pSF3d->begin());
+			m_SJCSF3dMap.push_back(std::make_pair(m_format_name[i] , pSF3d));
+		}
+		for (int i=0;i < 3 ;++i)
+		{
+			DependenceSort(dpvec[i], m_total, dpvec);
+		}
 	}
-	for (int i=0;i < 3 ;++i)
+	else
 	{
-		DependenceSort(dpvec[i], m_total, dpvec);
+		for (int i=0;i<m_format_count;i++)
+		{
+			vtkPoints_Sptr points = vtkSmartNew;
+			vtkDoubleArray_Sptr point_array = vtkSmartNew;
+			vtkPolyData_Sptr polydata = vtkSmartNew;
+			for (int offset=0;offset < (int)m_total;offset++)
+			{
+				point_array->InsertTuple1(offset, *((double*)(&m_pData[0])+i+offset*m_format_count));
+				points->InsertNextPoint(*((double*)(&m_pData[0])+0+offset*m_format_count), 
+							*((double*)(&m_pData[0])+1+offset*m_format_count), 
+							*((double*)(&m_pData[0])+2+offset*m_format_count));
+			}
+			polydata->SetPoints(points);
+			polydata->GetPointData()->SetScalars(point_array);
+			assert(polydata->GetNumberOfPoints() != 0);
+			m_SJCSF3dMap.push_back(std::make_pair(m_format_name[i] , polydata));
+		}
 	}
 	m_isload = true;
 	return 1;
@@ -121,7 +146,10 @@ HandleEvr::~HandleEvr()
 void HandleEvr::ExitFile()
 {
 	for (SJCSF3dMap::iterator it = m_SJCSF3dMap.begin(); it != m_SJCSF3dMap.end();it++)
-		delete it->second;
+	{
+		if (it->second.m_type == PointDataSource::SJCSCALAR_PTR)
+			delete it->second.m_sjcf3d;
+	}
 }
 
 int HandleEvr::Save_Evr(std::wstring Path, std::wstring filename)
@@ -243,7 +271,7 @@ int HandleEvr::Save_EvrA( std::wstring Path, std::wstring filename )
 	{
 		for (it = m_SJCSF3dMap.begin(); it != m_SJCSF3dMap.end();it++)
 		{
-			fOut << setw(15) << *(it->second->begin()+i) << ",";
+			fOut << setw(15) << *(((SJCScalarField3d*)(it->second))->begin()+i) << ",";
 		}
 		fOut << std::endl;
 	}
