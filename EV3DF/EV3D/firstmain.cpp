@@ -206,6 +206,7 @@ void FirstMain::Init()
     m_ZminText = NULL;
     m_ZmaxText = NULL;
     m_ShowTypeCombo = NULL;
+    m_InterpolationComBox = NULL;
     m_ColorList = NULL;
     m_treectrl = NULL;
     m_grid = NULL;
@@ -311,6 +312,11 @@ void FirstMain::CreateControls()
     wxArrayString m_ShowTypeComboStrings;
     m_ShowTypeCombo = new wxComboBox( m_BoundEditToolbar, ID_ShowTypeCombo, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_ShowTypeComboStrings, wxCB_READONLY );
     m_BoundEditToolbar->AddControl(m_ShowTypeCombo);
+    wxArrayString m_InterpolationComBoxStrings;
+    m_InterpolationComBoxStrings.Add(_("Nearest"));
+    m_InterpolationComBoxStrings.Add(_("Inverse"));
+    m_InterpolationComBox = new wxComboBox( m_BoundEditToolbar, ID_INTERPOLATIONCOMBOBOX, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_InterpolationComBoxStrings, wxCB_READONLY );
+    m_BoundEditToolbar->AddControl(m_InterpolationComBox);
     m_BoundEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_BoundEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("BoundEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
@@ -319,9 +325,9 @@ void FirstMain::CreateControls()
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
         .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
 
-    wxStatusBar* itemStatusBar49 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar49->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar49);
+    wxStatusBar* itemStatusBar50 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar50->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar50);
 
     m_treectrl = new MyTreeCtrl( itemFrame1, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
     itemFrame1->GetAuiManager().AddPane(m_treectrl, wxAuiPaneInfo()

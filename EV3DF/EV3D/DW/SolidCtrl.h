@@ -11,6 +11,11 @@ control unit
 class SolidCtrl
 {
 public:
+	enum InterpolationMethod
+	{
+		INVERSE,
+		NEAREST
+	};
 	SolidCtrl()
 	{
 		m_RenderWindow = vtkSmartNew;
@@ -48,7 +53,7 @@ public:
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
 	SJCScalarField3d	*m_sf3d;
 public:
-	int  SetData(SJCScalarField3d* sf3d);
+	int SetData(SJCScalarField3d* sf3d, InterpolationMethod method = NEAREST);
 	void RmAllView();
 	void RmView(SolidView_Sptr view);
 	void RmDoc(SolidDoc_Sptr doc);
