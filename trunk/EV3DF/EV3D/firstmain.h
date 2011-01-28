@@ -91,6 +91,7 @@ class MyGrid;
 #define ID_LABEL7 10032
 #define ID_ZmaxText 10034
 #define ID_ShowTypeCombo 10047
+#define ID_INTERPOLATIONCOMBOBOX 10004
 #define ID_LISTCTRL 10051
 #define ID_STATUSBAR 10065
 #define SYMBOL_FIRSTMAIN_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMAXIMIZE|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
@@ -357,6 +358,7 @@ public:
     wxTextCtrl* m_ZminText;
     wxTextCtrl* m_ZmaxText;
     wxComboBox* m_ShowTypeCombo;
+    wxComboBox* m_InterpolationComBox;
     wxListCtrl* m_ColorList;
     MyTreeCtrl* m_treectrl;
     MyGrid* m_grid;

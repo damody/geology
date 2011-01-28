@@ -3,6 +3,8 @@
 #include "SolidDoc.h"
 #include "SolidView.h"
 #include "SEffect.h"
+#include "Interpolation/vtkInverseDistanceFilter.h"
+#include "Interpolation/vtkNearestNeighborFilter.h"
 
 SolidDoc_Sptr	SolidCtrl::NewDoc() // 新資料集
 {
@@ -29,7 +31,7 @@ SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc ) //
 	return tmpPtr;
 }
 
-int SolidCtrl::SetData( SJCScalarField3d* sf3d ) // 設定來源資料
+int SolidCtrl::SetData( SJCScalarField3d* sf3d, InterpolationMethod method /*= NEAREST*/ )
 {
 	RmAllView();
 	m_sf3d = sf3d;
@@ -75,6 +77,14 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d ) // 設定來源資料
 	else
 	{
 		// Griding資料
+		switch (method)
+		{
+		case NEAREST:
+			break;
+		case INVERSE:
+			break;
+			
+		}
 	}
 	m_polydata->SetPoints(points);
 	m_polydata->GetPointData()->SetScalars(point_array);
