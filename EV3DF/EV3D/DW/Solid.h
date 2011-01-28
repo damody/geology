@@ -59,7 +59,7 @@ private:
 	vtkSmartPointer<vtkOrientationMarkerWidget> m_axes_widget;
 	vtkSmartPointer<vtkAxesActor>		m_axes; // to show axes
 	vtkSmartPointer<vtkImagePlaneWidget>	m_planeWidgetX, m_planeWidgetY, m_planeWidgetZ;
-	vtkSmartPointer<vtkFloatArray>		m_volcolors;
+	vtkSmartPointer<vtkDoubleArray>		m_volcolors;
 	vtkSmartPointer<vtkPoints>		m_points;
 	vtkSmartPointer<vtkUnsignedCharArray>	m_colors;
 	vtkSmartPointer<vtkImageShiftScale>	m_ImageShiftScale;

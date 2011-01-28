@@ -19,21 +19,20 @@ template <class T>
 class DWHistogram {
 public:
 	typedef std::vector<T> Tvector;
-	unsigned int m_size;
 	std::vector<T> m_data;
 	DWHistogram() {}
 	DWHistogram(T* data, int num)
 	{
 		m_data = Tvector(data, data+num);
-		sort(m_data.begin(), m_data.end());
+		std::sort(m_data.begin(), m_data.end());
 	}
 	template <class iter>
 	DWHistogram(iter start, iter end)
 	{
 		m_data = Tvector(start, end);
-		sort(m_data.begin(), m_data.end());
+		std::sort(m_data.begin(), m_data.end());
 	}
-	double find(T key);
+	double Find(T key);
 	T GetPersentValue(double p)
 	{
 		if (p<=0) return *(m_data.begin());
@@ -42,8 +41,13 @@ public:
 		return m_data[i];
 	}
 	unsigned int size();
-	void addData(T* dst, int size, int step=1);
-	void clear();
+	void AddData(T* dst, int size, int step=1);
+	void Append(T data) {m_data.push_back(data);}
+	void Sort()
+	{
+		std::sort(m_data.begin(), m_data.end());
+	}
+	void Clear();
 };
 typedef DWHistogram<double> Histogramd;
 typedef DWHistogram<float> Histogramf;

@@ -236,6 +236,8 @@ void NmeaCell::InputRawData( const char* data, const int size )
 				buffer[len] = '\0';
 				m_last_str = buffer;
 				assert(m_last_str.length()<100);
+				if (m_last_str.length()>200)
+					m_last_str = "";
 				buffer[0] = '\0';
 			}
 		}

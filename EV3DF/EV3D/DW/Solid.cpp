@@ -9,7 +9,7 @@ Solid::Solid()
 {
 	// vtk init
 	m_points = vtkSmartPointer<vtkPoints>::New();
-	m_volcolors = vtkSmartPointer<vtkFloatArray>::New();
+	m_volcolors = vtkSmartPointer<vtkDoubleArray>::New();
 	m_colors = vtkSmartPointer<vtkUnsignedCharArray>::New();
 	m_polydata = vtkSmartPointer<vtkPolyData>::New();
 	m_ImageData = vtkSmartPointer<vtkImageData>::New();
@@ -98,7 +98,7 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 	// m_SolidCtrl舊函式需要
 	//m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_RenderWindow, m_iren));
 	m_SolidCtrl->m_Renderer = m_Renderer;
-	m_SolidCtrl->SetData(sf3d);
+	m_SolidCtrl->SetGridedData(sf3d);
 	// backup to use
 	m_SJCScalarField3d = sf3d;
 	// color

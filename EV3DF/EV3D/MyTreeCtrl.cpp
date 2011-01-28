@@ -404,7 +404,7 @@ void MyTreeCtrl::OnMenu_AddItem( wxCommandEvent& event )
 		SEffect_Sptr Setting = SEffect::New(SEffect::VERTEX);
 		spView = sc->NewSEffect(Setting);
 	}
-	else if (wxstr == wxT(" Contour"))
+	else if (wxstr == wxT("Contour"))
 	{
 		SEffect_Sptr Setting = SEffect::New(SEffect::CONTOUR);
 		spView = sc->NewSEffect(Setting);

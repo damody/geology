@@ -4,10 +4,10 @@ class SolidDoc;
 class SolidView;
 class SolidCtrl;
 class SEffect;
-class BoxArea;
 class ColorTable;
 
 #include "DWHistogram.h"
+#include "Interpolation/vtkBounds.h"
 #include <boost/shared_ptr.hpp>
 #include <vector>
 #include <cassert>
@@ -26,6 +26,14 @@ void shareNew(boost::shared_ptr<T>& Ptr)
 	Ptr = boost::shared_ptr<T>(new T);
 	assert(Ptr.get() != 0);
 }
+static struct
+{
+	template <class T>
+	operator boost::shared_ptr<T>()
+	{
+		return boost::shared_ptr<T>::New();
+	}
+}SharePtrNew;
 
 /*!
 typedef boost::shared_ptr<SolidDoc>		SolidDoc_Sptr;
@@ -35,17 +43,16 @@ SHARE_PTR(Solid)
 SHARE_PTR(SolidDoc)
 SHARE_PTR(SolidView)
 SHARE_PTR(SolidCtrl)
-SHARE_PTR(BoxArea)
 SHARE_PTR(SEffect)
 SHARE_PTR(ColorTable)
 
-enum {
-	SET_OK,
-	SET_FAIL
-};
+// enum {
+// 	SET_OK,
+// 	SET_FAIL
+// };
 
 #include <vtkSmartPointer.h>
-#include <vtkFloatArray.h>
+#include <vtkDoubleArray.h>
 #include <vtkCellData.h>
 #include <vtkScalarsToColors.h>
 #include <vtkLookupTable.h>
@@ -75,7 +82,7 @@ enum {
 #define VTK_SMART_POINTER(x) \
 	typedef vtkSmartPointer< x >	x##_Sptr; \
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
-VTK_SMART_POINTER(vtkFloatArray)
+VTK_SMART_POINTER(vtkDoubleArray)
 VTK_SMART_POINTER(vtkCellData)
 VTK_SMART_POINTER(vtkScalarsToColors)
 VTK_SMART_POINTER(vtkLookupTable)

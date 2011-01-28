@@ -22,6 +22,7 @@
 #include "DW/ConvertToEvr.h"
 #include "DW/SolidCtrl.h"
 #include "DW/Solid.h"
+#include "DW/VarStr.h"
 ////@begin includes
 #include "wx/aui/framemanager.h"
 #include "wx/frame.h"

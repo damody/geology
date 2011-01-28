@@ -11,6 +11,7 @@
 #include "Windows.h"
 #include "SJCScalarField3.h"
 #include "SJCVector3.h"
+#include "SolidDefine.h"
 template <class T, class DT>
 void DependenceSort( T* beg, const uint total, std::vector<DT*>& depVector );
 
@@ -23,7 +24,30 @@ struct ptr_value_cmp
 		return (*_Left) < (*_Right);
 	}
 };
-
+struct PointDataSource
+{
+	enum {
+		SJCSCALAR_PTR,
+		VTKPOLYDATA
+	};
+	int m_type;
+	SJCScalarField3d* m_sjcf3d;
+	vtkPolyData_Sptr  m_polydata;
+	PointDataSource(SJCScalarField3d* sjc):m_sjcf3d(sjc), m_type(SJCSCALAR_PTR){}
+	PointDataSource(vtkPolyData_Sptr poly):m_polydata(poly), m_type(VTKPOLYDATA){}
+	operator SJCScalarField3d*()
+	{
+		if (m_type == SJCSCALAR_PTR)
+			return m_sjcf3d;
+		return NULL;
+	}
+	operator vtkPolyData_Sptr()
+	{
+		if (m_type == VTKPOLYDATA)
+			return m_polydata;
+		return vtkPolyData_Sptr();
+	}
+};
 class HandleEvr
 {
 public:
@@ -61,7 +85,7 @@ public:
 	int Save_EvrA(std::wstring Path, std::wstring filename);
 	bool IsLoad();
 	void ExitFile();
-	typedef std::vector< std::pair<std::string, SJCScalarField3d*> > SJCSF3dMap;
+	typedef std::vector< std::pair<std::string, PointDataSource> > SJCSF3dMap;
 	SJCSF3dMap	m_SJCSF3dMap;
 	double		Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ, DataAmount;
 	dVector		m_Datamax, m_Datamin;

@@ -5,19 +5,22 @@
 #include "SEffect.h"
 #include "Interpolation/vtkInverseDistanceFilter.h"
 #include "Interpolation/vtkNearestNeighborFilter.h"
+VTK_SMART_POINTER(vtkNearestNeighborFilter)
+VTK_SMART_POINTER(vtkInverseDistanceFilter)
 
 SolidDoc_Sptr	SolidCtrl::NewDoc() // 新資料集
 {
-	BoxArea_Sptr area;
-	shareNew(area);
-	*area = *m_area;
-	SolidDoc_Sptr tmpPtr(new SolidDoc(area));
+	SolidDoc_Sptr tmpPtr(new SolidDoc(m_bounds));
+	assert(m_polydata->GetNumberOfPoints() != 0);
 	tmpPtr->SetPolyData(m_polydata);
 	if (m_imagedata.GetPointer() != 0)
 	{
 		tmpPtr->SetImageData(m_imagedata);
 	}
-	tmpPtr->m_histogram = Histogramd(m_sf3d->begin(), m_sf3d->size());
+	if (m_sf3d)
+		tmpPtr->m_histogram = Histogramd(m_sf3d->begin(), m_sf3d->size());
+	else if (!m_SolidDocPtrs.empty())
+		tmpPtr->m_histogram = m_SolidDocPtrs.back()->m_histogram;
 	tmpPtr->m_ParentCtrl = this;
 	m_SolidDocPtrs.push_back(tmpPtr);
 	return tmpPtr;
@@ -31,22 +34,15 @@ SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc ) //
 	return tmpPtr;
 }
 
-int SolidCtrl::SetData( SJCScalarField3d* sf3d, InterpolationMethod method /*= NEAREST*/ )
+int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
 {
 	RmAllView();
 	m_sf3d = sf3d;
-	shareNew(m_area);
-	m_area->m_rangeX = m_sf3d->m_dLengthX;
-	m_area->m_rangeY = m_sf3d->m_dLengthY;
-	m_area->m_rangeZ = m_sf3d->m_dLengthZ;
-	m_area->m_numX = m_sf3d->NumX();
-	m_area->m_numY = m_sf3d->NumY();
-	m_area->m_numZ = m_sf3d->NumZ();
 	// 先載入資料
 	m_polydata = vtkSmartNew;
 	m_imagedata = vtkSmartNew;
 	vtkPoints_Sptr points = vtkSmartNew;
- 	vtkFloatArray_Sptr point_array = vtkSmartNew;
+ 	vtkDoubleArray_Sptr point_array = vtkSmartNew;
 	point_array->SetName("value");
 	const uint x_len = sf3d->NumX(),
 		y_len = sf3d->NumY(),
@@ -69,6 +65,9 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d, InterpolationMethod method /*= N
 	uint count = point_array->GetNumberOfTuples();
 	// 如果資料被Griding過了就直接放到imagedata
 	bool isGrided = x_len* y_len* z_len == count;
+	m_polydata->SetPoints(points);
+	m_polydata->GetPointData()->SetScalars(point_array);
+	m_bounds.SetBounds(m_polydata->GetBounds());
 	if (isGrided) 
 	{
 		m_imagedata->SetDimensions(x_len, y_len, z_len);
@@ -76,34 +75,27 @@ int SolidCtrl::SetData( SJCScalarField3d* sf3d, InterpolationMethod method /*= N
 	}
 	else
 	{
-		// Griding資料
-		switch (method)
-		{
-		case NEAREST:
-			break;
-		case INVERSE:
-			break;
-			
-		}
+		assert(0 && "error: x_len* y_len* z_len == count ");
+		return 1;
 	}
-	m_polydata->SetPoints(points);
-	m_polydata->GetPointData()->SetScalars(point_array);
 	// 把資料跟bounding box建出來
 	SolidDoc_Sptr spDoc = NewDoc();
+	assert(m_polydata->GetNumberOfPoints() != 0);
 	spDoc->SetPolyData(m_polydata);
 	if (isGrided)
 	{
 		spDoc->SetImageData(m_imagedata);
 	}
-	spDoc->m_histogram = Histogramd(sf3d->begin(), sf3d->size());
-	m_Camera->SetPosition(0, 0, (m_area->m_numX+m_area->m_numY+m_area->m_numZ)/3.0);
-	m_Camera->SetFocalPoint(m_area->m_numX/2.0, m_area->m_numY/2.0, m_area->m_numZ/2.0);
+	else
+		assert(0 && "not is Grided");
+	ReSetViewDirection();
 	return 0;
 }
 
 SolidView_Sptr SolidCtrl::NewSEffect( SEffect_Sptr effect )
 {
 	SolidDoc_Sptr spDoc = NewDoc();
+	assert(m_polydata->GetNumberOfPoints() != 0);
 	spDoc->SetPolyData(m_polydata);
 	if (m_imagedata.GetPointer() != 0)
 	{
@@ -115,8 +107,8 @@ SolidView_Sptr SolidCtrl::NewSEffect( SEffect_Sptr effect )
 
 void SolidCtrl::ReSetViewDirection()
 {
-	m_Camera->SetPosition(0, 0, (m_area->m_numX+m_area->m_numY+m_area->m_numZ)/3.0);
-	m_Camera->SetFocalPoint(m_area->m_numX/2.0, m_area->m_numY/2.0, m_area->m_numZ/2.0);
+	m_Camera->SetPosition(0, 0, (m_bounds.Xmid()+ m_bounds.Ymid()+ m_bounds.Zmid())/3 );
+	m_Camera->SetFocalPoint(m_bounds.Xmid(), m_bounds.Ymid(), m_bounds.Zmid());
 }
 
 void SolidCtrl::RmView( SolidView_Sptr view )
@@ -164,4 +156,72 @@ void SolidCtrl::RmAllView()
 		tmp.swap(*it);
 	}
 	m_SolidViewPtrs.clear();
+}
+
+int SolidCtrl::SetUnGridData( vtkPolyData_Sptr polydata, InterpolationMethod method /*= NEAREST_NEIGHBOR*/ )
+{
+	m_sf3d = NULL;
+	const float distance = 1.0f;
+	RmAllView();
+	// 先載入資料
+	m_polydata = vtkSmartNew;
+	m_imagedata = vtkSmartNew;
+	vtkPoints_Sptr points = vtkSmartNew;
+	vtkDoubleArray_Sptr point_array = vtkSmartNew;
+	point_array->SetName("value");
+	vtkDoubleArray* outScalars = (vtkDoubleArray*)polydata->GetPointData()->GetScalars();
+	assert(polydata->GetNumberOfPoints() != 0);
+	for(vtkIdType i = 0; i < polydata->GetNumberOfPoints(); i++)
+	{
+		double p[3];
+		polydata->GetPoint(i,p);
+		double s = outScalars->GetValue(i);
+		point_array->InsertTuple1(i, s);
+		points->InsertNextPoint(p);
+	}
+	uint count = point_array->GetNumberOfTuples();
+	m_polydata->SetPoints(points);
+	m_polydata->GetPointData()->SetScalars(point_array);
+	
+	// Griding資料
+	switch (method)
+	{
+	case NEAREST_NEIGHBOR:
+		{
+			vtkNearestNeighborFilter_Sptr NearestNeighbor = vtkSmartNew;
+			NearestNeighbor->SetBounds(m_polydata->GetBounds());
+			NearestNeighbor->SetInterval(distance);
+			NearestNeighbor->SetInput(m_polydata);
+			NearestNeighbor->Update();
+		}
+		break;
+	case INVERSE_DISTANCE:
+		{
+			vtkInverseDistanceFilter_Sptr InverseDistance = vtkSmartNew;
+			InverseDistance->SetBounds(m_polydata->GetBounds());
+			InverseDistance->SetInterval(distance);
+			InverseDistance->SetInput(m_polydata);
+			InverseDistance->Update();
+			
+		}
+		break;
+	}
+	vtkBounds tbounds;
+	m_polydata->GetBounds(tbounds);
+	m_imagedata->SetDimensions(int(tbounds.Xlen()/distance), 
+		int(tbounds.Ylen()/distance), 
+		int(tbounds.Zlen()/distance));
+	m_imagedata->GetPointData()->SetScalars(m_polydata->GetPointData()->GetScalars());
+	// 把資料跟bounding box建出來
+	SolidDoc_Sptr spDoc = NewDoc();
+	assert(m_polydata->GetNumberOfPoints() != 0);
+	spDoc->SetPolyData(m_polydata);
+	spDoc->SetImageData(m_imagedata);
+	Histogramd histg;
+	for(vtkIdType i = 0; i < point_array->GetNumberOfTuples(); i++)
+		histg.Append(point_array->GetValue(i));
+	histg.Sort();
+	spDoc->m_histogram = histg;
+	ReSetViewDirection();
+	return 0;
 }

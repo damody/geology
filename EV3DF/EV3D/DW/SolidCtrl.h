@@ -1,10 +1,10 @@
 ﻿#pragma once
 #include <vector>
 #include <boost/shared_ptr.hpp>
-#include "BoxArea.h"
 #include "SolidDefine.h"
 #include "SJCScalarField3.h"
 #include "DWHistogram.h"
+
 /**
 control unit
 */
@@ -13,10 +13,10 @@ class SolidCtrl
 public:
 	enum InterpolationMethod
 	{
-		INVERSE,
-		NEAREST
+		INVERSE_DISTANCE,
+		NEAREST_NEIGHBOR
 	};
-	SolidCtrl()
+	SolidCtrl():m_sf3d(NULL)
 	{
 		m_RenderWindow = vtkSmartNew;
 		m_Renderer = vtkSmartNew;
@@ -48,12 +48,13 @@ public:
 	vtkPolyData_Sptr	m_polydata;
 	vtkImageData_Sptr	m_imagedata;
 	vtkCamera_Sptr		m_Camera;
-	BoxArea_Sptr		m_area;
 	vtkRenderWindowInteractor_Sptr	m_WindowInteractor;
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
 	SJCScalarField3d	*m_sf3d;
+	vtkBounds		m_bounds;
 public:
-	int SetData(SJCScalarField3d* sf3d, InterpolationMethod method = NEAREST);
+	int SetGridedData(SJCScalarField3d* sf3d);
+	int SetUnGridData(vtkPolyData_Sptr poly, InterpolationMethod method = NEAREST_NEIGHBOR);
 	void RmAllView();
 	void RmView(SolidView_Sptr view);
 	void RmDoc(SolidDoc_Sptr doc);

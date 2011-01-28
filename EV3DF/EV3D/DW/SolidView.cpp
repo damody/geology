@@ -3,7 +3,6 @@
 #include "SolidDoc.h"
 #include "SolidCtrl.h"
 #include "SEffect.h"
-#include "BoxArea.h"
 
 SolidView::SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc):m_ParentCtrl(ParentCtrl)
 {
@@ -50,7 +49,6 @@ void SolidView::SetVisable( bool show )
 void SolidView::SetEffect( SEffect_Sptr effect )
 {
 	m_SEffect = effect;
-	BoxArea_Sptr area = GetParentDoc()->m_area;
 	switch (m_SEffect->GetType())
 	{
 	case SEffect::BOUNDING_BOX:
@@ -130,15 +128,15 @@ void SolidView::Update()
 			switch (setting->m_Axes)
 			{
 			case 0:
-				numvalue = GetParentDoc()->m_area->m_numX;
+				numvalue = GetParentDoc()->m_bounds.Xlen();
 				m_ImagePlane->SetPlaneOrientationToXAxes();
 				break;
 			case 1:
-				numvalue = GetParentDoc()->m_area->m_numY;
+				numvalue = GetParentDoc()->m_bounds.Ylen();
 				m_ImagePlane->SetPlaneOrientationToYAxes();
 				break;
 			case 2:
-				numvalue = GetParentDoc()->m_area->m_numZ;
+				numvalue = GetParentDoc()->m_bounds.Zlen();
 				m_ImagePlane->SetPlaneOrientationToZAxes();
 				break;
 			default:
@@ -195,8 +193,10 @@ void SolidView::Init_Vertex()
 	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
 		GetParentDoc()->m_histogram.GetPersentValue(0.99));
 	lut->Build();
+	double p[6];
+	GetParentDoc()->m_PolyData->GetBounds(p);
 	int point_size = GetParentDoc()->m_PolyData->GetNumberOfPoints();
-	vtkFloatArray* data_ary = (vtkFloatArray*)(GetParentDoc()->m_PolyData->GetPointData()->GetScalars("value"));
+	vtkDoubleArray* data_ary = (vtkDoubleArray*)(GetParentDoc()->m_PolyData->GetPointData()->GetScalars("value"));
 	for (int i = 0;i < point_size;i++)
 	{
 		double dcolor[3];

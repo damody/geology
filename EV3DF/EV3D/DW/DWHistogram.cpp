@@ -12,9 +12,8 @@
 
 #include "DWHistogram.h"
 
-
 template <class T>
-void DWHistogram<T>::addData( T* dst, int size, int step )
+void DWHistogram<T>::AddData( T* dst, int size, int step )
 {
 	for (int i=0;i<size;i+=step)
 	{
@@ -28,21 +27,21 @@ unsigned int DWHistogram<T>::size()
 	return m_data->size();
 }
 template <class T>
-double DWHistogram<T>::find( T key )
+double DWHistogram<T>::Find( T key )
 {
 	unsigned int i = 0;
 	for (Tvector::iterator it = m_data->begin();it != m_data->end();it++)
 	{
 		if (*it = key) break;
 		i++;
-	}   
+	}
 	double p = m_data->size();
 	p = i/p;
 	return p;
 }
 
 template <class T>
-void DWHistogram<T>::clear()
+void DWHistogram<T>::Clear()
 {
-	m_data->clear();
+	m_data.clear();
 }
