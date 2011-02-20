@@ -16,6 +16,9 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<ToolFile
+			RelativePath=".\Cuda.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -35,6 +38,11 @@
 				Description="upx 壓縮中..."
 				CommandLine="upx -9 &quot;$(TargetPath)&quot;&#x0D;&#x0A;"
 				Outputs="$(TargetPath)"
+			/>
+			<Tool
+				Name="CUDA Build Rule"
+				Debug="true"
+				Optimization="0"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -89,7 +97,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386"
-				AdditionalDependencies="wxmsw28u_adv.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxmsw28u_dbgrid.lib wxmsw28u_gl.lib wxmsw28u_html.lib wxmsw28u_media.lib wxmsw28u_qa.lib wxmsw28u_richtext.lib wxmsw28u_xrc.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib"
+				AdditionalDependencies="wxmsw28u_adv.lib wxmsw28u_aui.lib wxmsw28u_core.lib wxmsw28u_dbgrid.lib wxmsw28u_gl.lib wxmsw28u_html.lib wxmsw28u_media.lib wxmsw28u_qa.lib wxmsw28u_richtext.lib wxmsw28u_xrc.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib cudart.lib cutil32D.lib"
 				OutputFile="..\runtime\EarthViewer3D.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -144,6 +152,11 @@
 				Outputs="$(TargetPath)"
 			/>
 			<Tool
+				Name="CUDA Build Rule"
+				Debug="true"
+				Optimization="0"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -194,7 +207,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS"
-				AdditionalDependencies=" wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib SJCx64.lib  TriMeshx64.lib"
+				AdditionalDependencies=" wxmsw28u_richtext.lib wxmsw28u_aui.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_html.lib wxmsw28u_xrc.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib SJCx64.lib  TriMeshx64.lib cudart.lib cutil32D.lib"
 				OutputFile="..\runtime\EarthViewer3Dx64.exe"
 				LinkIncremental="0"
 				SuppressStartupBanner="true"
@@ -248,6 +261,15 @@
 				Outputs=""
 			/>
 			<Tool
+				Name="CUDA Build Rule"
+				AdditionalOptions=""
+				Debug="true"
+				Arch1="11"
+				Arch2="20"
+				Emulation="false"
+				Optimization="0"
+			/>
+			<Tool
 				Name="VCXMLDataGeneratorTool"
 			/>
 			<Tool
@@ -295,7 +317,7 @@
 				Name="VCLinkerTool"
 				UseLibraryDependencyInputs="false"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386 /DEBUG"
-				AdditionalDependencies="wxmsw28ud_aui.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJCd.lib"
+				AdditionalDependencies="wxmsw28ud_aui.lib wxmsw28ud_xrc.lib wxmsw28ud_core.lib wxbase28ud.lib wxtiffd.lib wxjpegd.lib wxpngd.lib wxzlibd.lib wxregexud.lib wxmsw28ud_adv.lib wxmsw28ud_gl.lib wxbase28ud_net.lib wxbase28ud_xml.lib wxexpatd.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJCd.lib cudart.lib cutil32D.lib"
 				OutputFile="..\runtime\EarthViewer3Dd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
@@ -350,6 +372,15 @@
 				Name="VCCustomBuildTool"
 				CommandLine=""
 				Outputs=""
+			/>
+			<Tool
+				Name="CUDA Build Rule"
+				AdditionalOptions=""
+				Debug="true"
+				Arch1="11"
+				Arch2="20"
+				Emulation="false"
+				Optimization="0"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -930,6 +961,22 @@
 				Name="Interpolation"
 				>
 				<File
+					RelativePath=".\DW\Interpolation\NearestNeighbor.cu"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="CUDA Build Rule"
+							ExtraNvccOptions="-m32"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\NearestNeighbor.h"
+					>
+				</File>
+				<File
 					RelativePath=".\DW\Interpolation\vtkBounds.h"
 					>
 				</File>
@@ -943,6 +990,14 @@
 				</File>
 				<File
 					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilterCuda.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilterCuda.h"
 					>
 				</File>
 			</Filter>

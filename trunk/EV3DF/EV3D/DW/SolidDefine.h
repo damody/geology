@@ -79,9 +79,11 @@ SHARE_PTR(ColorTable)
 #include <vtkColorTransferFunction.h>
 #include <vtkProperty.h>
 #include <vtkActor.h>
+#include <vtkInteractorStyleTrackballCamera.h>
 #define VTK_SMART_POINTER(x) \
 	typedef vtkSmartPointer< x >	x##_Sptr; \
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
+VTK_SMART_POINTER(vtkInteractorStyleTrackballCamera)
 VTK_SMART_POINTER(vtkDoubleArray)
 VTK_SMART_POINTER(vtkCellData)
 VTK_SMART_POINTER(vtkScalarsToColors)
