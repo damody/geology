@@ -34,73 +34,12 @@ SolidView_Sptr	SolidCtrl::NewView( SEffect_Sptr& effect, SolidDoc_Sptr& doc ) //
 	return tmpPtr;
 }
 
-int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
-{
-	RmAllView();
-	m_sf3d = sf3d;
-	// 先載入資料
-	m_polydata = vtkSmartNew;
-	m_imagedata = vtkSmartNew;
-	vtkPoints_Sptr points = vtkSmartNew;
- 	vtkDoubleArray_Sptr point_array = vtkSmartNew;
-	point_array->SetName("value");
-	const uint x_len = sf3d->NumX(),
-		y_len = sf3d->NumY(),
-		z_len = sf3d->NumZ();
-	uint i, j, k,  kOffset, jOffset, offset;
-	for(k=0;k<z_len;k++)
-	{
-		kOffset = k*y_len*x_len;
-		for(j=0; j<y_len; j++)
-		{
-			jOffset = j*x_len;
-			for(i=0;i<x_len;i++)
-			{
-				offset = i + jOffset + kOffset;
-				point_array->InsertTuple1(offset, sf3d->Value(i, j, k));
-				points->InsertNextPoint(i, j, k);
-			}
-		}
-	}
-	uint count = point_array->GetNumberOfTuples();
-	// 如果資料被Griding過了就直接放到imagedata
-	bool isGrided = x_len* y_len* z_len == count;
-	m_polydata->SetPoints(points);
-	m_polydata->GetPointData()->SetScalars(point_array);
-	m_bounds.SetBounds(m_polydata->GetBounds());
-	if (isGrided) 
-	{
-		m_imagedata->SetDimensions(x_len, y_len, z_len);
-		m_imagedata->GetPointData()->SetScalars(point_array);
-	}
-	else
-	{
-		assert(0 && "error: x_len* y_len* z_len == count ");
-		return 1;
-	}
-	// 把資料跟bounding box建出來
-	SolidDoc_Sptr spDoc = NewDoc();
-	assert(m_polydata->GetNumberOfPoints() != 0);
-	spDoc->SetPolyData(m_polydata);
-	if (isGrided)
-	{
-		spDoc->SetImageData(m_imagedata);
-	}
-	else
-		assert(0 && "not is Grided");
-	ReSetViewDirection();
-	return 0;
-}
-
 SolidView_Sptr SolidCtrl::NewSEffect( SEffect_Sptr effect )
 {
 	SolidDoc_Sptr spDoc = NewDoc();
 	assert(m_polydata->GetNumberOfPoints() != 0);
 	spDoc->SetPolyData(m_polydata);
-	if (m_imagedata.GetPointer() != 0)
-	{
-		 spDoc->SetImageData(m_imagedata);
-	}
+	spDoc->SetImageData(m_imagedata);
 	SolidView_Sptr spView = NewView(effect, spDoc);
 	return spView;
 }
@@ -167,61 +106,117 @@ int SolidCtrl::SetUnGridData( vtkPolyData_Sptr polydata, InterpolationMethod met
 	m_polydata = vtkSmartNew;
 	m_imagedata = vtkSmartNew;
 	vtkPoints_Sptr points = vtkSmartNew;
-	vtkDoubleArray_Sptr point_array = vtkSmartNew;
-	point_array->SetName("value");
-	vtkDoubleArray* outScalars = (vtkDoubleArray*)polydata->GetPointData()->GetScalars();
-	assert(polydata->GetNumberOfPoints() != 0);
-	for(vtkIdType i = 0; i < polydata->GetNumberOfPoints(); i++)
-	{
-		double p[3];
-		polydata->GetPoint(i,p);
-		double s = outScalars->GetValue(i);
-		point_array->InsertTuple1(i, s);
-		points->InsertNextPoint(p);
-	}
-	uint count = point_array->GetNumberOfTuples();
-	m_polydata->SetPoints(points);
-	m_polydata->GetPointData()->SetScalars(point_array);
-	
+	vtkDoubleArray_Sptr point_array = (vtkDoubleArray*)polydata->GetPointData()->GetScalars();
+ 	point_array->SetName("value");
+
 	// Griding資料
 	switch (method)
 	{
 	case NEAREST_NEIGHBOR:
 		{
 			vtkNearestNeighborFilter_Sptr NearestNeighbor = vtkSmartNew;
-			NearestNeighbor->SetBounds(m_polydata->GetBounds());
+			NearestNeighbor->SetBounds(polydata->GetBounds());
 			NearestNeighbor->SetInterval(distance);
-			NearestNeighbor->SetInput(m_polydata);
+			NearestNeighbor->SetInput(polydata);
 			NearestNeighbor->Update();
+			m_polydata = NearestNeighbor->GetOutput();
 		}
 		break;
 	case INVERSE_DISTANCE:
 		{
 			vtkInverseDistanceFilter_Sptr InverseDistance = vtkSmartNew;
-			InverseDistance->SetBounds(m_polydata->GetBounds());
+			InverseDistance->SetBounds(polydata->GetBounds());
 			InverseDistance->SetInterval(distance);
-			InverseDistance->SetInput(m_polydata);
+			InverseDistance->SetInput(polydata);
 			InverseDistance->Update();
+			m_polydata = InverseDistance->GetOutput();
 			
 		}
 		break;
 	}
 	vtkBounds tbounds;
+	int num = m_polydata->GetNumberOfPoints();
 	m_polydata->GetBounds(tbounds);
-	m_imagedata->SetDimensions(int(tbounds.Xlen()/distance), 
-		int(tbounds.Ylen()/distance), 
-		int(tbounds.Zlen()/distance));
+	m_polydata->GetPointData()->GetScalars()->SetName("value");
+	m_bounds.SetBounds(m_polydata->GetBounds());
+	m_imagedata->SetDimensions(tbounds.Xlen(), tbounds.Ylen(), tbounds.Zlen());
+	m_imagedata->SetExtent(tbounds[0], tbounds[1], tbounds[2], tbounds[3], tbounds[4], tbounds[5]);
+	//m_imagedata->SetOrigin(tbounds[0], tbounds[2], tbounds[4]);
+	//m_imagedata->SetSpacing(0.8, 0.8, 0.8);
+	
 	m_imagedata->GetPointData()->SetScalars(m_polydata->GetPointData()->GetScalars());
 	// 把資料跟bounding box建出來
 	SolidDoc_Sptr spDoc = NewDoc();
 	assert(m_polydata->GetNumberOfPoints() != 0);
 	spDoc->SetPolyData(m_polydata);
 	spDoc->SetImageData(m_imagedata);
+	point_array = (vtkDoubleArray*)m_polydata->GetPointData()->GetScalars();
 	Histogramd histg;
 	for(vtkIdType i = 0; i < point_array->GetNumberOfTuples(); i++)
 		histg.Append(point_array->GetValue(i));
 	histg.Sort();
 	spDoc->m_histogram = histg;
+	ReSetViewDirection();
+	return 0;
+}
+
+int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
+{
+	RmAllView();
+	m_sf3d = sf3d;
+	// 先載入資料
+	m_polydata = vtkSmartNew;
+	m_imagedata = vtkSmartNew;
+	vtkPoints_Sptr points = vtkSmartNew;
+	vtkDoubleArray_Sptr point_array = vtkSmartNew;
+	point_array->SetName("value");
+	const uint x_len = sf3d->NumX(),
+		y_len = sf3d->NumY(),
+		z_len = sf3d->NumZ();
+	uint i, j, k,  kOffset, jOffset, offset;
+	for(k=0;k<z_len;k++)
+	{
+		kOffset = k*y_len*x_len;
+		for(j=0; j<y_len; j++)
+		{
+			jOffset = j*x_len;
+			for(i=0;i<x_len;i++)
+			{
+				offset = i + jOffset + kOffset;
+				point_array->InsertTuple1(offset, sf3d->Value(i, j, k));
+				points->InsertNextPoint(i, j, k);
+			}
+		}
+	}
+	uint count = point_array->GetNumberOfTuples();
+	// 如果資料被Griding過了就直接放到imagedata
+	bool isGrided = x_len* y_len* z_len == count;
+	m_polydata->SetPoints(points);
+	m_polydata->GetPointData()->SetScalars(point_array);
+	m_bounds.SetBounds(m_polydata->GetBounds());
+	vtkBounds tbounds;
+	m_polydata->GetBounds(tbounds);
+	m_imagedata->SetExtent(tbounds[0], tbounds[1], tbounds[2], tbounds[3], tbounds[4], tbounds[5]);
+	if (isGrided) 
+	{
+		m_imagedata->SetDimensions(x_len, y_len, z_len);
+		m_imagedata->GetPointData()->SetScalars(point_array);
+	}
+	else
+	{
+		assert(0 && "error: x_len* y_len* z_len == count ");
+		return 1;
+	}
+	// 把資料跟bounding box建出來
+	SolidDoc_Sptr spDoc = NewDoc();
+	assert(m_polydata->GetNumberOfPoints() != 0);
+	spDoc->SetPolyData(m_polydata);
+	if (isGrided)
+	{
+		spDoc->SetImageData(m_imagedata);
+	}
+	else
+		assert(0 && "not is Grided");
 	ReSetViewDirection();
 	return 0;
 }

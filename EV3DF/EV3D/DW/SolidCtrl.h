@@ -24,10 +24,12 @@ public:
 		m_Camera = vtkSmartNew;
 		m_Axes_widget = vtkSmartNew;
 		m_Axes = vtkSmartNew;
+		m_style = vtkSmartNew;
 		m_RenderWindow->AddRenderer(m_Renderer);
 		m_WindowInteractor->SetRenderWindow(m_RenderWindow);
+		m_WindowInteractor->SetInteractorStyle( m_style );
 		m_Renderer->SetActiveCamera(m_Camera);
-		m_Renderer->SetBackground(.1, .2, .3);
+		m_Renderer->SetBackground(.0, .0, .0);
 		m_Axes_widget->SetOutlineColor( 0.8300, 0.6700, 0.5300 );
 		m_Axes_widget->SetOrientationMarker( m_Axes );
 		m_Axes_widget->SetInteractor( m_WindowInteractor );
@@ -50,6 +52,7 @@ public:
 	vtkCamera_Sptr		m_Camera;
 	vtkRenderWindowInteractor_Sptr	m_WindowInteractor;
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
+	vtkInteractorStyleTrackballCamera_Sptr	m_style;
 	SJCScalarField3d	*m_sf3d;
 	vtkBounds		m_bounds;
 public:

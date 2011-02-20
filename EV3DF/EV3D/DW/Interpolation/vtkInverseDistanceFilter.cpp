@@ -60,11 +60,11 @@ int vtkInverseDistanceFilter::RequestData(vtkInformation *vtkNotUsed(request),
 		vals.push_back(inScalars->GetValue(i));
 	}
 	double dim[3];
-	for (dim[0] = m_bounds.zmin;dim[0] <= m_bounds.zmax;dim[0]+=m_interval)
+	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval)
 	{
 		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval)
 		{
-			for (dim[2] = m_bounds.xmin;dim[2] <= m_bounds.xmax;dim[2]+=m_interval)
+			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval)
 			{
 				
 				doubles weights;

@@ -315,7 +315,8 @@ void FirstMain::CreateControls()
     wxArrayString m_InterpolationComBoxStrings;
     m_InterpolationComBoxStrings.Add(_("Nearest"));
     m_InterpolationComBoxStrings.Add(_("Inverse"));
-    m_InterpolationComBox = new wxComboBox( m_BoundEditToolbar, ID_INTERPOLATIONCOMBOBOX, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_InterpolationComBoxStrings, wxCB_READONLY );
+    m_InterpolationComBox = new wxComboBox( m_BoundEditToolbar, ID_INTERPOLATIONCOMBOBOX, _("Nearest"), wxDefaultPosition, wxDefaultSize, m_InterpolationComBoxStrings, wxCB_READONLY );
+    m_InterpolationComBox->SetStringSelection(_("Nearest"));
     m_BoundEditToolbar->AddControl(m_InterpolationComBox);
     m_BoundEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_BoundEditToolbar, wxAuiPaneInfo()
