@@ -59,9 +59,7 @@ BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 
     EVT_MENU( ID_MENUSaveFile, FirstMain::OnMENUSaveFileClick )
 
-    EVT_MENU( ID_MENUSHOWFILEINFO, FirstMain::OnMenushowfileinfoClick )
-
-    EVT_MENU( ID_MENUEDITFILEINFO, FirstMain::OnMenueditfileinfoClick )
+    EVT_MENU( ID_MENU_CONVERT_FILE, FirstMain::OnMenuConvertFileClick )
 
     EVT_MENU( ID_MENUEXIT, FirstMain::OnMenuexitClick )
 
@@ -76,26 +74,6 @@ BEGIN_EVENT_TABLE( FirstMain, wxFrame )
     EVT_MENU( ID_ColorTable, FirstMain::OnColorTableClick )
 
     EVT_MENU( ID_MENUPreciseToolbar, FirstMain::OnMENUPreciseToolbarClick )
-
-    EVT_MENU( ID_RenderBondingBox, FirstMain::OnRenderBondingBoxClick )
-
-    EVT_MENU( ID_RenderAxis, FirstMain::OnRenderAxisClick )
-
-    EVT_MENU( ID_RenderCube, FirstMain::OnRenderCubeClick )
-
-    EVT_MENU( ID_RenderFace1, FirstMain::OnRenderFace1Click )
-
-    EVT_MENU( ID_RenderFace2, FirstMain::OnRenderFace2Click )
-
-    EVT_MENU( ID_RenderFace3, FirstMain::OnRenderFace3Click )
-
-    EVT_MENU( ID_RenderFace4, FirstMain::OnRenderFace4Click )
-
-    EVT_MENU( ID_RenderFace5, FirstMain::OnRenderFace5Click )
-
-    EVT_MENU( ID_RenderFace6, FirstMain::OnRenderFace6Click )
-
-    EVT_MENU( ID_RenderXchip, FirstMain::OnRenderXchipClick )
 
     EVT_MENU( ID_BTNOPENFILE, FirstMain::OnBtnopenfileClick )
 
@@ -180,22 +158,9 @@ FirstMain::~FirstMain()
 void FirstMain::Init()
 {
 	////@begin FirstMain member initialisation
-    m_RenderFace1 = false;
-    m_RenderFace2 = false;
-    m_RenderFace3 = false;
-    m_RenderFace4 = false;
-    m_RenderFace5 = false;
-    m_RenderFace6 = false;
-    m_RenderX = false;
-    m_RenderCube = false;
     m_init = false;
-    m_RenderAxis = true;
-    m_useXchip = false;
     m_bFixMove = false;
     m_LoadColor = false;
-    m_useYchip = false;
-    m_useZchip = false;
-    m_RenderBondingBox = true;
     itemGLCanvas = NULL;
     m_FileEditToolbar = NULL;
     m_BoundEditToolbar = NULL;
@@ -232,38 +197,23 @@ void FirstMain::CreateControls()
     wxMenu* itemMenu4 = new wxMenu;
     itemMenu4->Append(ID_MENUOPENFILE, _("OpenFile"), wxEmptyString, wxITEM_NORMAL);
     itemMenu4->Append(ID_MENUSaveFile, _("SaveFile"), wxEmptyString, wxITEM_NORMAL);
-    itemMenu4->Append(ID_MENUSHOWFILEINFO, _("ShowFileInfomation"), wxEmptyString, wxITEM_NORMAL);
-    itemMenu4->Append(ID_MENUEDITFILEINFO, _("EditFileInformation"), wxEmptyString, wxITEM_NORMAL);
+    itemMenu4->Append(ID_MENU_CONVERT_FILE, _("ConvertFile"), wxEmptyString, wxITEM_NORMAL);
     itemMenu4->Append(ID_MENUEXIT, _("Exit"), wxEmptyString, wxITEM_NORMAL);
     menuBar->Append(itemMenu4, _("File"));
-    wxMenu* itemMenu10 = new wxMenu;
-    itemMenu10->Append(ID_FileEditToolbar, _("FileEdit Toolbar"), wxEmptyString, wxITEM_CHECK);
-    itemMenu10->Check(ID_FileEditToolbar, true);
-    itemMenu10->Append(ID_PositionEditToolbar, _("Position Edit Toolbar"), wxEmptyString, wxITEM_CHECK);
-    itemMenu10->Check(ID_PositionEditToolbar, true);
-    itemMenu10->Append(ID_BoundEditToolbar, _("Bound Edit Toolbar"), wxEmptyString, wxITEM_CHECK);
-    itemMenu10->Check(ID_BoundEditToolbar, true);
-    itemMenu10->Append(ID_XYZchipEditToolbar, _("XYZchip Edit Toolbar"), wxEmptyString, wxITEM_CHECK);
-    itemMenu10->Check(ID_XYZchipEditToolbar, true);
-    itemMenu10->Append(ID_ColorTable, _("Color Table"), wxEmptyString, wxITEM_CHECK);
-    itemMenu10->Check(ID_ColorTable, true);
-    itemMenu10->Append(ID_MENUPreciseToolbar, _("PreciseToolbar"), wxEmptyString, wxITEM_CHECK);
-    itemMenu10->Check(ID_MENUPreciseToolbar, true);
-    menuBar->Append(itemMenu10, _("View"));
-    wxMenu* itemMenu17 = new wxMenu;
-    itemMenu17->Append(ID_RenderBondingBox, _("RenderBondingBox"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Check(ID_RenderBondingBox, true);
-    itemMenu17->Append(ID_RenderAxis, _("RenderAxis"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Check(ID_RenderAxis, true);
-    itemMenu17->Append(ID_RenderCube, _("RenderCube"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Append(ID_RenderFace1, _("RenderFace1"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Append(ID_RenderFace2, _("RenderFace2"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Append(ID_RenderFace3, _("RenderFace3"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Append(ID_RenderFace4, _("RenderFace4"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Append(ID_RenderFace5, _("RenderFace5"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Append(ID_RenderFace6, _("RenderFace6"), wxEmptyString, wxITEM_CHECK);
-    itemMenu17->Append(ID_RenderXchip, _("RenderXchip"), wxEmptyString, wxITEM_CHECK);
-    menuBar->Append(itemMenu17, _("RenderMethod"));
+    wxMenu* itemMenu9 = new wxMenu;
+    itemMenu9->Append(ID_FileEditToolbar, _("FileEdit Toolbar"), wxEmptyString, wxITEM_CHECK);
+    itemMenu9->Check(ID_FileEditToolbar, true);
+    itemMenu9->Append(ID_PositionEditToolbar, _("Position Edit Toolbar"), wxEmptyString, wxITEM_CHECK);
+    itemMenu9->Check(ID_PositionEditToolbar, true);
+    itemMenu9->Append(ID_BoundEditToolbar, _("Bound Edit Toolbar"), wxEmptyString, wxITEM_CHECK);
+    itemMenu9->Check(ID_BoundEditToolbar, true);
+    itemMenu9->Append(ID_XYZchipEditToolbar, _("XYZchip Edit Toolbar"), wxEmptyString, wxITEM_CHECK);
+    itemMenu9->Check(ID_XYZchipEditToolbar, true);
+    itemMenu9->Append(ID_ColorTable, _("Color Table"), wxEmptyString, wxITEM_CHECK);
+    itemMenu9->Check(ID_ColorTable, true);
+    itemMenu9->Append(ID_MENUPreciseToolbar, _("PreciseToolbar"), wxEmptyString, wxITEM_CHECK);
+    itemMenu9->Check(ID_MENUPreciseToolbar, true);
+    menuBar->Append(itemMenu9, _("View"));
     itemFrame1->SetMenuBar(menuBar);
 
     itemGLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxDefaultSize, 0 );
@@ -271,21 +221,21 @@ void FirstMain::CreateControls()
         .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().TopDockable(false).BottomDockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(800, 800)));
 
     m_FileEditToolbar = new wxAuiToolBar( itemFrame1, ID_TOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
-    wxBitmap itemtool29Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
-    wxBitmap itemtool29BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNOPENFILE, wxEmptyString, itemtool29Bitmap, itemtool29BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool30Bitmap(itemFrame1->GetBitmapResource(wxT("filesave.xpm")));
-    wxBitmap itemtool30BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNSAVEFILE, wxEmptyString, itemtool30Bitmap, itemtool30BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool31Bitmap(itemFrame1->GetBitmapResource(wxT("copy.xpm")));
-    wxBitmap itemtool31BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNCOPY, wxEmptyString, itemtool31Bitmap, itemtool31BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool32Bitmap(itemFrame1->GetBitmapResource(wxT("cut.xpm")));
-    wxBitmap itemtool32BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNCUT, wxEmptyString, itemtool32Bitmap, itemtool32BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
-    wxBitmap itemtool33Bitmap(itemFrame1->GetBitmapResource(wxT("paste.xpm")));
-    wxBitmap itemtool33BitmapDisabled;
-    m_FileEditToolbar->AddTool(ID_BTNPASTE, wxEmptyString, itemtool33Bitmap, itemtool33BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
+    wxBitmap itemtool17BitmapDisabled;
+    m_FileEditToolbar->AddTool(ID_BTNOPENFILE, wxEmptyString, itemtool17Bitmap, itemtool17BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool18Bitmap(itemFrame1->GetBitmapResource(wxT("filesave.xpm")));
+    wxBitmap itemtool18BitmapDisabled;
+    m_FileEditToolbar->AddTool(ID_BTNSAVEFILE, wxEmptyString, itemtool18Bitmap, itemtool18BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool19Bitmap(itemFrame1->GetBitmapResource(wxT("copy.xpm")));
+    wxBitmap itemtool19BitmapDisabled;
+    m_FileEditToolbar->AddTool(ID_BTNCOPY, wxEmptyString, itemtool19Bitmap, itemtool19BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool20Bitmap(itemFrame1->GetBitmapResource(wxT("cut.xpm")));
+    wxBitmap itemtool20BitmapDisabled;
+    m_FileEditToolbar->AddTool(ID_BTNCUT, wxEmptyString, itemtool20Bitmap, itemtool20BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
+    wxBitmap itemtool21Bitmap(itemFrame1->GetBitmapResource(wxT("paste.xpm")));
+    wxBitmap itemtool21BitmapDisabled;
+    m_FileEditToolbar->AddTool(ID_BTNPASTE, wxEmptyString, itemtool21Bitmap, itemtool21BitmapDisabled, wxITEM_NORMAL, wxEmptyString, wxEmptyString, NULL);
     m_FileEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_FileEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("FileEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
@@ -326,9 +276,9 @@ void FirstMain::CreateControls()
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
         .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
 
-    wxStatusBar* itemStatusBar50 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar50->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar50);
+    wxStatusBar* itemStatusBar38 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar38->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar38);
 
     m_treectrl = new MyTreeCtrl( itemFrame1, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
     itemFrame1->GetAuiManager().AddPane(m_treectrl, wxAuiPaneInfo()
@@ -626,96 +576,6 @@ void FirstMain::OnBtncutClick( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_CUT in FirstMain. 
 }
 
-
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderAxis
-*/
-
-void FirstMain::OnRenderAxisClick( wxCommandEvent& event )
-{
-	m_RenderAxis = event.IsChecked();
-	RenderFrame();
-}
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderCube
-*/
-
-void FirstMain::OnRenderCubeClick( wxCommandEvent& event )
-{
-	m_RenderCube = event.IsChecked();
-	RenderFrame();
-}
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace1
-*/
-
-void FirstMain::OnRenderFace1Click( wxCommandEvent& event )
-{
-	m_RenderFace1 = event.IsChecked();
-	RenderFrame();
-}
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUITEM3
-*/
-
-void FirstMain::OnRenderFace2Click( wxCommandEvent& event )
-{
-	m_RenderFace2 = event.IsChecked();
-	RenderFrame();
-}
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace3
-*/
-
-void FirstMain::OnRenderFace3Click( wxCommandEvent& event )
-{
-	m_RenderFace3 = event.IsChecked();
-	RenderFrame();
-}
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace4
-*/
-
-void FirstMain::OnRenderFace4Click( wxCommandEvent& event )
-{
-	m_RenderFace4 = event.IsChecked();
-	RenderFrame();
-}
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace5
-*/
-
-void FirstMain::OnRenderFace5Click( wxCommandEvent& event )
-{
-	m_RenderFace5 = event.IsChecked();
-	RenderFrame();
-}
-
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace6
-*/
-
-void FirstMain::OnRenderFace6Click( wxCommandEvent& event )
-{
-	m_RenderFace6 = event.IsChecked();
-	RenderFrame();
-}
-
 /*
 * ToOpenFile
 */
@@ -843,7 +703,7 @@ void FirstMain::OnMENUSaveFileClick( wxCommandEvent& event )
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSHOWFILEINFO
 */
 
-void FirstMain::OnMenushowfileinfoClick( wxCommandEvent& event )
+void FirstMain::OnMenuConvertFileClick( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSHOWFILEINFO in FirstMain.
     // Before editing this code, remove the block markers.
@@ -851,18 +711,6 @@ void FirstMain::OnMenushowfileinfoClick( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSHOWFILEINFO in FirstMain. 
 }
 
-
-/*
-* wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEDITFILEINFO
-*/
-
-void FirstMain::OnMenueditfileinfoClick( wxCommandEvent& event )
-{
-	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEDITFILEINFO in FirstMain.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEDITFILEINFO in FirstMain. 
-}
 
 
 /*
@@ -1135,28 +983,6 @@ void FirstMain::OnMENUPreciseToolbarClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-/*
- * wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip
- */
-
-void FirstMain::OnRenderXchipClick( wxCommandEvent& event )
-{
-////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip in FirstMain.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip in FirstMain. 
-}
-
-
-/*
- * wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderBondingBox
- */
-
-void FirstMain::OnRenderBondingBoxClick( wxCommandEvent& event )
-{
-	m_RenderBondingBox = event.IsChecked();
-	event.Skip(false); 
-}
 
 /*
  * wxEVT_LEFT_DOWN event handler for ID_GLCANVAS

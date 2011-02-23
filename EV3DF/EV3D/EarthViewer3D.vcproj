@@ -477,6 +477,10 @@
 			Name="Source Files"
 			>
 			<File
+				RelativePath=".\convertdialog.cpp"
+				>
+			</File>
+			<File
 				RelativePath="EarthViewer3D.rc"
 				>
 			</File>
@@ -775,6 +779,10 @@
 		<Filter
 			Name="Header Files"
 			>
+			<File
+				RelativePath=".\convertdialog.h"
+				>
+			</File>
 			<File
 				RelativePath="earthviewer3dapp.h"
 				>
