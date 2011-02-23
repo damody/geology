@@ -1,5 +1,5 @@
 #pragma once
-#define THREADS 32
+#define THREADS 256
 
 
 struct InterpolationInfo
