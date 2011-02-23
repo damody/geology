@@ -53,8 +53,7 @@ class MyGrid;
 #define ID_GLCANVAS 10017
 #define ID_MENUOPENFILE 10043
 #define ID_MENUSaveFile 10062
-#define ID_MENUSHOWFILEINFO 10045
-#define ID_MENUEDITFILEINFO 10046
+#define ID_MENU_CONVERT_FILE 10045
 #define ID_MENUEXIT 10044
 #define ID_FileEditToolbar 10052
 #define ID_PositionEditToolbar 10053
@@ -62,16 +61,6 @@ class MyGrid;
 #define ID_XYZchipEditToolbar 10054
 #define ID_ColorTable 10055
 #define ID_MENUPreciseToolbar 10061
-#define ID_RenderBondingBox 10071
-#define ID_RenderAxis 10019
-#define ID_RenderCube 10020
-#define ID_RenderFace1 10021
-#define ID_RenderFace2 10022
-#define ID_RenderFace3 10023
-#define ID_RenderFace4 10024
-#define ID_RenderFace5 10025
-#define ID_RenderFace6 10026
-#define ID_RenderXchip 10060
 #define ID_TOOLBAR 10001
 #define ID_BTNOPENFILE 10002
 #define ID_BTNSAVEFILE 10100
@@ -181,11 +170,8 @@ public:
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSaveFile
     void OnMENUSaveFileClick( wxCommandEvent& event );
 
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSHOWFILEINFO
-    void OnMenushowfileinfoClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEDITFILEINFO
-    void OnMenueditfileinfoClick( wxCommandEvent& event );
+    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENU_CONVERT_FILE
+    void OnMenuConvertFileClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEXIT
     void OnMenuexitClick( wxCommandEvent& event );
@@ -207,36 +193,6 @@ public:
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUPreciseToolbar
     void OnMENUPreciseToolbarClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderBondingBox
-    void OnRenderBondingBoxClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderAxis
-    void OnRenderAxisClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderCube
-    void OnRenderCubeClick( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace1
-    void OnRenderFace1Click( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace2
-    void OnRenderFace2Click( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace3
-    void OnRenderFace3Click( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace4
-    void OnRenderFace4Click( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace5
-    void OnRenderFace5Click( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderFace6
-    void OnRenderFace6Click( wxCommandEvent& event );
-
-    /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_RenderXchip
-    void OnRenderXchipClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_MENU_SELECTED event handler for ID_BTNOPENFILE
     void OnBtnopenfileClick( wxCommandEvent& event );
@@ -281,30 +237,6 @@ public:
     /// Returns the AUI manager object
     wxAuiManager& GetAuiManager() { return m_auiManager; }
 
-    bool GetRenderFace1() const { return m_RenderFace1 ; }
-    void SetRenderFace1(bool value) { m_RenderFace1 = value ; }
-
-    bool GetRenderFace2() const { return m_RenderFace2 ; }
-    void SetRenderFace2(bool value) { m_RenderFace2 = value ; }
-
-    bool GetRenderFace3() const { return m_RenderFace3 ; }
-    void SetRenderFace3(bool value) { m_RenderFace3 = value ; }
-
-    bool GetRenderFace4() const { return m_RenderFace4 ; }
-    void SetRenderFace4(bool value) { m_RenderFace4 = value ; }
-
-    bool GetRenderFace5() const { return m_RenderFace5 ; }
-    void SetRenderFace5(bool value) { m_RenderFace5 = value ; }
-
-    bool GetRenderFace6() const { return m_RenderFace6 ; }
-    void SetRenderFace6(bool value) { m_RenderFace6 = value ; }
-
-    bool GetRenderX() const { return m_RenderX ; }
-    void SetRenderX(bool value) { m_RenderX = value ; }
-
-    bool GetRenderCube() const { return m_RenderCube ; }
-    void SetRenderCube(bool value) { m_RenderCube = value ; }
-
     bool GetInit() const { return m_init ; }
     void SetInit(bool value) { m_init = value ; }
 
@@ -314,26 +246,11 @@ public:
     wxPoint GetP() const { return P ; }
     void SetP(wxPoint value) { P = value ; }
 
-    bool GetRenderAxis() const { return m_RenderAxis ; }
-    void SetRenderAxis(bool value) { m_RenderAxis = value ; }
-
-    bool GetUseXYZchip() const { return m_useXchip ; }
-    void SetUseXYZchip(bool value) { m_useXchip = value ; }
-
     bool GetFixMove() const { return m_bFixMove ; }
     void SetFixMove(bool value) { m_bFixMove = value ; }
 
     bool GetLoadColor() const { return m_LoadColor ; }
     void SetLoadColor(bool value) { m_LoadColor = value ; }
-
-    bool GetUseYchip() const { return m_useYchip ; }
-    void SetUseYchip(bool value) { m_useYchip = value ; }
-
-    bool GetUseZchip() const { return m_useZchip ; }
-    void SetUseZchip(bool value) { m_useZchip = value ; }
-
-    bool GetRenderBondingBox() const { return m_RenderBondingBox ; }
-    void SetRenderBondingBox(bool value) { m_RenderBondingBox = value ; }
 
     /// Retrieves bitmap resources
     wxBitmap GetBitmapResource( const wxString& name );
@@ -363,24 +280,11 @@ public:
     wxListCtrl* m_ColorList;
     MyTreeCtrl* m_treectrl;
     MyGrid* m_grid;
-    bool m_RenderFace1;
-    bool m_RenderFace2;
-    bool m_RenderFace3;
-    bool m_RenderFace4;
-    bool m_RenderFace5;
-    bool m_RenderFace6;
-    bool m_RenderX;
-    bool m_RenderCube;
     bool m_init;
     wxPoint lastP;
     wxPoint P;
-    bool m_RenderAxis;
-    bool m_useXchip;
     bool m_bFixMove;
     bool m_LoadColor;
-    bool m_useYchip;
-    bool m_useZchip;
-    bool m_RenderBondingBox;
 ////@end FirstMain member variables
     private:
 	    HandleEvr*		m_hEvr;
