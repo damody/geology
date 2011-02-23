@@ -39,6 +39,7 @@ void SolidView::SetVisable( bool show )
 		case SEffect::RULER:
 			break;
 		case SEffect::VOLUME_RENDERING:
+			GetParentCtrl()->m_Renderer->RemoveViewProp(m_volume);
 			break;
 		default:
 			GetParentCtrl()->m_Renderer->RemoveActor(m_actor);
@@ -158,7 +159,7 @@ void SolidView::Update()
 		break;
 	case SEffect::VOLUME_RENDERING:
 		{
-			Init_VolumeRendering();
+			//Init_VolumeRendering();
 		}
 		break;
 	}
@@ -266,42 +267,31 @@ void SolidView::Init_ClipContour()
 
 void SolidView::Init_VolumeRendering()
 {
-	vtkPiecewiseFunction_Sptr PiecewiseFunction = vtkSmartNew;
-	vtkColorTransferFunction_Sptr ColorTransferFunction = vtkSmartNew;
+	vtkPiecewiseFunction_Sptr compositeOpacity = vtkSmartNew;
+	vtkColorTransferFunction_Sptr colorTransferFunction = vtkSmartNew;
 	vtkImageShiftScale_Sptr ImageShiftScale = vtkSmartNew;
-	vtkSmartVolumeMapper_Sptr SmartVolumeMapper = vtkOnlyNew;
-	vtkVolumeProperty_Sptr VolumeProperty = vtkSmartNew;
-	vtkVolume_Sptr Volume = vtkSmartNew;
+	vtkSmartVolumeMapper_Sptr volumeMapper = vtkOnlyNew;
+	vtkVolumeProperty_Sptr volumeProperty = vtkSmartNew;
 
-	vtkSmartPointer<vtkSmartVolumeMapper> volumeMapper = 
-		vtkSmartPointer<vtkSmartVolumeMapper>::New();
 	volumeMapper->SetBlendModeToComposite(); // composite first
 	volumeMapper->SetInputConnection(GetParentDoc()->m_ImageData->GetProducerPort());
 
-	vtkSmartPointer<vtkVolumeProperty> volumeProperty = 
-		vtkSmartPointer<vtkVolumeProperty>::New();
 	volumeProperty->ShadeOff();
 	volumeProperty->SetInterpolationType(VTK_LINEAR_INTERPOLATION);
 
-	vtkSmartPointer<vtkPiecewiseFunction> compositeOpacity = 
-		vtkSmartPointer<vtkPiecewiseFunction>::New();
 	compositeOpacity->AddPoint(0.0,0.0);
 	compositeOpacity->AddPoint(80.0,1.0);
 	compositeOpacity->AddPoint(80.1,0.0);
 	compositeOpacity->AddPoint(255.0,0.0);
 	volumeProperty->SetScalarOpacity(compositeOpacity); // composite first.
 
-	vtkSmartPointer<vtkColorTransferFunction> color = 
-		vtkSmartPointer<vtkColorTransferFunction>::New();
-	color->AddRGBPoint(0.0  ,0.0,0.0,1.0);
-	color->AddRGBPoint(40.0  ,1.0,0.0,0.0);
-	color->AddRGBPoint(255.0,1.0,1.0,1.0);
-	volumeProperty->SetColor(color);
+	colorTransferFunction->AddRGBPoint(0.0  ,0.0,0.0,1.0);
+	colorTransferFunction->AddRGBPoint(40.0  ,1.0,0.0,0.0);
+	colorTransferFunction->AddRGBPoint(255.0,1.0,1.0,1.0);
+	volumeProperty->SetColor(colorTransferFunction);
 
-	vtkSmartPointer<vtkVolume> volume = 
-		vtkSmartPointer<vtkVolume>::New();
-	volume->SetMapper(volumeMapper);
-	volume->SetProperty(volumeProperty);
-	GetParentCtrl()->m_Renderer->AddViewProp(volume);
-
+	m_volume = vtkSmartNew;
+	m_volume->SetMapper(volumeMapper);
+	m_volume->SetProperty(volumeProperty);
+	GetParentCtrl()->m_Renderer->AddViewProp(m_volume);
 }

@@ -532,7 +532,7 @@ void MyTreeCtrl::RmAllAddItem()
 void MyTreeItemData::RmView()
 {
 	m_View->SetVisable(false);
-	SolidView_Sptr tmp;
+	SolidView_Sptr tmp;//is need?
 	tmp.swap(m_View);
 }
 
