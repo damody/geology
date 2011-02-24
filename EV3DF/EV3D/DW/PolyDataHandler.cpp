@@ -1,9 +1,10 @@
-ï»¿#include "PolyDataHandler.h"
+#include "PolyDataHandler.h"
 #include "SolidDefine.h"
 #include <cassert>
 #include <istream>
 #include <fstream>
 #include <iostream>
+#include <istream>
 #include <sstream>
 #include "ConvStr.h"
 #include "..\Lua\CreateLua.h"
@@ -92,13 +93,12 @@ int PolyDataHandler::GetDataAmount( std::string path )
 	return i;
 }
 
-void PolyDataHandler::SavePolyDatasToEvrA( vtkPolyData_Sptrs datas, std::string Path, std::string filename )
+void PolyDataHandler::SavePolyDatasToEvrA( vtkPolyData_Sptrs datas, std::wstring Path, std::wstring filename )
 {
 	double		Xdelta, Ydelta, Zdelta;
 	int		Xspan, Yspan, Zspan;
 	int		m_format_count;
 	strVector	m_format_name;
-	iVector		m_moveTable;
 	std::string	m_dataPath;
 	std::wstring	m_dataWPath;
 	CreateLua	m_CreateLua;
@@ -112,30 +112,24 @@ void PolyDataHandler::SavePolyDatasToEvrA( vtkPolyData_Sptrs datas, std::string 
 	m_format_name.push_back("x");
 	m_format_name.push_back("y");
 	m_format_name.push_back("z");
-	m_moveTable.push_back(0);
-	m_moveTable.push_back(sizeof(double));
-	m_moveTable.push_back(sizeof(double)*2);
-	m_moveTable.push_back(sizeof(double)*3);
-
 	m_format_count = datas.size();	
 	std::string formatstring;
 	for (int j = 0;j < m_format_count;j++)
 	{
 		formatstring += "\"parameter" + ConvStr::GetStr(j+1) + "\",";
 		m_format_name.push_back("parameter" + ConvStr::GetStr(j+1));
-		m_moveTable.push_back(sizeof(double)*(j+4));
 	}
 	m_CreateLua.AddRawString("format_name", "{" + formatstring + "}");
 	m_CreateLua.AddInt("format_count", m_format_count);
-	// ç®—å‡ºæ¯ä¸€çµ„è³‡æ–™çš„å¤§å°
+	// ºâ¥X¨C¤@²Õ¸ê®Æªº¤j¤p
 	m_dataSize = sizeof(double) * (m_format_count+3);
-	// è®€å‡ºæª”æ¡ˆ
+	// Åª¥XÀÉ®×
 
 	m_total = datas[0]->GetNumberOfPoints();
 	m_totalSize = m_total * m_dataSize;
 	m_CreateLua.AddInt("total",m_total);
 
-	// è®€å…¥è³‡æ–™çš„æœ€å¤§æœ€å°å€¼
+	// Åª¤J¸ê®Æªº³Ì¤j³Ì¤p­È
 	for (int i = 0;i < m_format_count;i++)
 	{
 		vtkDoubleArray* inScalars = (vtkDoubleArray*)(datas[i]->GetPointData()->GetScalars());
@@ -173,7 +167,7 @@ void PolyDataHandler::SavePolyDatasToEvrA( vtkPolyData_Sptrs datas, std::string 
 	ofstream fOut;
 	fOut.open((Path+L".evr").c_str());
 	if(fOut==NULL)
-		return 0;
+		return ;
 	// Write the file into file
 	for (int i=0;i<m_format_count+3;i++)
 	{

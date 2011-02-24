@@ -1,6 +1,5 @@
 ﻿#include "ConvertToEvr.h"
 #include <memory>
-#include <wx\msgdlg.h>
 #include <limits>
 #include <sstream>
 #include <iostream>
