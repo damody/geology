@@ -1,4 +1,4 @@
-#include "vtkInverseDistanceFilter.h"
+ï»¿#include "vtkInverseDistanceFilter.h"
 
 #include "vtkObjectFactory.h"
 #include "vtkStreamingDemandDrivenPipeline.h"
@@ -48,7 +48,7 @@ int vtkInverseDistanceFilter::RequestData(vtkInformation *vtkNotUsed(request),
 		std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
 #endif // _DEBUG
 	}
-	if (input->GetNumberOfPoints()<2) //³»ÂI¼Æ¤p©ó2ª½±µÂ÷¶}
+	if (input->GetNumberOfPoints()<2) //é ‚é»žæ•¸å°æ–¼2ç›´æŽ¥é›¢é–‹
 	{
 		output->ShallowCopy(input);
 		return 1;

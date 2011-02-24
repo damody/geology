@@ -1,4 +1,4 @@
-#include "vtkNearestNeighborFilterCuda.h"
+﻿#include "vtkNearestNeighborFilterCuda.h"
 
 #include "vtkObjectFactory.h"
 #include "vtkStreamingDemandDrivenPipeline.h"

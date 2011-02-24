@@ -606,10 +606,6 @@
 				Name="DW"
 				>
 				<File
-					RelativePath=".\DW\BoxArea.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\DW\ConvertToEvr.cpp"
 					>
 				</File>
@@ -774,6 +770,10 @@
 					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilter.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilterCuda.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -854,6 +854,14 @@
 				</File>
 				<File
 					RelativePath=".\DW\HandleEvr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\PolyDataHandler.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\PolyDataHandler.h"
 					>
 				</File>
 				<File
@@ -969,6 +977,10 @@
 				Name="Interpolation"
 				>
 				<File
+					RelativePath=".\DW\Interpolation\InterpolationInfo.h"
+					>
+				</File>
+				<File
 					RelativePath=".\DW\Interpolation\NearestNeighbor.cu"
 					>
 					<FileConfiguration
@@ -1006,10 +1018,6 @@
 				</File>
 				<File
 					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilter.h"
-					>
-				</File>
-				<File
-					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilterCuda.cpp"
 					>
 				</File>
 				<File

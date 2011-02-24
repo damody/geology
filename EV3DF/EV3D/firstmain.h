@@ -23,6 +23,7 @@
 #include "DW/SolidCtrl.h"
 #include "DW/Solid.h"
 #include "DW/VarStr.h"
+#include "convertdialog.h"
 ////@begin includes
 #include "wx/aui/framemanager.h"
 #include "wx/frame.h"
@@ -290,6 +291,7 @@ public:
 	    HandleEvr*		m_hEvr;
 	    ConvertToEvr	m_ConvEvr;
 	    SJCScalarField3d*	m_psjcF3d;
+	    ConvertDialog*	m_convertdialog;
     public:
 	    SolidCtrl_Sptr	m_SolidCtrl;
 	    SolidView_Sptr	m_ActiveView;
