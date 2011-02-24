@@ -1,4 +1,4 @@
-#include "NmeaCell.h"
+ï»¿#include "NmeaCell.h"
 #include <fstream>
 #include <iostream>
 #include <cstring>
@@ -184,7 +184,7 @@ void NmeaCell::InputRawData( const char* data, const int size )
 	memset(buffer, 0, sizeof(char)*b_size);
 	memcpy(buffer, m_last_str.c_str(), m_last_str.length());
 	memcpy(buffer + m_last_str.length(), data, size);
-	// ¼W¥[¤å¦r¨ìOutputText
+	// å¢žåŠ æ–‡å­—åˆ°OutputText
 	char xbuf[200];
 	memset(xbuf, 0, sizeof(char)*200);
 	int len = strlen(buffer);
@@ -227,7 +227,7 @@ void NmeaCell::InputRawData( const char* data, const int size )
 			else if (i == len-1)
 			{
 				int ok_offset;
-				// ¸Ñ¨M´ú¸Õµ{¦¡ªºbug¦r¦ê¦³0xcc
+				// è§£æ±ºæ¸¬è©¦ç¨‹å¼çš„bugå­—ä¸²æœ‰0xcc
 				for (ok_offset=strlen(buffer)-1;ok_offset>0;ok_offset--)
 				{
 					if (buffer[ok_offset] == -52)

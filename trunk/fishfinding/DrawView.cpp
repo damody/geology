@@ -1,4 +1,4 @@
-#include "StdVtkWx.h"
+﻿#include "StdVtkWx.h"
 #include "DrawView.h"
 
 DrawView::DrawView()

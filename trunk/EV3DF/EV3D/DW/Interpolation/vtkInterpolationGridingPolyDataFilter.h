@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "vtkDoubleArray.h"
 #include "vtkPointData.h"
 #include "vtkPolyDataAlgorithm.h"

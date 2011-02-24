@@ -37,6 +37,7 @@
 ////@end XPM images
 #include <algorithm>
 
+
 /*
 * FirstMain type definition
 */
@@ -178,6 +179,7 @@ void FirstMain::Init()
 	////@end FirstMain member initialisation
 	m_hEvr = NULL;
 	m_psjcF3d = NULL;
+	m_convertdialog = NULL;
 	shareNew(m_SolidCtrl);
 }
 
@@ -705,10 +707,9 @@ void FirstMain::OnMENUSaveFileClick( wxCommandEvent& event )
 
 void FirstMain::OnMenuConvertFileClick( wxCommandEvent& event )
 {
-	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSHOWFILEINFO in FirstMain.
-    // Before editing this code, remove the block markers.
-    event.Skip();
-	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSHOWFILEINFO in FirstMain. 
+	m_convertdialog = new ConvertDialog(this);
+	m_convertdialog->Show(true);
+	event.Skip(false);
 }
 
 
