@@ -878,15 +878,20 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 	std::string str = ConvStr::GetStr(m_ShowTypeCombo->GetValue().c_str());
 	uint i=0;
 	for (;i<m_hEvr->m_SJCSF3dMap.size();i++)
+	{
 		if (m_hEvr->m_SJCSF3dMap[i].first == str)
-	// 保證取得的資料是對的，不對就不選擇
-	assert(i!=m_hEvr->m_SJCSF3dMap.size());
-	if (i==m_hEvr->m_SJCSF3dMap.size())  return;
-	m_psjcF3d = m_hEvr->m_SJCSF3dMap[i].second;
+		{
+			// 保證取得的資料是對的，不對就不選擇
+			assert(i!=m_hEvr->m_SJCSF3dMap.size());
+			if (i==m_hEvr->m_SJCSF3dMap.size())  return;
+			m_psjcF3d = m_hEvr->m_SJCSF3dMap[i].second;
+		}
+	}
 	if (m_psjcF3d)
 		m_SolidCtrl->SetGridedData(m_psjcF3d); // 設定第一順位的資料來顯示
 	else
 		m_SolidCtrl->SetUnGridData(m_hEvr->m_SJCSF3dMap[i].second.m_polydata); // 需要griding一下
+	m_treectrl->RmAllAddItem();
 // 	m_MarchCubeSet_spinctrl->SetMax(*std::max_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 // 	m_MarchCubeSet_spinctrl->SetMin(*std::min_element(m_psjcF3d->begin(),m_psjcF3d->end()));
 	//m_SolidCtrl.Set(m_PreciseSpin->GetValue());

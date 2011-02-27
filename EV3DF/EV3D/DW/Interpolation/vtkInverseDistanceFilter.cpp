@@ -48,11 +48,6 @@ int vtkInverseDistanceFilter::RequestData(vtkInformation *vtkNotUsed(request),
 		std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
 #endif // _DEBUG
 	}
-	if (input->GetNumberOfPoints()<2) //頂點數小於2直接離開
-	{
-		output->ShallowCopy(input);
-		return 1;
-	}
 	save_pos = raw_points;
 	doubles vals;
 	for(vtkIdType i = 0; i < input->GetNumberOfPoints(); i++, save_pos += 4)
@@ -60,11 +55,11 @@ int vtkInverseDistanceFilter::RequestData(vtkInformation *vtkNotUsed(request),
 		vals.push_back(inScalars->GetValue(i));
 	}
 	double dim[3];
-	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval)
+	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval[2])
 	{
-		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval)
+		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval[1])
 		{
-			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval)
+			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval[0])
 			{
 				
 				doubles weights;

@@ -9,6 +9,8 @@
 #include "ConvStr.h"
 #include "..\Lua\CreateLua.h"
 #include "Interpolation\vtkBounds.h"
+#include "Interpolation/vtkNearestNeighborFilter.h"
+VTK_SMART_POINTER(vtkNearestNeighborFilter)
 
 void PolyDataHandler::SaveFileToVtp( vtkPolyData* polydata, std::string path )
 {
@@ -29,7 +31,7 @@ vtkPolyData_Sptr PolyDataHandler::LoadFileFromVtp( std::string path )
 	return output;
 }
 
-vtkPolyData_Sptrs PolyDataHandler::LoadFileFromNative( std::string path )
+vtkPolyData_Sptrs PolyDataHandler::LoadFileFromNative( std::wstring path )
 {
 	const int AMOUNT = GetDataAmount(path);
 	vtkPolyData_Sptrs output;
@@ -57,8 +59,8 @@ vtkPolyData_Sptrs PolyDataHandler::LoadFileFromNative( std::string path )
 		outpoints->InsertNextPoint(&dataVector[i * AMOUNT]);
 		for (int field_index=0;field_index < AMOUNT-3;field_index++)
 		{
-			assert(i * AMOUNT+field_index < DATA_TOTAL && " index > DATA_TOTAL, error");
-			outScalars[field_index]->InsertNextTuple1(dataVector[i * AMOUNT+field_index]);
+			assert(i * AMOUNT+field_index < DATA_TOTAL*AMOUNT && " index > DATA_TOTAL*AMOUNT, error");
+			outScalars[field_index]->InsertNextTuple1(dataVector[i * AMOUNT+field_index+3]);
 		}
 	}
 	// format data to polydata vector
@@ -72,7 +74,7 @@ vtkPolyData_Sptrs PolyDataHandler::LoadFileFromNative( std::string path )
 	return output;
 }
 
-int PolyDataHandler::GetDataAmount( std::string path )
+int PolyDataHandler::GetDataAmount( std::wstring path )
 {
 	std::ifstream loaderx;
 	loaderx.open(path.c_str());
@@ -138,15 +140,22 @@ void PolyDataHandler::SavePolyDatasToEvrA( vtkPolyData_Sptrs datas, std::wstring
 	}
 	vtkPolyData* polydata = datas[0];
 	double p1[3], p2[3];
-	polydata->GetPoint(0,p1);
-	polydata->GetPoint(1,p2);
-	Xdelta = abs(p1[0]-p2[0]);
-	Ydelta = abs(p1[1]-p2[1]);
-	Zdelta = abs(p1[2]-p2[2]);
+	Xdelta = Ydelta = Zdelta = 0;
+	for (int i=0;Xdelta==0||Ydelta==0||Zdelta==0;i++)
+	{
+		polydata->GetPoint(i,p1);
+		polydata->GetPoint(i+1,p2);
+		if (p1[0]-p2[0] != 0 && Xdelta == 0)
+			Xdelta = abs(p1[0]-p2[0]);
+		if (p1[1]-p2[1] != 0 && Ydelta == 0)
+			Ydelta = abs(p1[1]-p2[1]);
+		if (p1[2]-p2[2] != 0 && Zdelta == 0)
+			Zdelta = abs(p1[2]-p2[2]);
+	}
 	Xspan = (bounds.xmax-bounds.xmin)/Xdelta;
 	Yspan = (bounds.ymax-bounds.ymin)/Ydelta;
 	Zspan = (bounds.zmax-bounds.zmin)/Zdelta;
-	m_CreateLua.AddDouble("DataAmount", m_format_count);
+	m_CreateLua.AddDouble("DataAmount", m_format_count+3);
 	m_CreateLua.AddDouble("Xmin", bounds.xmin);
 	m_CreateLua.AddDouble("Xmax", bounds.xmax);
 	m_CreateLua.AddDouble("deltaX", Xdelta);
@@ -193,7 +202,19 @@ void PolyDataHandler::SavePolyDatasToEvrA( vtkPolyData_Sptrs datas, std::wstring
 	fOut.close();
 }
 
-void PolyDataHandler::InterpolationPolyData( vtkPolyData_Sptrs datas, const InterpolationInfo* info )
+void PolyDataHandler::InterpolationPolyData( vtkPolyData_Sptrs &datas, const InterpolationInfo* info )
 {
-	
+	for (int i=0;i<datas.size();i++)
+	{
+		vtkNearestNeighborFilter_Sptr NearestNeighborCuda = vtkSmartNew;
+		double bounds[6] = {info->min[0], info->max[0], 
+				info->min[1], info->max[1], 
+				info->min[2], info->max[2]};
+		NearestNeighborCuda->SetBounds(bounds);
+		NearestNeighborCuda->SetInterval(info->interval[0], info->interval[1], info->interval[2]);
+		NearestNeighborCuda->SetInput(datas[i]);
+		NearestNeighborCuda->Update();
+		datas[i] = NearestNeighborCuda->GetOutput();
+		printf("GetNumberOfPoints: %d\n", datas[i]->GetNumberOfPoints());
+	}
 }

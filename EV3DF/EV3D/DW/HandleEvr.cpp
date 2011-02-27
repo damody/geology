@@ -65,7 +65,7 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 		fIn.seekg(0,ios_base::beg);
 
 		if (m_totalSize != ulSize)
-			MessageBox(NULL, L"m_totalSize != ulSize", L"瘜冽?", MB_OK|MB_ICONASTERISK);
+			MessageBox(NULL, L"m_totalSize != ulSize", L"???", MB_OK|MB_ICONASTERISK);
 		// Allocate some space
 		// Check and clear pDat, just in case
 		m_pData.resize(ulSize);
@@ -112,6 +112,12 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 		for (int i=0;i < 3 ;++i)
 		{
 			DependenceSort(dpvec[i], m_total, dpvec);
+		}
+		for (int i=0;i<10;i++)
+		{
+			for (int j=0;j<4;j++)
+				printf("%f\t", dpvec[j][i]);
+			printf("\n");
 		}
 	}
 	else

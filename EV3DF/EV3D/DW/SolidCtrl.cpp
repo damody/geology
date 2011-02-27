@@ -116,7 +116,7 @@ int SolidCtrl::SetUnGridData( vtkPolyData_Sptr polydata, InterpolationMethod met
 		{
 			vtkNearestNeighborFilter_Sptr NearestNeighbor = vtkSmartNew;
 			NearestNeighbor->SetBounds(polydata->GetBounds());
-			NearestNeighbor->SetInterval(distance);
+			NearestNeighbor->SetInterval(distance, distance, distance);
 			NearestNeighbor->SetInput(polydata);
 			NearestNeighbor->Update();
 			m_polydata = NearestNeighbor->GetOutput();
@@ -126,7 +126,7 @@ int SolidCtrl::SetUnGridData( vtkPolyData_Sptr polydata, InterpolationMethod met
 		{
 			vtkInverseDistanceFilter_Sptr InverseDistance = vtkSmartNew;
 			InverseDistance->SetBounds(polydata->GetBounds());
-			InverseDistance->SetInterval(distance);
+			InverseDistance->SetInterval(distance, distance, distance);
 			InverseDistance->SetInput(polydata);
 			InverseDistance->Update();
 			m_polydata = InverseDistance->GetOutput();
@@ -173,21 +173,20 @@ int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
 	const uint x_len = sf3d->NumX(),
 		y_len = sf3d->NumY(),
 		z_len = sf3d->NumZ();
-	uint i, j, k,  kOffset, jOffset, offset;
+	uint i, j, k, offset=0;
 	for(k=0;k<z_len;k++)
 	{
-		kOffset = k*y_len*x_len;
 		for(j=0; j<y_len; j++)
 		{
-			jOffset = j*x_len;
 			for(i=0;i<x_len;i++)
 			{
-				offset = i + jOffset + kOffset;
-				point_array->InsertTuple1(offset, sf3d->Value(i, j, k));
+				//printf("%d %d %d %f\t", dpvec[j][i]);
+				point_array->InsertTuple1(offset++, *(sf3d->begin()+i+j*x_len+k*x_len*y_len));
 				points->InsertNextPoint(i, j, k);
 			}
 		}
 	}
+	
 	uint count = point_array->GetNumberOfTuples();
 	// 如果資料被Griding過了就直接放到imagedata
 	bool isGrided = x_len* y_len* z_len == count;
@@ -197,7 +196,7 @@ int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
 	vtkBounds tbounds;
 	m_polydata->GetBounds(tbounds);
 	m_imagedata->SetExtent(tbounds[0], tbounds[1], tbounds[2], tbounds[3], tbounds[4], tbounds[5]);
-	if (isGrided) 
+	if (isGrided)
 	{
 		m_imagedata->SetDimensions(x_len, y_len, z_len);
 		m_imagedata->GetPointData()->SetScalars(point_array);
@@ -207,7 +206,7 @@ int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
 		assert(0 && "error: x_len* y_len* z_len == count ");
 		return 1;
 	}
-	// 把資料跟bounding box建出來
+	// 把資料建出來
 	SolidDoc_Sptr spDoc = NewDoc();
 	assert(m_polydata->GetNumberOfPoints() != 0);
 	spDoc->SetPolyData(m_polydata);
@@ -219,4 +218,11 @@ int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
 		assert(0 && "not is Grided");
 	ReSetViewDirection();
 	return 0;
+}
+
+void SolidCtrl::Render()
+{
+	m_RenderWindow->Render();
+	for (int i=0;i<m_SolidViewPtrs.size();i++)
+		m_SolidViewPtrs[i]->UpdatePlane();
 }

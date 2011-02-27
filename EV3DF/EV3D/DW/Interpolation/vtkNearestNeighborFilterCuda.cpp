@@ -1,4 +1,4 @@
-﻿#include "vtkNearestNeighborFilterCuda.h"
+#include "vtkNearestNeighborFilterCuda.h"
 
 #include "vtkObjectFactory.h"
 #include "vtkStreamingDemandDrivenPipeline.h"
@@ -43,7 +43,7 @@ int vtkNearestNeighborFilterCuda::RequestData(vtkInformation *vtkNotUsed(request
 		input->GetPoint(i, save_pos);
 		save_pos[3] = inScalars->GetValue(i);
 #ifdef _DEBUG
-		std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
+		//std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
 #endif // _DEBUG
 	}
 	int h_total = input->GetNumberOfPoints();
@@ -51,9 +51,9 @@ int vtkNearestNeighborFilterCuda::RequestData(vtkInformation *vtkNotUsed(request
 	InterpolationInfo info(h_total);
 	info.GetPosFromXYZArray(raw_points);
 	free(raw_points);
-	info.interval[0] = m_interval;
-	info.interval[1] = m_interval;
-	info.interval[2] = m_interval;
+	info.interval[0] = m_interval[0];
+	info.interval[1] = m_interval[1];
+	info.interval[2] = m_interval[2];
 	info.min[0] = m_bounds.xmin;
 	info.min[1] = m_bounds.ymin;
 	info.min[2] = m_bounds.zmin;
@@ -65,11 +65,11 @@ int vtkNearestNeighborFilterCuda::RequestData(vtkInformation *vtkNotUsed(request
 	NearestNeighbor_ComputeData(outdata);
 	double dim[3];
 	int outindex = 0;
-	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval)
+	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval[2])
 	{
-		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval)
+		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval[1])
 		{
-			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval)
+			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval[0])
 			{
 				outpoints->InsertNextPoint(dim);
 				outScalars->InsertNextTuple1(outdata[outindex++]);

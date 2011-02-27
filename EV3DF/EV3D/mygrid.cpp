@@ -312,10 +312,7 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 	SolidView_Sptr view = ((FirstMain*)GetParent())->m_ActiveView;
 	SEffect_Sptr SuperSetting = view->GetEffect();
 	double number = 0;
-	if (data.IsNumber())
-	{
-		data.ToDouble(&number);
-	}
+	data.ToDouble(&number);
 	switch (view->GetType())
 	{
 	case SEffect::BOUNDING_BOX:

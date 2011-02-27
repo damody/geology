@@ -2940,7 +2940,7 @@
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
               <string name="proxy-Member variable name">""</string>
-              <string name="proxy-Label">"input data info"</string>
+              <string name="proxy-Label">"input"</string>
               <long name="proxy-Wrapping width">-1</long>
               <string name="proxy-Help text">""</string>
               <string name="proxy-Tooltip text">""</string>
@@ -3014,7 +3014,7 @@
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
               <string name="proxy-Member variable name">""</string>
-              <string name="proxy-Label">"output data info"</string>
+              <string name="proxy-Label">"output"</string>
               <long name="proxy-Wrapping width">-1</long>
               <string name="proxy-Help text">""</string>
               <string name="proxy-Tooltip text">""</string>
@@ -3087,7 +3087,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_in_xmin"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -3134,7 +3134,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -3173,7 +3173,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_in_ymin"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -3220,7 +3220,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -3259,7 +3259,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_in_zmin"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -3306,7 +3306,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -3345,7 +3345,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_in_xmax"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -3392,7 +3392,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -3431,7 +3431,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_in_ymax"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -3478,7 +3478,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -3517,7 +3517,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_in_zmax"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -3564,7 +3564,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -3603,7 +3603,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_xmin"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -3650,7 +3650,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4207,7 +4207,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_ymin"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4254,7 +4254,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4293,7 +4293,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_zmin"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4340,7 +4340,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4379,7 +4379,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_xmax"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4426,7 +4426,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4465,7 +4465,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_ymax"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4512,7 +4512,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4551,7 +4551,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_zmax"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4598,7 +4598,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4637,7 +4637,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_xinterval"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4684,7 +4684,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4723,7 +4723,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_yinterval"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4770,7 +4770,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4809,7 +4809,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_zinterval"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -4856,7 +4856,7 @@
               <string name="proxy-Custom styles">""</string>
               <long name="proxy-X">-1</long>
               <long name="proxy-Y">-1</long>
-              <long name="proxy-Width">-1</long>
+              <long name="proxy-Width">120</long>
               <long name="proxy-Height">-1</long>
               <string name="proxy-AlignH">"Centre"</string>
               <string name="proxy-AlignV">"Centre"</string>
@@ -4877,7 +4877,7 @@
               <long name="proxy-Span y">1</long>
             </document>
             <document>
-              <string name="title">"wxButton: ID_BUTTON"</string>
+              <string name="title">"wxButton: ID_CLOSE"</string>
               <string name="type">"dialog-control-document"</string>
               <string name="filename">""</string>
               <string name="icon-name">"dialogcontrol"</string>
@@ -4886,7 +4886,8 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbButtonProxy"</string>
-              <string name="proxy-Id name">"ID_BUTTON"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnCloseClick|NONE||ConvertDialog"</string>
+              <string name="proxy-Id name">"ID_CLOSE"</string>
               <long name="proxy-Id value">10050</long>
               <string name="proxy-Name">""</string>
               <string name="proxy-Class">"wxButton"</string>
@@ -4946,7 +4947,7 @@
               <long name="proxy-Span y">1</long>
             </document>
             <document>
-              <string name="title">"wxButton: ID_BUTTON1"</string>
+              <string name="title">"wxButton: ID_CONVERT"</string>
               <string name="type">"dialog-control-document"</string>
               <string name="filename">""</string>
               <string name="icon-name">"dialogcontrol"</string>
@@ -4955,7 +4956,8 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbButtonProxy"</string>
-              <string name="proxy-Id name">"ID_BUTTON1"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnConvertClick|NONE||ConvertDialog"</string>
+              <string name="proxy-Id name">"ID_CONVERT"</string>
               <long name="proxy-Id value">10057</long>
               <string name="proxy-Name">""</string>
               <string name="proxy-Class">"wxButton"</string>
@@ -5015,7 +5017,7 @@
               <long name="proxy-Span y">1</long>
             </document>
             <document>
-              <string name="title">"wxFilePickerCtrl: ID_FILECTRL"</string>
+              <string name="title">"wxFilePickerCtrl: ID_FILECTRL_INPUT"</string>
               <string name="type">"dialog-control-document"</string>
               <string name="filename">""</string>
               <string name="icon-name">"dialogcontrol"</string>
@@ -5024,7 +5026,7 @@
               <long name="title-mode">0</long>
               <long name="locked">0</long>
               <string name="proxy-type">"wbFilePickerCtrlProxy"</string>
-              <string name="proxy-Id name">"ID_FILECTRL"</string>
+              <string name="proxy-Id name">"ID_FILECTRL_INPUT"</string>
               <long name="proxy-Id value">10058</long>
               <string name="proxy-Name">""</string>
               <string name="proxy-Class">"wxFilePickerCtrl"</string>
@@ -5033,7 +5035,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_filectrl_input"</string>
               <string name="proxy-Default filename">""</string>
               <string name="proxy-Message">""</string>
               <string name="proxy-Wildcard">""</string>
@@ -5092,6 +5094,76 @@
               <long name="proxy-Span y">1</long>
             </document>
             <document>
+              <string name="title">"wxButton: ID_BUTTON2"</string>
+              <string name="type">"dialog-control-document"</string>
+              <string name="filename">""</string>
+              <string name="icon-name">"dialogcontrol"</string>
+              <long name="is-transient">0</long>
+              <long name="owns-file">1</long>
+              <long name="title-mode">0</long>
+              <long name="locked">0</long>
+              <string name="proxy-type">"wbButtonProxy"</string>
+              <string name="event-handler-0">"wxEVT_COMMAND_BUTTON_CLICKED|OnLoadClick|NONE||ConvertDialog"</string>
+              <string name="proxy-Id name">"ID_BUTTON2"</string>
+              <long name="proxy-Id value">10019</long>
+              <string name="proxy-Name">""</string>
+              <string name="proxy-Class">"wxButton"</string>
+              <string name="proxy-Base class">"wxButton"</string>
+              <bool name="proxy-External implementation">1</bool>
+              <bool name="proxy-Separate files">0</bool>
+              <string name="proxy-Implementation filename">""</string>
+              <string name="proxy-Header filename">""</string>
+              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Label">"Load"</string>
+              <bool name="proxy-Default">0</bool>
+              <string name="proxy-Help text">""</string>
+              <string name="proxy-Tooltip text">""</string>
+              <string name="proxy-Data variable">""</string>
+              <string name="proxy-Data validator">""</string>
+              <string name="proxy-Data source">""</string>
+              <string name="proxy-Data class name">""</string>
+              <string name="proxy-Data class implementation filename">""</string>
+              <string name="proxy-Data class header filename">""</string>
+              <string name="proxy-Data class manager window">""</string>
+              <string name="proxy-Background colour">""</string>
+              <string name="proxy-Foreground colour">""</string>
+              <string name="proxy-Font">""</string>
+              <bool name="proxy-Hidden">0</bool>
+              <bool name="proxy-Enabled">1</bool>
+              <string name="proxy-Platform">"&lt;Any platform&gt;"</string>
+              <bool name="proxy-wxBU_LEFT">0</bool>
+              <bool name="proxy-wxBU_RIGHT">0</bool>
+              <bool name="proxy-wxBU_TOP">0</bool>
+              <bool name="proxy-wxBU_BOTTOM">0</bool>
+              <bool name="proxy-wxBU_EXACTFIT">0</bool>
+              <bool name="proxy-wxNO_BORDER">0</bool>
+              <bool name="proxy-wxWANTS_CHARS">0</bool>
+              <bool name="proxy-wxNO_FULL_REPAINT_ON_RESIZE">0</bool>
+              <bool name="proxy-wxFULL_REPAINT_ON_RESIZE">0</bool>
+              <string name="proxy-Custom styles">""</string>
+              <long name="proxy-X">-1</long>
+              <long name="proxy-Y">-1</long>
+              <long name="proxy-Width">-1</long>
+              <long name="proxy-Height">-1</long>
+              <string name="proxy-AlignH">"Centre"</string>
+              <string name="proxy-AlignV">"Centre"</string>
+              <long name="proxy-Stretch factor">0</long>
+              <long name="proxy-Border">5</long>
+              <bool name="proxy-wxLEFT">1</bool>
+              <bool name="proxy-wxRIGHT">1</bool>
+              <bool name="proxy-wxTOP">1</bool>
+              <bool name="proxy-wxBOTTOM">1</bool>
+              <bool name="proxy-wxSHAPED">0</bool>
+              <bool name="proxy-wxADJUST_MINSIZE">0</bool>
+              <bool name="proxy-wxFIXED_MINSIZE">0</bool>
+              <string name="proxy-Custom arguments">""</string>
+              <string name="proxy-Custom ctor arguments">""</string>
+              <long name="proxy-Grid x">5</long>
+              <long name="proxy-Grid y">4</long>
+              <long name="proxy-Span x">1</long>
+              <long name="proxy-Span y">1</long>
+            </document>
+            <document>
               <string name="title">"wxFilePickerCtrl: ID_FILEPICKERCTRL"</string>
               <string name="type">"dialog-control-document"</string>
               <string name="filename">""</string>
@@ -5110,7 +5182,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_filectrl_output"</string>
               <string name="proxy-Default filename">""</string>
               <string name="proxy-Message">""</string>
               <string name="proxy-Wildcard">""</string>
@@ -5335,7 +5407,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_in_datatotal"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
@@ -5421,7 +5493,7 @@
               <bool name="proxy-Separate files">0</bool>
               <string name="proxy-Implementation filename">""</string>
               <string name="proxy-Header filename">""</string>
-              <string name="proxy-Member variable name">""</string>
+              <string name="proxy-Member variable name">"m_out_datatotal"</string>
               <string name="proxy-Initial value">""</string>
               <long name="proxy-Max length">0</long>
               <string name="proxy-Help text">""</string>
