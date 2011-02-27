@@ -11,7 +11,7 @@
 VTK_SMART_POINTER(vtkXMLPolyDataWriter)
 VTK_SMART_POINTER(vtkXMLPolyDataReader)
 #include "Interpolation/InterpolationInfo.h"
-#include "Interpolation/vtkNearestNeighborFilterCuda.h"
+
 
 class PolyDataHandler
 {
@@ -23,10 +23,9 @@ public:
 	static void SaveFileToVtp(vtkPolyData* polydata, std::string path);
 	static vtkPolyData_Sptr LoadFileFromVtp(std::string path);
 	// native to polydata
-	static vtkPolyData_Sptrs LoadFileFromNative(std::string path);
-	static void InterpolationPolyData(vtkPolyData_Sptrs datas, const InterpolationInfo* info);
+	static vtkPolyData_Sptrs LoadFileFromNative(std::wstring path);
+	static void InterpolationPolyData(vtkPolyData_Sptrs &datas, const InterpolationInfo* info);
 	static void SavePolyDatasToEvrA(vtkPolyData_Sptrs datas, std::wstring Path, std::wstring filename);
 private:
-	
-	static int GetDataAmount(std::string path);
+	static int GetDataAmount(std::wstring path);
 };

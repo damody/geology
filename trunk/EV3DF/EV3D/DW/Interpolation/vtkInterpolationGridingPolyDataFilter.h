@@ -14,14 +14,15 @@ public:
 	// Customer function
 	void SetBounds(const double bounds[]);
 	void GetBounds(double bounds[]);
-	void SetInterval(double inter);
+	void SetInterval(double x, double y, double z);
+	void SetInterval(double inter[]);
 	int  NumOfInterpolationPoints();
 	int  NumOfXPoints();
 	int  NumOfYPoints();
 	int  NumOfZPoints();
 protected:
 	vtkBounds m_bounds;	// vtk's format bounds
-	double m_interval;	// griding's interval
+	double m_interval[3];	// griding's interval
 	double PointsDistanceSquare(double pos1[], double pos2[]);
 	vtkInterpolationGridingPolyDataFilter();
 	~vtkInterpolationGridingPolyDataFilter();

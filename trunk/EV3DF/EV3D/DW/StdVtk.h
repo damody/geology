@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 #include <vtkSmartPointer.h>
+#include <vtkImageMapToColors.h>
+#include <vtkPolyDataNormals.h>
+#include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkXMLPolyDataReader.h>
 #include <vtkAppendPolyData.h>
 #include <vtkClipPolyData.h>
@@ -20,7 +23,6 @@
 #include <vtkRenderWindow.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkVertexGlyphFilter.h>
-#include <vtkDoubleArray.h>
 #include <vtkPolyDataPointSampler.h>
 #include <vtkPolyDataToPolyDataFilter.h>
 #include <vtkGraphLayoutFilter.h>

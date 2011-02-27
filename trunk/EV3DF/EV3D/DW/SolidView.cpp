@@ -228,7 +228,20 @@ void SolidView::Init_Contour()
 	m_ContourFilter = vtkSmartNew;
 	m_ContourFilter->SetInput(GetParentDoc()->m_ImageData);
 	m_polydataMapper->SetInputConnection(m_ContourFilter->GetOutputPort());
-	m_polydataMapper->SetLookupTable(lut);
+	vtkColorTransferFunction_Sptr colorTransferFunction = vtkSmartNew;
+	colorTransferFunction->AddRGBPoint(0.0  ,1.0/2,0.0,0.0);
+	colorTransferFunction->AddRGBPoint(20.0  ,1.0/2, 165/255/2.0,0.0);
+	colorTransferFunction->AddRGBPoint(40.0  ,1.0/2, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(50.0  ,0.0, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(60.0  ,0.0, 0.5/2, 1.0/2);
+	colorTransferFunction->AddRGBPoint(70.0  ,0.0, 0.0, 1.0/2);
+	colorTransferFunction->AddRGBPoint(80.0  ,139/255.0/2, 0.0, 1.0/2);
+	m_polydataMapper->SetLookupTable(colorTransferFunction);
+	vtkPolyDataNormals_Sptr sGridPolyDataNormal = vtkSmartNew;
+	sGridPolyDataNormal->SetInput(m_ContourFilter->GetOutput());
+	sGridPolyDataNormal->Update();
+	m_polydataMapper->SetInput(sGridPolyDataNormal->GetOutput());
+	m_polydataMapper->Update();
 	m_actor->SetMapper(m_polydataMapper);
 }
 
@@ -247,11 +260,15 @@ void SolidView::Init_ClipPlane()
 	m_ImagePlane->RestrictPlaneToVolumeOn();
 	m_ImagePlane->SetInput(GetParentDoc()->m_ImageData);
 	m_ImagePlane->SetPlaneOrientationToXAxes();
-	vtkLookupTable_Sptr lut= vtkSmartNew;
-	lut->SetTableRange(GetParentDoc()->m_histogram.GetPersentValue(0.01), 
-		GetParentDoc()->m_histogram.GetPersentValue(0.99));
-	lut->Build();
-	m_ImagePlane->SetLookupTable(lut);
+	vtkColorTransferFunction_Sptr colorTransferFunction = vtkSmartNew;
+	colorTransferFunction->AddRGBPoint(0.0  ,1.0/2,0.0,0.0);
+	colorTransferFunction->AddRGBPoint(20.0  ,1.0/2, 165/255/2.0,0.0);
+	colorTransferFunction->AddRGBPoint(40.0  ,1.0/2, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(50.0  ,0.0, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(60.0  ,0.0, 0.5/2, 1.0/2);
+	colorTransferFunction->AddRGBPoint(70.0  ,0.0, 0.0, 1.0/2);
+	colorTransferFunction->AddRGBPoint(80.0  ,139/255.0/2, 0.0, 1.0/2);
+	m_ImagePlane->GetColorMap()->SetLookupTable(colorTransferFunction);
 	m_ImagePlane->On();
 }
 
@@ -279,19 +296,31 @@ void SolidView::Init_VolumeRendering()
 	volumeProperty->ShadeOff();
 	volumeProperty->SetInterpolationType(VTK_LINEAR_INTERPOLATION);
 
-	compositeOpacity->AddPoint(0.0,0.0);
-	compositeOpacity->AddPoint(80.0,1.0);
+	compositeOpacity->AddPoint(20.0,0.0);
+	compositeOpacity->AddPoint(80.0,0.5);
 	compositeOpacity->AddPoint(80.1,0.0);
-	compositeOpacity->AddPoint(255.0,0.0);
+	compositeOpacity->AddPoint(255.0,1.0);
 	volumeProperty->SetScalarOpacity(compositeOpacity); // composite first.
 
-	colorTransferFunction->AddRGBPoint(0.0  ,0.0,0.0,1.0);
-	colorTransferFunction->AddRGBPoint(40.0  ,1.0,0.0,0.0);
-	colorTransferFunction->AddRGBPoint(255.0,1.0,1.0,1.0);
+	colorTransferFunction->AddRGBPoint(0.0  ,1.0/2,0.0,0.0);
+	colorTransferFunction->AddRGBPoint(20.0  ,1.0/2, 165/255/2.0,0.0);
+	colorTransferFunction->AddRGBPoint(40.0  ,1.0/2, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(50.0  ,0.0, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(60.0  ,0.0, 0.5/2, 1.0/2);
+	colorTransferFunction->AddRGBPoint(70.0  ,0.0, 0.0, 1.0/2);
+	colorTransferFunction->AddRGBPoint(80.0  ,139/255.0/2, 0.0, 1.0/2);
 	volumeProperty->SetColor(colorTransferFunction);
 
 	m_volume = vtkSmartNew;
 	m_volume->SetMapper(volumeMapper);
 	m_volume->SetProperty(volumeProperty);
 	GetParentCtrl()->m_Renderer->AddViewProp(m_volume);
+}
+
+void SolidView::UpdatePlane()
+{
+	if (m_SEffect->GetType() == SEffect::CLIP_PLANE)
+	{
+		m_ImagePlane->UpdatePlacement();
+	}
 }

@@ -62,10 +62,7 @@ public:
 	void RmView(SolidView_Sptr view);
 	void RmDoc(SolidDoc_Sptr doc);
 	void ReSetViewDirection();
-	void Render()
-	{
-		m_RenderWindow->Render();
-	}
+	void Render();
 	void SetHwnd( HWND hwnd )
 	{
 		m_RenderWindow->SetParentId(hwnd);

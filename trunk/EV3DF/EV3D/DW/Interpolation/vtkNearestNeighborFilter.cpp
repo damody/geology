@@ -1,4 +1,4 @@
-﻿#include "vtkNearestNeighborFilter.h"
+#include "vtkNearestNeighborFilter.h"
 
 #include "vtkObjectFactory.h"
 #include "vtkStreamingDemandDrivenPipeline.h"
@@ -42,17 +42,22 @@ int vtkNearestNeighborFilter::RequestData(vtkInformation *vtkNotUsed(request),
 		input->GetPoint(i, save_pos);
 		save_pos[3] = inScalars->GetValue(i);
 #ifdef _DEBUG
-		std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
+		//std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
 #endif // _DEBUG
 	}
 	double dim[3];
-	
-	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval)
+	int count[3] = {0,0,0};
+	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval[2])
 	{
-		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval)
+		count[2]++;
+		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval[1])
 		{
-			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval)
+			if (count[2] == 1)
+				count[1]++;
+			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval[0])
 			{
+				if (count[1] == 1)
+					count[0]++;
 				double min_dis = VTK_DOUBLE_MAX;
 				double val = VTK_DOUBLE_MAX;
 				save_pos = raw_points;
@@ -71,6 +76,7 @@ int vtkNearestNeighborFilter::RequestData(vtkInformation *vtkNotUsed(request),
 			}
 		}
 	}
+	printf("x:%d y:%d z:%d\n", count[0], count[1], count[2]);
 	output->SetPoints(outpoints);
 	output->GetPointData()->SetScalars(outScalars);
 	return 1;

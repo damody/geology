@@ -27,6 +27,7 @@
  */
 
 ////@begin forward declarations
+class wxFilePickerCtrl;
 ////@end forward declarations
 
 /*!
@@ -50,9 +51,10 @@
 #define ID_TEXTCTRL12 10042
 #define ID_TEXTCTRL13 10048
 #define ID_TEXTCTRL14 10049
-#define ID_BUTTON 10050
-#define ID_BUTTON1 10057
-#define ID_FILECTRL 10058
+#define ID_CLOSE 10050
+#define ID_CONVERT 10057
+#define ID_FILECTRL_INPUT 10058
+#define ID_BUTTON2 10019
 #define ID_FILEPICKERCTRL 10059
 #define ID_TEXTCTRL15 10063
 #define ID_TEXTCTRL16 10064
@@ -93,6 +95,15 @@ public:
 
 ////@begin ConvertDialog event handler declarations
 
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_CLOSE
+    void OnCloseClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_CONVERT
+    void OnConvertClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON2
+    void OnLoadClick( wxCommandEvent& event );
+
 ////@end ConvertDialog event handler declarations
 
 ////@begin ConvertDialog member function declarations
@@ -108,6 +119,25 @@ public:
     static bool ShowToolTips();
 
 ////@begin ConvertDialog member variables
+    wxTextCtrl* m_in_xmin;
+    wxTextCtrl* m_in_ymin;
+    wxTextCtrl* m_in_zmin;
+    wxTextCtrl* m_in_xmax;
+    wxTextCtrl* m_in_ymax;
+    wxTextCtrl* m_in_zmax;
+    wxTextCtrl* m_out_xmin;
+    wxTextCtrl* m_out_ymin;
+    wxTextCtrl* m_out_zmin;
+    wxTextCtrl* m_out_xmax;
+    wxTextCtrl* m_out_ymax;
+    wxTextCtrl* m_out_zmax;
+    wxTextCtrl* m_out_xinterval;
+    wxTextCtrl* m_out_yinterval;
+    wxTextCtrl* m_out_zinterval;
+    wxFilePickerCtrl* m_filectrl_input;
+    wxFilePickerCtrl* m_filectrl_output;
+    wxTextCtrl* m_in_datatotal;
+    wxTextCtrl* m_out_datatotal;
 ////@end ConvertDialog member variables
 };
 
