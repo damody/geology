@@ -759,6 +759,7 @@
 					>
 					<FileConfiguration
 						Name="Release|Win32"
+						ExcludedFromBuild="true"
 						>
 						<Tool
 							Name="CUDA Build Rule"
@@ -793,6 +794,14 @@
 				<File
 					RelativePath=".\DW\Interpolation\vtkNearestNeighborFilterCuda.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 		</Filter>

@@ -72,7 +72,7 @@ const nmeaINFOs& NmeaCell::GetDataList()
 	return m_infos;
 }
 
-const nmeaINFO& NmeaCell::GetLastData()
+const nmeaINFO& NmeaCell::GetRealTimeData()
 {
 	if (m_lastinfo.lat!=0)
 		return m_lastinfo;
@@ -153,7 +153,7 @@ int NmeaCell::GetTotal()
 	return m_infos.size();
 }
 
-void NmeaCell::ReSetGetOne()
+void NmeaCell::ResetGetOne()
 {
 	m_output_index = 0;
 }
@@ -244,6 +244,28 @@ void NmeaCell::InputRawData( const char* data, const int size )
 		len = strlen(buffer);
 	}
 	free(buffer);
+}
+
+const nmeaINFO& NmeaCell::GetLastData()
+{
+	if (m_infos.size()>1)
+		return *(m_infos.end()-2);
+	else
+		return m_lastinfo;
+}
+
+void NmeaCell::SaveDatFile( const std::wstring path )
+{
+	std::ofstream fIn;
+	fIn.open(path.c_str(), std::ios_base::out);
+	if (fIn.good())
+	{
+		for (int i=0;i<m_infos.size();i++)
+		{
+			fIn << m_infos[i].lon << "\t0\t" << m_infos[i].lat << "\t" << -m_infos[i].depthinfo.depth_M << std::endl; //lat緯z，lon經x
+		}
+	}
+	fIn.close();
 }
 
 

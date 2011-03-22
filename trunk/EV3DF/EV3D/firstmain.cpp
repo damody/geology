@@ -11,23 +11,18 @@
 #include "stdwx.h"
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
-
 #ifdef __BORLANDC__
 #pragma hdrstop
 #endif
-
 #ifndef WX_PRECOMP
 #include "wx/wx.h"
 #endif
-
 ////@begin includes
 #include "wx/imaglist.h"
 #include "Mytreectrl.h"
 #include "mygrid.h"
 ////@end includes
-
 #include "firstmain.h"
-
 ////@begin XPM images
 #include "fileopen.xpm"
 #include "filesave.xpm"
@@ -37,110 +32,72 @@
 ////@end XPM images
 #include <algorithm>
 
-
 /*
 * FirstMain type definition
 */
-
 IMPLEMENT_CLASS( FirstMain, wxFrame )
-
 
 /*
 * FirstMain event table definition
 */
-
 BEGIN_EVENT_TABLE( FirstMain, wxFrame )
-
 ////@begin FirstMain event table entries
     EVT_WINDOW_DESTROY( FirstMain::OnDestroy )
-
     EVT_UPDATE_UI( ID_GLCANVAS, FirstMain::OnGlcanvasUpdate )
-
     EVT_MENU( ID_MENUOPENFILE, FirstMain::OnMenuopenfileClick )
-
     EVT_MENU( ID_MENUSaveFile, FirstMain::OnMENUSaveFileClick )
-
     EVT_MENU( ID_MENU_CONVERT_FILE, FirstMain::OnMenuConvertFileClick )
-
     EVT_MENU( ID_MENUEXIT, FirstMain::OnMenuexitClick )
-
     EVT_MENU( ID_FileEditToolbar, FirstMain::OnFileEditToolbarClick )
-
     EVT_MENU( ID_PositionEditToolbar, FirstMain::OnPositionEditToolbarClick )
-
     EVT_MENU( ID_BoundEditToolbar, FirstMain::OnBoundEditToolbarClick )
-
     EVT_MENU( ID_XYZchipEditToolbar, FirstMain::OnXYZchipEditToolbarClick )
-
     EVT_MENU( ID_ColorTable, FirstMain::OnColorTableClick )
-
     EVT_MENU( ID_MENUPreciseToolbar, FirstMain::OnMENUPreciseToolbarClick )
-
     EVT_MENU( ID_BTNOPENFILE, FirstMain::OnBtnopenfileClick )
-
     EVT_MENU( ID_BTNSAVEFILE, FirstMain::OnBtnsavefileClick )
-
     EVT_MENU( ID_BTNCOPY, FirstMain::OnBtncopyClick )
-
     EVT_MENU( ID_BTNCUT, FirstMain::OnBtncutClick )
-
     EVT_MENU( ID_BTNPASTE, FirstMain::OnBtnpasteClick )
-
     EVT_TEXT( ID_XminText, FirstMain::OnXminTextTextUpdated )
-
     EVT_TEXT( ID_XmaxText, FirstMain::OnXmaxTextTextUpdated )
-
     EVT_TEXT( ID_YminText, FirstMain::OnYminTextTextUpdated )
-
     EVT_TEXT( ID_YmaxText, FirstMain::OnYmaxTextTextUpdated )
-
     EVT_TEXT( ID_ZminText, FirstMain::OnZminTextTextUpdated )
-
     EVT_TEXT( ID_ZmaxText, FirstMain::OnZmaxTextTextUpdated )
-
     EVT_COMBOBOX( ID_ShowTypeCombo, FirstMain::OnShowTypeComboSelected )
-
 ////@end FirstMain event table entries
-
 END_EVENT_TABLE()
-
 
 /*
 * FirstMain constructors
 */
-
 FirstMain::FirstMain()
 {
 	Init();
 }
-
 FirstMain::FirstMain( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
 	Init();
 	Create( parent, id, caption, pos, size, style );
 }
 
-
 /*
 * FirstMain creator
 */
-
 bool FirstMain::Create( wxWindow* parent, wxWindowID id, const wxString& caption, const wxPoint& pos, const wxSize& size, long style )
 {
 	////@begin FirstMain creation
     wxFrame::Create( parent, id, caption, pos, size, style );
-
     CreateControls();
     Centre();
 	////@end FirstMain creation
 	return true;
 }
 
-
 /*
 * FirstMain destructor
 */
-
 FirstMain::~FirstMain()
 {
 	////@begin FirstMain destruction
@@ -151,11 +108,9 @@ FirstMain::~FirstMain()
 	m_hEvr = NULL;
 }
 
-
 /*
 * Member initialisation
 */
-
 void FirstMain::Init()
 {
 	////@begin FirstMain member initialisation
@@ -183,18 +138,14 @@ void FirstMain::Init()
 	shareNew(m_SolidCtrl);
 }
 
-
 /*
 * Control creation for FirstMain
 */
-
 void FirstMain::CreateControls()
 {    
 	////@begin FirstMain content construction
     FirstMain* itemFrame1 = this;
-
     GetAuiManager().SetManagedWindow(this);
-
     wxMenuBar* menuBar = new wxMenuBar;
     wxMenu* itemMenu4 = new wxMenu;
     itemMenu4->Append(ID_MENUOPENFILE, _("OpenFile"), wxEmptyString, wxITEM_NORMAL);
@@ -217,11 +168,9 @@ void FirstMain::CreateControls()
     itemMenu9->Check(ID_MENUPreciseToolbar, true);
     menuBar->Append(itemMenu9, _("View"));
     itemFrame1->SetMenuBar(menuBar);
-
     itemGLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxDefaultSize, 0 );
     itemFrame1->GetAuiManager().AddPane(itemGLCanvas, wxAuiPaneInfo()
         .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().TopDockable(false).BottomDockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(800, 800)));
-
     m_FileEditToolbar = new wxAuiToolBar( itemFrame1, ID_TOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
     wxBitmap itemtool17BitmapDisabled;
@@ -241,7 +190,6 @@ void FirstMain::CreateControls()
     m_FileEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_FileEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("FileEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
-
     m_BoundEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR1, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     m_BoundEditToolbar->AddLabel(ID_LABEL3, _("Xmin"), 30);
     m_XminText = new wxTextCtrl( m_BoundEditToolbar, ID_XminText, wxEmptyString, wxDefaultPosition, wxSize(50, -1), 0 );
@@ -273,19 +221,15 @@ void FirstMain::CreateControls()
     m_BoundEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_BoundEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("BoundEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
-
     m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
         .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
-
     wxStatusBar* itemStatusBar38 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
     itemStatusBar38->SetFieldsCount(2);
     itemFrame1->SetStatusBar(itemStatusBar38);
-
     m_treectrl = new MyTreeCtrl( itemFrame1, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
     itemFrame1->GetAuiManager().AddPane(m_treectrl, wxAuiPaneInfo()
         .Name(_T("ID_TREECTRL")).Caption(_("Effect Tree")).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
-
     m_grid = new MyGrid( itemFrame1, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     m_grid->SetDefaultColSize(75);
     m_grid->SetDefaultRowSize(25);
@@ -294,9 +238,7 @@ void FirstMain::CreateControls()
     m_grid->CreateGrid(1, 1, wxGrid::wxGridSelectCells);
     itemFrame1->GetAuiManager().AddPane(m_grid, wxAuiPaneInfo()
         .Name(_T("ID_GRID")).Caption(_("Attribute")).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, -1)));
-
     GetAuiManager().Update();
-
     // Connect events and objects
     itemFrame1->Connect(ID_FIRSTMAIN, wxEVT_DESTROY, wxWindowDestroyEventHandler(FirstMain::OnDestroy), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_DESTROY, wxWindowDestroyEventHandler(FirstMain::OnDestroy), NULL, this);
@@ -313,12 +255,9 @@ void FirstMain::CreateControls()
 	////@end FirstMain content construction
 } 
 
-
-
 /*
 * wxEVT_DESTROY event handler for ID_FIRSTMAIN
 */
-
 void FirstMain::OnDestroy( wxWindowDestroyEvent& event )
 {
 	////@begin wxEVT_DESTROY event handler for ID_FIRSTMAIN in FirstMain.
@@ -327,20 +266,16 @@ void FirstMain::OnDestroy( wxWindowDestroyEvent& event )
 	////@end wxEVT_DESTROY event handler for ID_FIRSTMAIN in FirstMain. 
 }
 
-
 /*
 * Should we show tooltips?
 */
-
 bool FirstMain::ShowToolTips()
 {
 	return true;
 }
-
 /*
 * Get bitmap resources
 */
-
 wxBitmap FirstMain::GetBitmapResource( const wxString& name )
 {
 	// Bitmap retrieval
@@ -374,11 +309,9 @@ wxBitmap FirstMain::GetBitmapResource( const wxString& name )
     return wxNullBitmap;
 	////@end FirstMain bitmap retrieval
 }
-
 /*
 * Get icon resources
 */
-
 wxIcon FirstMain::GetIconResource( const wxString& name )
 {
 	// Icon retrieval
@@ -388,11 +321,9 @@ wxIcon FirstMain::GetIconResource( const wxString& name )
 	////@end FirstMain icon retrieval
 }
 
-
 /*
 * wxEVT_SIZE event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnSize( wxSizeEvent& event )
 {
 	itemGLCanvas->SetCurrent();
@@ -401,11 +332,9 @@ void FirstMain::OnSize( wxSizeEvent& event )
 	RenderFrame();
 }
 
-
 /*
 * wxEVT_PAINT event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnPaint( wxPaintEvent& event )
 {
 	itemGLCanvas->SetCurrent();
@@ -415,12 +344,9 @@ void FirstMain::OnPaint( wxPaintEvent& event )
 }
 
 
-
-
 /*
 * wxEVT_LEFT_UP event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnLeftUp( wxMouseEvent& event )
 {
 	////@begin wxEVT_LEFT_UP event handler for ID_GLCANVAS in FirstMain.
@@ -429,11 +355,9 @@ void FirstMain::OnLeftUp( wxMouseEvent& event )
 	////@end wxEVT_LEFT_UP event handler for ID_GLCANVAS in FirstMain. 
 }
 
-
 /*
 * wxEVT_MIDDLE_DOWN event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnMiddleDown( wxMouseEvent& event )
 {
 	////@begin wxEVT_MIDDLE_DOWN event handler for ID_GLCANVAS in FirstMain.
@@ -442,11 +366,9 @@ void FirstMain::OnMiddleDown( wxMouseEvent& event )
 	////@end wxEVT_MIDDLE_DOWN event handler for ID_GLCANVAS in FirstMain. 
 }
 
-
 /*
 * wxEVT_MIDDLE_UP event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnMiddleUp( wxMouseEvent& event )
 {
 	////@begin wxEVT_MIDDLE_UP event handler for ID_GLCANVAS in FirstMain.
@@ -455,11 +377,9 @@ void FirstMain::OnMiddleUp( wxMouseEvent& event )
 	////@end wxEVT_MIDDLE_UP event handler for ID_GLCANVAS in FirstMain. 
 }
 
-
 /*
 * wxEVT_RIGHT_DOWN event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnRightDown( wxMouseEvent& event )
 {
 	////@begin wxEVT_RIGHT_DOWN event handler for ID_GLCANVAS in FirstMain.
@@ -468,11 +388,9 @@ void FirstMain::OnRightDown( wxMouseEvent& event )
 	////@end wxEVT_RIGHT_DOWN event handler for ID_GLCANVAS in FirstMain. 
 }
 
-
 /*
 * wxEVT_RIGHT_UP event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnRightUp( wxMouseEvent& event )
 {
 	////@begin wxEVT_RIGHT_UP event handler for ID_GLCANVAS in FirstMain.
@@ -481,11 +399,9 @@ void FirstMain::OnRightUp( wxMouseEvent& event )
 	////@end wxEVT_RIGHT_UP event handler for ID_GLCANVAS in FirstMain. 
 }
 
-
 /*
 * wxEVT_MOTION event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnMotion( wxMouseEvent& event )
 {
 	P= event.GetPosition();
@@ -493,44 +409,36 @@ void FirstMain::OnMotion( wxMouseEvent& event )
 	lastP = P;
 }
 
-
 /*
 * wxEVT_MOUSEWHEEL event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnMouseWheel( wxMouseEvent& event )
 {
 	RenderFrame();
 	event.Skip(false);
 }
 
-
 /*
 * wxEVT_UPDATE_UI event handler for ID_GLCANVAS
 */
-
 void FirstMain::OnGlcanvasUpdate( wxUpdateUIEvent& event )
 {
 	RenderFrame();
 	event.Skip(false);
 }
 
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_OPENFILE
 */
-
 void FirstMain::OnBtnopenfileClick( wxCommandEvent& event )
 {
 	OpenFile();
 	event.Skip(false);
 }
 
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_SAVEFILE
 */
-
 void FirstMain::OnBtnsavefileClick( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_SAVEFILE in FirstMain.
@@ -539,11 +447,9 @@ void FirstMain::OnBtnsavefileClick( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_SAVEFILE in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_COPY
 */
-
 void FirstMain::OnBtncopyClick( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_COPY in FirstMain.
@@ -552,11 +458,9 @@ void FirstMain::OnBtncopyClick( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_COPY in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_PASTE
 */
-
 void FirstMain::OnBtnpasteClick( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_PASTE in FirstMain.
@@ -565,11 +469,9 @@ void FirstMain::OnBtnpasteClick( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_PASTE in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_CUT
 */
-
 void FirstMain::OnBtncutClick( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_CUT in FirstMain.
@@ -577,11 +479,9 @@ void FirstMain::OnBtncutClick( wxCommandEvent& event )
 	event.Skip();
 	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_CUT in FirstMain. 
 }
-
 /*
 * ToOpenFile
 */
-
 void FirstMain::OpenFile()
 {
 	m_bFixMove = true;
@@ -659,21 +559,17 @@ void FirstMain::OpenFile()
 	}
 }
 
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUOPENFILE
 */
-
 void FirstMain::OnMenuopenfileClick( wxCommandEvent& event )
 {
 	OpenFile();
 	event.Skip(false);
 }
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSaveFile
 */
-
 void FirstMain::OnMENUSaveFileClick( wxCommandEvent& event )
 {
 	if (m_hEvr)
@@ -700,11 +596,9 @@ void FirstMain::OnMENUSaveFileClick( wxCommandEvent& event )
 	}
 	event.Skip(false);
 }
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUSHOWFILEINFO
 */
-
 void FirstMain::OnMenuConvertFileClick( wxCommandEvent& event )
 {
 	m_convertdialog = new ConvertDialog(this);
@@ -712,12 +606,9 @@ void FirstMain::OnMenuConvertFileClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
-
 /*
 * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEXIT
 */
-
 void FirstMain::OnMenuexitClick( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEXIT in FirstMain.
@@ -726,11 +617,9 @@ void FirstMain::OnMenuexitClick( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUEXIT in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL
 */
-
 void FirstMain::OnXminTextTextUpdated( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL in FirstMain.
@@ -739,11 +628,9 @@ void FirstMain::OnXminTextTextUpdated( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL1
 */
-
 void FirstMain::OnXmaxTextTextUpdated( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL1 in FirstMain.
@@ -752,11 +639,9 @@ void FirstMain::OnXmaxTextTextUpdated( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL1 in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL3
 */
-
 void FirstMain::OnYminTextTextUpdated( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL3 in FirstMain.
@@ -765,11 +650,9 @@ void FirstMain::OnYminTextTextUpdated( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL3 in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL2
 */
-
 void FirstMain::OnYmaxTextTextUpdated( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL2 in FirstMain.
@@ -778,11 +661,9 @@ void FirstMain::OnYmaxTextTextUpdated( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL2 in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL4
 */
-
 void FirstMain::OnZminTextTextUpdated( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL4 in FirstMain.
@@ -791,11 +672,9 @@ void FirstMain::OnZminTextTextUpdated( wxCommandEvent& event )
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL4 in FirstMain. 
 }
 
-
 /*
 * wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL5
 */
-
 void FirstMain::OnZmaxTextTextUpdated( wxCommandEvent& event )
 {
 	////@begin wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL5 in FirstMain.
@@ -803,7 +682,6 @@ void FirstMain::OnZmaxTextTextUpdated( wxCommandEvent& event )
     event.Skip();
 	////@end wxEVT_COMMAND_TEXT_UPDATED event handler for ID_TEXTCTRL5 in FirstMain. 
 }
-
 
 void FirstMain::RenderFrame()
 {
@@ -814,11 +692,9 @@ void FirstMain::RenderFrame()
 	}
 }
 
-
 /*
  * ToShowColorList
  */
-
 void FirstMain::ShowColorTable(ColorTable* ict)
 {
 	m_ColorList->ClearAll();
@@ -831,7 +707,6 @@ void FirstMain::ShowColorTable(ColorTable* ict)
 	m_ColorList->InsertColumn(2, itemCol);
 	itemCol.SetText(_T("Blue"));
 	m_ColorList->InsertColumn(3, itemCol);
-
 	m_ColorList->SetColumnWidth( 0, 70 );
 	m_ColorList->SetColumnWidth( 1, 40 );
 	m_ColorList->SetColumnWidth( 2, 40 );
@@ -843,36 +718,30 @@ void FirstMain::ShowColorTable(ColorTable* ict)
 		InsertColor(i++, it->first, wc);
 	}
 }
-
 /*
  * InsertItem to ColorList
  */
-
 void FirstMain::InsertColor( int i, double val, wxColour& iwc )
 {
 	wxString buf;
 	buf.Printf(_T("●%f"), val);
 	long tmp = m_ColorList->InsertItem(i, buf, 0);
 	m_ColorList->SetItemData(tmp, i);
-
 	buf.Printf(_T("%d"), int(iwc.Red()));
 	m_ColorList->SetItem(tmp, 1, buf);
 	buf.Printf(_T("%d"), int(iwc.Green()));
 	m_ColorList->SetItem(tmp, 2, buf);
 	buf.Printf(_T("%d"), int(iwc.Blue()));
 	m_ColorList->SetItem(tmp, 3, buf);
-
 	wxListItem item;
 	item.m_itemId = i;
 	item.SetTextColour(iwc);
 	m_ColorList->SetItem( item );
 }
 
-
 /*
  * wxEVT_COMMAND_COMBOBOX_SELECTED event handler for ID_ShowTypeCombo
  */
-
 void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 {
 	std::string str = ConvStr::GetStr(m_ShowTypeCombo->GetValue().c_str());
@@ -899,11 +768,9 @@ void FirstMain::OnShowTypeComboSelected( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
 /*
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_FileEditToolbar
  */
-
 void FirstMain::OnFileEditToolbarClick( wxCommandEvent& event )
 {
 	if (event.IsChecked())
@@ -914,11 +781,9 @@ void FirstMain::OnFileEditToolbarClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
 /*
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_PositionEditToolbar
  */
-
 void FirstMain::OnPositionEditToolbarClick( wxCommandEvent& event )
 {
 	if (event.IsChecked())
@@ -929,11 +794,9 @@ void FirstMain::OnPositionEditToolbarClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
 /*
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_BoundEditToolbar
  */
-
 void FirstMain::OnBoundEditToolbarClick( wxCommandEvent& event )
 {
 	if (event.IsChecked())
@@ -944,11 +807,9 @@ void FirstMain::OnBoundEditToolbarClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
 /*
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_XYZchipEditToolbar
  */
-
 void FirstMain::OnXYZchipEditToolbarClick( wxCommandEvent& event )
 {
 	if (event.IsChecked())
@@ -959,11 +820,9 @@ void FirstMain::OnXYZchipEditToolbarClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
 /*
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_ColorTable
  */
-
 void FirstMain::OnColorTableClick( wxCommandEvent& event )
 {
 	if (event.IsChecked())
@@ -974,11 +833,9 @@ void FirstMain::OnColorTableClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
 /*
  * wxEVT_COMMAND_MENU_SELECTED event handler for ID_MENUITEM
  */
-
 void FirstMain::OnMENUPreciseToolbarClick( wxCommandEvent& event )
 {
 	if (event.IsChecked())
@@ -989,11 +846,9 @@ void FirstMain::OnMENUPreciseToolbarClick( wxCommandEvent& event )
 	event.Skip(false);
 }
 
-
 /*
  * wxEVT_LEFT_DOWN event handler for ID_GLCANVAS
  */
-
 void FirstMain::OnLeftDown( wxMouseEvent& event )
 {
 ////@begin wxEVT_LEFT_DOWN event handler for ID_GLCANVAS in FirstMain.
@@ -1001,4 +856,3 @@ void FirstMain::OnLeftDown( wxMouseEvent& event )
     event.Skip();
 ////@end wxEVT_LEFT_DOWN event handler for ID_GLCANVAS in FirstMain. 
 }
-

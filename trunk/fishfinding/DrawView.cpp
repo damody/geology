@@ -244,3 +244,21 @@ int DrawView::GetTotal()
 	return (int)m_raw_points.size();
 }
 
+void DrawView::SaveDatFile( const std::wstring path )
+{
+	std::ofstream fIn;
+	fIn.open(path.c_str(), std::ios_base::out);
+	if (fIn.good())
+	{
+		for (int i=0;i<m_raw_points.size();i++)
+		{
+			if (m_raw_points[i].depth>1)
+			{
+				fIn << std::setprecision(14) << m_raw_points[i].x << "\t0\t" << m_raw_points[i].y 
+					<< "\t" << -m_raw_points[i].depth << std::endl; //lat緯z，lon經x
+			}
+		}
+	}
+	fIn.close();
+}
+

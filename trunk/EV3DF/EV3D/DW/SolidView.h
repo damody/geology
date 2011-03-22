@@ -20,7 +20,6 @@ public:
 	void		SetEffect(SEffect_Sptr setting);
 	SEffect_Sptr	GetEffect() {return m_SEffect;}
 	void		Update();
-	void		UpdatePlane();
 	void		SetColorTable();
 	void		Init_BoundingBox();
 	void		Init_Vertex();

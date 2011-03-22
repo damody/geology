@@ -223,6 +223,4 @@ int SolidCtrl::SetGridedData( SJCScalarField3d* sf3d )
 void SolidCtrl::Render()
 {
 	m_RenderWindow->Render();
-	for (int i=0;i<m_SolidViewPtrs.size();i++)
-		m_SolidViewPtrs[i]->UpdatePlane();
 }
