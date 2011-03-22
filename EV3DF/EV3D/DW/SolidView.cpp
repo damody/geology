@@ -247,7 +247,7 @@ void SolidView::Init_Contour()
 
 void SolidView::Init_Axes()
 {
-
+	MESSAGE("not Implementation");
 }
 
 void SolidView::Init_ClipPlane()
@@ -274,12 +274,12 @@ void SolidView::Init_ClipPlane()
 
 void SolidView::Init_Ruler()
 {
-
+	MESSAGE("not Implementation");
 }
 
 void SolidView::Init_ClipContour()
 {
-
+	MESSAGE("not Implementation");
 }
 
 void SolidView::Init_VolumeRendering()
@@ -315,12 +315,4 @@ void SolidView::Init_VolumeRendering()
 	m_volume->SetMapper(volumeMapper);
 	m_volume->SetProperty(volumeProperty);
 	GetParentCtrl()->m_Renderer->AddViewProp(m_volume);
-}
-
-void SolidView::UpdatePlane()
-{
-	if (m_SEffect->GetType() == SEffect::CLIP_PLANE)
-	{
-		m_ImagePlane->UpdatePlacement();
-	}
 }

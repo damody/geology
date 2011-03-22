@@ -42,6 +42,7 @@ public:
 	void SetPointSize(int size);
 	DataPoint GetLastData();
 	int  GetTotal();
+	void SaveDatFile(const std::wstring path);
 private:
 	DataPoints	m_raw_points;
 	Rectf		m_area;

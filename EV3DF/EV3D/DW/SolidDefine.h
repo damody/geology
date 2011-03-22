@@ -31,7 +31,7 @@ static struct
 	template <class T>
 	operator boost::shared_ptr<T>()
 	{
-		return boost::shared_ptr<T>::New();
+		return boost::shared_ptr<T>(new T);
 	}
 }SharePtrNew;
 

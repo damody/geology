@@ -61,6 +61,7 @@ class wxGLCanvas;
 #define ID_SPINCTRL1 10015
 #define ID_BUTTON2 10017
 #define ID_BUTTON3 10018
+#define ID_BUTTON4 10019
 #define ID_GLCANVAS 10009
 #define ID_TEXTCTRL 10008
 #define SYMBOL_MAINFRAME_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
@@ -102,12 +103,6 @@ public:
 
 	////@begin mainframe event handler declarations
 
-	/// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE1
-	void OnChoice1Selected( wxCommandEvent& event );
-
-	/// wxEVT_COMMAND_CHOICE_SELECTED event handler for ID_CHOICE
-	void OnChoiceSelected( wxCommandEvent& event );
-
 	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
 	void OnStartGetClick( wxCommandEvent& event );
 
@@ -117,17 +112,11 @@ public:
 	/// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
 	void OnPointSizeUpdated( wxSpinEvent& event );
 
-	/// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2
-	void OnCheckbox2Click( wxCommandEvent& event );
-
 	/// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL
 	void OnSpinctrlUpdated( wxSpinEvent& event );
 
 	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON1
 	void OnStopGetClick( wxCommandEvent& event );
-
-	/// wxEVT_FILEPICKER_CHANGED event handler for ID_FILECTRL
-	void OnFilectrlFilePickerChanged( wxFileDirPickerEvent& event );
 
 	/// wxEVT_COLOURPICKER_CHANGED event handler for ID_COLOURCTRL
 	void OnDeepColorChanged( wxColourPickerEvent& event );
@@ -140,6 +129,9 @@ public:
 
 	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON3
 	void OnClearDataClick( wxCommandEvent& event );
+
+	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON4
+	void OnOutputDatClick( wxCommandEvent& event );
 
 	/// wxEVT_SIZE event handler for ID_GLCANVAS
 	void OnCanvasSize( wxSizeEvent& event );
@@ -185,6 +177,7 @@ public:
 	wxStaticText* m_Longitude;
 	wxStaticText* m_Latitude;
 	wxStaticText* m_DataTotal;
+	wxStaticText* m_MaxDepthText;
 	wxColourPickerCtrl* m_deColor;
 	wxColourPickerCtrl* m_hsColor;
 	wxSpinCtrl* m_UpdateInterval;
@@ -195,6 +188,7 @@ public:
 	bool		m_open,
 			m_timer_go;
 	NmeaCell	m_nCell;
+	double		m_MaxDepth;
 	DrawView	m_DrawView;
 	int		m_lastUpdateTime;
 };
