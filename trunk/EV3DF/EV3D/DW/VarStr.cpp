@@ -1,4 +1,6 @@
 ﻿#include "VarStr.h"
+#include <cstdio>
+#include <clocale>
 
 wstrings split(const wchar_t *str, const wchar_t *del )
 {

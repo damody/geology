@@ -9,7 +9,7 @@ class vtkInterpolationGridingPolyDataFilter : public vtkPolyDataAlgorithm
 {
 public:
 	vtkTypeMacro(vtkInterpolationGridingPolyDataFilter,vtkPolyDataAlgorithm);
-	void PrintSelf(ostream& os, vtkIndent indent);
+	void PrintSelf(std::ostream& os, vtkIndent indent);
 	static vtkInterpolationGridingPolyDataFilter *New();
 	// Customer function
 	void SetBounds(const double bounds[]);

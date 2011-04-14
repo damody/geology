@@ -558,6 +558,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\seetaiwan.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stdwx.cpp"
 				>
 				<FileConfiguration
@@ -852,6 +856,10 @@
 			</File>
 			<File
 				RelativePath=".\Mytreectrl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\seetaiwan.cpp"
 				>
 			</File>
 			<Filter
