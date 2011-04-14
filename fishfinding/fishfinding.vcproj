@@ -182,6 +182,7 @@
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
 				AdditionalLibraryDirectories="E:\clibrary\VTK\Win32\bin\Release"
+				GenerateManifest="false"
 				IgnoreDefaultLibraryNames="msvcrt.lib"
 				ProgramDatabaseFile="VCProjectUnicodeRelease\fishfinding.pdb"
 				SubSystem="2"

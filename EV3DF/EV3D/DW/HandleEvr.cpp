@@ -5,6 +5,7 @@
 #include <fstream>
 #include <cassert>
 #include <algorithm>
+#include "VarStr.h"
 
 
 // directoryPath?槌ua頝臬? lua瑼??vr頝臬?
@@ -56,7 +57,7 @@ int HandleEvr::InitLoad(const std::wstring& directoryPath)
 	{
 		ifstream fIn;
 		unsigned long ulSize;
-		fIn.open(m_dataWPath.c_str(),ios::binary);
+		fIn.open(m_dataWPath.c_str(), ios::binary);
 		if(fIn==NULL)
 			return 0;
 		// Get file size

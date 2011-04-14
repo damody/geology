@@ -19,7 +19,7 @@ vtkInterpolationGridingPolyDataFilter::~vtkInterpolationGridingPolyDataFilter()
 {
 
 }
-void vtkInterpolationGridingPolyDataFilter::PrintSelf(ostream& os, vtkIndent indent)
+void vtkInterpolationGridingPolyDataFilter::PrintSelf(std::ostream& os, vtkIndent indent)
 {
 	this->Superclass::PrintSelf(os,indent);
 }

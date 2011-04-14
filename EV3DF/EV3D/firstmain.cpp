@@ -43,29 +43,53 @@ IMPLEMENT_CLASS( FirstMain, wxFrame )
 BEGIN_EVENT_TABLE( FirstMain, wxFrame )
 ////@begin FirstMain event table entries
     EVT_WINDOW_DESTROY( FirstMain::OnDestroy )
+
     EVT_UPDATE_UI( ID_GLCANVAS, FirstMain::OnGlcanvasUpdate )
+
     EVT_MENU( ID_MENUOPENFILE, FirstMain::OnMenuopenfileClick )
+
     EVT_MENU( ID_MENUSaveFile, FirstMain::OnMENUSaveFileClick )
+
     EVT_MENU( ID_MENU_CONVERT_FILE, FirstMain::OnMenuConvertFileClick )
+
     EVT_MENU( ID_MENUEXIT, FirstMain::OnMenuexitClick )
+
     EVT_MENU( ID_FileEditToolbar, FirstMain::OnFileEditToolbarClick )
+
     EVT_MENU( ID_PositionEditToolbar, FirstMain::OnPositionEditToolbarClick )
+
     EVT_MENU( ID_BoundEditToolbar, FirstMain::OnBoundEditToolbarClick )
+
     EVT_MENU( ID_XYZchipEditToolbar, FirstMain::OnXYZchipEditToolbarClick )
+
     EVT_MENU( ID_ColorTable, FirstMain::OnColorTableClick )
+
     EVT_MENU( ID_MENUPreciseToolbar, FirstMain::OnMENUPreciseToolbarClick )
+
     EVT_MENU( ID_BTNOPENFILE, FirstMain::OnBtnopenfileClick )
+
     EVT_MENU( ID_BTNSAVEFILE, FirstMain::OnBtnsavefileClick )
+
     EVT_MENU( ID_BTNCOPY, FirstMain::OnBtncopyClick )
+
     EVT_MENU( ID_BTNCUT, FirstMain::OnBtncutClick )
+
     EVT_MENU( ID_BTNPASTE, FirstMain::OnBtnpasteClick )
+
     EVT_TEXT( ID_XminText, FirstMain::OnXminTextTextUpdated )
+
     EVT_TEXT( ID_XmaxText, FirstMain::OnXmaxTextTextUpdated )
+
     EVT_TEXT( ID_YminText, FirstMain::OnYminTextTextUpdated )
+
     EVT_TEXT( ID_YmaxText, FirstMain::OnYmaxTextTextUpdated )
+
     EVT_TEXT( ID_ZminText, FirstMain::OnZminTextTextUpdated )
+
     EVT_TEXT( ID_ZmaxText, FirstMain::OnZmaxTextTextUpdated )
+
     EVT_COMBOBOX( ID_ShowTypeCombo, FirstMain::OnShowTypeComboSelected )
+
 ////@end FirstMain event table entries
 END_EVENT_TABLE()
 
@@ -89,6 +113,7 @@ bool FirstMain::Create( wxWindow* parent, wxWindowID id, const wxString& caption
 {
 	////@begin FirstMain creation
     wxFrame::Create( parent, id, caption, pos, size, style );
+
     CreateControls();
     Centre();
 	////@end FirstMain creation
@@ -127,7 +152,6 @@ void FirstMain::Init()
     m_ZminText = NULL;
     m_ZmaxText = NULL;
     m_ShowTypeCombo = NULL;
-    m_InterpolationComBox = NULL;
     m_ColorList = NULL;
     m_treectrl = NULL;
     m_grid = NULL;
@@ -145,7 +169,9 @@ void FirstMain::CreateControls()
 {    
 	////@begin FirstMain content construction
     FirstMain* itemFrame1 = this;
+
     GetAuiManager().SetManagedWindow(this);
+
     wxMenuBar* menuBar = new wxMenuBar;
     wxMenu* itemMenu4 = new wxMenu;
     itemMenu4->Append(ID_MENUOPENFILE, _("OpenFile"), wxEmptyString, wxITEM_NORMAL);
@@ -168,9 +194,11 @@ void FirstMain::CreateControls()
     itemMenu9->Check(ID_MENUPreciseToolbar, true);
     menuBar->Append(itemMenu9, _("View"));
     itemFrame1->SetMenuBar(menuBar);
+
     itemGLCanvas = new wxGLCanvas( itemFrame1, ID_GLCANVAS, wxDefaultPosition, wxDefaultSize, 0 );
     itemFrame1->GetAuiManager().AddPane(itemGLCanvas, wxAuiPaneInfo()
         .Name(_T("ID_GLCANVAS")).Caption(_("layout")).Centre().TopDockable(false).BottomDockable(false).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(800, 800)));
+
     m_FileEditToolbar = new wxAuiToolBar( itemFrame1, ID_TOOLBAR, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     wxBitmap itemtool17Bitmap(itemFrame1->GetBitmapResource(wxT("fileopen.xpm")));
     wxBitmap itemtool17BitmapDisabled;
@@ -190,6 +218,7 @@ void FirstMain::CreateControls()
     m_FileEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_FileEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("FileEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
+
     m_BoundEditToolbar = new wxAuiToolBar( itemFrame1, ID_AUITOOLBAR1, wxDefaultPosition, wxDefaultSize, wxAUI_TB_GRIPPER );
     m_BoundEditToolbar->AddLabel(ID_LABEL3, _("Xmin"), 30);
     m_XminText = new wxTextCtrl( m_BoundEditToolbar, ID_XminText, wxEmptyString, wxDefaultPosition, wxSize(50, -1), 0 );
@@ -212,24 +241,22 @@ void FirstMain::CreateControls()
     wxArrayString m_ShowTypeComboStrings;
     m_ShowTypeCombo = new wxComboBox( m_BoundEditToolbar, ID_ShowTypeCombo, wxEmptyString, wxDefaultPosition, wxDefaultSize, m_ShowTypeComboStrings, wxCB_READONLY );
     m_BoundEditToolbar->AddControl(m_ShowTypeCombo);
-    wxArrayString m_InterpolationComBoxStrings;
-    m_InterpolationComBoxStrings.Add(_("Nearest"));
-    m_InterpolationComBoxStrings.Add(_("Inverse"));
-    m_InterpolationComBox = new wxComboBox( m_BoundEditToolbar, ID_INTERPOLATIONCOMBOBOX, _("Nearest"), wxDefaultPosition, wxDefaultSize, m_InterpolationComBoxStrings, wxCB_READONLY );
-    m_InterpolationComBox->SetStringSelection(_("Nearest"));
-    m_BoundEditToolbar->AddControl(m_InterpolationComBox);
     m_BoundEditToolbar->Realize();
     itemFrame1->GetAuiManager().AddPane(m_BoundEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("BoundEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
+
     m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
     itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
         .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
-    wxStatusBar* itemStatusBar38 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar38->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar38);
+
+    wxStatusBar* itemStatusBar37 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar37->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar37);
+
     m_treectrl = new MyTreeCtrl( itemFrame1, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
     itemFrame1->GetAuiManager().AddPane(m_treectrl, wxAuiPaneInfo()
         .Name(_T("ID_TREECTRL")).Caption(_("Effect Tree")).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
+
     m_grid = new MyGrid( itemFrame1, ID_GRID, wxDefaultPosition, wxDefaultSize, wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
     m_grid->SetDefaultColSize(75);
     m_grid->SetDefaultRowSize(25);
@@ -238,7 +265,9 @@ void FirstMain::CreateControls()
     m_grid->CreateGrid(1, 1, wxGrid::wxGridSelectCells);
     itemFrame1->GetAuiManager().AddPane(m_grid, wxAuiPaneInfo()
         .Name(_T("ID_GRID")).Caption(_("Attribute")).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, -1)));
+
     GetAuiManager().Update();
+
     // Connect events and objects
     itemFrame1->Connect(ID_FIRSTMAIN, wxEVT_DESTROY, wxWindowDestroyEventHandler(FirstMain::OnDestroy), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_DESTROY, wxWindowDestroyEventHandler(FirstMain::OnDestroy), NULL, this);

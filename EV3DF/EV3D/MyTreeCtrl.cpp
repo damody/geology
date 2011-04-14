@@ -30,6 +30,7 @@
 #include "DW/SEffect.h"
 #include "DW/SolidView.h"
 #include "DW/SolidDefine.h"
+#include <algorithm>
 
 ////@begin XPM images
 ////@end XPM images
@@ -453,7 +454,7 @@ void MyTreeCtrl::OnMenu_DeleteItem( wxCommandEvent& event )
 	}
 	else
 	{
-		wxTreeItemIds::iterator it =  find(m_newIds.begin(), m_newIds.end(), m_lastItem);
+		wxTreeItemIds::iterator it =  std::find(m_newIds.begin(), m_newIds.end(), m_lastItem);
 		m_newIds.erase(it);
 		MyTreeItemData* mti_data = (MyTreeItemData*)GetItemData(m_lastItem);
 		((FirstMain*)GetParent())->m_SolidCtrl->RmView(mti_data->GetView());

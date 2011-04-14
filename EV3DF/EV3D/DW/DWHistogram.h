@@ -36,7 +36,7 @@ public:
 	T GetPersentValue(double p)
 	{
 		if (p<=0) return *(m_data.begin());
-		if (p>=1) return *(--m_data.end());
+		if (p>=1) return *(m_data.end()-1);
 		unsigned int i = (m_data.size()-1)*p;
 		return m_data[i];
 	}
