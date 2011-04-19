@@ -20,11 +20,10 @@
 ////@begin includes
 #include "wx/frame.h"
 #include "wx/gbsizer.h"
-#include "wx/combo.h"
 #include "wx/glcanvas.h"
 #include "wx/scrolbar.h"
 ////@end includes
-
+class FirstMain;
 /*!
  * Forward declarations
  */
@@ -53,7 +52,7 @@
 #define ID_TEXTCTRL22 10074
 #define ID_TEXTCTRL23 10075
 #define ID_BUTTON10 10069
-#define ID_COMBOCTRL 10023
+#define ID_CHOICE 10089
 #define ID_SLIDER 10086
 #define ID_GLCANVAS1 10080
 #define ID_SCROLLBAR 10087
@@ -97,6 +96,9 @@ public:
 
 ////@begin Taiwan event handler declarations
 
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON10
+    void OnShowResult( wxCommandEvent& event );
+
 ////@end Taiwan event handler declarations
 
 ////@begin Taiwan member function declarations
@@ -113,6 +115,8 @@ public:
 
 ////@begin Taiwan member variables
 ////@end Taiwan member variables
+private:
+	FirstMain* m_FirstMain;
 };
 
 #endif
