@@ -159,7 +159,7 @@ void FirstMain::Init()
 	m_hEvr = NULL;
 	m_psjcF3d = NULL;
 	m_convertdialog = NULL;
-	shareNew(m_SolidCtrl);
+	m_SolidCtrl = SharePtrNew;
 }
 
 /*

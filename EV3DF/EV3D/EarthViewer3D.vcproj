@@ -558,10 +558,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\seetaiwan.h"
-				>
-			</File>
-			<File
 				RelativePath=".\stdwx.cpp"
 				>
 				<FileConfiguration
@@ -858,10 +854,6 @@
 				RelativePath=".\Mytreectrl.h"
 				>
 			</File>
-			<File
-				RelativePath=".\seetaiwan.cpp"
-				>
-			</File>
 			<Filter
 				Name="DW"
 				>
@@ -1047,6 +1039,22 @@
 			Name="Lua"
 			>
 		</Filter>
+		<File
+			RelativePath=".\datamodifywindow.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\datamodifywindow.h"
+			>
+		</File>
+		<File
+			RelativePath=".\taiwan.cpp"
+			>
+		</File>
+		<File
+			RelativePath=".\taiwan.h"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>
