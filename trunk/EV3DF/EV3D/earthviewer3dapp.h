@@ -19,7 +19,7 @@
 
 ////@begin includes
 #include "wx/image.h"
-#include "firstmain.h"
+#include "taiwan.h"
 ////@end includes
 
 /*!

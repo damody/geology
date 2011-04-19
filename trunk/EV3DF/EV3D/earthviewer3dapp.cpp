@@ -8,9 +8,8 @@
 // Copyright:   NTUST
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
-
-// For compilers that support precompilation, includes "wx/wx.h".
 #include "stdwx.h"
+// For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
 
 #ifdef __BORLANDC__
@@ -149,7 +148,7 @@ bool EarthViewer3DApp::OnInit()
 #if wxUSE_GIF
 	wxImage::AddHandler(new wxGIFHandler);
 #endif
-	FirstMain* mainWindow = new FirstMain( NULL );
+	Taiwan* mainWindow = new Taiwan( NULL );
 	mainWindow->Show(true);
 ////@end EarthViewer3DApp initialisation
 
