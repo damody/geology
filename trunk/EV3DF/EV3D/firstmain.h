@@ -50,7 +50,7 @@ class MyGrid;
  */
 
 ////@begin control identifiers
-#define ID_FIRSTMAIN 10000
+#define ID_FIRSTMAIN 10401
 #define ID_GLCANVAS 10017
 #define ID_MENUOPENFILE 10043
 #define ID_MENUSaveFile 10062

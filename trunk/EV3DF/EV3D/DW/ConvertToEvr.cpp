@@ -51,10 +51,8 @@ int ConvertToEvr::Load_Dat( std::wstring Path )
 	m_CreateLua.AddRawString("format_name", "{" + formatstring + "}");
 	m_CreateLua.AddInt("format_count", amount-3);
 	// 算出每一組資料的大小
-
 	m_dataSize = sizeof(double) * amount;
 	// 讀出檔案
-
 	std::ifstream loader;
 	loader.open(Path.c_str());
 	double tdata;
