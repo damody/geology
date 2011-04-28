@@ -3,6 +3,7 @@
 #include "SolidDoc.h"
 #include "SolidCtrl.h"
 #include "SEffect.h"
+#include <vtkCubeAxesActor.h>
 
 SolidView::SolidView(SolidCtrl *ParentCtrl, SolidDoc_Sptr Doc):m_ParentCtrl(ParentCtrl)
 {
@@ -25,6 +26,9 @@ void SolidView::SetVisable( bool show )
 			break;
 		case SEffect::VOLUME_RENDERING:
 			break;
+		case SEffect::AXES:
+			GetParentCtrl()->m_Renderer->AddActor(m_CubeAxesActor);
+			break;
 		default:
 			GetParentCtrl()->m_Renderer->AddActor(m_actor);
 		}
@@ -40,6 +44,9 @@ void SolidView::SetVisable( bool show )
 			break;
 		case SEffect::VOLUME_RENDERING:
 			GetParentCtrl()->m_Renderer->RemoveViewProp(m_volume);
+			break;
+		case SEffect::AXES:
+			GetParentCtrl()->m_Renderer->RemoveActor(m_CubeAxesActor);
 			break;
 		default:
 			GetParentCtrl()->m_Renderer->RemoveActor(m_actor);
@@ -69,7 +76,7 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 		break;
 	case SEffect::AXES:
 		{
-			MESSAGE("not Implementation");
+			Init_Axes();
 		}
 		break;
 	case SEffect::CLIP_PLANE:
@@ -79,12 +86,12 @@ void SolidView::SetEffect( SEffect_Sptr effect )
 		break;
 	case SEffect::RULER:
 		{
-			MESSAGE("not Implementation");
+			Init_Ruler();
 		}
 		break;
 	case SEffect::CLIP_CONTOUR:
 		{
-			MESSAGE("not Implementation");
+			Init_ClipContour();
 		}
 		break;
 	case SEffect::VOLUME_RENDERING:
@@ -119,7 +126,7 @@ void SolidView::Update()
 		break;
 	case SEffect::AXES:
 		{
-			MESSAGE("not Implementation");
+			
 		}
 		break;
 	case SEffect::CLIP_PLANE:
@@ -145,6 +152,7 @@ void SolidView::Update()
 			}
 			m_ImagePlane->SetSlicePosition(setting->m_Percent * numvalue / 100.0);
 			setting->m_Percent = m_ImagePlane->GetSlicePosition()/numvalue*100.0;
+			vtkProperty_Sptr proerty = vtkSmartNew;
 		}
 		break;
 	case SEffect::RULER:
@@ -247,7 +255,9 @@ void SolidView::Init_Contour()
 
 void SolidView::Init_Axes()
 {
-	MESSAGE("not Implementation");
+	m_CubeAxesActor = vtkSmartNew;
+	m_CubeAxesActor->SetBounds(GetParentDoc()->m_ImageData->GetBounds());
+	m_CubeAxesActor->SetCamera(GetParentCtrl()->m_Renderer->GetActiveCamera());
 }
 
 void SolidView::Init_ClipPlane()
@@ -261,13 +271,13 @@ void SolidView::Init_ClipPlane()
 	m_ImagePlane->SetInput(GetParentDoc()->m_ImageData);
 	m_ImagePlane->SetPlaneOrientationToXAxes();
 	vtkColorTransferFunction_Sptr colorTransferFunction = vtkSmartNew;
-	colorTransferFunction->AddRGBPoint(0.0  ,1.0/2,0.0,0.0);
-	colorTransferFunction->AddRGBPoint(20.0  ,1.0/2, 165/255/2.0,0.0);
-	colorTransferFunction->AddRGBPoint(40.0  ,1.0/2, 1.0/2,0.0);
-	colorTransferFunction->AddRGBPoint(50.0  ,0.0, 1.0/2,0.0);
-	colorTransferFunction->AddRGBPoint(60.0  ,0.0, 0.5/2, 1.0/2);
-	colorTransferFunction->AddRGBPoint(70.0  ,0.0, 0.0, 1.0/2);
-	colorTransferFunction->AddRGBPoint(80.0  ,139/255.0/2, 0.0, 1.0/2);
+	colorTransferFunction->AddRGBPoint(649.0  ,1.0/2,0.0,0.0);
+	colorTransferFunction->AddRGBPoint(580.0  ,1.0/2, 165/255/2.0,0.0);
+	colorTransferFunction->AddRGBPoint(500.0  ,1.0/2, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(400.0  ,0.0, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(330.0  ,0.0, 0.5/2, 1.0/2);
+	colorTransferFunction->AddRGBPoint(220.0  ,0.0, 0.0, 1.0/2);
+	colorTransferFunction->AddRGBPoint(143.0  ,139/255.0/2, 0.0, 1.0/2);
 	m_ImagePlane->GetColorMap()->SetLookupTable(colorTransferFunction);
 	m_ImagePlane->On();
 }
@@ -296,19 +306,18 @@ void SolidView::Init_VolumeRendering()
 	volumeProperty->ShadeOff();
 	volumeProperty->SetInterpolationType(VTK_LINEAR_INTERPOLATION);
 
-	compositeOpacity->AddPoint(20.0,0.0);
-	compositeOpacity->AddPoint(80.0,0.5);
-	compositeOpacity->AddPoint(80.1,0.0);
-	compositeOpacity->AddPoint(255.0,1.0);
+	compositeOpacity->AddPoint(649.0,0.0);
+	compositeOpacity->AddPoint(450.0,0.5);
+	compositeOpacity->AddPoint(143.0,0.0);
 	volumeProperty->SetScalarOpacity(compositeOpacity); // composite first.
 
-	colorTransferFunction->AddRGBPoint(0.0  ,1.0/2,0.0,0.0);
-	colorTransferFunction->AddRGBPoint(20.0  ,1.0/2, 165/255/2.0,0.0);
-	colorTransferFunction->AddRGBPoint(40.0  ,1.0/2, 1.0/2,0.0);
-	colorTransferFunction->AddRGBPoint(50.0  ,0.0, 1.0/2,0.0);
-	colorTransferFunction->AddRGBPoint(60.0  ,0.0, 0.5/2, 1.0/2);
-	colorTransferFunction->AddRGBPoint(70.0  ,0.0, 0.0, 1.0/2);
-	colorTransferFunction->AddRGBPoint(80.0  ,139/255.0/2, 0.0, 1.0/2);
+	colorTransferFunction->AddRGBPoint(649.0  ,1.0/2,0.0,0.0);
+	colorTransferFunction->AddRGBPoint(580.0  ,1.0/2, 165/255/2.0,0.0);
+	colorTransferFunction->AddRGBPoint(500.0  ,1.0/2, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(400.0  ,0.0, 1.0/2,0.0);
+	colorTransferFunction->AddRGBPoint(330.0  ,0.0, 0.5/2, 1.0/2);
+	colorTransferFunction->AddRGBPoint(220.0  ,0.0, 0.0, 1.0/2);
+	colorTransferFunction->AddRGBPoint(143.0  ,139/255.0/2, 0.0, 1.0/2);
 	volumeProperty->SetColor(colorTransferFunction);
 
 	m_volume = vtkSmartNew;

@@ -57,12 +57,23 @@ public:
 	vtkBounds		m_bounds;
 public:
 	int SetGridedData(SJCScalarField3d* sf3d);
+	int SetGridedData(vtkImageData_Sptr image);
+	int SetGridedData(vtkPolyData_Sptr poly, int nx, int ny, int nz);
 	int SetUnGridData(vtkPolyData_Sptr poly, InterpolationMethod method = NEAREST_NEIGHBOR);
+	void AddTaiwan();
+	void AddTaiwan(char* datafilename, int col, int raw);
 	void RmAllView();
 	void RmView(SolidView_Sptr view);
 	void RmDoc(SolidDoc_Sptr doc);
 	void ReSetViewDirection();
 	void Render();
+	void SetCamera(vtkCamera_Sptr camera)
+	{
+		m_Camera->SetPosition(camera->GetPosition());
+		m_Camera->SetViewUp(camera->GetViewUp());
+		m_Camera->SetViewAngle(camera->GetViewAngle());
+		m_Camera->SetFocalPoint(camera->GetFocalPoint());
+	}
 	void SetHwnd( HWND hwnd )
 	{
 		m_RenderWindow->SetParentId(hwnd);
