@@ -40,6 +40,7 @@ private:
 	vtkImagePlaneWidget_Sptr m_ImagePlane;
 	vtkContourFilter_Sptr	m_ContourFilter;
 	vtkVolume_Sptr		m_volume;
+	vtkCubeAxesActor_Sptr	m_CubeAxesActor;
 private:	
 	friend SolidCtrl;
 	friend SolidDoc;

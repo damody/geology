@@ -9,6 +9,8 @@
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
 #include "stdwx.h"
+#include "DW/SolidDefine.h"
+#include "DW/SEffect.h"
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
 #include "firstmain.h"
@@ -36,7 +38,7 @@
 #include "down.xpm"
 #include "forward.xpm"
 ////@end XPM images
-
+VOID CALLBACK TimerProc ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer );
 
 /*
 * Taiwan type definition
@@ -59,6 +61,22 @@ BEGIN_EVENT_TABLE( Taiwan, wxFrame )
     EVT_CHECKBOX( ID_CHECKBOX, Taiwan::OnShowInfo )
 
     EVT_CHECKBOX( ID_CHECKBOX3, Taiwan::OnCheckShowWellInfo )
+
+    EVT_CHECKBOX( ID_CHECKBOX1, Taiwan::OnCheckboxAxis_Sync )
+
+    EVT_CHECKBOX( ID_CHECKBOX2, Taiwan::OnCheckboxDepth_Sync )
+
+    EVT_SCROLLBAR( ID_SCROLLBAR, Taiwan::OnScrollbarVLUpdated )
+
+    EVT_SCROLLBAR( ID_SCROLLBAR5, Taiwan::OnScrollbarRLUpdated )
+
+    EVT_SCROLLBAR( ID_SCROLLBAR3, Taiwan::OnScrollbarHL1Updated )
+
+    EVT_SCROLLBAR( ID_SCROLLBAR4, Taiwan::OnScrollbarHR1Updated )
+
+    EVT_SCROLLBAR( ID_SCROLLBAR1, Taiwan::OnScrollbarHL2Updated )
+
+    EVT_SCROLLBAR( ID_SCROLLBAR2, Taiwan::OnScrollbarHR2Updated )
 
 ////@end Taiwan event table entries
 
@@ -118,6 +136,16 @@ void Taiwan::Init()
 	////@begin Taiwan member initialisation
     m_ruler_slider = NULL;
     m_ruler_spinctrl = NULL;
+    m_Checkbox_Axis_Sync = NULL;
+    m_Checkbox_Depth_Sync = NULL;
+    m_CanvasL = NULL;
+    m_ScrollbarVL = NULL;
+    m_CanvasR = NULL;
+    m_ScrollbarRL = NULL;
+    m_ScrollbarHL1 = NULL;
+    m_ScrollbarHR1 = NULL;
+    m_ScrollbarHL2 = NULL;
+    m_ScrollbarHR2 = NULL;
     m_area_infopanel = NULL;
     m_well_infopanel = NULL;
 	////@end Taiwan member initialisation
@@ -179,7 +207,7 @@ void Taiwan::CreateControls()
     wxButton* itemButton22 = new wxButton( itemPanel15, ID_BUTTON7, wxGetTranslation(wxString() + (wxChar) 0x79FB + (wxChar) 0x9664 + (wxChar) 0x7CBE + (wxChar) 0x5BC6 + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer16->Add(itemButton22, wxGBPosition(6, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    wxButton* itemButton23 = new wxButton( itemPanel15, ID_BUTTON8, wxGetTranslation(wxString() + (wxChar) 0x8B80 + (wxChar) 0x5165 + (wxChar) 0x4E95 + (wxChar) 0x6E2C + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton23 = new wxButton( itemPanel15, ID_BUTTON8, wxGetTranslation(wxString() + (wxChar) 0x8F09 + (wxChar) 0x5165 + (wxChar) 0x4E95 + (wxChar) 0x6E2C + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
     itemGridBagSizer16->Add(itemButton23, wxGBPosition(12, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     wxButton* itemButton24 = new wxButton( itemPanel15, ID_BUTTON9, wxGetTranslation(wxString() + (wxChar) 0x53E6 + (wxChar) 0x5B58 + (wxChar) 0x4E95 + (wxChar) 0x6E2C + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
@@ -279,61 +307,61 @@ void Taiwan::CreateControls()
     wxStaticText* itemStaticText49 = new wxStaticText( itemPanel46, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x5730 + (wxChar) 0x5F62 + (wxChar) 0x986F + (wxChar) 0x793A + (wxChar) 0x90E8 + (wxChar) 0x4EFD), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer48->Add(itemStaticText49, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    wxCheckBox* itemCheckBox50 = new wxCheckBox( itemPanel46, ID_CHECKBOX1, wxGetTranslation(wxString() + (wxChar) 0x5EA7 + (wxChar) 0x6A19 + (wxChar) 0x540C + (wxChar) 0x6B65), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox50->SetValue(false);
-    itemBoxSizer48->Add(itemCheckBox50, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    m_Checkbox_Axis_Sync = new wxCheckBox( itemPanel46, ID_CHECKBOX1, wxGetTranslation(wxString() + (wxChar) 0x5EA7 + (wxChar) 0x6A19 + (wxChar) 0x540C + (wxChar) 0x6B65), wxDefaultPosition, wxDefaultSize, 0 );
+    m_Checkbox_Axis_Sync->SetValue(false);
+    itemBoxSizer48->Add(m_Checkbox_Axis_Sync, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     wxStaticText* itemStaticText51 = new wxStaticText( itemPanel46, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x5730 + (wxChar) 0x71B1 + (wxChar) 0x5207 + (wxChar) 0x9762 + (wxChar) 0x90E8 + (wxChar) 0x4EFD), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer48->Add(itemStaticText51, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    wxCheckBox* itemCheckBox52 = new wxCheckBox( itemPanel46, ID_CHECKBOX2, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x540C + (wxChar) 0x6B65), wxDefaultPosition, wxDefaultSize, 0 );
-    itemCheckBox52->SetValue(false);
-    itemBoxSizer48->Add(itemCheckBox52, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    m_Checkbox_Depth_Sync = new wxCheckBox( itemPanel46, ID_CHECKBOX2, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x540C + (wxChar) 0x6B65), wxDefaultPosition, wxDefaultSize, 0 );
+    m_Checkbox_Depth_Sync->SetValue(false);
+    itemBoxSizer48->Add(m_Checkbox_Depth_Sync, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     wxBoxSizer* itemBoxSizer53 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer47->Add(itemBoxSizer53, 1, wxGROW|wxALL, 5);
 
-    wxGLCanvas* itemGLCanvas54 = new wxGLCanvas( itemPanel46, ID_GLCANVAS1, wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer53->Add(itemGLCanvas54, 1, wxGROW|wxALL, 2);
+    m_CanvasL = new wxGLCanvas( itemPanel46, ID_GLCANVAS1, wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer53->Add(m_CanvasL, 1, wxGROW|wxALL, 2);
 
-    wxScrollBar* itemScrollBar55 = new wxScrollBar( itemPanel46, ID_SCROLLBAR, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
-    itemScrollBar55->SetScrollbar(0, 1, 100, 1);
-    itemBoxSizer53->Add(itemScrollBar55, 0, wxGROW|wxALL, 1);
+    m_ScrollbarVL = new wxScrollBar( itemPanel46, ID_SCROLLBAR, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
+    m_ScrollbarVL->SetScrollbar(0, 1, 100, 1);
+    itemBoxSizer53->Add(m_ScrollbarVL, 0, wxGROW|wxALL, 1);
 
-    wxGLCanvas* itemGLCanvas56 = new wxGLCanvas( itemPanel46, ID_GLCANVAS2, wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer53->Add(itemGLCanvas56, 1, wxGROW|wxALL, 2);
+    m_CanvasR = new wxGLCanvas( itemPanel46, ID_GLCANVAS2, wxDefaultPosition, wxDefaultSize, 0 );
+    itemBoxSizer53->Add(m_CanvasR, 1, wxGROW|wxALL, 2);
 
-    wxScrollBar* itemScrollBar57 = new wxScrollBar( itemPanel46, ID_SCROLLBAR5, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
-    itemScrollBar57->SetScrollbar(0, 1, 100, 1);
-    itemBoxSizer53->Add(itemScrollBar57, 0, wxGROW|wxALL, 1);
+    m_ScrollbarRL = new wxScrollBar( itemPanel46, ID_SCROLLBAR5, wxDefaultPosition, wxDefaultSize, wxSB_VERTICAL );
+    m_ScrollbarRL->SetScrollbar(0, 1, 100, 1);
+    itemBoxSizer53->Add(m_ScrollbarRL, 0, wxGROW|wxALL, 1);
 
     wxBoxSizer* itemBoxSizer58 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer47->Add(itemBoxSizer58, 0, wxGROW|wxALL, 0);
 
-    wxScrollBar* itemScrollBar59 = new wxScrollBar( itemPanel46, ID_SCROLLBAR3, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
-    itemScrollBar59->SetScrollbar(0, 1, 100, 1);
-    itemBoxSizer58->Add(itemScrollBar59, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    m_ScrollbarHL1 = new wxScrollBar( itemPanel46, ID_SCROLLBAR3, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
+    m_ScrollbarHL1->SetScrollbar(0, 1, 100, 1);
+    itemBoxSizer58->Add(m_ScrollbarHL1, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     wxStaticText* itemStaticText60 = new wxStaticText( itemPanel46, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x5EA7 + (wxChar) 0x6A19), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer58->Add(itemStaticText60, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    wxScrollBar* itemScrollBar61 = new wxScrollBar( itemPanel46, ID_SCROLLBAR4, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
-    itemScrollBar61->SetScrollbar(0, 1, 100, 1);
-    itemBoxSizer58->Add(itemScrollBar61, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    m_ScrollbarHR1 = new wxScrollBar( itemPanel46, ID_SCROLLBAR4, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
+    m_ScrollbarHR1->SetScrollbar(0, 1, 100, 1);
+    itemBoxSizer58->Add(m_ScrollbarHR1, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     wxBoxSizer* itemBoxSizer62 = new wxBoxSizer(wxHORIZONTAL);
     itemBoxSizer47->Add(itemBoxSizer62, 0, wxGROW|wxALL, 0);
 
-    wxScrollBar* itemScrollBar63 = new wxScrollBar( itemPanel46, ID_SCROLLBAR1, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
-    itemScrollBar63->SetScrollbar(0, 1, 100, 1);
-    itemBoxSizer62->Add(itemScrollBar63, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    m_ScrollbarHL2 = new wxScrollBar( itemPanel46, ID_SCROLLBAR1, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
+    m_ScrollbarHL2->SetScrollbar(0, 1, 100, 1);
+    itemBoxSizer62->Add(m_ScrollbarHL2, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     wxStaticText* itemStaticText64 = new wxStaticText( itemPanel46, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer62->Add(itemStaticText64, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-    wxScrollBar* itemScrollBar65 = new wxScrollBar( itemPanel46, ID_SCROLLBAR2, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
-    itemScrollBar65->SetScrollbar(0, 1, 100, 1);
-    itemBoxSizer62->Add(itemScrollBar65, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+    m_ScrollbarHR2 = new wxScrollBar( itemPanel46, ID_SCROLLBAR2, wxDefaultPosition, wxDefaultSize, wxSB_HORIZONTAL );
+    m_ScrollbarHR2->SetScrollbar(0, 1, 100, 1);
+    itemBoxSizer62->Add(m_ScrollbarHR2, 1, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
     // Fit to content
     itemFrame1->GetAuiManager().GetPane(_T("ID_PANEL3")).BestSize(itemPanel46->GetSizer()->Fit(itemPanel46)).MinSize(itemPanel46->GetSizer()->GetMinSize());
@@ -456,8 +484,18 @@ void Taiwan::CreateControls()
 
     GetAuiManager().Update();
 
+    // Connect events and objects
+    m_CanvasL->Connect(ID_GLCANVAS1, wxEVT_SIZE, wxSizeEventHandler(Taiwan::OnCanvasLSize), NULL, this);
+    m_CanvasL->Connect(ID_GLCANVAS1, wxEVT_PAINT, wxPaintEventHandler(Taiwan::OnCanvasLPaint), NULL, this);
+    m_CanvasL->Connect(ID_GLCANVAS1, wxEVT_MOTION, wxMouseEventHandler(Taiwan::OnCanvasLMotion), NULL, this);
+    m_CanvasR->Connect(ID_GLCANVAS2, wxEVT_SIZE, wxSizeEventHandler(Taiwan::OnCanvasRSize), NULL, this);
+    m_CanvasR->Connect(ID_GLCANVAS2, wxEVT_PAINT, wxPaintEventHandler(Taiwan::OnCanvasRPaint), NULL, this);
+    m_CanvasR->Connect(ID_GLCANVAS2, wxEVT_MOTION, wxMouseEventHandler(Taiwan::OnCanvasRMotion), NULL, this);
 	////@end Taiwan content construction
 	m_FirstMain = NULL;
+	m_SolidCtrlL.SetHwnd((HWND)m_CanvasL->GetHandle());
+	m_SolidCtrlR.SetHwnd((HWND)m_CanvasR->GetHandle());
+	m_timego = false;
 }
 
 
@@ -560,6 +598,56 @@ void Taiwan::OnShowResult( wxCommandEvent& event )
 
 void Taiwan::OnModifyData( wxCommandEvent& event )
 {
+	vtkPoints_Sptr points2 = vtkSmartNew;
+	vtkPolyData_Sptr polydata2 = vtkSmartNew;
+	vtkDoubleArray_Sptr scalars2 = vtkSmartNew;
+	std::ifstream istr1("Grid_use InverseDistanceH.dat");
+	double nx, ny, nz;
+	int i=0;
+	if (istr1.good())
+	{
+		istr1 >>nx>>ny>>nz;
+		for (;!istr1.eof();)
+		{
+			i++;
+			double x, y, z, s;
+			istr1 >>x>>y>>z>>s;
+			points2->InsertNextPoint(x,y,z);
+			scalars2->InsertNextTuple1(s);
+		}
+	}
+	else
+	{
+		MessageBoxA(0, "can't read Grid_use InverseDistanceH.dat", "error!", 0);
+		return;
+	}
+// 	char buffer[10];
+// 	sprintf(buffer, "%d", i);
+// 	MessageBoxA(0, buffer, "", 0);
+	polydata2->SetPoints(points2);
+	polydata2->GetPointData()->SetScalars(scalars2);
+	SolidView_Sptr clip;
+	SEffect_Sptr Setting = SEffect::New(SEffect::BOUNDING_BOX);
+	m_SolidCtrlL.SetGridedData(polydata2, nx, ny, nz);
+	m_SolidCtrlL.NewSEffect(Setting);
+	m_SolidCtrlL.AddTaiwan();
+	Setting = SEffect::New(SEffect::AXES);
+	m_SolidCtrlL.NewSEffect(Setting);
+	m_SolidCtrlL.Render();
+	m_SolidCtrlR.SetGridedData(polydata2, nx, ny, nz);
+	
+	m_SolidCtrlR.NewSEffect(Setting);
+	Setting = SEffect::New(SEffect::CLIP_PLANE);
+	clip = m_SolidCtrlR.NewSEffect(Setting);
+	Setting = SEffect::New(SEffect::CLIP_PLANE);
+	clip = m_SolidCtrlR.NewSEffect(Setting);
+	((ClipPlane_Setting*)Setting.get())->m_Axes = 1;
+	clip->Update();
+	Setting = SEffect::New(SEffect::CLIP_PLANE);
+	clip = m_SolidCtrlR.NewSEffect(Setting);
+	((ClipPlane_Setting*)Setting.get())->m_Axes = 2;
+	clip->Update();
+	m_SolidCtrlR.Render();
 	event.Skip(false);
 }
 
@@ -593,6 +681,195 @@ void Taiwan::OnCheckShowWellInfo( wxCommandEvent& event )
 	else
 		GetAuiManager().GetPane(m_well_infopanel).Show(false);
 	GetAuiManager().Update();
-	event.Skip();
+	event.Skip(false);
 }
 
+
+/*
+* wxEVT_SIZE event handler for ID_GLCANVAS1
+*/
+
+void Taiwan::OnCanvasLSize( wxSizeEvent& event )
+{
+	m_SolidCtrlL.ReSize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
+	m_SolidCtrlL.Render();
+	event.Skip(false);
+}
+
+
+/*
+* wxEVT_PAINT event handler for ID_GLCANVAS1
+*/
+
+void Taiwan::OnCanvasLPaint( wxPaintEvent& event )
+{
+	wxPaintDC dc(wxDynamicCast(event.GetEventObject(), wxWindow));
+	m_SolidCtrlL.ReSize(m_CanvasL->GetSize().GetWidth(), 
+		m_CanvasL->GetSize().GetHeight());
+	m_SolidCtrlL.Render();
+}
+
+
+/*
+* wxEVT_SIZE event handler for ID_GLCANVAS2
+*/
+
+void Taiwan::OnCanvasRSize( wxSizeEvent& event )
+{
+	m_SolidCtrlR.ReSize(event.GetSize().GetWidth(),event.GetSize().GetHeight());
+	m_SolidCtrlR.Render();
+	event.Skip(false);
+}
+
+
+/*
+* wxEVT_PAINT event handler for ID_GLCANVAS2
+*/
+
+void Taiwan::OnCanvasRPaint( wxPaintEvent& event )
+{
+	wxPaintDC dc(wxDynamicCast(event.GetEventObject(), wxWindow));
+	m_SolidCtrlR.ReSize(m_CanvasR->GetSize().GetWidth(), 
+		m_CanvasR->GetSize().GetHeight());
+	m_SolidCtrlR.Render();
+}
+
+
+/*
+* wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR
+*/
+
+void Taiwan::OnScrollbarVLUpdated( wxCommandEvent& event )
+{
+	////@begin wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR in Taiwan.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+	////@end wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR in Taiwan. 
+}
+
+
+/*
+* wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR5
+*/
+
+void Taiwan::OnScrollbarRLUpdated( wxCommandEvent& event )
+{
+	////@begin wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR5 in Taiwan.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+	////@end wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR5 in Taiwan. 
+}
+
+
+/*
+* wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR3
+*/
+
+void Taiwan::OnScrollbarHL1Updated( wxCommandEvent& event )
+{
+	////@begin wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR3 in Taiwan.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+	////@end wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR3 in Taiwan. 
+}
+
+
+/*
+* wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR1
+*/
+
+void Taiwan::OnScrollbarHL2Updated( wxCommandEvent& event )
+{
+	////@begin wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR1 in Taiwan.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+	////@end wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR1 in Taiwan. 
+}
+
+
+/*
+* wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR4
+*/
+
+void Taiwan::OnScrollbarHR1Updated( wxCommandEvent& event )
+{
+	////@begin wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR4 in Taiwan.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+	////@end wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR4 in Taiwan. 
+}
+
+
+/*
+* wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR2
+*/
+
+void Taiwan::OnScrollbarHR2Updated( wxCommandEvent& event )
+{
+	////@begin wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR2 in Taiwan.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+	////@end wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR2 in Taiwan. 
+}
+
+Taiwan* mf;
+/*
+* wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
+*/
+
+void Taiwan::OnCheckboxAxis_Sync( wxCommandEvent& event )
+{
+	if (!m_timego && event.IsChecked())
+	{
+		SetTimer ((HWND)(this->GetHandle()), DRAW_TIMER, 0.5, TimerProc);
+		m_timego = true;
+		mf = this;
+	}
+	else if (m_timego && !event.IsChecked())
+	{
+		KillTimer((HWND)(this->GetHandle()), DRAW_TIMER);
+	}
+	event.Skip(false);
+}
+
+
+/*
+* wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2
+*/
+
+void Taiwan::OnCheckboxDepth_Sync( wxCommandEvent& event )
+{
+	////@begin wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2 in Taiwan.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+	////@end wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2 in Taiwan. 
+}
+
+
+/*
+ * wxEVT_MOTION event handler for ID_GLCANVAS1
+ */
+
+void Taiwan::OnCanvasLMotion( wxMouseEvent& event )
+{
+	event.Skip(false);
+}
+
+
+/*
+ * wxEVT_MOTION event handler for ID_GLCANVAS2
+ */
+
+void Taiwan::OnCanvasRMotion( wxMouseEvent& event )
+{
+	event.Skip(false);
+}
+
+VOID CALLBACK TimerProc ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer )
+{
+	if (mf->m_timego)
+	{
+		mf->m_SolidCtrlR.SetCamera(mf->m_SolidCtrlL.m_Camera);
+	}
+	mf->m_SolidCtrlR.Render();
+}

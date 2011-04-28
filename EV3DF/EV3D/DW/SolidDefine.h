@@ -12,6 +12,7 @@ class ColorTable;
 #include <vector>
 #include <cassert>
 
+
 /*! 使用這個巨集將會得到
 SHARE_PTR(x, y)
 boost::shared_ptr<x> y_Sptr;
@@ -52,6 +53,7 @@ SHARE_PTR(ColorTable)
 // };
 
 #include <vtkSmartPointer.h>
+#include <vtkCubeAxesActor.h>
 #include <vtkImageMapToColors.h>
 #include <vtkPolyDataNormals.h>
 #include <vtkInteractorStyleTrackballCamera.h>
@@ -86,6 +88,7 @@ SHARE_PTR(ColorTable)
 #define VTK_SMART_POINTER(x) \
 	typedef vtkSmartPointer< x >	x##_Sptr; \
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
+VTK_SMART_POINTER(vtkCubeAxesActor)
 VTK_SMART_POINTER(vtkPolyDataNormals)
 VTK_SMART_POINTER(vtkImageMapToColors)
 VTK_SMART_POINTER(vtkInteractorStyleTrackballCamera)

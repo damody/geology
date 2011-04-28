@@ -11,6 +11,9 @@
 
 #ifndef _TAIWAN_H_
 #define _TAIWAN_H_
+#include "DW/SolidCtrl.h"
+#include "DW/SolidView.h"
+#include "DW/SolidDoc.h"
 
 
 /*!
@@ -35,6 +38,7 @@ class DataModifyWindow;
 
 ////@begin forward declarations
 class wxSpinCtrl;
+class wxGLCanvas;
 ////@end forward declarations
 
 /*!
@@ -151,6 +155,48 @@ public:
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX3
     void OnCheckShowWellInfo( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
+    void OnCheckboxAxis_Sync( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX2
+    void OnCheckboxDepth_Sync( wxCommandEvent& event );
+
+    /// wxEVT_SIZE event handler for ID_GLCANVAS1
+    void OnCanvasLSize( wxSizeEvent& event );
+
+    /// wxEVT_PAINT event handler for ID_GLCANVAS1
+    void OnCanvasLPaint( wxPaintEvent& event );
+
+    /// wxEVT_MOTION event handler for ID_GLCANVAS1
+    void OnCanvasLMotion( wxMouseEvent& event );
+
+    /// wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR
+    void OnScrollbarVLUpdated( wxCommandEvent& event );
+
+    /// wxEVT_SIZE event handler for ID_GLCANVAS2
+    void OnCanvasRSize( wxSizeEvent& event );
+
+    /// wxEVT_PAINT event handler for ID_GLCANVAS2
+    void OnCanvasRPaint( wxPaintEvent& event );
+
+    /// wxEVT_MOTION event handler for ID_GLCANVAS2
+    void OnCanvasRMotion( wxMouseEvent& event );
+
+    /// wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR5
+    void OnScrollbarRLUpdated( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR3
+    void OnScrollbarHL1Updated( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR4
+    void OnScrollbarHR1Updated( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR1
+    void OnScrollbarHL2Updated( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_SCROLLBAR_UPDATED event handler for ID_SCROLLBAR2
+    void OnScrollbarHR2Updated( wxCommandEvent& event );
+
 ////@end Taiwan event handler declarations
 
 ////@begin Taiwan member function declarations
@@ -172,12 +218,33 @@ public:
     wxAuiManager m_auiManager;
     wxSlider* m_ruler_slider;
     wxSpinCtrl* m_ruler_spinctrl;
+    wxCheckBox* m_Checkbox_Axis_Sync;
+    wxCheckBox* m_Checkbox_Depth_Sync;
+    wxGLCanvas* m_CanvasL;
+    wxScrollBar* m_ScrollbarVL;
+    wxGLCanvas* m_CanvasR;
+    wxScrollBar* m_ScrollbarRL;
+    wxScrollBar* m_ScrollbarHL1;
+    wxScrollBar* m_ScrollbarHR1;
+    wxScrollBar* m_ScrollbarHL2;
+    wxScrollBar* m_ScrollbarHR2;
     wxPanel* m_area_infopanel;
     wxPanel* m_well_infopanel;
 ////@end Taiwan member variables
 private:
 	FirstMain* m_FirstMain;
 	DataModifyWindow* m_DataModifyWindow;
+	
+	SolidView_Sptr	m_Volume;
+	SolidView_Sptr	m_Terrain;
+	SolidView_Sptr	m_ClipPlane;
+public:
+	SolidCtrl	m_SolidCtrlL;
+	SolidCtrl	m_SolidCtrlR;
+	bool		m_timego;
+	enum	{
+		DRAW_TIMER
+	};
 };
 
 #endif
