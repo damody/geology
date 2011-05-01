@@ -109,9 +109,7 @@ EarthViewer3DApp::EarthViewer3DApp()
 {
     Init();
 #ifdef _WIN32 
-#ifdef _DEBUG
     RedirectIOToConsole();
-#endif
 #endif
 }
 

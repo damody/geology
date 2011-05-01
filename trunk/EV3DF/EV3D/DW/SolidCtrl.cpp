@@ -412,5 +412,6 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int raw)
 
 	vtkActor_Sptr	actor = vtkSmartNew;
 	actor->SetMapper(mapper);
+	actor->GetProperty()->SetOpacity(0.5);
 	m_Renderer->AddActor(actor);
 }

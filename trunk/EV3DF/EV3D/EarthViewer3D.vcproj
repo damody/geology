@@ -516,7 +516,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="StdVtk.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
