@@ -3,6 +3,7 @@
 #include <iostream>
 #include <cstring>
 #include <cassert>
+#include <iomanip>
 
 NmeaCell::NmeaCell()
 {
@@ -258,11 +259,13 @@ void NmeaCell::SaveDatFile( const std::wstring path )
 {
 	std::ofstream fIn;
 	fIn.open(path.c_str(), std::ios_base::out);
+	fIn << std::setprecision(14);
 	if (fIn.good())
 	{
 		for (int i=0;i<m_infos.size();i++)
 		{
-			fIn << m_infos[i].lon << "\t0\t" << m_infos[i].lat << "\t" << -m_infos[i].depthinfo.depth_M << std::endl; //lat緯z，lon經x
+			if (m_infos[i].lon != 0)
+				fIn << m_infos[i].lon << "\t0\t" << m_infos[i].lat << "\t" << -m_infos[i].depthinfo.depth_M << std::endl; //lat緯z，lon經x
 		}
 	}
 	fIn.close();

@@ -20,12 +20,25 @@ public:
 			{
 				double x, y;
 			};
+			struct
+			{
+				double lon, lat;
+			};
 		};
 		double depth;
+		void Scalar(double val)
+		{
+			N*=val;
+			E*=val;
+			depth*=val;
+		}
 	};
 	typedef std::vector<DataPoint> DataPoints;
+	void SetScalar(double val);
+	void SetIgnoreDepth(double val);
 public:
 	DrawView();
+	void UpdateScalar();
 	void SetHwnd(HWND hwnd);
 	void ReSize(int w, int h);
 	void AddDataList(const nmeaINFOs& infos);
@@ -44,6 +57,9 @@ public:
 	int  GetTotal();
 	void SaveDatFile(const std::wstring path);
 private:
+	double		m_depth_scalar,
+			m_IgnoreDepth;
+	int		m_total_size;
 	DataPoints	m_raw_points;
 	Rectf		m_area;
 	double		m_focus_height;
@@ -78,4 +94,6 @@ private:
 	vtkRenderWindowInteractor_Sptr	m_WindowInteractor;
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
 	vtkInteractorStyleTrackballCamera_Sptr	m_style;
+	vtkCubeAxesActor_Sptr	m_CubeAxes;
+	double		m_bounding[6];
 };

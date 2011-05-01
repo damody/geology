@@ -40,12 +40,14 @@
 #include <vtkPiecewiseFunction.h>
 #include <vtkColorTransferFunction.h>
 #include <vtkProperty.h>
+#include <vtkCubeAxesActor.h>
 #include <vtkActor.h>
 
 #define VTK_SMART_POINTER(x) \
 	typedef vtkSmartPointer< x >	x##_Sptr; \
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
 
+VTK_SMART_POINTER(vtkCubeAxesActor)
 VTK_SMART_POINTER(vtkLegendScaleActor)
 VTK_SMART_POINTER(vtkInteractorStyleTrackballCamera)
 VTK_SMART_POINTER(vtkAppendPolyData)
