@@ -636,21 +636,24 @@ void Taiwan::OnModifyData( wxCommandEvent& event )
 	m_SolidCtrlL.NewSEffect(Setting);
 	Setting = SEffect::New(SEffect::CLIP_PLANE);
 	clip = m_SolidCtrlL.NewSEffect(Setting);
+	((ClipPlane_Setting*)Setting.get())->m_Axes = 2;
+	clip->Update();
+	Setting = SEffect::New(SEffect::CLIP_PLANE);
+	clip = m_SolidCtrlL.NewSEffect(Setting);
 	((ClipPlane_Setting*)Setting.get())->m_Axes = 1;
 	clip->Update();
 	m_SolidCtrlL.Render();
 	// right
 	m_SolidCtrlR.SetGridedData(polydata2, nx, ny, nz);
+	Setting = SEffect::New(SEffect::AXES);
 	m_SolidCtrlR.NewSEffect(Setting);
 	Setting = SEffect::New(SEffect::CLIP_PLANE);
 	clip = m_SolidCtrlR.NewSEffect(Setting);
-	Setting = SEffect::New(SEffect::CLIP_PLANE);
-	clip = m_SolidCtrlR.NewSEffect(Setting);
-	((ClipPlane_Setting*)Setting.get())->m_Axes = 1;
+	((ClipPlane_Setting*)Setting.get())->m_Axes = 2;
 	clip->Update();
 	Setting = SEffect::New(SEffect::CLIP_PLANE);
 	clip = m_SolidCtrlR.NewSEffect(Setting);
-	((ClipPlane_Setting*)Setting.get())->m_Axes = 2;
+	((ClipPlane_Setting*)Setting.get())->m_Axes = 1;
 	clip->Update();
 	m_SolidCtrlR.Render();
 	event.Skip(false);
