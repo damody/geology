@@ -57,17 +57,20 @@ class wxGLCanvas;
 #define ID_BUTTON1 10004
 #define ID_FILECTRL 10007
 #define ID_COLOURCTRL 10013
+#define ID_COLOURPICKERCTRL1 10020
 #define ID_COLOURPICKERCTRL 10014
 #define ID_SPINCTRL1 10015
 #define ID_BUTTON2 10017
 #define ID_BUTTON3 10018
 #define ID_BUTTON4 10019
+#define ID_SPINCTRL3 10021
+#define ID_SPINCTRL4 10022
 #define ID_GLCANVAS 10009
 #define ID_TEXTCTRL 10008
 #define SYMBOL_MAINFRAME_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
-#define SYMBOL_MAINFRAME_TITLE _("Bottom plotter 1.3")
+#define SYMBOL_MAINFRAME_TITLE _("Bottom plotter 1.5")
 #define SYMBOL_MAINFRAME_IDNAME ID_MAINFRAME
-#define SYMBOL_MAINFRAME_SIZE wxSize(800, 600)
+#define SYMBOL_MAINFRAME_SIZE wxSize(1000, 700)
 #define SYMBOL_MAINFRAME_POSITION wxDefaultPosition
 ////@end control identifiers
 
@@ -121,7 +124,7 @@ public:
 	/// wxEVT_COLOURPICKER_CHANGED event handler for ID_COLOURCTRL
 	void OnDeepColorChanged( wxColourPickerEvent& event );
 
-	/// wxEVT_COLOURPICKER_CHANGED event handler for ID_COLOURPICKERCTRL
+	/// wxEVT_COLOURPICKER_CHANGED event handler for ID_COLOURPICKERCTRL1
 	void OnhsColorChanged( wxColourPickerEvent& event );
 
 	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON2
@@ -132,6 +135,12 @@ public:
 
 	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON4
 	void OnOutputDatClick( wxCommandEvent& event );
+
+	/// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL3
+	void OnIgnoreDepthUpdated( wxSpinEvent& event );
+
+	/// wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL4
+	void OnDepthScalarUpdated( wxSpinEvent& event );
 
 	/// wxEVT_SIZE event handler for ID_GLCANVAS
 	void OnCanvasSize( wxSizeEvent& event );
@@ -179,8 +188,11 @@ public:
 	wxStaticText* m_DataTotal;
 	wxStaticText* m_MaxDepthText;
 	wxColourPickerCtrl* m_deColor;
+	wxColourPickerCtrl* m_bgcolor;
 	wxColourPickerCtrl* m_hsColor;
 	wxSpinCtrl* m_UpdateInterval;
+	wxSpinCtrl* m_ignore_depth;
+	wxSpinCtrl* m_depth_scalar;
 	wxGLCanvas* m_GLCanvas;
 	wxTextCtrl* m_OutputText;
 	////@end mainframe member variables

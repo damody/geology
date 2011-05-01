@@ -47,6 +47,8 @@ BEGIN_EVENT_TABLE( mainframe, wxFrame )
 
 	EVT_COLOURPICKER_CHANGED( ID_COLOURCTRL, mainframe::OnDeepColorChanged )
 
+	EVT_COLOURPICKER_CHANGED( ID_COLOURPICKERCTRL1, mainframe::OnhsColorChanged )
+
 	EVT_COLOURPICKER_CHANGED( ID_COLOURPICKERCTRL, mainframe::OnhsColorChanged )
 
 	EVT_BUTTON( ID_BUTTON2, mainframe::OnLoadFileDataClick )
@@ -54,6 +56,10 @@ BEGIN_EVENT_TABLE( mainframe, wxFrame )
 	EVT_BUTTON( ID_BUTTON3, mainframe::OnClearDataClick )
 
 	EVT_BUTTON( ID_BUTTON4, mainframe::OnOutputDatClick )
+
+	EVT_SPINCTRL( ID_SPINCTRL3, mainframe::OnIgnoreDepthUpdated )
+
+	EVT_SPINCTRL( ID_SPINCTRL4, mainframe::OnDepthScalarUpdated )
 
 	EVT_TEXT( ID_TEXTCTRL, mainframe::OnTimerUpdated )
 
@@ -123,8 +129,11 @@ void mainframe::Init()
 	m_DataTotal = NULL;
 	m_MaxDepthText = NULL;
 	m_deColor = NULL;
+	m_bgcolor = NULL;
 	m_hsColor = NULL;
 	m_UpdateInterval = NULL;
+	m_ignore_depth = NULL;
+	m_depth_scalar = NULL;
 	m_GLCanvas = NULL;
 	m_OutputText = NULL;
 ////@end mainframe member initialisation
@@ -197,97 +206,124 @@ void mainframe::CreateControls()
 	itemGridBagSizer3->Add(itemStaticText7, wxGBPosition(1, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	m_BtnStartGet = new wxButton( itemPanel2, ID_BUTTON, wxGetTranslation(wxString() + (wxChar) 0x958B + (wxChar) 0x59CB + (wxChar) 0x63A5 + (wxChar) 0x6536), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(m_BtnStartGet, wxGBPosition(2, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	itemGridBagSizer3->Add(m_BtnStartGet, wxGBPosition(2, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_CanOutput = new wxCheckBox( itemPanel2, ID_CHECKBOX, wxGetTranslation(wxString() + (wxChar) 0x6587 + (wxChar) 0x5B57 + (wxChar) 0x8F38 + (wxChar) 0x51FA), wxDefaultPosition, wxDefaultSize, 0 );
 	m_CanOutput->SetValue(false);
-	itemGridBagSizer3->Add(m_CanOutput, wxGBPosition(10, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_CanOutput, wxGBPosition(11, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-	m_point_size = new wxSpinCtrl( itemPanel2, ID_SPINCTRL2, _T("3"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, 0, 10, 3 );
-	itemGridBagSizer3->Add(m_point_size, wxGBPosition(15, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	m_point_size = new wxSpinCtrl( itemPanel2, ID_SPINCTRL2, _T("2"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, 0, 10, 2 );
+	itemGridBagSizer3->Add(m_point_size, wxGBPosition(16, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	wxStaticText* itemStaticText11 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x9EDE + (wxChar) 0x7684 + (wxChar) 0x5927 + (wxChar) 0x5C0F), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText11, wxGBPosition(15, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText11, wxGBPosition(16, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	wxStaticText* itemStaticText12 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x66F4 + (wxChar) 0x65B0 + (wxChar) 0x901F + (wxChar) 0x5EA6), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText12, wxGBPosition(14, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText12, wxGBPosition(15, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	wxStaticText* itemStaticText13 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6700 + (wxChar) 0x6DF1 + (wxChar) 0x6C34 + (wxChar) 0x6DF1), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText13, wxGBPosition(16, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 4);
+	itemGridBagSizer3->Add(itemStaticText13, wxGBPosition(17, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 4);
 
 	m_NormalLook = new wxCheckBox( itemPanel2, ID_CHECKBOX2, wxGetTranslation(wxString() + (wxChar) 0x5782 + (wxChar) 0x76F4 + (wxChar) 0x4FEF + (wxChar) 0x8996), wxDefaultPosition, wxDefaultSize, 0 );
 	m_NormalLook->SetValue(true);
-	itemGridBagSizer3->Add(m_NormalLook, wxGBPosition(11, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_NormalLook, wxGBPosition(12, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	wxStaticText* itemStaticText15 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x89C0 + (wxChar) 0x770B + (wxChar) 0x9AD8 + (wxChar) 0x5EA6), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText15, wxGBPosition(9, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText15, wxGBPosition(10, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	m_spinctrl_height = new wxSpinCtrl( itemPanel2, ID_SPINCTRL, _T("3"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, -32760, 32760, 3 );
-	itemGridBagSizer3->Add(m_spinctrl_height, wxGBPosition(9, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_spinctrl_height, wxGBPosition(10, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_FocusLast = new wxCheckBox( itemPanel2, ID_CHECKBOX1, wxGetTranslation(wxString() + (wxChar) 0x9396 + (wxChar) 0x5B9A + (wxChar) 0x8239 + (wxChar) 0x4F4D), wxDefaultPosition, wxDefaultSize, 0 );
 	m_FocusLast->SetValue(true);
-	itemGridBagSizer3->Add(m_FocusLast, wxGBPosition(10, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_FocusLast, wxGBPosition(11, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	m_BtnStopGet = new wxButton( itemPanel2, ID_BUTTON1, wxGetTranslation(wxString() + (wxChar) 0x505C + (wxChar) 0x6B62 + (wxChar) 0x63A5 + (wxChar) 0x6536), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(m_BtnStopGet, wxGBPosition(2, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	itemGridBagSizer3->Add(m_BtnStopGet, wxGBPosition(2, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_Browse = new wxFilePickerCtrl( itemPanel2, ID_FILECTRL, wxEmptyString, wxGetTranslation(wxString() + (wxChar) 0x6A94 + (wxChar) 0x6848 + (wxChar) 0x8DEF + (wxChar) 0x5F91), wxEmptyString, wxDefaultPosition, wxDefaultSize, wxFLP_USE_TEXTCTRL|wxFLP_SAVE );
-	itemGridBagSizer3->Add(m_Browse, wxGBPosition(12, 0), wxGBSpan(1, 2), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_Browse, wxGBPosition(13, 0), wxGBSpan(1, 2), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	wxStaticText* itemStaticText20 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x8CC7 + (wxChar) 0x6599 + (wxChar) 0x500B + (wxChar) 0x6578), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText20, wxGBPosition(3, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText20, wxGBPosition(3, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	wxStaticText* itemStaticText21 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x7D93 + (wxChar) 0x5EA6 + wxT("E")), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText21, wxGBPosition(5, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText21, wxGBPosition(5, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_WaterDepth = new wxStaticText( itemPanel2, wxID_STATIC, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(m_WaterDepth, wxGBPosition(4, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_WaterDepth, wxGBPosition(4, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	wxStaticText* itemStaticText23 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6C34 + (wxChar) 0x6DF1), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText23, wxGBPosition(4, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText23, wxGBPosition(4, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_Longitude = new wxStaticText( itemPanel2, wxID_STATIC, _("0.0"), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(m_Longitude, wxGBPosition(5, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_Longitude, wxGBPosition(5, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	wxStaticText* itemStaticText25 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x7DEF + (wxChar) 0x5EA6 + wxT("N")), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText25, wxGBPosition(6, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText25, wxGBPosition(6, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_Latitude = new wxStaticText( itemPanel2, wxID_STATIC, _("0.0"), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(m_Latitude, wxGBPosition(6, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_Latitude, wxGBPosition(6, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_DataTotal = new wxStaticText( itemPanel2, wxID_STATIC, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(m_DataTotal, wxGBPosition(3, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_DataTotal, wxGBPosition(3, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	wxStaticText* itemStaticText28 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6A94 + (wxChar) 0x6848 + (wxChar) 0x8DEF + (wxChar) 0x5F91), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText28, wxGBPosition(11, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(itemStaticText28, wxGBPosition(12, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	m_MaxDepthText = new wxStaticText( itemPanel2, wxID_STATIC, _("0"), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(m_MaxDepthText, wxGBPosition(16, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_MaxDepthText, wxGBPosition(17, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	m_deColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURCTRL, wxColour(222, 113, 39), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	itemGridBagSizer3->Add(m_deColor, wxGBPosition(7, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_deColor, wxGBPosition(7, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+	m_bgcolor = new wxColourPickerCtrl( itemPanel2, ID_COLOURPICKERCTRL1, wxColour(0, 0, 255), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	itemGridBagSizer3->Add(m_bgcolor, wxGBPosition(9, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	m_hsColor = new wxColourPickerCtrl( itemPanel2, ID_COLOURPICKERCTRL, wxColour(49, 249, 169), wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
-	itemGridBagSizer3->Add(m_hsColor, wxGBPosition(8, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_hsColor, wxGBPosition(8, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-	wxStaticText* itemStaticText32 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText32, wxGBPosition(7, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	wxStaticText* itemStaticText33 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText33, wxGBPosition(7, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
-	wxStaticText* itemStaticText33 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6C34 + (wxChar) 0x9762 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemStaticText33, wxGBPosition(8, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	wxStaticText* itemStaticText34 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x80CC + (wxChar) 0x666F + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText34, wxGBPosition(9, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+
+	wxStaticText* itemStaticText35 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6C34 + (wxChar) 0x9762 + (wxChar) 0x984F + (wxChar) 0x8272), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemStaticText35, wxGBPosition(8, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
 
 	m_UpdateInterval = new wxSpinCtrl( itemPanel2, ID_SPINCTRL1, _T("500"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, 100, 5000, 500 );
-	itemGridBagSizer3->Add(m_UpdateInterval, wxGBPosition(14, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	itemGridBagSizer3->Add(m_UpdateInterval, wxGBPosition(15, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-	wxButton* itemButton35 = new wxButton( itemPanel2, ID_BUTTON2, wxGetTranslation(wxString() + (wxChar) 0x8F09 + (wxChar) 0x5165 + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemButton35, wxGBPosition(13, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	wxButton* itemButton37 = new wxButton( itemPanel2, ID_BUTTON2, wxGetTranslation(wxString() + (wxChar) 0x8F09 + (wxChar) 0x5165 + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemButton37, wxGBPosition(14, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-	wxButton* itemButton36 = new wxButton( itemPanel2, ID_BUTTON3, wxGetTranslation(wxString() + (wxChar) 0x6E05 + (wxChar) 0x7A7A + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemButton36, wxGBPosition(13, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 1);
+	wxButton* itemButton38 = new wxButton( itemPanel2, ID_BUTTON3, wxGetTranslation(wxString() + (wxChar) 0x6E05 + (wxChar) 0x7A7A + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemButton38, wxGBPosition(14, 1), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
-	wxButton* itemButton37 = new wxButton( itemPanel2, ID_BUTTON4, wxGetTranslation(wxString() + (wxChar) 0x8F38 + (wxChar) 0x51FA + wxT("dat")), wxDefaultPosition, wxDefaultSize, 0 );
-	itemGridBagSizer3->Add(itemButton37, wxGBPosition(17, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+	wxButton* itemButton39 = new wxButton( itemPanel2, ID_BUTTON4, wxGetTranslation(wxString() + (wxChar) 0x8F38 + (wxChar) 0x51FA + wxT("dat")), wxDefaultPosition, wxDefaultSize, 0 );
+	itemGridBagSizer3->Add(itemButton39, wxGBPosition(23, 0), wxGBSpan(1, 1), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+	wxBoxSizer* itemBoxSizer40 = new wxBoxSizer(wxHORIZONTAL);
+	itemGridBagSizer3->Add(itemBoxSizer40, wxGBPosition(18, 0), wxGBSpan(1, 2), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 5);
+
+	wxStaticText* itemStaticText41 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x5FFD + (wxChar) 0x7565), wxDefaultPosition, wxDefaultSize, 0 );
+	itemBoxSizer40->Add(itemStaticText41, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+	m_ignore_depth = new wxSpinCtrl( itemPanel2, ID_SPINCTRL3, _T("100"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, -1, 10000, 100 );
+	itemBoxSizer40->Add(m_ignore_depth, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+	wxStaticText* itemStaticText43 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString(wxT("cm")) + (wxChar) 0x6DF1 + (wxChar) 0x4EE5 + (wxChar) 0x4E0A + (wxChar) 0x7684 + (wxChar) 0x8CC7 + (wxChar) 0x6599), wxDefaultPosition, wxDefaultSize, 0 );
+	itemBoxSizer40->Add(itemStaticText43, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+	wxBoxSizer* itemBoxSizer44 = new wxBoxSizer(wxHORIZONTAL);
+	itemGridBagSizer3->Add(itemBoxSizer44, wxGBPosition(20, 0), wxGBSpan(1, 2), wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+	wxStaticText* itemStaticText45 = new wxStaticText( itemPanel2, wxID_STATIC, wxGetTranslation(wxString() + (wxChar) 0x6DF1 + (wxChar) 0x5EA6 + (wxChar) 0x7684 + wxT("scale(") + (wxChar) 0x5343 + (wxChar) 0x5206 + (wxChar) 0x6BD4 + wxT(")")), wxDefaultPosition, wxDefaultSize, 0 );
+	itemBoxSizer44->Add(itemStaticText45, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
+
+	m_depth_scalar = new wxSpinCtrl( itemPanel2, ID_SPINCTRL4, _T("100"), wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, -1, 10000, 100 );
+	itemBoxSizer44->Add(m_depth_scalar, 0, wxALIGN_CENTER_VERTICAL|wxALL, 0);
 
 	// Fit to content
 	itemFrame1->GetAuiManager().GetPane(_T("Pane1")).BestSize(itemPanel2->GetSizer()->Fit(itemPanel2)).MinSize(itemPanel2->GetSizer()->GetMinSize());
@@ -515,9 +551,9 @@ void mainframe::OnTimerUpdated( wxCommandEvent& event )
 /*
  * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
  */
-void mainframe::OnPointSizeUpdated( wxSpinEvent& event )
+void mainframe::OnDepthScalarUpdated( wxSpinEvent& event )
 {
-	m_DrawView.SetPointSize(m_point_size->GetValue());
+	m_DrawView.SetScalar(m_depth_scalar->GetValue()*0.001);
 	event.Skip(false);
 }
 
@@ -645,3 +681,26 @@ void mainframe::OnOutputDatClick( wxCommandEvent& event )
 	//dialog.SetDirectory(wxGetHomeDir());
 	event.Skip(false);
 }
+
+
+/*
+ * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
+ */
+
+void mainframe::OnIgnoreDepthUpdated( wxSpinEvent& event )
+{
+	m_DrawView.SetIgnoreDepth(m_ignore_depth->GetValue()/100.0);
+	event.Skip(false);
+}
+
+
+/*
+ * wxEVT_COMMAND_SPINCTRL_UPDATED event handler for ID_SPINCTRL2
+ */
+
+void mainframe::OnPointSizeUpdated( wxSpinEvent& event )
+{
+	m_DrawView.SetPointSize(m_point_size->GetValue());
+	event.Skip(false);
+}
+
