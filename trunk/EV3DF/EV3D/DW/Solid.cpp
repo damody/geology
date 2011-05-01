@@ -1,12 +1,11 @@
-﻿#include "StdVtk.h"
+﻿
+#include "StdWxVtk.h"
 #include "Solid.h"
-
 #include "ConvStr.h"
 #include "SolidCtrl.h"
-
-
 Solid::Solid()
 {
+
 	// vtk init
 	m_points = vtkSmartPointer<vtkPoints>::New();
 	m_volcolors = vtkSmartPointer<vtkDoubleArray>::New();
@@ -42,28 +41,33 @@ Solid::Solid()
 	m_ImageShiftScale = vtkSmartPointer<vtkImageShiftScale>::New();
 	m_CompositeOpacity = vtkSmartPointer<vtkPiecewiseFunction>::New();
 	m_ColorTransferFun = vtkSmartPointer<vtkColorTransferFunction>::New();
-
 	m_Cliplut->Build();
-	m_volumeMapper->SetBlendModeToComposite(); // composite first
+	m_volumeMapper->SetBlendModeToComposite();	// composite first
+
 	// ofher init
 	m_pCtable = ColorTable_Sptr(new ColorTable);
+
 	// contour flow
 	m_contour->SetInput(m_ImageData);
 	m_contour_mapper->SetInputConnection(m_contour->GetOutputPort());
 	m_contour_actor->SetMapper(m_contour_mapper);
 	m_outlineMapper->SetLookupTable(m_lut);
+
 	// outline flow
 	m_outline->SetInput(m_ImageData);
 	m_outlineMapper->SetInputConnection(m_outline->GetOutputPort());
-	m_outlineActor->SetMapper( m_outlineMapper);
+	m_outlineActor->SetMapper(m_outlineMapper);
+
 	// Vertex flow
 	m_VertexFilter->SetInput(m_polydata);
 	m_vertex_mapper->SetInputConnection(m_VertexFilter->GetOutputPort());
 	m_vertex_actor->SetMapper(m_vertex_mapper);
-
 	m_vertex_mapper->SetLookupTable(m_lut);
 	m_contour_mapper->SetLookupTable(m_lut);
-	m_vertex_actor->GetProperty()->SetPointSize(3);
+	m_vertex_actor->
+	GetProperty()
+	->SetPointSize(3);
+
 	//m_Renderer->AddActor(m_outlineActor);
 	//m_Renderer->AddActor(m_vertex_actor);
 	//m_Renderer->AddActor(m_contour_actor);
@@ -71,15 +75,14 @@ Solid::Solid()
 	m_RenderWindow->AddRenderer(m_Renderer);
 	m_iren->SetRenderWindow(m_RenderWindow);
 	m_Renderer->SetActiveCamera(m_camera);
-
-	m_axes_widget->SetOutlineColor( 0.9300, 0.5700, 0.1300 );
-	m_axes_widget->SetOrientationMarker( m_axes );
-	m_axes_widget->SetInteractor( m_iren );
+	m_axes_widget->SetOutlineColor(0.9300, 0.5700, 0.1300);
+	m_axes_widget->SetOrientationMarker(m_axes);
+	m_axes_widget->SetInteractor(m_iren);
 	m_axes_widget->On();
 
-// 	m_planeWidgetX->SetLeftButtonAction(-1);
-// 	m_planeWidgetX->SetMiddleButtonAction(-1);
-// 	m_planeWidgetX->SetRightButtonAction(-1);
+	// 	m_planeWidgetX->SetLeftButtonAction(-1);
+	// 	m_planeWidgetX->SetMiddleButtonAction(-1);
+	// 	m_planeWidgetX->SetRightButtonAction(-1);
 	m_planeWidgetY->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetY->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_planeWidgetY->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
@@ -92,56 +95,62 @@ Solid::Solid()
 	m_volumeProperty->SetScalarOpacity(m_CompositeOpacity);
 	m_volumeProperty->SetColor(m_ColorTransferFun);
 }
-
-void Solid::SetData( SJCScalarField3d* sf3d )
+void Solid::SetData(SJCScalarField3d *sf3d)
 {
+
 	// m_SolidCtrl舊函式需要
 	//m_SolidCtrl = SolidCtrl_Sptr(new SolidCtrl(m_RenderWindow, m_iren));
 	m_SolidCtrl->m_Renderer = m_Renderer;
 	m_SolidCtrl->SetGridedData(sf3d);
+
 	// backup to use
 	m_SJCScalarField3d = sf3d;
+
 	// color
-	m_histogram = DWHistogram<double>(m_SJCScalarField3d->begin(), m_SJCScalarField3d->size());
+	m_histogram = DWHistogram<double> (m_SJCScalarField3d->begin(), m_SJCScalarField3d->size());
 	m_lut->SetTableRange(m_histogram.GetPersentValue(0.01), m_histogram.GetPersentValue(0.99));
 	m_lut->Build();
+
 	// data
 	m_polydata->Initialize();
 	m_ImageData->Initialize();
 	m_points->Initialize();
 	m_volcolors->Initialize();
 	m_colors->Initialize();
-	
 	m_colors->SetNumberOfComponents(3);
 	m_colors->SetName("Colors");
-	uint i, j, k,  kOffset, jOffset, offset;
-	const uint x_len = m_SJCScalarField3d->NumX(),
-		y_len = m_SJCScalarField3d->NumY(),
-		z_len = m_SJCScalarField3d->NumZ();
-	m_camera->SetPosition(0, 0, (x_len+y_len+z_len)/3.0);
-	m_camera->SetFocalPoint(x_len/2.0, y_len/2.0, z_len/2.0);
-	for(k=0;k<z_len;k++)
+
+	uint		i, j, k, kOffset, jOffset, offset;
+	const uint	x_len = m_SJCScalarField3d->NumX(), y_len = m_SJCScalarField3d->NumY(),
+	z_len = m_SJCScalarField3d->NumZ();
+	m_camera->SetPosition(0, 0, (x_len + y_len + z_len) / 3.0);
+	m_camera->SetFocalPoint(x_len / 2.0, y_len / 2.0, z_len / 2.0);
+	for (k = 0; k < z_len; k++)
 	{
-		kOffset = k*y_len*x_len;
-		for(j=0; j<y_len; j++)
+		kOffset = k * y_len * x_len;
+		for (j = 0; j < y_len; j++)
 		{
-			jOffset = j*x_len;
-			for(i=0;i<x_len;i++)
+			jOffset = j * x_len;
+			for (i = 0; i < x_len; i++)
 			{
 				offset = i + jOffset + kOffset;
 				m_volcolors->InsertTuple1(offset, sf3d->Value(i, j, k));
 				m_points->InsertNextPoint(i, j, k);
-				double dcolor[3];
+
+				double	dcolor[3];
 				m_lut->GetColor(sf3d->Value(i, j, k), dcolor);
-				unsigned char color[3];
-				for(unsigned int j = 0; j < 3; j++)
+
+				unsigned char	color[3];
+				for (unsigned int j = 0; j < 3; j++)
 				{
 					color[j] = static_cast<unsigned char>(255.0 * dcolor[j]);
 				}
+
 				m_colors->InsertNextTupleValue(color);
 			}
 		}
 	}
+
 	m_vol->SetDimensions(x_len, y_len, z_len);
 	m_vol->GetPointData()->SetScalars(m_volcolors);
 	m_ImageData->SetDimensions(x_len, y_len, z_len);
@@ -149,45 +158,39 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 	m_polydata->SetPoints(m_points);
 	m_polydata->GetPointData()->SetScalars(m_colors);
 
-// 	m_pCtable->clear();
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(1),Color4(255, 0, 0,0));	// 紅
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.75),Color4(255, 128, 0,0));	// 橙
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.625),Color4(255, 255, 0,0));	// 黃
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0, 255, 0,0));	// 綠
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.375),Color4(0, 255, 255,0));	// 青
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.25),Color4(0, 0, 255,0));	// 藍
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.125),Color4(102, 0, 255,0));	// 靛
-// 	m_pCtable->push_back(m_histogram.GetPersentValue(0),Color4(167, 87, 168,0));	// 紫
-
+	// 	m_pCtable->clear();
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(1),Color4(255, 0, 0,0));	// 紅
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.75),Color4(255, 128, 0,0));	// 橙
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.625),Color4(255, 255, 0,0));	// 黃
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.5),Color4(0, 255, 0,0));	// 綠
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.375),Color4(0, 255, 255,0));	// 青
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.25),Color4(0, 0, 255,0));	// 藍
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(0.125),Color4(102, 0, 255,0));	// 靛
+	// 	m_pCtable->push_back(m_histogram.GetPersentValue(0),Color4(167, 87, 168,0));	// 紫
 	// plane
 	m_planeWidgetX->SetInteractor(m_iren);
 	m_planeWidgetX->RestrictPlaneToVolumeOn();
 	m_planeWidgetX->SetInput(m_vol);
 	m_planeWidgetX->SetPlaneOrientationToXAxes();
-	
 	m_planeWidgetY->SetInteractor(m_iren);
 	m_planeWidgetY->RestrictPlaneToVolumeOn();
 	m_planeWidgetY->SetInput(m_vol);
 	m_planeWidgetY->SetPlaneOrientationToYAxes();
-	
 	m_planeWidgetZ->SetInteractor(m_iren);
 	m_planeWidgetZ->RestrictPlaneToVolumeOn();
 	m_planeWidgetZ->SetInput(m_vol);
 	m_planeWidgetZ->SetPlaneOrientationToZAxes();
-	
 	m_CompositeOpacity->AddPoint(0, 0.0);
 	m_CompositeOpacity->AddPoint(62.0, 0.6);
 	m_CompositeOpacity->AddPoint(125.0, 1.0);
+
 	//m_CompositeOpacity->AddPoint(125, 1.5);
-	
+	m_ColorTransferFun->AddRGBPoint(0.0, 1.0, 0.0, 0.0);
+	m_ColorTransferFun->AddRGBPoint(62.0, 0.0, 1.0, 0.0);
+	m_ColorTransferFun->AddRGBPoint(125.0, 0.0, 0.0, 1.0);
 
-	m_ColorTransferFun->AddRGBPoint(0.0, 1.0,0.0,0.0);
-	m_ColorTransferFun->AddRGBPoint(62.0, 0.0,1.0,0.0);
-	m_ColorTransferFun->AddRGBPoint(125.0, 0.0,0.0,1.0);
 	//m_ColorTransferFun->AddRGBPoint(125.0, 1.0,1.0,1.0);
-	
 	m_ColorTransferFun->Build();
-
 	m_ImageShiftScale->SetInput(m_vol);
 	m_ImageShiftScale->SetScale(2);
 	m_ImageShiftScale->SetOutputScalarTypeToUnsignedChar();
@@ -196,12 +199,13 @@ void Solid::SetData( SJCScalarField3d* sf3d )
 	m_volumeProperty->SetInterpolationType(VTK_LINEAR_INTERPOLATION);
 	m_volume->SetMapper(m_volumeMapper);
 	m_volume->SetProperty(m_volumeProperty);
+
 	//m_Renderer->AddViewProp(m_volume);
-	
 }
 
-void Solid::Set( double isolevel, bool show /*= true*/ )
+void Solid::Set(double isolevel, bool show /*= true*/ )
 {
+
 	// set data
 	m_contour->SetInput(m_ImageData);
 	m_contour->SetValue(1, isolevel);
@@ -216,8 +220,9 @@ void Solid::Set( double isolevel, bool show /*= true*/ )
 	}
 }
 
-void Solid::SetVertex( bool show /*= true*/ )
+void Solid::SetVertex(bool show /*= true*/ )
 {
+
 	// set data
 	m_VertexFilter->SetInput(m_polydata);
 	m_VertexFilter->Update();
@@ -231,12 +236,12 @@ void Solid::SetVertex( bool show /*= true*/ )
 	}
 }
 
-void Solid::ReSize( int w, int h )
+void Solid::ReSize(int w, int h)
 {
 	m_RenderWindow->SetSize(w, h);
 }
 
-void Solid::SetHwnd( HWND hwnd )
+void Solid::SetHwnd(HWND hwnd)
 {
 	m_RenderWindow->SetParentId(hwnd);
 }
@@ -246,11 +251,10 @@ void Solid::Render()
 	m_RenderWindow->Render();
 }
 
-void Solid::SetColorTable( ColorTable_Sptr ct )
+void Solid::SetColorTable(ColorTable_Sptr ct)
 {
 	m_pCtable = ct;
 }
-
 
 void Solid::SetVolume()
 {
@@ -261,53 +265,34 @@ void Solid::SetVolume()
 	m_volumeMapper->SetInputConnection(m_ImageShiftScale->GetOutputPort());
 }
 
-void Solid::SetSlice( AXIS axes, double percent )
+void Solid::SetSlice(AXIS axes, double percent)
 {
-	const uint x_len = m_SJCScalarField3d->NumX(),
-		y_len = m_SJCScalarField3d->NumY(),
-		z_len = m_SJCScalarField3d->NumZ();
+	const uint	x_len = m_SJCScalarField3d->NumX(), y_len = m_SJCScalarField3d->NumY(),
+	z_len = m_SJCScalarField3d->NumZ();
 	switch (axes)
 	{
-	case USE_X:
-		m_planeWidgetX->SetSlicePosition(percent*x_len/100.0);
-		break;
-	case USE_Y:
-		m_planeWidgetY->SetSlicePosition(percent*y_len/100.0);
-		break;
-	case USE_Z:
-		m_planeWidgetZ->SetSlicePosition(percent*z_len/100.0);
-		break;
+	case USE_X:	m_planeWidgetX->SetSlicePosition(percent * x_len / 100.0); break;
+	case USE_Y:	m_planeWidgetY->SetSlicePosition(percent * y_len / 100.0); break;
+	case USE_Z:	m_planeWidgetZ->SetSlicePosition(percent * z_len / 100.0); break;
 	}
 }
 
-void Solid::EnableSlice( AXIS axes )
+void Solid::EnableSlice(AXIS axes)
 {
 	switch (axes)
 	{
-	case USE_X:
-		m_planeWidgetX->On();
-		break;
-	case USE_Y:
-		m_planeWidgetY->On();
-		break;
-	case USE_Z:
-		m_planeWidgetZ->On();
-		break;
+	case USE_X:	m_planeWidgetX->On(); break;
+	case USE_Y:	m_planeWidgetY->On(); break;
+	case USE_Z:	m_planeWidgetZ->On(); break;
 	}
 }
 
-void Solid::DisableSlice( AXIS axes )
+void Solid::DisableSlice(AXIS axes)
 {
 	switch (axes)
 	{
-	case USE_X:
-		m_planeWidgetX->Off();
-		break;
-	case USE_Y:
-		m_planeWidgetY->Off();
-		break;
-	case USE_Z:
-		m_planeWidgetZ->Off();
-		break;
+	case USE_X:	m_planeWidgetX->Off(); break;
+	case USE_Y:	m_planeWidgetY->Off(); break;
+	case USE_Z:	m_planeWidgetZ->Off(); break;
 	}
 }

@@ -69,10 +69,7 @@ public:
 	void Render();
 	void SetCamera(vtkCamera_Sptr camera)
 	{
-		m_Camera->SetPosition(camera->GetPosition());
-		m_Camera->SetViewUp(camera->GetViewUp());
-		m_Camera->SetViewAngle(camera->GetViewAngle());
-		m_Camera->SetFocalPoint(camera->GetFocalPoint());
+		camera->DeepCopy(m_Camera);
 	}
 	void SetHwnd( HWND hwnd )
 	{

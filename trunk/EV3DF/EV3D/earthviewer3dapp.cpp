@@ -8,7 +8,7 @@
 // Copyright:   NTUST
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
-#include "stdwx.h"
+#include "StdWxVtk.h"
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
 

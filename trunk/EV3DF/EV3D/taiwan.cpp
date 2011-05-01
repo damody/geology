@@ -8,7 +8,7 @@
 // Copyright:   NTUST
 // Licence:     
 /////////////////////////////////////////////////////////////////////////////
-#include "stdwx.h"
+#include "StdWxVtk.h"
 #include "DW/SolidDefine.h"
 #include "DW/SEffect.h"
 // For compilers that support precompilation, includes "wx/wx.h".
@@ -628,14 +628,19 @@ void Taiwan::OnModifyData( wxCommandEvent& event )
 	polydata2->GetPointData()->SetScalars(scalars2);
 	SolidView_Sptr clip;
 	SEffect_Sptr Setting = SEffect::New(SEffect::BOUNDING_BOX);
+	// left
 	m_SolidCtrlL.SetGridedData(polydata2, nx, ny, nz);
 	m_SolidCtrlL.NewSEffect(Setting);
 	m_SolidCtrlL.AddTaiwan();
 	Setting = SEffect::New(SEffect::AXES);
 	m_SolidCtrlL.NewSEffect(Setting);
+	Setting = SEffect::New(SEffect::CLIP_PLANE);
+	clip = m_SolidCtrlL.NewSEffect(Setting);
+	((ClipPlane_Setting*)Setting.get())->m_Axes = 1;
+	clip->Update();
 	m_SolidCtrlL.Render();
+	// right
 	m_SolidCtrlR.SetGridedData(polydata2, nx, ny, nz);
-	
 	m_SolidCtrlR.NewSEffect(Setting);
 	Setting = SEffect::New(SEffect::CLIP_PLANE);
 	clip = m_SolidCtrlR.NewSEffect(Setting);
@@ -869,7 +874,7 @@ VOID CALLBACK TimerProc ( HWND hParent, UINT uMsg, UINT uEventID, DWORD dwTimer 
 {
 	if (mf->m_timego)
 	{
-		mf->m_SolidCtrlR.SetCamera(mf->m_SolidCtrlL.m_Camera);
+		mf->m_SolidCtrlL.SetCamera(mf->m_SolidCtrlR.m_Camera);
 	}
-	mf->m_SolidCtrlR.Render();
+	mf->m_SolidCtrlL.Render();
 }

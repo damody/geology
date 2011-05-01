@@ -524,12 +524,21 @@
 					RelativePath=".\DW\SolidCtrl.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="stdwxvtk.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="StdVtk.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -537,12 +546,21 @@
 					RelativePath=".\DW\SolidDoc.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="stdwxvtk.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="StdVtk.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -550,25 +568,43 @@
 					RelativePath=".\DW\SolidView.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="stdwxvtk.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="StdVtk.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath=".\DW\StdVtk.cpp"
+					RelativePath=".\DW\StdWxVtk.cpp"
 					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="1"
+							PrecompiledHeaderThrough="stdwxvtk.h"
+						/>
+					</FileConfiguration>
 					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="1"
-							PrecompiledHeaderThrough="StdVtk.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -694,6 +730,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -702,7 +739,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -715,7 +752,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -734,7 +771,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -747,7 +784,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -766,7 +803,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -783,12 +820,21 @@
 					RelativePath=".\mygrid.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="stdwxvtk.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -796,53 +842,21 @@
 					RelativePath=".\MyTreeCtrl.cpp"
 					>
 					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="stdwxvtk.h"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
 						Name="Debug|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\stdwx.cpp"
-					>
-					<FileConfiguration
-						Name="Release|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="1"
-							PrecompiledHeaderThrough="stdwx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Release|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="1"
-							PrecompiledHeaderThrough="stdwx.h"
-							PrecompiledHeaderFile="VCProjectRelease\EarthViewer3Dx64.pch"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|Win32"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="1"
-							PrecompiledHeaderThrough="stdwx.h"
-						/>
-					</FileConfiguration>
-					<FileConfiguration
-						Name="Debug|x64"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-							UsePrecompiledHeader="1"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -855,6 +869,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -863,7 +878,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							UsePrecompiledHeader="2"
-							PrecompiledHeaderThrough="stdwx.h"
+							PrecompiledHeaderThrough="stdwxvtk.h"
 						/>
 					</FileConfiguration>
 				</File>
@@ -936,7 +951,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\DW\StdVtk.h"
+					RelativePath=".\DW\StdWxVtk.h"
 					>
 				</File>
 				<File
@@ -1073,10 +1088,6 @@
 				</File>
 				<File
 					RelativePath=".\Mytreectrl.h"
-					>
-				</File>
-				<File
-					RelativePath=".\stdwx.h"
 					>
 				</File>
 				<File
