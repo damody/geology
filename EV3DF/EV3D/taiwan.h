@@ -14,7 +14,12 @@
 #include "DW/SolidCtrl.h"
 #include "DW/SolidView.h"
 #include "DW/SolidDoc.h"
-
+#include "DW/SelectionSphere.h"
+#include "DW/SelctionBounding.h"
+#include "DW/Interpolation/vtkHeatTranslationFilter.h"
+SHARE_PTR(SelectionSphere)
+SHARE_PTR(SelctionBounding)
+VTKSMART_PTR(vtkHeatTranslationFilter)
 
 /*!
  * Includes
@@ -64,6 +69,7 @@ class wxGLCanvas;
 #define ID_BUTTON7 10026
 #define ID_BUTTON8 10046
 #define ID_BUTTON9 10060
+#define ID_TEXTCTRL25 10120
 #define ID_BUTTON10 10069
 #define ID_CHOICE 10089
 #define ID_SLIDER 10086
@@ -74,6 +80,13 @@ class wxGLCanvas;
 #define ID_CHECKBOX5 10118
 #define ID_BUTTON3 10109
 #define ID_CHECKBOX3 10000
+#define ID_LISTBOX 10093
+#define ID_BUTTON12 10119
+#define ID_TEXTCTRL 10001
+#define ID_TEXTCTRL1 10002
+#define ID_TEXTCTRL2 10003
+#define ID_TEXTCTRL3 10005
+#define ID_TEXTCTRL4 10006
 #define ID_PANEL3 10097
 #define ID_CHECKBOX1 10022
 #define ID_CHECKBOX2 10108
@@ -143,6 +156,12 @@ public:
 
 ////@begin Taiwan event handler declarations
 
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
+    void OnGetRegionClick( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON5
+    void OnComputeRegionHeatClick( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON8
     void OnModifyData( wxCommandEvent& event );
 
@@ -154,6 +173,12 @@ public:
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX3
     void OnCheckShowWellInfo( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_LISTBOX_SELECTED event handler for ID_LISTBOX
+    void OnRegionListboxSelected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON12
+    void OnOpenDataClick( wxCommandEvent& event );
 
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
     void OnCheckboxAxis_Sync( wxCommandEvent& event );
@@ -216,8 +241,15 @@ public:
 
 ////@begin Taiwan member variables
     wxAuiManager m_auiManager;
+    wxTextCtrl* m_Hv;
     wxSlider* m_ruler_slider;
     wxSpinCtrl* m_ruler_spinctrl;
+    wxListBox* m_RegionList;
+    wxTextCtrl* m_Tzero;
+    wxTextCtrl* m_Rt;
+    wxTextCtrl* m_Fppc;
+    wxTextCtrl* m_Life;
+    wxTextCtrl* m_LimitTemperature;
     wxCheckBox* m_Checkbox_Axis_Sync;
     wxCheckBox* m_Checkbox_Depth_Sync;
     wxGLCanvas* m_CanvasL;
@@ -234,6 +266,7 @@ public:
 private:
 	FirstMain* m_FirstMain;
 	DataModifyWindow* m_DataModifyWindow;
+	SelctionBounding_Sptr m_selectionBounding;
 	
 	SolidView_Sptr	m_Volume;
 	SolidView_Sptr	m_Terrain;
@@ -241,6 +274,7 @@ private:
 public:
 	SolidCtrl	m_SolidCtrlL;
 	SolidCtrl	m_SolidCtrlR;
+	SelectionSphere_Sptr m_SelectionSphere;
 	bool		m_timego;
 	enum	{
 		DRAW_TIMER

@@ -72,7 +72,7 @@
 				EnableFunctionLevelLinking="true"
 				RuntimeTypeInfo="true"
 				UsePrecompiledHeader="0"
-				PrecompiledHeaderThrough="stdwx.h"
+				PrecompiledHeaderThrough=""
 				PrecompiledHeaderFile="VCProjectRelease\EarthViewer3D.pch"
 				AssemblerListingLocation="VCProjectRelease/"
 				ObjectFile="VCProjectRelease/"
@@ -97,11 +97,11 @@
 			<Tool
 				Name="VCLinkerTool"
 				AdditionalOptions="/nologo /SUBSYSTEM:WINDOWS /machine:i386"
-				AdditionalDependencies="wxmsw28u_aui.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib cudart.lib cutil32D.lib"
+				AdditionalDependencies="wxmsw28u_aui.lib wxmsw28u_xrc.lib wxmsw28u_core.lib wxbase28u.lib wxtiff.lib wxjpeg.lib wxpng.lib wxzlib.lib wxregexu.lib wxmsw28u_adv.lib wxmsw28u_gl.lib wxbase28u_net.lib wxbase28u_xml.lib wxexpat.lib kernel32.lib user32.lib gdi32.lib comdlg32.lib winspool.lib winmm.lib shell32.lib comctl32.lib ole32.lib oleaut32.lib uuid.lib rpcrt4.lib advapi32.lib wsock32.lib opengl32.lib vtkalglib.lib vtkCommon.lib vtkFiltering.lib vtkfreetype.lib vtkftgl.lib vtkGenericFiltering.lib vtkGraphics.lib vtkHybrid.lib vtkImaging.lib vtkInfovis.lib vtkIO.lib vtkRendering.lib vtksys.lib vtkViews.lib vtkVolumeRendering.lib vtkWidgets.lib vtkzlib.lib Opengl32.lib wbemuuid.lib d3d9.lib vtkpng.lib vtkjpeg.lib vtklibxml2.lib vtktiff.lib vtkexpat.lib SJC.lib &quot;C:\Program Files (x86)\NVIDIA Corporation\Cg\lib\cg.lib&quot; &quot;C:\Program Files (x86)\NVIDIA Corporation\Cg\lib\cgGL.lib&quot;"
 				OutputFile="..\runtime\EarthViewer3D.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\lib;E:\clibrary\VTK\Win32\bin\Release"
+				AdditionalLibraryDirectories="..\lib;C:\clibrary\VTK\Win32\bin\Release"
 				IgnoreDefaultLibraryNames="libcmtd.lib"
 				GenerateDebugInformation="true"
 				AssemblyDebug="0"
@@ -321,7 +321,7 @@
 				OutputFile="..\runtime\EarthViewer3Dd.exe"
 				LinkIncremental="2"
 				SuppressStartupBanner="true"
-				AdditionalLibraryDirectories="..\lib;E:\clibrary\VTK\Win32\bin\Debug"
+				AdditionalLibraryDirectories="..\lib;C:\clibrary\VTK\Win32\bin\Debug"
 				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="true"
 				AssemblyDebug="1"
@@ -504,7 +504,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\DW\PolyDataHandler.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\DW\SEffect.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\SelctionBounding.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\SelectionSphere.cpp"
 					>
 				</File>
 				<File
@@ -614,6 +626,34 @@
 				</File>
 				<File
 					RelativePath=".\DW\VarStr.cpp"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							PrecompiledHeaderThrough="stdwxvtk.h"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkGridHeightFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkHeatTranslationFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkLimitedInverseDistanceFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkLimitedInverseDistanceHeightFilter.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkNearestNeighborHeightFilter.cpp"
 					>
 				</File>
 			</Filter>
@@ -919,7 +959,7 @@
 					>
 				</File>
 				<File
-					RelativePath=".\DW\PolyDataHandler.cpp"
+					RelativePath=".\DW\Interpolation\InterpolationInfo.cpp"
 					>
 				</File>
 				<File
@@ -928,6 +968,14 @@
 				</File>
 				<File
 					RelativePath=".\DW\SEffect.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\SelctionBounding.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\SelectionSphere.h"
 					>
 				</File>
 				<File
@@ -956,6 +1004,26 @@
 				</File>
 				<File
 					RelativePath=".\DW\VarStr.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkGridHeightFilter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkHeatTranslationFilter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkLimitedInverseDistanceFilter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkLimitedInverseDistanceHeightFilter.h"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\Interpolation\vtkNearestNeighborHeightFilter.h"
 					>
 				</File>
 			</Filter>

@@ -1,4 +1,4 @@
-﻿#include "vtkInverseDistanceFilter.h"
+#include "vtkInverseDistanceFilter.h"
 
 #include "vtkObjectFactory.h"
 #include "vtkStreamingDemandDrivenPipeline.h"
@@ -9,13 +9,26 @@
 #include <cassert>
 #include <numeric>
 #include <algorithm>
+#include <vtkMath.h>
 
 vtkStandardNewMacro(vtkInverseDistanceFilter);
+
+template<class _Ty>
+struct power
+	: public std::binary_function<_Ty, _Ty, _Ty>
+{	// functor for operator%
+	_Ty operator()(const _Ty& _Left, const _Ty& _Right) const
+	{	// apply operator% to operands
+		return pow(_Left, _Right);
+	}
+};
+
 
 vtkInverseDistanceFilter::vtkInverseDistanceFilter()
 {
 	this->SetNumberOfInputPorts(1);
 	this->SetNumberOfOutputPorts(1);
+	m_PowerValue = 2.0;
 }
 
 vtkInverseDistanceFilter::~vtkInverseDistanceFilter()
@@ -35,71 +48,51 @@ int vtkInverseDistanceFilter::RequestData(vtkInformation *vtkNotUsed(request),
 		inInfo->Get(vtkDataObject::DATA_OBJECT()));
 	vtkPolyData *output = vtkPolyData::SafeDownCast(
 		outInfo->Get(vtkDataObject::DATA_OBJECT()));
-	vtkPoints * outpoints = vtkPoints::New();
-	vtkDoubleArray* outScalars = vtkDoubleArray::New();
+	VTK_CREATE(outpoints, vtkPoints);
+	VTK_CREATE(outScalars, vtkDoubleArray);
 	vtkDoubleArray* inScalars = (vtkDoubleArray*)(input->GetPointData()->GetScalars());
+	const int MAX_POINTS = input->GetNumberOfPoints();
 	double *raw_points = (double*)malloc(sizeof(double) * 4 * input->GetNumberOfPoints()),
 		*save_pos = raw_points;
+	
 	for(vtkIdType i = 0; i < input->GetNumberOfPoints(); i++, save_pos += 4)
 	{
 		input->GetPoint(i, save_pos);
 		save_pos[3] = inScalars->GetValue(i);
-#ifdef _DEBUG
-		std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
-#endif // _DEBUG
 	}
-	save_pos = raw_points;
 	doubles vals;
-	for(vtkIdType i = 0; i < input->GetNumberOfPoints(); i++, save_pos += 4)
-	{
-		vals.push_back(inScalars->GetValue(i));
-	}
 	double dim[3];
-	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval[2])
+	for (dim[2] = m_Bounds.zmin;dim[2] <= m_Bounds.zmax;dim[2]+=m_Interval[2])
 	{
-		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval[1])
+		for (dim[1] = m_Bounds.ymin;dim[1] <= m_Bounds.ymax;dim[1]+=m_Interval[1])
 		{
-			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval[0])
+			for (dim[0] = m_Bounds.xmin;dim[0] <= m_Bounds.xmax;dim[0]+=m_Interval[0])
 			{
-				
-				doubles weights;
-				int zero_pos_index = -1;
-				save_pos = raw_points;
-				for(vtkIdType i = 0; i < input->GetNumberOfPoints(); i++, save_pos += 4)
+				outpoints->InsertNextPoint(dim);
+				double sum = 0, sum2 = 0, dis;
+				for (int i = 0;i < MAX_POINTS;i++)
 				{
-					double dis = PointsDistanceSquare(save_pos, dim);
-					assert(dis>=0);
-					if (dis == 0.0)
+					dis = sqrt(vtkMath::Distance2BetweenPoints(raw_points+i*4, dim));
+					if (dis<0.001)
 					{
-						zero_pos_index = i;
+						outScalars->InsertNextTuple1(*(raw_points+i*4+3));
 						break;
 					}
-					weights.push_back(dis);
+					double tmp = pow(dis, m_PowerValue);
+					sum += tmp;
+					sum2 += tmp*(*(raw_points+i*4+3)); // *(raw_points+i*4+3) is as same as inScalars->GetValue(i);
 				}
-				if (zero_pos_index != -1)
+				if (dis>=0.001)
 				{
-					outpoints->InsertNextPoint(dim);
-					outScalars->InsertNextTuple1(inScalars->GetValue(zero_pos_index));
-				}
-				else
-				{
-					double sum = accumulate(weights.begin(), weights.end(), 0.0, std::plus<double>());
-					assert(sum>0);
-					double multi_num = 1.0/sum;
-					// each weight multiplies multi_num, let sum = 1
-					std::transform(weights.begin(), weights.end(), weights.begin(),
-						std::bind2nd(std::multiplies<double>(), multi_num));
-					// get average use (weight1 * value1) + (weight2 * value2) + ...
-					double val = std::inner_product(weights.begin(), weights.end(),
-						vals.begin(), 0.0, std::plus<double>(), std::multiplies<double>());
-					outpoints->InsertNextPoint(dim);
-					outScalars->InsertNextTuple1(val);
+					sum2 /= sum;
+					outScalars->InsertNextTuple1(sum2);
 				}
 			}
 		}
 	}
 	output->SetPoints(outpoints);
 	output->GetPointData()->SetScalars(outScalars);
+	free(raw_points);
 	return 1;
 }
 
@@ -108,5 +101,15 @@ int vtkInverseDistanceFilter::RequestData(vtkInformation *vtkNotUsed(request),
 void vtkInverseDistanceFilter::PrintSelf(ostream& os, vtkIndent indent)
 {
 	this->Superclass::PrintSelf(os,indent);
+}
+
+void vtkInverseDistanceFilter::SetPowerValue( double v )
+{
+	m_PowerValue = v;
+}
+
+double vtkInverseDistanceFilter::GetPowerValue()
+{
+	return m_PowerValue;
 }
 

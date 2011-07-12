@@ -28,6 +28,7 @@ public:
 		m_RenderWindow->AddRenderer(m_Renderer);
 		m_WindowInteractor->SetRenderWindow(m_RenderWindow);
 		m_WindowInteractor->SetInteractorStyle( m_style );
+		m_WindowInteractor->EnableRenderOn();
 		m_Renderer->SetActiveCamera(m_Camera);
 		m_Renderer->SetBackground(.0, .0, .0);
 		m_Axes_widget->SetOutlineColor( 0.8300, 0.6700, 0.5300 );

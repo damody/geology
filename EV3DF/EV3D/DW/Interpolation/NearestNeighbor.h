@@ -1,7 +1,5 @@
-﻿#pragma once
+#pragma once
 #include "InterpolationInfo.h"
-#define THREADS 256
-
 #define _out
 #define _in
 // use by vtkNearestNeighborFilterCuda

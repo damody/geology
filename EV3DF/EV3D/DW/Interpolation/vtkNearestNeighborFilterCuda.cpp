@@ -33,8 +33,8 @@ int vtkNearestNeighborFilterCuda::RequestData(vtkInformation *vtkNotUsed(request
 		inInfo->Get(vtkDataObject::DATA_OBJECT()));
 	vtkPolyData *output = vtkPolyData::SafeDownCast(
 		outInfo->Get(vtkDataObject::DATA_OBJECT()));
-	vtkPoints * outpoints = vtkPoints::New();
-	vtkDoubleArray* outScalars = vtkDoubleArray::New();
+	VTK_CREATE(outpoints, vtkPoints);
+	VTK_CREATE(outScalars, vtkDoubleArray);
 	vtkDoubleArray* inScalars = (vtkDoubleArray*)(input->GetPointData()->GetScalars());
 	double *raw_points = (double*)malloc(sizeof(double) * 4 * input->GetNumberOfPoints()),
 		*save_pos = raw_points;
@@ -42,40 +42,33 @@ int vtkNearestNeighborFilterCuda::RequestData(vtkInformation *vtkNotUsed(request
 	{
 		input->GetPoint(i, save_pos);
 		save_pos[3] = inScalars->GetValue(i);
-#ifdef _DEBUG
-		//std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
-#endif // _DEBUG
 	}
 	int h_total = input->GetNumberOfPoints();
 	
 	InterpolationInfo info(h_total);
 	info.GetPosFromXYZArray(raw_points);
 	free(raw_points);
-	info.interval[0] = m_interval[0];
-	info.interval[1] = m_interval[1];
-	info.interval[2] = m_interval[2];
-	info.min[0] = m_bounds.xmin;
-	info.min[1] = m_bounds.ymin;
-	info.min[2] = m_bounds.zmin;
-	info.max[0] = m_bounds.xmax;
-	info.max[1] = m_bounds.ymax;
-	info.max[2] = m_bounds.zmax;
+	info.interval[0] = m_Interval[0];
+	info.interval[1] = m_Interval[1];
+	info.interval[2] = m_Interval[2];
+	info.SetBounds(m_Bounds);
 	int size = NearestNeighbor_SetData(&info);
 	float *outdata = new float[size];
 	NearestNeighbor_ComputeData(outdata);
 	double dim[3];
 	int outindex = 0;
-	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval[2])
+	for (dim[2] = m_Bounds.zmin;dim[2] <= m_Bounds.zmax;dim[2]+=m_Interval[2])
 	{
-		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval[1])
+		for (dim[1] = m_Bounds.ymin;dim[1] <= m_Bounds.ymax;dim[1]+=m_Interval[1])
 		{
-			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval[0])
+			for (dim[0] = m_Bounds.xmin;dim[0] <= m_Bounds.xmax;dim[0]+=m_Interval[0])
 			{
 				outpoints->InsertNextPoint(dim);
 				outScalars->InsertNextTuple1(outdata[outindex++]);
 			}
 		}
 	}
+	delete outdata;
 	printf("size: %d, outindex: %d\n", size, outindex);
 	output->SetPoints(outpoints);
 	output->GetPointData()->SetScalars(outScalars);

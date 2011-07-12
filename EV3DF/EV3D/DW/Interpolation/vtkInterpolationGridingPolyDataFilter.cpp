@@ -13,13 +13,14 @@ vtkInterpolationGridingPolyDataFilter::vtkInterpolationGridingPolyDataFilter()
 {
 	this->SetNumberOfInputPorts(1);
 	this->SetNumberOfOutputPorts(1);
+	m_NullValue = VTK_FLOAT_MIN;
 }
 
 vtkInterpolationGridingPolyDataFilter::~vtkInterpolationGridingPolyDataFilter()
 {
 
 }
-void vtkInterpolationGridingPolyDataFilter::PrintSelf(std::ostream& os, vtkIndent indent)
+void vtkInterpolationGridingPolyDataFilter::PrintSelf(ostream& os, vtkIndent indent)
 {
 	this->Superclass::PrintSelf(os,indent);
 }
@@ -27,12 +28,12 @@ void vtkInterpolationGridingPolyDataFilter::PrintSelf(std::ostream& os, vtkInden
 // Customer function
 void vtkInterpolationGridingPolyDataFilter::SetBounds( const double bounds[] )
 {
-	m_bounds.SetBounds(bounds);
+	m_Bounds.SetBounds(bounds);
 }
 
 void vtkInterpolationGridingPolyDataFilter::GetBounds( double bounds[] )
 {
-	m_bounds.GetBounds(bounds);
+	m_Bounds.GetBounds(bounds);
 }
 
 void vtkInterpolationGridingPolyDataFilter::SetInterval( double x, double y, double z )
@@ -40,14 +41,14 @@ void vtkInterpolationGridingPolyDataFilter::SetInterval( double x, double y, dou
 	assert(x > 0);
 	assert(y > 0);
 	assert(z > 0);
-	m_interval[0] = x;
-	m_interval[1] = y;
-	m_interval[2] = z;
+	m_Interval[0] = x;
+	m_Interval[1] = y;
+	m_Interval[2] = z;
 }
 
 void vtkInterpolationGridingPolyDataFilter::SetInterval( double inter[] )
 {
-	memcpy(m_interval, inter, sizeof(double)*3);
+	memcpy(m_Interval, inter, sizeof(double)*3);
 }
 
 int vtkInterpolationGridingPolyDataFilter::NumOfInterpolationPoints()
@@ -57,17 +58,17 @@ int vtkInterpolationGridingPolyDataFilter::NumOfInterpolationPoints()
 
 int vtkInterpolationGridingPolyDataFilter::NumOfXPoints()
 {
-	return floor((m_bounds.xmax-m_bounds.xmin)/m_interval[0]);
+	return floor((m_Bounds.xmax-m_Bounds.xmin)/m_Interval[0]+1);
 }
 
 int vtkInterpolationGridingPolyDataFilter::NumOfYPoints()
 {
-	return floor((m_bounds.ymax-m_bounds.ymin)/m_interval[1]);
+	return floor((m_Bounds.ymax-m_Bounds.ymin)/m_Interval[1]+1);
 }
 
 int vtkInterpolationGridingPolyDataFilter::NumOfZPoints()
 {
-	return floor((m_bounds.zmax-m_bounds.zmin)/m_interval[2]);
+	return floor((m_Bounds.zmax-m_Bounds.zmin)/m_Interval[2]+1);
 }
 
 int vtkInterpolationGridingPolyDataFilter::RequestData( vtkInformation *vtkNotUsed(request),
@@ -85,14 +86,4 @@ int vtkInterpolationGridingPolyDataFilter::RequestData( vtkInformation *vtkNotUs
 	input->GetPoints()->InsertNextPoint(1.0, 1.0, 1.0);
 	output->ShallowCopy(input);
 	return 1;
-}
-
-double vtkInterpolationGridingPolyDataFilter::PointsDistanceSquare( double pos1[], double pos2[] )
-{
-	double dis[3];
-	for (int i=0;i<3;i++)
-		dis[i] = pos1[i]-pos2[i];
-	return  dis[0]*dis[0] +
-		dis[1]*dis[1] +
-		dis[2]*dis[2];
 }

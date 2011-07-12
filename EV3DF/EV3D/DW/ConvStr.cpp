@@ -1,13 +1,15 @@
 ﻿#include "ConvStr.h"
+#include <windows.h>
 
 #pragma warning(disable : 4996) // use sprintf
 
 void ConvStr::CharToWchar(wchar_t *unicode, const char *ansi)
 {
-	mbstowcs(unicode, ansi, INT_MAX);
+	MultiByteToWideChar(CP_ACP, 0, ansi, strlen(ansi), unicode, 2048 ); 
 }
 void ConvStr::WcharToChar(const wchar_t *unicode, char *ansi)
 {
+	setlocale(LC_ALL, "cht");
 	wcstombs(ansi, unicode, INT_MAX);
 }
 
