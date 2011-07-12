@@ -9,8 +9,8 @@
 #include <vtkCellArray.h>
 #include <vtkDataSetMapper.h>
 #include <vtkTriangleStrip.h>
-VTK_SMART_POINTER(vtkNearestNeighborFilter)
-VTK_SMART_POINTER(vtkInverseDistanceFilter)
+VTKSMART_PTR(vtkNearestNeighborFilter)
+VTKSMART_PTR(vtkInverseDistanceFilter)
 SolidDoc_Sptr SolidCtrl::NewDoc()	// 新資料集
 {
 	SolidDoc_Sptr	tmpPtr(new SolidDoc(m_bounds));
@@ -258,6 +258,12 @@ int SolidCtrl::SetGridedData(SJCScalarField3d *sf3d)
 	m_imagedata->SetExtent(tbounds[0], tbounds[1], tbounds[2], tbounds[3], tbounds[4], tbounds[5]);
 	if (isGrided)
 	{
+		m_imagedata->SetSpacing
+			(
+			m_bounds.Xlen() / (x_len - 1),
+			m_bounds.Ylen() / (y_len - 1),
+			m_bounds.Zlen() / (z_len - 1)
+			);
 		m_imagedata->SetDimensions(x_len, y_len, z_len);
 		m_imagedata->GetPointData()->SetScalars(point_array);
 	}
@@ -352,7 +358,6 @@ void SolidCtrl::Render()
 {
 	m_RenderWindow->Render();
 }
-
 void SolidCtrl::AddTaiwan()
 {
 	AddTaiwan("TW100m.dat", 0, 503);
@@ -363,7 +368,7 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int raw)
 	vtkPoints_Sptr	points = vtkSmartNew;
 	std::ifstream istr1(datafilename);
 
-	vtkSmartPointer<vtkTriangleStrip>	triangle = vtkSmartNew;
+	
 	int					i = 0;
 	for (; !istr1.eof();)
 	{
@@ -380,29 +385,17 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int raw)
 		col = i / raw;
 
 	int	count = 0;
+	vtkSmartPointer<vtkCellArray>	cells = vtkSmartNew;
 	for (int c = 0; c < col - 1; c++)
 	{
-		if (c % 2 == 0)
-		{
+		vtkSmartPointer<vtkTriangleStrip>	triangle = vtkSmartNew;
 			for (int w = 0; w < raw - 1; w++)
 			{
 				triangle->GetPointIds()->InsertNextId(c * raw + w);
 				triangle->GetPointIds()->InsertNextId((c + 1) * raw + w);
 			}
-		}
-		else
-		{
-			for (int w = raw - 1; w > 0; w--)
-			{
-				triangle->GetPointIds()->InsertNextId((c + 1) * raw + w);
-				triangle->GetPointIds()->InsertNextId(c * raw + w - 1);
-			}
-		}
+		cells->InsertNextCell(triangle);
 	}
-
-	vtkSmartPointer<vtkCellArray>	cells = vtkSmartNew;
-	cells->InsertNextCell(triangle);
-
 	vtkPolyData_Sptr	polydata = vtkSmartNew;
 	polydata->SetPoints(points);
 	polydata->SetStrips(cells);
@@ -414,4 +407,5 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int raw)
 	actor->SetMapper(mapper);
 	actor->GetProperty()->SetOpacity(0.5);
 	m_Renderer->AddActor(actor);
+
 }

@@ -1,6 +1,6 @@
-﻿#pragma once
+#pragma once
 #include "vtkInterpolationGridingPolyDataFilter.h"
-
+//v
 class vtkNearestNeighborFilter : public vtkInterpolationGridingPolyDataFilter 
 {
 public:

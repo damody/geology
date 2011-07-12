@@ -3,13 +3,14 @@
 #include "vtkPointData.h"
 #include "vtkPolyDataAlgorithm.h"
 #include "vtkBounds.h"
-
+#include <vtkMath.h>
+#define VTK_CREATE(var, type) vtkSmartPointer<type> var = vtkSmartPointer<type>::New();
 
 class vtkInterpolationGridingPolyDataFilter : public vtkPolyDataAlgorithm 
 {
 public:
 	vtkTypeMacro(vtkInterpolationGridingPolyDataFilter,vtkPolyDataAlgorithm);
-	void PrintSelf(std::ostream& os, vtkIndent indent);
+	void PrintSelf(ostream& os, vtkIndent indent);
 	static vtkInterpolationGridingPolyDataFilter *New();
 	// Customer function
 	void SetBounds(const double bounds[]);
@@ -20,10 +21,19 @@ public:
 	int  NumOfXPoints();
 	int  NumOfYPoints();
 	int  NumOfZPoints();
+	// if don't have any value set this value, default is VTK_FLOAT_MIN
+	void SetNullValue( double v )
+	{
+		m_NullValue = v;
+	}
+	double GetNullValue()
+	{
+		return m_NullValue;
+	}
 protected:
-	vtkBounds m_bounds;	// vtk's format bounds
-	double m_interval[3];	// griding's interval
-	double PointsDistanceSquare(double pos1[], double pos2[]);
+	double	m_NullValue;
+	vtkBounds m_Bounds;	// vtk's format bounds
+	double m_Interval[3];	// griding's interval
 	vtkInterpolationGridingPolyDataFilter();
 	~vtkInterpolationGridingPolyDataFilter();
 

@@ -10,7 +10,7 @@
 #include "..\Lua\CreateLua.h"
 #include "Interpolation\vtkBounds.h"
 #include "Interpolation/vtkNearestNeighborFilter.h"
-VTK_SMART_POINTER(vtkNearestNeighborFilter)
+VTKSMART_PTR(vtkNearestNeighborFilter)
 
 void PolyDataHandler::SaveFileToVtp( vtkPolyData* polydata, std::string path )
 {

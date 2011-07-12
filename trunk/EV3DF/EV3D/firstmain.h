@@ -263,6 +263,7 @@ public:
     static bool ShowToolTips();
 
 	void RenderFrame();
+	void OpenLuaFile(std::wstring str);
 
 ////@begin FirstMain member variables
     wxAuiManager m_auiManager;

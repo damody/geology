@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #pragma warning(disable:4201)
 
 class vtkBounds
@@ -26,12 +26,13 @@ public:
 	vtkBounds();
 	vtkBounds(double data[]);
 	vtkBounds(	double xmin,
-			double xmax,
-			double ymin,
-			double ymax,
-			double zmin,
-			double zmax);
+		double xmax,
+		double ymin,
+		double ymax,
+		double zmin,
+		double zmax);
 	operator double*() {return m_bounds;}
+	void SetBounds(const vtkBounds& b){*this = b;}
 	void SetBounds(const double bounds[]);
 	void GetBounds(double bounds[]);
 	double Xlen(){return xmax-xmin;}

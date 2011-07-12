@@ -316,8 +316,14 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 	switch (view->GetType())
 	{
 	case SEffect::BOUNDING_BOX:
+		{
+			Bounding_Box_Setting* setting = (Bounding_Box_Setting*)SuperSetting.get();
+		}
 		break;
 	case SEffect::VERTEX:
+		{
+			Vertex_Setting* setting = (Vertex_Setting*)SuperSetting.get();
+		}
 		break;
 	case SEffect::CONTOUR:
 		{
@@ -333,6 +339,9 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 		}
 		break;
 	case SEffect::AXES:
+		{
+			Axes_Setting* setting = (Axes_Setting*)SuperSetting.get();
+		}
 		break;
 	case SEffect::CLIP_PLANE:
 		{
@@ -354,10 +363,19 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 		}
 		break;
 	case SEffect::RULER:
+		{
+			Ruler_Setting* setting = (Ruler_Setting*)SuperSetting.get();
+		}
 		break;
 	case SEffect::CLIP_CONTOUR:
+		{
+			ClipContour_Setting* setting = (ClipContour_Setting*)SuperSetting.get();
+		}
 		break;
 	case SEffect::VOLUME_RENDERING:
+		{
+			VolumeRender_Setting* setting = (VolumeRender_Setting*)SuperSetting.get();
+		}
 		break;
 	}
 	view->Update();

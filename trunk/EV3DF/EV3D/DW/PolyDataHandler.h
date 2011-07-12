@@ -8,8 +8,8 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-VTK_SMART_POINTER(vtkXMLPolyDataWriter)
-VTK_SMART_POINTER(vtkXMLPolyDataReader)
+VTKSMART_PTR(vtkXMLPolyDataWriter)
+VTKSMART_PTR(vtkXMLPolyDataReader)
 #include "Interpolation/InterpolationInfo.h"
 
 

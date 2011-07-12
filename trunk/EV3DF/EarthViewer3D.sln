@@ -2,9 +2,6 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EarthViewer3D", "EV3D\EarthViewer3D.vcproj", "{9926C1F5-D07F-43FF-959C-7CD14594951D}"
-	ProjectSection(ProjectDependencies) = postProject
-		{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB} = {14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SJC", "SJC\SJC.vcproj", "{14549BEA-8B20-4CD8-BE0A-09C5DA1E6EDB}"
 EndProject

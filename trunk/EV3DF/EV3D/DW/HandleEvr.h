@@ -33,6 +33,7 @@ struct PointDataSource
 	int m_type;
 	SJCScalarField3d* m_sjcf3d;
 	vtkPolyData_Sptr  m_polydata;
+	PointDataSource(){}
 	PointDataSource(SJCScalarField3d* sjc):m_sjcf3d(sjc), m_type(SJCSCALAR_PTR){}
 	PointDataSource(vtkPolyData_Sptr poly):m_polydata(poly), m_type(VTKPOLYDATA){}
 	operator SJCScalarField3d*()
@@ -54,13 +55,30 @@ public:
 	typedef std::vector<std::string> strVector;
 	typedef std::vector<int> iVector;
 	typedef std::vector<double> dVector;
+	std::string m_path;
+	std::wstring m_wpath;
+	std::wstring m_wdir;
 
-	HandleEvr(const char* file):m_pData(NULL),m_isload(false)
+	HandleEvr(std::wstring file):m_pData(NULL),m_isload(false)
 	{
-		m_cell.InputLuaFile(file);
+		m_wpath = file;
+		int n = m_wpath.find_last_of(L'\\');
+		m_wdir = m_wpath.substr(0, n);
+		if (n == -1)
+			m_wdir = L"";
+		m_cell.InputLuaFile(ConvStr::GetStr(file).c_str());
+	}
+	HandleEvr(std::string file):m_pData(NULL),m_isload(false)
+	{
+		m_wpath = ConvStr::GetWstr(file);
+		int n = m_wpath.find_last_of(L'\\');
+		m_wdir = m_wpath.substr(0, n);
+		if (n == -1)
+			m_wdir = L"";
+		m_cell.InputLuaFile(file.c_str());
 	}
 	~HandleEvr();
-	int InitLoad(const std::wstring& directoryPath);
+	int InitLoad();
 	// 2d test, it will be delete on next version
 	double* Get2Ddata();
 	double* p2d;

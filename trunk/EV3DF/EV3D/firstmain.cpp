@@ -282,6 +282,7 @@ void FirstMain::CreateControls()
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_MOTION, wxMouseEventHandler(FirstMain::OnMotion), NULL, this);
     itemGLCanvas->Connect(ID_GLCANVAS, wxEVT_MOUSEWHEEL, wxMouseEventHandler(FirstMain::OnMouseWheel), NULL, this);
 	////@end FirstMain content construction
+    m_SolidCtrl->ReSize(itemGLCanvas->GetSize().GetWidth(), itemGLCanvas->GetSize().GetHeight());
 } 
 
 /*
@@ -529,11 +530,11 @@ void FirstMain::OpenFile()
 		itemGLCanvas->SetCurrent();       
 		switch(dialog.GetFilterIndex())
 		{
-		case 0:
+		case 0: // load lua file
 			if (m_hEvr)
 				delete m_hEvr;
-			m_hEvr = new HandleEvr(VarStr(dialog.GetPath().c_str()));
-			m_hEvr->InitLoad(dialog.GetDirectory().wc_str());
+			m_hEvr = new HandleEvr(dialog.GetPath().c_str());
+			m_hEvr->InitLoad();
 			m_ShowTypeCombo->Clear();
 			{
 				int i=0;
@@ -559,7 +560,7 @@ void FirstMain::OpenFile()
 			m_ZminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmin).c_str()));
 			m_ZmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmax).c_str()));
 			break;
-		case 1:
+		case 1: // load dat file
 			{
 				m_ConvEvr = ConvertToEvr();
 				m_ConvEvr.Load_Dat(dialog.GetPath().c_str());
@@ -884,4 +885,36 @@ void FirstMain::OnLeftDown( wxMouseEvent& event )
     // Before editing this code, remove the block markers.
     event.Skip();
 ////@end wxEVT_LEFT_DOWN event handler for ID_GLCANVAS in FirstMain. 
+}
+
+void FirstMain::OpenLuaFile( std::wstring str )
+{
+	if (m_hEvr)
+		delete m_hEvr;
+	m_hEvr = new HandleEvr(str.c_str());
+	m_hEvr->InitLoad();
+	m_ShowTypeCombo->Clear();
+	{
+		int i=0;
+		for (HandleEvr::strVector::iterator it = m_hEvr->m_format_name.begin();
+			it != m_hEvr->m_format_name.end(); it++)
+		{
+			i++;
+			if (i>3)
+				m_ShowTypeCombo->Append(wxString::FromAscii(it->c_str()));
+		}
+	}
+	m_ShowTypeCombo->SetSelection(0);
+	m_treectrl->RmAllAddItem();
+	m_psjcF3d = m_hEvr->m_SJCSF3dMap[3].second;
+	if (m_psjcF3d)
+		m_SolidCtrl->SetGridedData(m_psjcF3d); // 設定第一順位的資料來顯示
+	else
+		m_SolidCtrl->SetUnGridData(m_hEvr->m_SJCSF3dMap[3].second.m_polydata);
+	m_XminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmin).c_str()));
+	m_XmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Xmax).c_str()));
+	m_YminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymin).c_str()));
+	m_YmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Ymax).c_str()));
+	m_ZminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmin).c_str()));
+	m_ZmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmax).c_str()));
 }

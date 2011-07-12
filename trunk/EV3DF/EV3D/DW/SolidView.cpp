@@ -4,7 +4,7 @@
 #include "SolidDoc.h"
 #include "SolidCtrl.h"
 #include "SEffect.h"
-#include <vtkCubeAxesActor.h>
+
 SolidView::SolidView(SolidCtrl * ParentCtrl, SolidDoc_Sptr Doc) :
 	m_ParentCtrl(ParentCtrl)
 {
@@ -21,7 +21,8 @@ void SolidView::SetVisable(bool show)
 		{
 		case SEffect::CLIP_PLANE:	m_ImagePlane->On(); break;
 		case SEffect::RULER:		break;
-		case SEffect::VOLUME_RENDERING: break;
+		case SEffect::VOLUME_RENDERING: GetParentCtrl()->m_Renderer->AddViewProp(m_volume); 
+			GetParentCtrl()->m_Renderer->AddActor2D(m_ScalarBarActor); break;
 		case SEffect::AXES:		GetParentCtrl()->m_Renderer->AddActor(m_CubeAxesActor); break;
 		default:			GetParentCtrl()->m_Renderer->AddActor(m_actor);
 		}
@@ -32,7 +33,8 @@ void SolidView::SetVisable(bool show)
 		{
 		case SEffect::CLIP_PLANE:	m_ImagePlane->Off(); break;
 		case SEffect::RULER:		break;
-		case SEffect::VOLUME_RENDERING: GetParentCtrl()->m_Renderer->RemoveViewProp(m_volume); break;
+		case SEffect::VOLUME_RENDERING: GetParentCtrl()->m_Renderer->RemoveViewProp(m_volume); 
+			GetParentCtrl()->m_Renderer->RemoveActor2D(m_ScalarBarActor); break;
 		case SEffect::AXES:		GetParentCtrl()->m_Renderer->RemoveActor(m_CubeAxesActor); break;
 		default:			GetParentCtrl()->m_Renderer->RemoveActor(m_actor);
 		}
@@ -109,11 +111,8 @@ void SolidView::Update()
 			default:
 				assert(0 && "setting->m_Axes");
 			}
-
 			m_ImagePlane->SetSlicePosition(setting->m_Percent * numvalue / 100.0);
 			setting->m_Percent = m_ImagePlane->GetSlicePosition() / numvalue * 100.0;
-
-			vtkProperty_Sptr	proerty = vtkSmartNew;
 		}
 		break;
 
@@ -131,8 +130,6 @@ void SolidView::Update()
 
 	case SEffect::VOLUME_RENDERING:
 		{
-
-			//Init_VolumeRendering();
 		}
 		break;
 	}
@@ -237,8 +234,19 @@ void SolidView::Init_Contour()
 void SolidView::Init_Axes()
 {
 	m_CubeAxesActor = vtkSmartNew;
+	double bounding[6];
+	GetParentDoc()->m_ImageData->GetBounds(bounding);
 	m_CubeAxesActor->SetBounds(GetParentDoc()->m_ImageData->GetBounds());
 	m_CubeAxesActor->SetCamera(GetParentCtrl()->m_Renderer->GetActiveCamera());
+	m_CubeAxesActor->SetBounds(bounding);
+	m_CubeAxesActor->SetXTitle("E,lon");
+	m_CubeAxesActor->SetYTitle("Height");
+	m_CubeAxesActor->SetZTitle("N,lot");
+	m_CubeAxesActor->SetXLabelFormat("%-#f");
+	m_CubeAxesActor->SetYLabelFormat("%-#f");
+	m_CubeAxesActor->SetZLabelFormat("%-#f");
+	m_CubeAxesActor->SetLabelScaling(false,4,4,4);
+	m_CubeAxesActor->SetFlyModeToStaticEdges();
 }
 
 void SolidView::Init_ClipPlane()
@@ -282,21 +290,29 @@ void SolidView::Init_VolumeRendering()
 	vtkImageShiftScale_Sptr		ImageShiftScale = vtkSmartNew;
 	vtkSmartVolumeMapper_Sptr	volumeMapper = vtkOnlyNew;
 	vtkVolumeProperty_Sptr		volumeProperty = vtkSmartNew;
+	m_ScalarBarActor = vtkSmartNew;
 	volumeMapper->SetBlendModeToComposite();		// composite first
 	volumeMapper->SetInputConnection(GetParentDoc()->m_ImageData->GetProducerPort());
 	volumeProperty->ShadeOff();
 	volumeProperty->SetInterpolationType(VTK_LINEAR_INTERPOLATION);
 	compositeOpacity->AddPoint(649.0, 0.0);
-	compositeOpacity->AddPoint(450.0, 0.5);
+	compositeOpacity->AddPoint(450.0, 0.005);
+	compositeOpacity->AddPoint(400.0, 0.0);
+	compositeOpacity->AddPoint(300.0, 0.005);
 	compositeOpacity->AddPoint(143.0, 0.0);
 	volumeProperty->SetScalarOpacity(compositeOpacity);	// composite first.
 	colorTransferFunction->AddRGBPoint(649.0, 1.0 / 2, 0.0, 0.0);
-	colorTransferFunction->AddRGBPoint(350.0, 1.0 / 2, 165 / 255 / 2.0, 0.0);
-	colorTransferFunction->AddRGBPoint(300.0, 1.0 / 2, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(250.0, 0.0, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(200.0, 0.0, 0.5 / 2, 1.0 / 2);
-	colorTransferFunction->AddRGBPoint(150.0, 0.0, 0.0, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(450.0, 1.0 / 2, 165 / 255 / 2.0, 0.0);
+	colorTransferFunction->AddRGBPoint(350.0, 1.0 / 2, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(280.0, 0.0, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(230.0, 0.0, 0.5 / 2, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(180.0, 0.0, 0.0, 1.0 / 2);
 	colorTransferFunction->AddRGBPoint(100.0, 139 / 255.0 / 2, 0.0, 1.0 / 2);
+	m_ScalarBarActor->SetLookupTable(colorTransferFunction);
+	m_ScalarBarActor->SetNumberOfLabels(4);
+ 	m_ScalarBarActor->SetMaximumWidthInPixels(60);
+	m_ScalarBarActor->SetMaximumHeightInPixels(300);
+	GetParentCtrl()->m_Renderer->AddActor2D(m_ScalarBarActor);
 	volumeProperty->SetColor(colorTransferFunction);
 	m_volume = vtkSmartNew;
 	m_volume->SetMapper(volumeMapper);

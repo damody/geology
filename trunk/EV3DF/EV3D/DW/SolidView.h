@@ -41,6 +41,7 @@ private:
 	vtkContourFilter_Sptr		m_ContourFilter;
 	vtkVolume_Sptr			m_volume;
 	vtkCubeAxesActor_Sptr		m_CubeAxesActor;
+	vtkScalarBarActor_Sptr		m_ScalarBarActor;
 private:
 	friend	SolidCtrl;
 	friend	SolidDoc;

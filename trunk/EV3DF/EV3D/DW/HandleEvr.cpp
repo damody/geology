@@ -8,7 +8,7 @@
 #include "VarStr.h"
 
 // directoryPath?槌ua頝臬? lua瑼??vr頝臬?
-int HandleEvr::InitLoad (const std::wstring &directoryPath)
+int HandleEvr::InitLoad ()
 {
 	DataAmount = m_cell.getLua_UsePath<double> ("DataAmount");
 	for (int i = 0; i < DataAmount - 3; i++)
@@ -46,7 +46,8 @@ int HandleEvr::InitLoad (const std::wstring &directoryPath)
 	m_totalSize = m_total * m_dataSize;
 	m_dataPath = m_cell.getLua_UsePath < const char * > ("data");
 	m_dataWPath = ConvStr::GetWstr(m_dataPath.c_str());
-	m_dataWPath = directoryPath + L"\\" + m_dataWPath;
+	if (m_wdir.size() != 0)
+	m_dataWPath = m_wdir + L"\\" + m_dataWPath;
 	using namespace std;
 	string		data_format = m_cell.getLua_UsePath < const char * > ("data_format");
 	transform(data_format.begin(), data_format.end(), data_format.begin(), (int(*) (int)) tolower);
@@ -141,11 +142,9 @@ int HandleEvr::InitLoad (const std::wstring &directoryPath)
 					);
 			}
 			polydata->SetPoints(points);
-			polydata->
-			GetPointData()
-			->SetScalars(point_array);
+			polydata->GetPointData()->SetScalars(point_array);
 			assert(polydata->GetNumberOfPoints() != 0);
-			m_SJCSF3dMap.push_back(std::make_pair(m_format_name[i], polydata));
+			//m_SJCSF3dMap.push_back(std::make_pair(m_format_name[i], polydata));
 		}
 	}
 	m_isload = true;

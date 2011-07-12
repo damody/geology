@@ -32,8 +32,8 @@ int vtkNearestNeighborFilter::RequestData(vtkInformation *vtkNotUsed(request),
 		inInfo->Get(vtkDataObject::DATA_OBJECT()));
 	vtkPolyData *output = vtkPolyData::SafeDownCast(
 		outInfo->Get(vtkDataObject::DATA_OBJECT()));
-	vtkPoints * outpoints = vtkPoints::New();
-	vtkDoubleArray* outScalars = vtkDoubleArray::New();
+	VTK_CREATE(outpoints, vtkPoints);
+	VTK_CREATE(outScalars, vtkDoubleArray);
 	vtkDoubleArray* inScalars = (vtkDoubleArray*)(input->GetPointData()->GetScalars());
 	double *raw_points = (double*)malloc(sizeof(double) * 4 * input->GetNumberOfPoints()),
 		*save_pos = raw_points;
@@ -41,29 +41,21 @@ int vtkNearestNeighborFilter::RequestData(vtkInformation *vtkNotUsed(request),
 	{
 		input->GetPoint(i, save_pos);
 		save_pos[3] = inScalars->GetValue(i);
-#ifdef _DEBUG
-		//std::cout << "Point " << i << " : (" << save_pos[0] << " " << save_pos[1] << " " << save_pos[2] << ")" << std::endl;
-#endif // _DEBUG
 	}
 	double dim[3];
-	int count[3] = {0,0,0};
-	for (dim[2] = m_bounds.zmin;dim[2] <= m_bounds.zmax;dim[2]+=m_interval[2])
+	
+	for (dim[2] = m_Bounds.zmin;dim[2] <= m_Bounds.zmax;dim[2]+=m_Interval[2])
 	{
-		count[2]++;
-		for (dim[1] = m_bounds.ymin;dim[1] <= m_bounds.ymax;dim[1]+=m_interval[1])
+		for (dim[1] = m_Bounds.ymin;dim[1] <= m_Bounds.ymax;dim[1]+=m_Interval[1])
 		{
-			if (count[2] == 1)
-				count[1]++;
-			for (dim[0] = m_bounds.xmin;dim[0] <= m_bounds.xmax;dim[0]+=m_interval[0])
+			for (dim[0] = m_Bounds.xmin;dim[0] <= m_Bounds.xmax;dim[0]+=m_Interval[0])
 			{
-				if (count[1] == 1)
-					count[0]++;
-				double min_dis = VTK_DOUBLE_MAX;
-				double val = VTK_DOUBLE_MAX;
+				double min_dis = VTK_FLOAT_MAX;
+				double val = VTK_FLOAT_MAX;
 				save_pos = raw_points;
 				for(vtkIdType i = 0; i < input->GetNumberOfPoints(); i++)
 				{
-					double dis = PointsDistanceSquare(save_pos, dim);
+					double dis = sqrt(vtkMath::Distance2BetweenPoints(save_pos, dim));
 					if (min_dis > dis)
 					{
 						min_dis = dis;
@@ -71,12 +63,13 @@ int vtkNearestNeighborFilter::RequestData(vtkInformation *vtkNotUsed(request),
 					}
 					save_pos += 4;
 				}
+				if (val == VTK_FLOAT_MAX)
+					val = m_NullValue;
 				outpoints->InsertNextPoint(dim);
 				outScalars->InsertNextTuple1(val);
 			}
 		}
 	}
-	printf("x:%d y:%d z:%d\n", count[0], count[1], count[2]);
 	output->SetPoints(outpoints);
 	output->GetPointData()->SetScalars(outScalars);
 	return 1;
