@@ -4,6 +4,20 @@
 #include "TShape.hpp"
 #include <boost/shared_ptr.hpp>
 
+// Define interaction style
+class MouseInteractorStylePP : public vtkInteractorStyleTrackballCamera
+{
+public:
+	static MouseInteractorStylePP* New();
+	vtkTypeMacro(MouseInteractorStylePP, vtkInteractorStyleTrackballCamera);
+
+	virtual void OnLeftButtonDown();
+
+};
+
+
+VTK_SMART_POINTER(MouseInteractorStylePP)
+
 class DrawView
 {
 public:
@@ -88,12 +102,14 @@ private:
 				m_Append_de;
 	vtkLookupTable_Sptr	m_hs_lut,
 				m_depth_lut;
+	vtkPointPicker_Sptr	m_PointPicker;
 	vtkUnsignedCharArray_Sptr	m_hs_colors,
 					m_de_colors;
 	vtkLegendScaleActor_Sptr	m_legendScaleActor;
 	vtkRenderWindowInteractor_Sptr	m_WindowInteractor;
 	vtkOrientationMarkerWidget_Sptr	m_Axes_widget;
 	vtkInteractorStyleTrackballCamera_Sptr	m_style;
+	MouseInteractorStylePP_Sptr	m_style2;
 	vtkCubeAxesActor_Sptr	m_CubeAxes;
 	double		m_bounding[6];
 };

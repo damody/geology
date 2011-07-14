@@ -9,6 +9,8 @@
 	MESSAGE(res);
 
 #include <vtkSmartPointer.h>
+#include <vtkObjectFactory.h>
+#include <vtkRendererCollection.h>
 #include <vtkLegendScaleActor.h>
 #include <vtkInteractorStyleTrackballCamera.h>
 #include <vtkAppendPolyData.h>
@@ -42,11 +44,13 @@
 #include <vtkProperty.h>
 #include <vtkCubeAxesActor.h>
 #include <vtkActor.h>
+#include <vtkPointPicker.h>
 
 #define VTK_SMART_POINTER(x) \
 	typedef vtkSmartPointer< x >	x##_Sptr; \
 	typedef std::vector< x##_Sptr >	x##_Sptrs;
 
+VTK_SMART_POINTER(vtkPointPicker)
 VTK_SMART_POINTER(vtkCubeAxesActor)
 VTK_SMART_POINTER(vtkLegendScaleActor)
 VTK_SMART_POINTER(vtkInteractorStyleTrackballCamera)
