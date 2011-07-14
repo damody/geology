@@ -1,5 +1,6 @@
 ﻿#include "StdVtkWx.h"
 #include "DrawView.h"
+#include <vtkSphereSource.h>
 
 DrawView::DrawView()
 {
@@ -45,11 +46,14 @@ DrawView::DrawView()
 	vtkSmartNew(m_Axes);
 	vtkSmartNew(m_legendScaleActor);
 	vtkSmartNew(m_WindowInteractor);
+	vtkSmartNew(m_PointPicker);
 	vtkSmartNew(m_Axes_widget);
 	vtkSmartNew(m_style);
+	vtkSmartNew(m_style2);
 
 	m_RenderWindow->AddRenderer(m_Renderer);
 	m_WindowInteractor->SetRenderWindow(m_RenderWindow);
+	m_WindowInteractor->SetPicker(m_PointPicker);
 	m_WindowInteractor->SetInteractorStyle( m_style );
 	//m_Renderer->AddActor(m_legendScaleActor);
 	m_Renderer->SetActiveCamera(m_Camera);
@@ -144,8 +148,8 @@ void DrawView::AddData( const nmeaINFO& info )
 	m_bounding[4] = m_bounding[4] < -data.depth? m_bounding[4]: -data.depth;
 	m_bounding[5] = 0;
 	m_CubeAxes->SetBounds(m_bounding);
-	m_CubeAxes->SetXAxisRange(m_bounding[0]*0.1, m_bounding[1]*0.1);
-	m_CubeAxes->SetYAxisRange(m_bounding[2]*0.1, m_bounding[3]*0.1);
+	m_CubeAxes->SetXAxisRange(m_bounding[0]*0.01, m_bounding[1]*0.01);
+	m_CubeAxes->SetYAxisRange(m_bounding[2]*0.01, m_bounding[3]*0.01);
 	m_CubeAxes->SetZAxisRange(m_bounding[4]/m_depth_scalar*10, 0);
 	vtkIdType pid[1];
 	pid[0] = m_hs_points->InsertNextPoint(phs);
@@ -168,11 +172,11 @@ void DrawView::AddData( const nmeaINFO& info )
 		line->GetPointIds()->SetId(0, m_total_size-2);
 		line->GetPointIds()->SetId(1, m_total_size-1);
 		m_hs_lines->InsertNextCell(line);
-		vtkLine_Sptr line2;
-		vtkSmartNew(line2);
-		line2->GetPointIds()->SetId(0, m_total_size-2);
-		line2->GetPointIds()->SetId(1, m_total_size-1);
-		m_de_lines->InsertNextCell(line2);
+// 		vtkLine_Sptr line2;
+// 		vtkSmartNew(line2);
+// 		line2->GetPointIds()->SetId(0, m_total_size-2);
+// 		line2->GetPointIds()->SetId(1, m_total_size-1);
+// 		m_de_lines->InsertNextCell(line2);
 	}
 }
 
@@ -350,11 +354,11 @@ void DrawView::UpdateScalar()
 			line->GetPointIds()->SetId(0, m_total_size-2);
 			line->GetPointIds()->SetId(1, m_total_size-1);
 			m_hs_lines->InsertNextCell(line);
-			vtkLine_Sptr line2;
-			vtkSmartNew(line2);
-			line2->GetPointIds()->SetId(0, m_total_size-2);
-			line2->GetPointIds()->SetId(1, m_total_size-1);
-			m_de_lines->InsertNextCell(line2);
+// 			vtkLine_Sptr line2;
+// 			vtkSmartNew(line2);
+// 			line2->GetPointIds()->SetId(0, m_total_size-2);
+// 			line2->GetPointIds()->SetId(1, m_total_size-1);
+// 			m_de_lines->InsertNextCell(line2);
 		}
 	}
 	m_hs_poly->GetPointData()->SetScalars(m_hs_colors);
@@ -365,8 +369,8 @@ void DrawView::UpdateScalar()
 	m_Append_de->AddInput(m_de_poly);
 
 	m_CubeAxes->SetBounds(m_bounding);
-	m_CubeAxes->SetXAxisRange(m_bounding[0]*0.1, m_bounding[1]*0.1);
-	m_CubeAxes->SetYAxisRange(m_bounding[2]*0.1, m_bounding[3]*0.1);
+	m_CubeAxes->SetXAxisRange(m_bounding[0]*0.01, m_bounding[1]*0.01);
+	m_CubeAxes->SetYAxisRange(m_bounding[2]*0.01, m_bounding[3]*0.01);
 	m_CubeAxes->SetZAxisRange(m_bounding[4]/m_depth_scalar*10, 0);
 }
 
@@ -375,3 +379,37 @@ void DrawView::SetIgnoreDepth( double val )
 	m_IgnoreDepth = val;
 	UpdateScalar();
 }
+
+void MouseInteractorStylePP::OnLeftButtonDown()
+{
+	std::cout << "Picking pixel: " << this->Interactor->GetEventPosition()[0] << " " << this->Interactor->GetEventPosition()[1] << std::endl;
+	this->Interactor->GetPicker()->Pick(this->Interactor->GetEventPosition()[0], 
+		this->Interactor->GetEventPosition()[1], 
+		0,  // always zero.
+		this->Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer());
+	double picked[3];
+	this->Interactor->GetPicker()->GetPickPosition(picked);
+	std::cout << "Picked value: " << picked[0] << " " << picked[1] << " " << picked[2] << std::endl;
+
+	vtkSmartPointer<vtkSphereSource> sphereSource =
+		vtkSmartPointer<vtkSphereSource>::New();
+	sphereSource->SetCenter(picked[0], picked[1], picked[2]);
+	sphereSource->SetRadius(0.1);
+
+	//Create a mapper and actor
+	vtkSmartPointer<vtkPolyDataMapper> mapper =
+		vtkSmartPointer<vtkPolyDataMapper>::New();
+	mapper->SetInputConnection(sphereSource->GetOutputPort());
+
+	vtkSmartPointer<vtkActor> actor =
+		vtkSmartPointer<vtkActor>::New();
+	actor->SetMapper(mapper);
+
+
+	//this->GetInteractor()->GetRenderWindow()->GetRenderers()->GetDefaultRenderer()->AddActor(actor);
+	this->GetDefaultRenderer()->AddActor(actor);
+	// Forward events
+	vtkInteractorStyleTrackballCamera::OnLeftButtonDown();
+}
+
+vtkStandardNewMacro(MouseInteractorStylePP);
