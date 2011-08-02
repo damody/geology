@@ -15,6 +15,7 @@ SEffect_Sptr SEffect::New( int type )
 	case CONTOUR:
 		res = SEffect_Sptr(new Contour_Setting);
 		break;
+	case AXES_TWD97_TO_WGS84:
 	case AXES:
 		res = SEffect_Sptr(new Axes_Setting);
 		break;

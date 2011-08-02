@@ -947,6 +947,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\DW\CoordinateTransform.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\DW\CoordinateTransform.h"
+					>
+				</File>
+				<File
 					RelativePath=".\DW\DWHistogram.h"
 					>
 				</File>

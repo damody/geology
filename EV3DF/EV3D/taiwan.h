@@ -82,11 +82,13 @@ class wxGLCanvas;
 #define ID_CHECKBOX3 10000
 #define ID_LISTBOX 10093
 #define ID_BUTTON12 10119
-#define ID_TEXTCTRL 10001
-#define ID_TEXTCTRL1 10002
-#define ID_TEXTCTRL2 10003
-#define ID_TEXTCTRL3 10005
-#define ID_TEXTCTRL4 10006
+#define ID_TEXTCTRL 1011
+#define ID_TEXTCTRL1 1021
+#define ID_TEXTCTRL2 10203
+#define ID_TEXTCTRL3 1051
+#define ID_TEXTCTRL4 1061
+#define ID_RADIOBUTTON 10121
+#define ID_RADIOBUTTON1 10122
 #define ID_PANEL3 10097
 #define ID_CHECKBOX1 10022
 #define ID_CHECKBOX2 10108
@@ -180,6 +182,12 @@ public:
     /// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON12
     void OnOpenDataClick( wxCommandEvent& event );
 
+    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON
+    void OnTWD97Selected( wxCommandEvent& event );
+
+    /// wxEVT_COMMAND_RADIOBUTTON_SELECTED event handler for ID_RADIOBUTTON1
+    void OnWGS84Selected( wxCommandEvent& event );
+
     /// wxEVT_COMMAND_CHECKBOX_CLICKED event handler for ID_CHECKBOX1
     void OnCheckboxAxis_Sync( wxCommandEvent& event );
 
@@ -268,12 +276,16 @@ private:
 	DataModifyWindow* m_DataModifyWindow;
 	SelctionBounding_Sptr m_selectionBounding;
 	
+	int		m_load;
 	SolidView_Sptr	m_Volume;
 	SolidView_Sptr	m_Terrain;
 	SolidView_Sptr	m_ClipPlane;
 public:
 	SolidCtrl	m_SolidCtrlL;
 	SolidCtrl	m_SolidCtrlR;
+	SolidView_Sptr	m_SolidViewL;
+	SolidView_Sptr	m_SolidViewR;
+	bool		m_SolidViewIsTWD97;
 	SelectionSphere_Sptr m_SelectionSphere;
 	bool		m_timego;
 	enum	{

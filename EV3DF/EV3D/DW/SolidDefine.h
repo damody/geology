@@ -84,6 +84,8 @@ SHARE_PTR(ColorTable)
 #include <vtkActor.h>
 #include <vtkDelaunay2D.h>
 #include <vtkScalarBarActor.h>
+#include <vtkTransform.h>
+#include <vtkImageReslice.h>
 #define VTKSMART_PTR(x) \
 	typedef vtkSmartPointer<x> x##_Sptr; \
 	typedef std::vector<x##_Sptr> x##_Sptrs;
@@ -121,6 +123,9 @@ VTKSMART_PTR(vtkColorTransferFunction)
 VTKSMART_PTR(vtkProperty)
 VTKSMART_PTR(vtkActor)
 VTKSMART_PTR(vtkPoints)
+VTKSMART_PTR(vtkTransform)
+VTKSMART_PTR(vtkImageReslice)
+
 template<typename T, typename U> class has_member_Initialize_tester
 {
 private:

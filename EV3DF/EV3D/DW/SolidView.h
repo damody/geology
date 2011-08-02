@@ -25,6 +25,7 @@ public:
 	void		Init_Vertex();
 	void		Init_Contour();
 	void		Init_Axes();
+	void		Init_Axes_TWD97_TO_WGS84();
 	void		Init_ClipPlane();
 	void		Init_Ruler();
 	void		Init_ClipContour();
