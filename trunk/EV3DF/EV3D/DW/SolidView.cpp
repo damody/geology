@@ -4,6 +4,7 @@
 #include "SolidDoc.h"
 #include "SolidCtrl.h"
 #include "SEffect.h"
+#include "CoordinateTransform.h"
 
 SolidView::SolidView(SolidCtrl * ParentCtrl, SolidDoc_Sptr Doc) :
 	m_ParentCtrl(ParentCtrl)
@@ -23,6 +24,7 @@ void SolidView::SetVisable(bool show)
 		case SEffect::RULER:		break;
 		case SEffect::VOLUME_RENDERING: GetParentCtrl()->m_Renderer->AddViewProp(m_volume); 
 			GetParentCtrl()->m_Renderer->AddActor2D(m_ScalarBarActor); break;
+		case SEffect::AXES_TWD97_TO_WGS84:
 		case SEffect::AXES:		GetParentCtrl()->m_Renderer->AddActor(m_CubeAxesActor); break;
 		default:			GetParentCtrl()->m_Renderer->AddActor(m_actor);
 		}
@@ -35,6 +37,7 @@ void SolidView::SetVisable(bool show)
 		case SEffect::RULER:		break;
 		case SEffect::VOLUME_RENDERING: GetParentCtrl()->m_Renderer->RemoveViewProp(m_volume); 
 			GetParentCtrl()->m_Renderer->RemoveActor2D(m_ScalarBarActor); break;
+		case SEffect::AXES_TWD97_TO_WGS84:
 		case SEffect::AXES:		GetParentCtrl()->m_Renderer->RemoveActor(m_CubeAxesActor); break;
 		default:			GetParentCtrl()->m_Renderer->RemoveActor(m_actor);
 		}
@@ -50,6 +53,7 @@ void SolidView::SetEffect(SEffect_Sptr effect)
 	case SEffect::VERTEX:		{ Init_Vertex(); }break;
 	case SEffect::CONTOUR:		{ Init_Contour(); }break;
 	case SEffect::AXES:		{ Init_Axes(); }break;
+	case SEffect::AXES_TWD97_TO_WGS84:	{ Init_Axes_TWD97_TO_WGS84(); } break;
 	case SEffect::CLIP_PLANE:	{ Init_ClipPlane(); }break;
 	case SEffect::RULER:		{ Init_Ruler(); }break;
 	case SEffect::CLIP_CONTOUR:	{ Init_ClipContour(); }break;
@@ -231,6 +235,34 @@ void SolidView::Init_Contour()
 	m_actor->SetMapper(m_polydataMapper);
 }
 
+void SolidView::Init_Axes_TWD97_TO_WGS84()
+{
+	m_CubeAxesActor = vtkSmartNew;
+	double boundingTWD[6];
+	double boundingWGS[6];
+	GetParentDoc()->m_ImageData->GetBounds(boundingTWD);
+	GetParentDoc()->m_ImageData->GetBounds(boundingWGS);
+	//xmin zmin
+	CoordinateTransform::TWD97_To_lonlat(boundingTWD[0], boundingTWD[4], boundingWGS+0, boundingWGS+4);
+	CoordinateTransform::TWD97_To_lonlat(boundingTWD[1], boundingTWD[5], boundingWGS+1, boundingWGS+5);
+	
+	m_CubeAxesActor->SetBounds(GetParentDoc()->m_ImageData->GetBounds());
+	m_CubeAxesActor->SetCamera(GetParentCtrl()->m_Renderer->GetActiveCamera());
+	m_CubeAxesActor->SetBounds(boundingTWD);
+	m_CubeAxesActor->SetXAxisRange(boundingWGS[0], boundingWGS[1]);
+	m_CubeAxesActor->SetYAxisRange(boundingWGS[2]/10, boundingWGS[3]/10);
+	m_CubeAxesActor->SetZAxisRange(boundingWGS[4], boundingWGS[5]);
+	m_CubeAxesActor->SetDrawXGridlines(0);
+	m_CubeAxesActor->SetXTitle("E,lon");
+	m_CubeAxesActor->SetYTitle("Height");
+	m_CubeAxesActor->SetZTitle("N,lot");
+	m_CubeAxesActor->SetXLabelFormat("%-#f");
+	m_CubeAxesActor->SetYLabelFormat("%-#f");
+	m_CubeAxesActor->SetZLabelFormat("%-#f");
+	m_CubeAxesActor->SetLabelScaling(false,0,0,0);
+	m_CubeAxesActor->SetFlyModeToStaticEdges();
+}
+
 void SolidView::Init_Axes()
 {
 	m_CubeAxesActor = vtkSmartNew;
@@ -239,6 +271,7 @@ void SolidView::Init_Axes()
 	m_CubeAxesActor->SetBounds(GetParentDoc()->m_ImageData->GetBounds());
 	m_CubeAxesActor->SetCamera(GetParentCtrl()->m_Renderer->GetActiveCamera());
 	m_CubeAxesActor->SetBounds(bounding);
+	m_CubeAxesActor->SetXAxisRange(350920,150120);
 	m_CubeAxesActor->SetXTitle("E,lon");
 	m_CubeAxesActor->SetYTitle("Height");
 	m_CubeAxesActor->SetZTitle("N,lot");
@@ -287,7 +320,6 @@ void SolidView::Init_VolumeRendering()
 {
 	vtkPiecewiseFunction_Sptr	compositeOpacity = vtkSmartNew;
 	vtkColorTransferFunction_Sptr	colorTransferFunction = vtkSmartNew;
-	vtkImageShiftScale_Sptr		ImageShiftScale = vtkSmartNew;
 	vtkSmartVolumeMapper_Sptr	volumeMapper = vtkOnlyNew;
 	vtkVolumeProperty_Sptr		volumeProperty = vtkSmartNew;
 	m_ScalarBarActor = vtkSmartNew;

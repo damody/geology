@@ -338,6 +338,7 @@ void MyGrid::ChangeToView( int col, int row, const wxString& data )
 			}
 		}
 		break;
+	case SEffect::AXES_TWD97_TO_WGS84:
 	case SEffect::AXES:
 		{
 			Axes_Setting* setting = (Axes_Setting*)SuperSetting.get();
@@ -412,6 +413,7 @@ bool MyGrid::ChangeGrid( SolidView_Sptr& view )
 			return true;
 		}
 		break;
+	case SEffect::AXES_TWD97_TO_WGS84:
 	case SEffect::AXES:
 		{
 			ConvertTo_Axes();
