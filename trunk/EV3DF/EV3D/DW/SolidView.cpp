@@ -243,13 +243,13 @@ void SolidView::Init_Axes_TWD97_TO_WGS84()
 	GetParentDoc()->m_ImageData->GetBounds(boundingTWD);
 	GetParentDoc()->m_ImageData->GetBounds(boundingWGS);
 	//xmin zmin
-	CoordinateTransform::TWD97_To_lonlat(boundingTWD[0], boundingTWD[4], boundingWGS+0, boundingWGS+4);
-	CoordinateTransform::TWD97_To_lonlat(boundingTWD[1], boundingTWD[5], boundingWGS+1, boundingWGS+5);
+	CoordinateTransform::TWD97_To_lonlat(350920-boundingTWD[0], boundingTWD[4], boundingWGS+0, boundingWGS+4);
+	CoordinateTransform::TWD97_To_lonlat(350920-boundingTWD[1], boundingTWD[5], boundingWGS+1, boundingWGS+5);
 	
 	m_CubeAxesActor->SetBounds(GetParentDoc()->m_ImageData->GetBounds());
 	m_CubeAxesActor->SetCamera(GetParentCtrl()->m_Renderer->GetActiveCamera());
 	m_CubeAxesActor->SetBounds(boundingTWD);
-	m_CubeAxesActor->SetXAxisRange(boundingWGS[0], boundingWGS[1]);
+	m_CubeAxesActor->SetXAxisRange(-boundingWGS[0], -boundingWGS[1]);
 	m_CubeAxesActor->SetYAxisRange(boundingWGS[2]/10, boundingWGS[3]/10);
 	m_CubeAxesActor->SetZAxisRange(boundingWGS[4], boundingWGS[5]);
 	m_CubeAxesActor->SetDrawXGridlines(0);
@@ -271,7 +271,7 @@ void SolidView::Init_Axes()
 	m_CubeAxesActor->SetBounds(GetParentDoc()->m_ImageData->GetBounds());
 	m_CubeAxesActor->SetCamera(GetParentCtrl()->m_Renderer->GetActiveCamera());
 	m_CubeAxesActor->SetBounds(bounding);
-	m_CubeAxesActor->SetXAxisRange(350920,150120);
+	m_CubeAxesActor->SetXAxisRange(-350920,-150120);
 	m_CubeAxesActor->SetXTitle("E,lon");
 	m_CubeAxesActor->SetYTitle("Height");
 	m_CubeAxesActor->SetZTitle("N,lot");

@@ -186,7 +186,6 @@ int SolidCtrl::SetGridedData(vtkImageData_Sptr image)
 	point_array->SetName("value");
 
 	vtkBounds	tbounds;
-	int		num = m_polydata->GetNumberOfPoints();
 	m_imagedata->GetBounds(tbounds);
 	m_imagedata->GetPointData()->GetScalars()->SetName("value");
 	m_bounds.SetBounds(m_imagedata->GetBounds());
@@ -368,7 +367,6 @@ void SolidCtrl::AddTaiwan()
 void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 {
 	vtkPoints_Sptr	points = vtkSmartNew;
-	vtkPoints_Sptr	pointsCountour = vtkSmartNew;
 	std::ifstream istr1(datafilename);
 	vtkSmartPointer<vtkDoubleArray> Scalars =
 		vtkSmartPointer<vtkDoubleArray>::New();
@@ -380,8 +378,7 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	{
 		double	x, y, z;
 		istr1 >> x >> y >> z;
-		points->InsertNextPoint(x, y, z);
-		pointsCountour->InsertNextPoint(0, y, 0);
+		points->InsertNextPoint(x, y*0.5, z);
 		Scalars->InsertNextTuple1(y*0.1);
 		i++;
 	}
@@ -413,12 +410,11 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	vtkPoints *ps = polydata2->GetPoints();
 	double bound[6];
 	ps->GetBounds(bound);
-	double yy = bound[3];
 	for (int c = 0; c < ps->GetNumberOfPoints(); c++)
 	{
 		double pos[3];
 		ps->GetPoint(c, pos);
-		ps->SetPoint(c, pos[0], yy, pos[2]);
+		ps->SetPoint(c, pos[0], pos[1], pos[2]);
 	}
 	polydata2->SetPoints(ps);
 	vtkPolyDataMapper_Sptr	mapper = vtkSmartNew;
@@ -426,13 +422,13 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 
 	vtkActor_Sptr	actor = vtkSmartNew;
 	actor->SetMapper(mapper);
-	actor->GetProperty()->SetOpacity(0.5);
+	//actor->GetProperty()->SetOpacity(0.7);
 	//m_Renderer->AddActor(actor);
 
 	vtkSmartPointer<vtkContourFilter> contours =
 		vtkSmartPointer<vtkContourFilter>::New();
 	contours->SetInput(polydata2);
-	contours->GenerateValues(6, 0, 3500);
+	contours->GenerateValues(7, 0, 3000);
 
 	// Connect the segments of the conours into polylines
 	vtkSmartPointer<vtkStripper> contourStripper =
@@ -540,6 +536,7 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	vtkSmartPointer<vtkActor> surface =
 		vtkSmartPointer<vtkActor>::New();
 	surface->SetMapper(surfaceMapper);
+	//surface->GetProperty()->SetOpacity(0.99);
 
 	// The labeled data mapper will place labels at the points
 	vtkSmartPointer<vtkLabeledDataMapper> labelMapper =
@@ -547,7 +544,7 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	labelMapper->SetFieldDataName("Isovalues");
 	labelMapper->SetInput(labelPolyData);
 	labelMapper->SetLabelModeToLabelScalars();
-	labelMapper->SetLabelFormat("%6.2f");
+	labelMapper->SetLabelFormat("%6.0f");
 
 	vtkSmartPointer<vtkActor2D> isolabels =
 		vtkSmartPointer<vtkActor2D>::New();
@@ -556,5 +553,5 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	// Add the actors to the scene
 	m_Renderer->AddActor(isolines);
 	m_Renderer->AddActor(isolabels);
-	m_Renderer->AddActor(surface);
+	//m_Renderer->AddActor(surface);
 }
