@@ -762,6 +762,10 @@
 				Name="GUI"
 				>
 				<File
+					RelativePath=".\colorgrid.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\convertdialog.cpp"
 					>
 					<FileConfiguration
@@ -1146,6 +1150,10 @@
 			<Filter
 				Name="GUI"
 				>
+				<File
+					RelativePath=".\colorgrid.h"
+					>
+				</File>
 				<File
 					RelativePath=".\convertdialog.h"
 					>

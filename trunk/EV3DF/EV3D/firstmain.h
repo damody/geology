@@ -29,7 +29,6 @@
 #include "wx/frame.h"
 #include "wx/glcanvas.h"
 #include "wx/aui/auibar.h"
-#include "wx/listctrl.h"
 #include "wx/statusbr.h"
 ////@end includes
 
@@ -40,7 +39,7 @@
 ////@begin forward declarations
 class wxGLCanvas;
 class wxAuiToolBar;
-class wxListCtrl;
+class ColorGrid;
 class MyTreeCtrl;
 class MyGrid;
 ////@end forward declarations
@@ -82,7 +81,6 @@ class MyGrid;
 #define ID_LABEL7 10032
 #define ID_ZmaxText 10034
 #define ID_ShowTypeCombo 10047
-#define ID_LISTCTRL 10051
 #define ID_STATUSBAR 10065
 #define SYMBOL_FIRSTMAIN_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxMINIMIZE_BOX|wxMAXIMIZE_BOX|wxCLOSE_BOX
 #define SYMBOL_FIRSTMAIN_TITLE _("FirstMain")
@@ -277,7 +275,6 @@ public:
     wxTextCtrl* m_ZminText;
     wxTextCtrl* m_ZmaxText;
     wxComboBox* m_ShowTypeCombo;
-    wxListCtrl* m_ColorList;
     MyTreeCtrl* m_treectrl;
     MyGrid* m_grid;
     bool m_init;
