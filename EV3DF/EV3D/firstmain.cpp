@@ -18,7 +18,7 @@
 #include "wx/wx.h"
 #endif
 ////@begin includes
-#include "wx/imaglist.h"
+#include "colorgrid.h"
 #include "Mytreectrl.h"
 #include "mygrid.h"
 ////@end includes
@@ -152,7 +152,6 @@ void FirstMain::Init()
     m_ZminText = NULL;
     m_ZmaxText = NULL;
     m_ShowTypeCombo = NULL;
-    m_ColorList = NULL;
     m_treectrl = NULL;
     m_grid = NULL;
 	////@end FirstMain member initialisation
@@ -245,13 +244,18 @@ void FirstMain::CreateControls()
     itemFrame1->GetAuiManager().AddPane(m_BoundEditToolbar, wxAuiPaneInfo()
         .ToolbarPane().Name(_T("BoundEditToolbar")).Top().Layer(10).CaptionVisible(false).CloseButton(false).DestroyOnClose(false).Resizable(false).Floatable(false).Gripper(true));
 
-    m_ColorList = new wxListCtrl( itemFrame1, ID_LISTCTRL, wxDefaultPosition, wxDefaultSize, wxLC_REPORT );
-    itemFrame1->GetAuiManager().AddPane(m_ColorList, wxAuiPaneInfo()
-        .Name(_T("ColorList")).Caption(_("ColorTable")).BestSize(wxSize(200, 200)).CloseButton(false).DestroyOnClose(false).Resizable(true).FloatingSize(wxSize(200, 200)));
+    wxStatusBar* itemStatusBar36 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
+    itemStatusBar36->SetFieldsCount(2);
+    itemFrame1->SetStatusBar(itemStatusBar36);
 
-    wxStatusBar* itemStatusBar37 = new wxStatusBar( itemFrame1, ID_STATUSBAR, wxST_SIZEGRIP|wxNO_BORDER );
-    itemStatusBar37->SetFieldsCount(2);
-    itemFrame1->SetStatusBar(itemStatusBar37);
+    ColorGrid* itemGrid37 = new ColorGrid( itemFrame1, ID_GRID2, wxDefaultPosition, wxSize(200, 150), wxSUNKEN_BORDER|wxHSCROLL|wxVSCROLL );
+    itemGrid37->SetDefaultColSize(50);
+    itemGrid37->SetDefaultRowSize(25);
+    itemGrid37->SetColLabelSize(25);
+    itemGrid37->SetRowLabelSize(50);
+    itemGrid37->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
+    itemFrame1->GetAuiManager().AddPane(itemGrid37, wxAuiPaneInfo()
+        .Name(_T("Pane1")).Caption(_("Color")).CloseButton(false).DestroyOnClose(false).Resizable(true).Floatable(false));
 
     m_treectrl = new MyTreeCtrl( itemFrame1, ID_TREECTRL, wxDefaultPosition, wxDefaultSize, wxTR_EDIT_LABELS|wxTR_SINGLE );
     itemFrame1->GetAuiManager().AddPane(m_treectrl, wxAuiPaneInfo()
@@ -727,46 +731,12 @@ void FirstMain::RenderFrame()
  */
 void FirstMain::ShowColorTable(ColorTable* ict)
 {
-	m_ColorList->ClearAll();
-	wxListItem itemCol;
-	itemCol.SetText(_T("Color"));
-	m_ColorList->InsertColumn(0, itemCol);
-	itemCol.SetText(_T("Red"));
-	m_ColorList->InsertColumn(1, itemCol);
-	itemCol.SetText(_T("Green"));
-	m_ColorList->InsertColumn(2, itemCol);
-	itemCol.SetText(_T("Blue"));
-	m_ColorList->InsertColumn(3, itemCol);
-	m_ColorList->SetColumnWidth( 0, 70 );
-	m_ColorList->SetColumnWidth( 1, 40 );
-	m_ColorList->SetColumnWidth( 2, 40 );
-	m_ColorList->SetColumnWidth( 3, 40 );
-	int i=0;
-	for (ColorTable::ctMap::iterator it = ict->vMapping.begin(); it != ict->vMapping.end();it++)
-	{
-		wxColour wc(it->second.r, it->second.g, it->second.b);
-		InsertColor(i++, it->first, wc);
-	}
 }
 /*
  * InsertItem to ColorList
  */
 void FirstMain::InsertColor( int i, double val, wxColour& iwc )
 {
-	wxString buf;
-	buf.Printf(_T("●%f"), val);
-	long tmp = m_ColorList->InsertItem(i, buf, 0);
-	m_ColorList->SetItemData(tmp, i);
-	buf.Printf(_T("%d"), int(iwc.Red()));
-	m_ColorList->SetItem(tmp, 1, buf);
-	buf.Printf(_T("%d"), int(iwc.Green()));
-	m_ColorList->SetItem(tmp, 2, buf);
-	buf.Printf(_T("%d"), int(iwc.Blue()));
-	m_ColorList->SetItem(tmp, 3, buf);
-	wxListItem item;
-	item.m_itemId = i;
-	item.SetTextColour(iwc);
-	m_ColorList->SetItem( item );
 }
 
 /*
