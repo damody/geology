@@ -286,7 +286,6 @@ void SolidView::Init_ClipPlane()
 {
 	m_ImagePlane = vtkSmartNew;
 	m_ImagePlane->SetLeftButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
-
 	//m_ImagePlane->SetMiddleButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_ImagePlane->SetRightButtonAction(vtkImagePlaneWidget::VTK_CURSOR_ACTION);
 	m_ImagePlane->SetInteractor(GetParentCtrl()->m_WindowInteractor);
@@ -324,15 +323,20 @@ void SolidView::Init_VolumeRendering()
 	vtkVolumeProperty_Sptr		volumeProperty = vtkSmartNew;
 	m_ScalarBarActor = vtkSmartNew;
 	volumeMapper->SetBlendModeToComposite();		// composite first
+	volumeMapper->SetRequestedRenderMode(vtkSmartVolumeMapper::GPURenderMode);
 	volumeMapper->SetInputConnection(GetParentDoc()->m_ImageData->GetProducerPort());
-	volumeProperty->ShadeOff();
 	volumeProperty->SetInterpolationType(VTK_LINEAR_INTERPOLATION);
-	compositeOpacity->AddPoint(649.0, 0.0);
-	compositeOpacity->AddPoint(450.0, 0.005);
-	compositeOpacity->AddPoint(400.0, 0.0);
-	compositeOpacity->AddPoint(300.0, 0.005);
-	compositeOpacity->AddPoint(143.0, 0.0);
+	compositeOpacity->AddPoint(649.0, 0.0001);
+	compositeOpacity->AddPoint(450.0, 0.0005);
+	compositeOpacity->AddPoint(400.0, 0.0001);
+	compositeOpacity->AddPoint(300.0, 0.0005);
+	compositeOpacity->AddPoint(250.0, 0.0005);
+	compositeOpacity->AddPoint(170.0, 0.0001);
+	compositeOpacity->AddPoint(143.0, 0.0001);
 	volumeProperty->SetScalarOpacity(compositeOpacity);	// composite first.
+	volumeProperty->SetDiffuse(0.2);
+	volumeProperty->ShadeOff();
+	volumeProperty->SetDisableGradientOpacity(1);
 	colorTransferFunction->AddRGBPoint(649.0, 1.0 / 2, 0.0, 0.0);
 	colorTransferFunction->AddRGBPoint(450.0, 1.0 / 2, 165 / 255 / 2.0, 0.0);
 	colorTransferFunction->AddRGBPoint(350.0, 1.0 / 2, 1.0 / 2, 0.0);
