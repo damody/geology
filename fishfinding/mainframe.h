@@ -28,6 +28,8 @@
 ////@end includes
 #include "NmeaCell.h"
 #include "DrawView.h"
+#include <iostream>
+#include <fstream>
 /*!
 * Forward declarations
 */
@@ -48,6 +50,8 @@ class wxGLCanvas;
 #define ID_PANEL 10006
 #define ID_CHOICE1 10002
 #define ID_CHOICE 10001
+#define ID_BUTTON6 10024
+#define ID_BUTTON5 10023
 #define ID_BUTTON 10003
 #define ID_CHECKBOX 10005
 #define ID_SPINCTRL2 10016
@@ -77,6 +81,7 @@ class wxGLCanvas;
 enum
 {
 	DRAW_TIMER = 1,
+	SIMULATE_TIMER,
 	CHECK_NORMAL_TIMER
 };
 /*!
@@ -106,6 +111,12 @@ public:
 
 	////@begin mainframe event handler declarations
 
+	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON6
+	void OnStopSimulateClick( wxCommandEvent& event );
+
+	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON5
+	void OnSimulateClick( wxCommandEvent& event );
+
 	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON
 	void OnStartGetClick( wxCommandEvent& event );
 
@@ -125,6 +136,9 @@ public:
 	void OnDeepColorChanged( wxColourPickerEvent& event );
 
 	/// wxEVT_COLOURPICKER_CHANGED event handler for ID_COLOURPICKERCTRL1
+	void OnBackColorChanged( wxColourPickerEvent& event );
+
+	/// wxEVT_COLOURPICKER_CHANGED event handler for ID_COLOURPICKERCTRL
 	void OnhsColorChanged( wxColourPickerEvent& event );
 
 	/// wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_BUTTON2
@@ -174,6 +188,8 @@ public:
 	wxAuiManager m_auiManager;
 	wxChoice* m_BoundRate;
 	wxChoice* m_Combo_ComPort;
+	wxButton* m_BtnStopSimulate;
+	wxButton* m_BtnSimulate;
 	wxButton* m_BtnStartGet;
 	wxCheckBox* m_CanOutput;
 	wxSpinCtrl* m_point_size;
@@ -203,6 +219,7 @@ public:
 	double		m_MaxDepth;
 	DrawView	m_DrawView;
 	int		m_lastUpdateTime;
+	std::ifstream	m_read;
 };
 
 #endif

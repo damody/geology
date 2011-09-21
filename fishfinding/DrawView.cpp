@@ -380,6 +380,11 @@ void DrawView::SetIgnoreDepth( double val )
 	UpdateScalar();
 }
 
+void DrawView::SetBackColor( unsigned char r, unsigned char g, unsigned char b )
+{
+	m_Renderer->SetBackground(r/255.0, g/255.0, b/255.0);
+}
+
 void MouseInteractorStylePP::OnLeftButtonDown()
 {
 	std::cout << "Picking pixel: " << this->Interactor->GetEventPosition()[0] << " " << this->Interactor->GetEventPosition()[1] << std::endl;

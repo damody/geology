@@ -66,6 +66,7 @@ public:
 	void NormalLook(double angle = 0);
  	void SetHSColor(unsigned char r, unsigned char g, unsigned char b);
  	void SetDEColor(unsigned char r, unsigned char g, unsigned char b);
+	void SetBackColor(unsigned char r, unsigned char g, unsigned char b);
 	void SetPointSize(int size);
 	DataPoint GetLastData();
 	int  GetTotal();
