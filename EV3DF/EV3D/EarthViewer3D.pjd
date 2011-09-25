@@ -199,7 +199,7 @@
           <long name="title-mode">0</long>
           <long name="locked">0</long>
           <string name="template-name">"VC++ Project"</string>
-          <bool name="dirty">1</bool>
+          <bool name="dirty">0</bool>
           <long name="makefile-last-written">-8519680</long>
           <string name="Compiler name">"VC++ Project"</string>
           <string name="Build mode">"Release"</string>
@@ -278,7 +278,7 @@
           <long name="title-mode">0</long>
           <long name="locked">0</long>
           <string name="template-name">"VC++ Project"</string>
-          <bool name="dirty">1</bool>
+          <bool name="dirty">0</bool>
           <long name="makefile-last-written">-8519680</long>
           <string name="Compiler name">"VC++ Project"</string>
           <string name="Build mode">"Debug"</string>
@@ -1951,7 +1951,7 @@
             <long name="title-mode">0</long>
             <long name="locked">0</long>
             <string name="proxy-type">"wbGridProxy"</string>
-            <string name="event-handler-0">"wxEVT_GRID_CELL_CHANGED|OnCellChange|NONE||"</string>
+            <string name="event-handler-0">"wxEVT_GRID_CELL_CHANGE|OnCellChange|NONE||"</string>
             <string name="proxy-Id name">"ID_GRID2"</string>
             <long name="proxy-Id value">10051</long>
             <string name="proxy-Name">""</string>
