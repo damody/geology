@@ -70,7 +70,7 @@ public:
 
 ////@begin ColorGrid event handler declarations
 
-    /// wxEVT_GRID_CELL_CHANGED event handler for ID_GRID2
+    /// wxEVT_GRID_CELL_CHANGE event handler for ID_GRID2
     void OnCellChange( wxGridEvent& event );
 
 ////@end ColorGrid event handler declarations
