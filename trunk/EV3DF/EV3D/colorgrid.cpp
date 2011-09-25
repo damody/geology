@@ -43,6 +43,8 @@ IMPLEMENT_DYNAMIC_CLASS( ColorGrid, wxGrid )
 BEGIN_EVENT_TABLE( ColorGrid, wxGrid )
 
 ////@begin ColorGrid event table entries
+    EVT_GRID_CELL_CHANGED( ColorGrid::OnCellChange )
+
 ////@end ColorGrid event table entries
 
 END_EVENT_TABLE()
@@ -145,3 +147,17 @@ wxIcon ColorGrid::GetIconResource( const wxString& name )
     return wxNullIcon;
 ////@end ColorGrid icon retrieval
 }
+
+
+/*
+ * wxEVT_GRID_CELL_CHANGED event handler for ID_GRID2
+ */
+
+void ColorGrid::OnCellChange( wxGridEvent& event )
+{
+////@begin wxEVT_GRID_CELL_CHANGED event handler for ID_GRID2 in ColorGrid.
+    // Before editing this code, remove the block markers.
+    event.Skip();
+////@end wxEVT_GRID_CELL_CHANGED event handler for ID_GRID2 in ColorGrid. 
+}
+
