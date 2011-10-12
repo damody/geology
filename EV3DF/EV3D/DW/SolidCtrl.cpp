@@ -552,6 +552,6 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 
 	// Add the actors to the scene
 	m_Renderer->AddActor(isolines);
-	m_Renderer->AddActor(isolabels);
+	//m_Renderer->AddActor(isolabels);
 	m_Renderer->AddActor(surface);
 }

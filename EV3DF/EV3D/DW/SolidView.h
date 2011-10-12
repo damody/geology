@@ -43,6 +43,8 @@ private:
 	vtkVolume_Sptr			m_volume;
 	vtkCubeAxesActor_Sptr		m_CubeAxesActor;
 	vtkScalarBarActor_Sptr		m_ScalarBarActor;
+
+	vtkColorTransferFunction*		GettColorTable();
 private:
 	friend	SolidCtrl;
 	friend	SolidDoc;

@@ -6,6 +6,12 @@
 #include "SolidDefine.h"
 #pragma warning(disable:4201)
 
+struct Color3Val
+{
+	unsigned char r, g, b;
+	float val;
+};
+
 class SEffect
 {
 public:
@@ -23,6 +29,7 @@ public:
 public:
 	bool GetVisable() {return m_Visable;}
 	int  GetType() {return m_Type;}
+	std::vector<Color3Val>	m_ColorPoints;
 public:
 	static SEffect_Sptr New( int type );
 protected:
@@ -38,16 +45,16 @@ protected:
 struct Bounding_Box_Setting : public SEffect
 {
 	Bounding_Box_Setting():
-	m_Color(Color4(255,255,255,255)),
-	m_ThickDegree(1){}
-	Color4		m_Color;
-	float		m_ThickDegree;
+m_Color(Color4(255,255,255,255)),
+m_ThickDegree(1){}
+Color4		m_Color;
+float		m_ThickDegree;
 };
 struct Vertex_Setting : public SEffect
 {
 	float		m_MaxValue,
-			m_MinValue,
-			m_Size;
+		m_MinValue,
+		m_Size;
 };
 struct Contour_Setting : public SEffect
 {
@@ -58,17 +65,17 @@ struct Contour_Setting : public SEffect
 struct Axes_Setting : public SEffect
 {
 	Color4		m_XColor,
-			m_YColor,
-			m_ZColor;
+		m_YColor,
+		m_ZColor;
 };
 struct Ruler_Setting : public SEffect
 {
 	Color4		m_Color;
 	float		m_TargetAxes,
-			m_Scalar,
-			m_ThickDegree;
+		m_Scalar,
+		m_ThickDegree;
 	Posf		m_StartPoint,
-			m_EndPoint;
+		m_EndPoint;
 };
 struct ClipPlane_Setting : public SEffect
 {
@@ -81,12 +88,12 @@ struct ClipContour_Setting : public SEffect
 {
 	int		m_Axes;
 	float		m_Percent,
-			m_ContourValue;
+		m_ContourValue;
 };
 struct VolumeRender_Setting : public SEffect
 {
 	ColorTable	m_ColorTable;
 	float		m_MaxValue,
-			m_MinValue;
+		m_MinValue;
 };
 

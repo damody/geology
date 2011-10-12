@@ -17,8 +17,13 @@
  * Includes
  */
 
+#include "DW/SolidDefine.h"
+#include "DW/SEffect.h"
+#include "DW/SolidView.h"
+
 ////@begin includes
 #include "wx/grid.h"
+// #include "mygrid.h"
 ////@end includes
 
 /*!
@@ -64,6 +69,7 @@ public:
 
     /// Initialises member variables
     void Init();
+    void InitGrid();
 
     /// Creates the controls and sizers
     void CreateControls();
@@ -86,6 +92,16 @@ public:
 
     /// Should we show tooltips?
     static bool ShowToolTips();
+
+
+	void DeleteGrid();
+	void AppendGrid(int Cols, int Rows);
+	void ReCreateGrid(int Cols, int Rows);
+
+	void ChangeToView(int col, int row, const wxString& data);
+
+	bool ChangeColorGrid(SolidView_Sptr& view);
+	bool ChangeGrid(SolidView_Sptr& view);
 
 ////@begin ColorGrid member variables
 ////@end ColorGrid member variables
