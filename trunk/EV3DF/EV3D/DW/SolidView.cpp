@@ -7,7 +7,7 @@
 #include "CoordinateTransform.h"
 
 SolidView::SolidView(SolidCtrl * ParentCtrl, SolidDoc_Sptr Doc) :
-	m_ParentCtrl(ParentCtrl)
+m_ParentCtrl(ParentCtrl)
 {
 	m_actor = vtkSmartNew;
 	m_polydataMapper = vtkSmartNew;
@@ -76,11 +76,13 @@ void SolidView::Update()
 	case SEffect::VERTEX:
 		{
 			Init_Vertex();
+			//m_polydataMapper->SetLookupTable(GettColorTable());
 		}
 		break;
 
 	case SEffect::CONTOUR:
 		{
+			//m_polydataMapper->SetLookupTable(GettColorTable());
 			Contour_Setting *setting = (Contour_Setting *) m_SEffect.get();
 			m_ContourFilter->SetValue(1, setting->m_ContourValue);
 			m_ContourFilter->Update();
@@ -117,6 +119,7 @@ void SolidView::Update()
 			}
 			m_ImagePlane->SetSlicePosition(setting->m_Percent * numvalue / 100.0);
 			setting->m_Percent = m_ImagePlane->GetSlicePosition() / numvalue * 100.0;
+			//m_ImagePlane->GetColorMap()->SetLookupTable(GettColorTable());
 		}
 		break;
 
@@ -134,6 +137,7 @@ void SolidView::Update()
 
 	case SEffect::VOLUME_RENDERING:
 		{
+			//m_polydataMapper->SetLookupTable(GettColorTable());
 		}
 		break;
 	}
@@ -168,10 +172,10 @@ void SolidView::Init_Vertex()
 
 	vtkLookupTable_Sptr	lut = vtkSmartNew;
 	lut->SetTableRange
-	(
+		(
 		GetParentDoc()->m_histogram.GetPersentValue(0.01),
 		GetParentDoc()->m_histogram.GetPersentValue(0.99)
-	);
+		);
 	lut->Build();
 
 	double	p[6];
@@ -208,10 +212,10 @@ void SolidView::Init_Contour()
 {
 	vtkLookupTable_Sptr	lut = vtkSmartNew;
 	lut->SetTableRange
-	(
+		(
 		GetParentDoc()->m_histogram.GetPersentValue(0.01),
 		GetParentDoc()->m_histogram.GetPersentValue(0.99)
-	);
+		);
 	lut->Build();
 	m_ContourFilter = vtkSmartNew;
 	m_ContourFilter->SetInput(GetParentDoc()->m_ImageData);
@@ -245,7 +249,7 @@ void SolidView::Init_Axes_TWD97_TO_WGS84()
 	//xmin zmin
 	CoordinateTransform::TWD97_To_lonlat(350920-boundingTWD[0], boundingTWD[4], boundingWGS+0, boundingWGS+4);
 	CoordinateTransform::TWD97_To_lonlat(350920-boundingTWD[1], boundingTWD[5], boundingWGS+1, boundingWGS+5);
-	
+
 	m_CubeAxesActor->SetBounds(GetParentDoc()->m_ImageData->GetBounds());
 	m_CubeAxesActor->SetCamera(GetParentCtrl()->m_Renderer->GetActiveCamera());
 	m_CubeAxesActor->SetBounds(boundingTWD);
@@ -346,7 +350,7 @@ void SolidView::Init_VolumeRendering()
 	colorTransferFunction->AddRGBPoint(100.0, 139 / 255.0 / 2, 0.0, 1.0 / 2);
 	m_ScalarBarActor->SetLookupTable(colorTransferFunction);
 	m_ScalarBarActor->SetNumberOfLabels(4);
- 	m_ScalarBarActor->SetMaximumWidthInPixels(60);
+	m_ScalarBarActor->SetMaximumWidthInPixels(60);
 	m_ScalarBarActor->SetMaximumHeightInPixels(300);
 	GetParentCtrl()->m_Renderer->AddActor2D(m_ScalarBarActor);
 	volumeProperty->SetColor(colorTransferFunction);
@@ -355,3 +359,32 @@ void SolidView::Init_VolumeRendering()
 	m_volume->SetProperty(volumeProperty);
 	GetParentCtrl()->m_Renderer->AddViewProp(m_volume);
 }
+
+void SolidView::SetColorTable()
+{
+
+}
+
+vtkColorTransferFunction* SolidView::GettColorTable()
+{
+	vtkColorTransferFunction_Sptr	colorTransferFunction = vtkSmartNew;
+	colorTransferFunction->AddRGBPoint(649.0, 1.0 / 2, 0.0, 0.0);
+	colorTransferFunction->AddRGBPoint(350.0, 1.0 / 2, 165 / 255 / 2.0, 0.0);
+	colorTransferFunction->AddRGBPoint(300.0, 1.0 / 2, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(250.0, 0.0, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(200.0, 0.0, 0.5 / 2, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(150.0, 0.0, 0.0, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(100.0, 139 / 255.0 / 2, 0.0, 1.0 / 2);
+
+	int colornum = m_SEffect->m_ColorPoints.size();
+
+	Color3Val c3v;
+	for (int i=0; i<colornum; i++)
+	{
+		c3v = m_SEffect->m_ColorPoints[i];
+		colorTransferFunction->AddRGBPoint(c3v.val, c3v.r, c3v.g, c3v.b);
+	}
+
+	return colorTransferFunction;
+}
+

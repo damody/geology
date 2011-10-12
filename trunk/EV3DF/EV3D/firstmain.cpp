@@ -253,7 +253,7 @@ void FirstMain::CreateControls()
     itemGrid37->SetDefaultRowSize(25);
     itemGrid37->SetColLabelSize(25);
     itemGrid37->SetRowLabelSize(50);
-    itemGrid37->CreateGrid(5, 5, wxGrid::wxGridSelectCells);
+    itemGrid37->CreateGrid(1, 1, wxGrid::wxGridSelectCells);
     itemFrame1->GetAuiManager().AddPane(itemGrid37, wxAuiPaneInfo()
         .Name(_T("Pane1")).Caption(_("Color")).CloseButton(false).DestroyOnClose(false).Resizable(true).Floatable(false));
 

@@ -747,10 +747,10 @@ void Taiwan::OnModifyData( wxCommandEvent& event )
 	SEffect_Sptr Setting = SEffect::New(SEffect::BOUNDING_BOX);
 	// left
 	m_SolidCtrlL.SetGridedData(polydata2, nx, ny, nz);
-	m_SolidCtrlL.NewSEffect(Setting);
+	//m_SolidCtrlL.NewSEffect(Setting);
 	m_SolidCtrlL.AddTaiwan();
 	Setting = SEffect::New(SEffect::AXES);
-	m_SolidViewL = m_SolidCtrlL.NewSEffect(Setting);
+	//m_SolidViewL = m_SolidCtrlL.NewSEffect(Setting);
 // 	Setting = SEffect::New(SEffect::AXES_TWD97_TO_WGS84);
 // 	m_SolidViewL = m_SolidCtrlL.NewSEffect(Setting);
 // 	m_SolidCtrlL.RmView(m_SolidViewToWGS84);
@@ -759,10 +759,10 @@ void Taiwan::OnModifyData( wxCommandEvent& event )
 // 	clip = m_SolidCtrlL.NewSEffect(Setting);
 // 	((ClipPlane_Setting*)Setting.get())->m_Axes = 1;
 //	clip->Update();
-	Setting = SEffect::New(SEffect::CLIP_PLANE);
-	clip = m_SolidCtrlL.NewSEffect(Setting);
-	((ClipPlane_Setting*)Setting.get())->m_Axes = 2;
-	clip->Update();
+	//Setting = SEffect::New(SEffect::CLIP_PLANE);
+	//clip = m_SolidCtrlL.NewSEffect(Setting);
+	//((ClipPlane_Setting*)Setting.get())->m_Axes = 2;
+	//clip->Update();
  	
 	// right
 	m_SolidCtrlR.SetGridedData(polydata2, nx, ny, nz);
