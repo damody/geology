@@ -9,8 +9,9 @@ void ConvStr::CharToWchar(wchar_t *unicode, const char *ansi)
 }
 void ConvStr::WcharToChar(const wchar_t *unicode, char *ansi)
 {
-	setlocale(LC_ALL, "cht");
-	wcstombs(ansi, unicode, INT_MAX);
+	int n;
+	n = MultiByteToWideChar(CP_ACP, 0, ansi, -1, 0, 0);
+	MultiByteToWideChar(CP_ACP, 0, ansi, -1, unicode, n);
 }
 
 std::wstring ConvStr::GetWstr( int number )
