@@ -378,7 +378,7 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	{
 		double	x, y, z;
 		istr1 >> x >> y >> z;
-		points->InsertNextPoint(x, y*0.5, z);
+		points->InsertNextPoint(x, y*0.2, z);
 		Scalars->InsertNextTuple1(y*0.1);
 		i++;
 	}
@@ -428,7 +428,8 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	vtkSmartPointer<vtkContourFilter> contours =
 		vtkSmartPointer<vtkContourFilter>::New();
 	contours->SetInput(polydata2);
-	contours->GenerateValues(7, 0, 3000);
+	//contours->GenerateValues(7, 0, 3000);
+	contours->GenerateValues(10, 0, 4000);
 
 	// Connect the segments of the conours into polylines
 	vtkSmartPointer<vtkStripper> contourStripper =
@@ -470,7 +471,7 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 		count = cells2->GetNextCell(numberOfPoints, indices);
 		lineCount++)
 	{
-		if (numberOfPoints > 200)
+		if (numberOfPoints > 100)
 		{
 			newcells->InsertNextCell(numberOfPoints, indices);
 			vtkIdType midPointId = indices[numberOfPoints / 2];
@@ -536,7 +537,7 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 	vtkSmartPointer<vtkActor> surface =
 		vtkSmartPointer<vtkActor>::New();
 	surface->SetMapper(surfaceMapper);
-	//surface->GetProperty()->SetOpacity(0.99);
+	//surface->GetProperty()->SetOpacity(0.5);
 
 	// The labeled data mapper will place labels at the points
 	vtkSmartPointer<vtkLabeledDataMapper> labelMapper =

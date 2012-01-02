@@ -153,6 +153,8 @@ static struct
 	}
 }
 vtkSmartNew;
+
+
 static struct
 {
 	template<class T> operator vtkSmartPointer<T> ()

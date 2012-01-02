@@ -754,7 +754,11 @@ void Taiwan::OnModifyData( wxCommandEvent& event )
 // 	Setting = SEffect::New(SEffect::AXES_TWD97_TO_WGS84);
 // 	m_SolidViewL = m_SolidCtrlL.NewSEffect(Setting);
 // 	m_SolidCtrlL.RmView(m_SolidViewToWGS84);
-	m_SolidViewIsTWD97 = true;
+// 	m_SolidViewIsTWD97 = true;
+// 	Setting = SEffect::New(SEffect::CLIP_PLANE);
+// 	clip = m_SolidCtrlL.NewSEffect(Setting);
+// 	((ClipPlane_Setting*)Setting.get())->m_Axes = 2;
+// 	clip->Update();
 // 	Setting = SEffect::New(SEffect::CLIP_PLANE);
 // 	clip = m_SolidCtrlL.NewSEffect(Setting);
 // 	((ClipPlane_Setting*)Setting.get())->m_Axes = 1;

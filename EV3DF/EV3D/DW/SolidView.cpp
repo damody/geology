@@ -5,6 +5,7 @@
 #include "SolidCtrl.h"
 #include "SEffect.h"
 #include "CoordinateTransform.h"
+#include <vtkStripper.h>
 
 SolidView::SolidView(SolidCtrl * ParentCtrl, SolidDoc_Sptr Doc) :
 m_ParentCtrl(ParentCtrl)
@@ -84,7 +85,7 @@ void SolidView::Update()
 		{
 			//m_polydataMapper->SetLookupTable(GettColorTable());
 			Contour_Setting *setting = (Contour_Setting *) m_SEffect.get();
-			m_ContourFilter->SetValue(1, setting->m_ContourValue);
+			m_ContourFilter->SetValue(0, setting->m_ContourValue);
 			m_ContourFilter->Update();
 		}
 		break;
@@ -187,7 +188,7 @@ void SolidView::Init_Vertex()
 	for (int i = 0; i < point_size; i++)
 	{
 		double	dcolor[3];
-		lut->GetColor(data_ary->GetValue(i), dcolor);
+		colorTransferFunction->GetColor(data_ary->GetValue(i), dcolor);
 
 		unsigned char	color[3];
 		for (unsigned int j = 0; j < 3; j++)
@@ -204,7 +205,7 @@ void SolidView::Init_Vertex()
 	colorpolydata->GetPointData()->SetScalars(colors);
 	vertexGlyphFilter->SetInput(colorpolydata);
 	m_polydataMapper->SetInputConnection(vertexGlyphFilter->GetOutputPort());
-	m_polydataMapper->SetLookupTable(lut);
+	m_polydataMapper->SetLookupTable(colorTransferFunction);
 	m_actor->SetMapper(m_polydataMapper);
 }
 
@@ -222,13 +223,14 @@ void SolidView::Init_Contour()
 	m_polydataMapper->SetInputConnection(m_ContourFilter->GetOutputPort());
 
 	vtkColorTransferFunction_Sptr	colorTransferFunction = vtkSmartNew;
-	colorTransferFunction->AddRGBPoint(0.0, 1.0 / 2, 0.0, 0.0);
-	colorTransferFunction->AddRGBPoint(20.0, 1.0 / 2, 165 / 255 / 2.0, 0.0);
-	colorTransferFunction->AddRGBPoint(40.0, 1.0 / 2, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(50.0, 0.0, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(60.0, 0.0, 0.5 / 2, 1.0 / 2);
-	colorTransferFunction->AddRGBPoint(70.0, 0.0, 0.0, 1.0 / 2);
-	colorTransferFunction->AddRGBPoint(80.0, 139 / 255.0 / 2, 0.0, 1.0 / 2);
+	Histogramd &histo = GetParentDoc()->m_histogram;
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.99), 1.0 / 2, 0.0, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.81), 1.0 / 2, 165 / 255 / 2.0, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.64), 1.0 / 2, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.48), 0.0, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.32), 0.0, 0.5 / 2, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.16), 0.0, 0.0, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.01), 139 / 255.0 / 2, 0.0, 1.0 / 2);
 	m_polydataMapper->SetLookupTable(colorTransferFunction);
 
 	vtkPolyDataNormals_Sptr sGridPolyDataNormal = vtkSmartNew;
@@ -245,7 +247,6 @@ void SolidView::Init_Axes_TWD97_TO_WGS84()
 	double boundingTWD[6];
 	double boundingWGS[6];
 	GetParentDoc()->m_ImageData->GetBounds(boundingTWD);
-	GetParentDoc()->m_ImageData->GetBounds(boundingWGS);
 	//xmin zmin
 	CoordinateTransform::TWD97_To_lonlat(350920-boundingTWD[0], boundingTWD[4], boundingWGS+0, boundingWGS+4);
 	CoordinateTransform::TWD97_To_lonlat(350920-boundingTWD[1], boundingTWD[5], boundingWGS+1, boundingWGS+5);
@@ -298,15 +299,47 @@ void SolidView::Init_ClipPlane()
 	m_ImagePlane->SetPlaneOrientationToXAxes();
 
 	vtkColorTransferFunction_Sptr	colorTransferFunction = vtkSmartNew;
-	colorTransferFunction->AddRGBPoint(649.0, 1.0 / 2, 0.0, 0.0);
-	colorTransferFunction->AddRGBPoint(350.0, 1.0 / 2, 165 / 255 / 2.0, 0.0);
-	colorTransferFunction->AddRGBPoint(300.0, 1.0 / 2, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(250.0, 0.0, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(200.0, 0.0, 0.5 / 2, 1.0 / 2);
-	colorTransferFunction->AddRGBPoint(150.0, 0.0, 0.0, 1.0 / 2);
-	colorTransferFunction->AddRGBPoint(100.0, 139 / 255.0 / 2, 0.0, 1.0 / 2);
+	Histogramd &histo = GetParentDoc()->m_histogram;
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.99), 1.0 / 2, 0.0, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.90), 1.0 / 2, 165 / 255 / 2.0, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.80), 1.0 / 2, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.70), 0.0, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.6), 0.0, 0.5 / 2, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.5), 0.0, 0.0, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.01), 139 / 255.0 / 2, 0.0, 1.0 / 2);
 	m_ImagePlane->GetColorMap()->SetLookupTable(colorTransferFunction);
 	m_ImagePlane->On();
+	m_ImagePlane->UpdatePlacement();
+	/*
+	vtkPolyData_Sptr polydata = vtkSmartNew;
+	m_ImagePlane->GetPolyData(polydata);
+
+	printf("cells: %d\n", polydata->GetNumberOfCells());
+	printf("Points: %d\n", polydata->GetNumberOfPoints());
+	vtkSmartPointer<vtkContourFilter> contours =
+		vtkSmartPointer<vtkContourFilter>::New();
+	contours->SetInput(polydata);
+	contours->GenerateValues(7, 0, 50);
+
+	// Connect the segments of the conours into polylines
+	vtkSmartPointer<vtkStripper> contourStripper =
+		vtkSmartPointer<vtkStripper>::New();
+	contourStripper->SetInputConnection(contours->GetOutputPort());
+
+	vtkSmartPointer<vtkPolyDataMapper> contourMapper =
+		vtkSmartPointer<vtkPolyDataMapper>::New();
+	contourMapper->SetInputConnection(contourStripper->GetOutputPort());
+	contourMapper->SetLookupTable(colorTransferFunction);
+	contourMapper->ScalarVisibilityOn();
+	contourMapper->SetScalarRange(
+		polydata->GetPointData()->GetScalars()->GetRange());
+
+	vtkSmartPointer<vtkActor> isolines =
+		vtkSmartPointer<vtkActor>::New();
+	isolines->SetMapper(contourMapper);
+
+	GetParentCtrl()->m_Renderer->AddActor(isolines);
+	*/
 }
 
 void SolidView::Init_Ruler()
@@ -330,24 +363,67 @@ void SolidView::Init_VolumeRendering()
 	volumeMapper->SetRequestedRenderMode(vtkSmartVolumeMapper::GPURenderMode);
 	volumeMapper->SetInputConnection(GetParentDoc()->m_ImageData->GetProducerPort());
 	volumeProperty->SetInterpolationType(VTK_LINEAR_INTERPOLATION);
-	compositeOpacity->AddPoint(649.0, 0.0001);
-	compositeOpacity->AddPoint(450.0, 0.0005);
-	compositeOpacity->AddPoint(400.0, 0.0001);
-	compositeOpacity->AddPoint(300.0, 0.0005);
-	compositeOpacity->AddPoint(250.0, 0.0005);
-	compositeOpacity->AddPoint(170.0, 0.0001);
-	compositeOpacity->AddPoint(143.0, 0.0001);
+	Histogramd &histo = GetParentDoc()->m_histogram;
+	const float v1 = 0.0001;
+	const float v2 = 0.0005;
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.99), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.95), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.90), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.85), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.80), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.75), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.70), v1);
+
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.65), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.60), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.55), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.50), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.45), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.40), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.35), v2);
+
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.30), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.25), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.20), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.15), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.10), v1);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.05), v2);
+	compositeOpacity->AddPoint(histo.GetPersentValue(0.01), v1);
 	volumeProperty->SetScalarOpacity(compositeOpacity);	// composite first.
 	volumeProperty->SetDiffuse(0.2);
 	volumeProperty->ShadeOff();
 	volumeProperty->SetDisableGradientOpacity(1);
-	colorTransferFunction->AddRGBPoint(649.0, 1.0 / 2, 0.0, 0.0);
-	colorTransferFunction->AddRGBPoint(450.0, 1.0 / 2, 165 / 255 / 2.0, 0.0);
-	colorTransferFunction->AddRGBPoint(350.0, 1.0 / 2, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(280.0, 0.0, 1.0 / 2, 0.0);
-	colorTransferFunction->AddRGBPoint(230.0, 0.0, 0.5 / 2, 1.0 / 2);
-	colorTransferFunction->AddRGBPoint(180.0, 0.0, 0.0, 1.0 / 2);
-	colorTransferFunction->AddRGBPoint(100.0, 139 / 255.0 / 2, 0.0, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.99), 1.0 / 2, 0.0, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.81), 1.0 / 2, 165 / 255 / 2.0, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.64), 1.0 / 2, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.48), 0.0, 1.0 / 2, 0.0);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.32), 0.0, 0.5 / 2, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.16), 0.0, 0.0, 1.0 / 2);
+	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.01), 139 / 255.0 / 2, 0.0, 1.0 / 2);
+
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.99), 1.0 / 2, 0.8 / 2, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.95), 1.0 / 2, 165 / 255 / 2.0, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.90), 1.0 / 2, 1.0 / 2, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.85), 0.0, 1.0 / 2, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.80), 0.0, 0.5 / 2, 1.0 / 2);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.75), 0.0, 0.0, 1.0 / 2);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.70), 139 / 255.0 / 2, 0.0, 1.0 / 2);
+// 
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.65), 1.0 / 2, 0.0, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.60), 1.0 / 2, 165 / 255 / 2.0, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.55), 1.0 / 2, 1.0 / 2, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.50), 0.0, 1.0 / 2, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.45), 0.0, 0.5 / 2, 1.0 / 2);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.40), 0.0, 0.0, 1.0 / 2);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.35), 139 / 255.0 / 2, 0.0, 1.0 / 2);
+// 
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.30), 1.0 / 2, 0.0, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.25), 1.0 / 2, 165 / 255 / 2.0, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.20), 1.0 / 2, 1.0 / 2, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.15), 0.0, 1.0 / 2, 0.0);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.10), 0.0, 0.5 / 2, 1.0 / 2);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.05), 0.0, 0.0, 1.0 / 2);
+// 	colorTransferFunction->AddRGBPoint(histo.GetPersentValue(0.01), 139 / 255.0 / 2, 0.0, 1.0 / 2);
 	m_ScalarBarActor->SetLookupTable(colorTransferFunction);
 	m_ScalarBarActor->SetNumberOfLabels(4);
 	m_ScalarBarActor->SetMaximumWidthInPixels(60);
