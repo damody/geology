@@ -1,3 +1,6 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #pragma once
 #pragma warning(disable:4201)
 
@@ -42,3 +45,6 @@ public:
 	double Ymid(){return (ymax+ymin)/2.0;}
 	double Zmid(){return (zmax+zmin)/2.0;}
 };
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

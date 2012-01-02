@@ -1,3 +1,6 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #include "PolyDataHandler.h"
 #include "SolidDefine.h"
 #include <cassert>
@@ -218,3 +221,6 @@ void PolyDataHandler::InterpolationPolyData( vtkPolyData_Sptrs &datas, const Int
 		printf("GetNumberOfPoints: %d\n", datas[i]->GetNumberOfPoints());
 	}
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

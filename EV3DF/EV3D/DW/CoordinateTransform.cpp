@@ -1,3 +1,8 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
+// modify from internet
+
 #include "CoordinateTransform.h"
 
 void CoordinateTransform::lonlat_To_TWD97x( int lonD,int lonM,int lonS,int latD,int latM,int latS, double *x, double *y )
@@ -91,3 +96,6 @@ void CoordinateTransform::TWD97_To_lonlat( double x, double y, double *lon ,doub
 	*lat = (*lat * 180) / Math_PI;
 	*lon = (*lon * 180) / Math_PI;
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

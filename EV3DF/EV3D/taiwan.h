@@ -1,13 +1,8 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        taiwan.h
-// Purpose:     
-// Author:      damody
-// Modified by: 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 // Created:     20/04/2011 02:44:01
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
 
 #ifndef _TAIWAN_H_
 #define _TAIWAN_H_
@@ -295,3 +290,6 @@ public:
 
 #endif
     // _TAIWAN_H_
+    // author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+    // author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+    // In academic purposes only(2012/1/12)

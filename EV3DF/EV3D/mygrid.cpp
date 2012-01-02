@@ -1,13 +1,8 @@
-﻿/////////////////////////////////////////////////////////////////////////////
-// Name:        mygrid.cpp
-// Purpose:     
-// Author:      damody
-// Modified by: 
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 // Created:     04/10/2010 14:37:18
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
 #include "StdWxVtk.h"
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
@@ -463,4 +458,6 @@ bool MyGrid::ChangeGrid( SolidView_Sptr& view )
 	return false;
 }
 
-
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

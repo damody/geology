@@ -1,4 +1,6 @@
-﻿
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 #include "StdWxVtk.h"
 #include "SolidView.h"
 #include "SolidDoc.h"
@@ -70,6 +72,7 @@ void SolidView::Update()
 	{
 	case SEffect::BOUNDING_BOX:
 		{
+			// TODO: you need add color table on this SEffect
 			Init_BoundingBox();
 		}
 		break;
@@ -77,12 +80,14 @@ void SolidView::Update()
 	case SEffect::VERTEX:
 		{
 			Init_Vertex();
+			// TODO: you need add color table on this SEffect
 			//m_polydataMapper->SetLookupTable(GettColorTable());
 		}
 		break;
 
 	case SEffect::CONTOUR:
 		{
+			// TODO: you need add color table on this SEffect
 			//m_polydataMapper->SetLookupTable(GettColorTable());
 			Contour_Setting *setting = (Contour_Setting *) m_SEffect.get();
 			m_ContourFilter->SetValue(0, setting->m_ContourValue);
@@ -120,24 +125,28 @@ void SolidView::Update()
 			}
 			m_ImagePlane->SetSlicePosition(setting->m_Percent * numvalue / 100.0);
 			setting->m_Percent = m_ImagePlane->GetSlicePosition() / numvalue * 100.0;
+			// TODO: you need add color table on this SEffect
 			//m_ImagePlane->GetColorMap()->SetLookupTable(GettColorTable());
 		}
 		break;
 
 	case SEffect::RULER:
 		{
+			// TODO: maybe you need to Implement this
 			MESSAGE("not Implementation");
 		}
 		break;
 
 	case SEffect::CLIP_CONTOUR:
 		{
+			// TODO: you need to Implement this
 			MESSAGE("not Implementation");
 		}
 		break;
 
 	case SEffect::VOLUME_RENDERING:
 		{
+			// TODO: you need add color table on this SEffect
 			//m_polydataMapper->SetLookupTable(GettColorTable());
 		}
 		break;
@@ -181,8 +190,8 @@ void SolidView::Init_Vertex()
 
 	double	p[6];
 	GetParentDoc()->m_PolyData->GetBounds(p);
-
-	int		point_size = GetParentDoc()->m_PolyData->GetNumberOfPoints();
+	vtkColorTransferFunction_Sptr	colorTransferFunction = GetColorTable();
+	int	point_size = GetParentDoc()->m_PolyData->GetNumberOfPoints();
 	vtkDoubleArray	*data_ary = (vtkDoubleArray *)
 		(GetParentDoc()->m_PolyData->GetPointData()->GetScalars("value"));
 	for (int i = 0; i < point_size; i++)
@@ -441,7 +450,7 @@ void SolidView::SetColorTable()
 
 }
 
-vtkColorTransferFunction* SolidView::GettColorTable()
+vtkColorTransferFunction* SolidView::GetColorTable()
 {
 	vtkColorTransferFunction_Sptr	colorTransferFunction = vtkSmartNew;
 	colorTransferFunction->AddRGBPoint(649.0, 1.0 / 2, 0.0, 0.0);
@@ -464,3 +473,6 @@ vtkColorTransferFunction* SolidView::GettColorTable()
 	return colorTransferFunction;
 }
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

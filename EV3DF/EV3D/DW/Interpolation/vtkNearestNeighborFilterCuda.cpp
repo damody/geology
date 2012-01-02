@@ -1,3 +1,6 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #include "vtkNearestNeighborFilterCuda.h"
 
 #include "vtkObjectFactory.h"
@@ -46,7 +49,7 @@ int vtkNearestNeighborFilterCuda::RequestData(vtkInformation *vtkNotUsed(request
 	int h_total = input->GetNumberOfPoints();
 	
 	InterpolationInfo info(h_total);
-	info.GetPosFromXYZArray(raw_points);
+	info.GetPosFromXYZArray(raw_points, h_total);
 	free(raw_points);
 	info.interval[0] = m_Interval[0];
 	info.interval[1] = m_Interval[1];
@@ -82,3 +85,6 @@ void vtkNearestNeighborFilterCuda::PrintSelf(ostream& os, vtkIndent indent)
 	this->Superclass::PrintSelf(os,indent);
 }
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

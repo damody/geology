@@ -1,6 +1,8 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
+
 #include "SelectionSphere.h"
-
-
 
 SelectionSphere::SelectionSphere( double pos[3], double radius )
 {
@@ -37,3 +39,6 @@ void SelectionSphere::SetUnselect()
 	m_actor->GetProperty()->SetColor(1, 1, 1);
 	m_IsSelect = false;
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

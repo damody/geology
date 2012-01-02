@@ -1,3 +1,6 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #include "vtkInverseDistanceFilter.h"
 
 #include "vtkObjectFactory.h"
@@ -113,3 +116,6 @@ double vtkInverseDistanceFilter::GetPowerValue()
 	return m_PowerValue;
 }
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

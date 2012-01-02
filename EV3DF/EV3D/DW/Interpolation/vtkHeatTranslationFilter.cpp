@@ -1,3 +1,6 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #include <vtkSmartPointer.h>
 #include <cassert>
 
@@ -163,3 +166,6 @@ void vtkHeatTranslationFilter::SetNumberOfXYZ( double xyz[3] )
 	m_Interval[1] = (m_Bounds.ymax-m_Bounds.ymin)/xyz[1];
 	m_Interval[2] = (m_Bounds.zmax-m_Bounds.zmin)/xyz[2];
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

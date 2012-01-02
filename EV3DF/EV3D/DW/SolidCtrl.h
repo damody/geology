@@ -1,4 +1,7 @@
-﻿#pragma once
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+#pragma once
 #include <vector>
 #include <boost/shared_ptr.hpp>
 #include "SolidDefine.h"
@@ -7,13 +10,14 @@
 
 /**
 control unit
+Control each data and view, has origin data
 */
 class SolidCtrl
 {
 public:
 	enum InterpolationMethod
 	{
-		INVERSE_DISTANCE,
+		INVERSE_DISTANCE, ///< use interpolate to get grid data
 		NEAREST_NEIGHBOR
 	};
 	SolidCtrl():m_sf3d(NULL)
@@ -57,31 +61,44 @@ public:
 	SJCScalarField3d	*m_sf3d;
 	vtkBounds		m_bounds;
 public:
+	// set data to use
 	int SetGridedData(SJCScalarField3d* sf3d);
 	int SetGridedData(vtkImageData_Sptr image);
 	int SetGridedData(vtkPolyData_Sptr poly, int nx, int ny, int nz);
 	int SetUnGridData(vtkPolyData_Sptr poly, InterpolationMethod method = NEAREST_NEIGHBOR);
+	// not good
+	// TODO: Remove this function and add General function to add data
 	void AddTaiwan();
 	void AddTaiwan(char* datafilename, int col, int raw);
+	// remove all SEffect View
 	void RmAllView();
+	// remove view you want
 	void RmView(SolidView_Sptr view);
+	// remove doc in this ctrl
 	void RmDoc(SolidDoc_Sptr doc);
-	void ReSetViewDirection();
+	void ResetViewDirection();
+	// render frame
 	void Render();
 	void SetCamera(vtkCamera_Sptr camera)
 	{
 		camera->DeepCopy(m_Camera);
 	}
+	// you need to set hwnd to render on window
 	void SetHwnd( HWND hwnd )
 	{
 		m_RenderWindow->SetParentId(hwnd);
 	}
+	// if window resize you need to call this function
 	void ReSize( int w, int h )
 	{
 		m_RenderWindow->SetSize(w, h);
 	}
+	// if your want to add new view by use SEffect
 	SolidView_Sptr	NewSEffect(SEffect_Sptr effect);
 private:
 	SolidDoc_Sptr	NewDoc();
 	SolidView_Sptr	NewView(SEffect_Sptr& area, SolidDoc_Sptr& doc);
 };
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

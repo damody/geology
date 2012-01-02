@@ -1,4 +1,6 @@
-﻿
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 #include "StdWxVtk.h"
 #include "SolidCtrl.h"
 #include "SolidDoc.h"
@@ -54,7 +56,7 @@ SolidView_Sptr SolidCtrl::NewSEffect(SEffect_Sptr effect)
 	return spView;
 }
 
-void SolidCtrl::ReSetViewDirection()
+void SolidCtrl::ResetViewDirection()
 {
 	m_Camera->SetPosition(0, 0, (m_bounds.Xmid() + m_bounds.Ymid() + m_bounds.Zmid()) / 2);
 	m_Camera->SetFocalPoint(m_bounds.Xmid(), m_bounds.Ymid(), m_bounds.Zmid());
@@ -169,7 +171,7 @@ int SolidCtrl::SetUnGridData(vtkPolyData_Sptr polydata, InterpolationMethod meth
 		histg.Append(point_array->GetValue(i));
 	histg.Sort();
 	spDoc->m_histogram = histg;
-	ReSetViewDirection();
+	ResetViewDirection();
 	return 0;
 }
 
@@ -211,7 +213,7 @@ int SolidCtrl::SetGridedData(vtkImageData_Sptr image)
 		histg.Append(point_array->GetValue(i));
 	histg.Sort();
 	spDoc->m_histogram = histg;
-	ReSetViewDirection();
+	ResetViewDirection();
 	return 0;
 }
 
@@ -291,7 +293,7 @@ int SolidCtrl::SetGridedData(SJCScalarField3d *sf3d)
 		histg.Append(point_array->GetValue(i));
 	histg.Sort();
 	spDoc->m_histogram = histg;
-	ReSetViewDirection();
+	ResetViewDirection();
 	return 0;
 }
 
@@ -351,7 +353,7 @@ int SolidCtrl::SetGridedData(vtkPolyData_Sptr poly, int nx, int ny, int nz)
 		histg.Append(point_array->GetValue(i));
 	histg.Sort();
 	spDoc->m_histogram = histg;
-	ReSetViewDirection();
+	ResetViewDirection();
 	return 0;
 }
 
@@ -359,6 +361,7 @@ void SolidCtrl::Render()
 {
 	m_RenderWindow->Render();
 }
+// add taiwan model
 void SolidCtrl::AddTaiwan()
 {
 	AddTaiwan("TW100m.dat", 0, 503);
@@ -553,6 +556,11 @@ void SolidCtrl::AddTaiwan(char *datafilename, int col, int row)
 
 	// Add the actors to the scene
 	m_Renderer->AddActor(isolines);
-	//m_Renderer->AddActor(isolabels);
+	// add isoline labels
+	m_Renderer->AddActor(isolabels);
+	// add surface
 	m_Renderer->AddActor(surface);
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
+#pragma once
 #include <iomanip>
 #include <vector>
 #include <cstring>
@@ -9,6 +13,7 @@
 #include "ConvStr.h"
 #include "FindSpan.h"
 
+// this class is save data by Custom format
 class ConvertToEvr
 {
 public:
@@ -36,3 +41,6 @@ private:
 	unsigned long	m_totalSize;
 	unsigned char*	m_pData;
 };
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

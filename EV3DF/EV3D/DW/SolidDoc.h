@@ -3,7 +3,7 @@
 #include "SolidDefine.h"
 
 /**
-
+	for save data copy to modify for each view
 */
 class SolidDoc
 {
@@ -24,7 +24,6 @@ public:
 	SolidView_Sptrs GetViewList() const;
 	void		SetPolyData(vtkPolyData_Sptr polyData);
 	void		SetImageData(vtkImageData_Sptr imageData);
-	int		GridingData(const vtkBounds area);
 private:
 	SolidDoc(vtkBounds bound);
 	Histogramd		m_histogram;

@@ -1,4 +1,7 @@
-﻿
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
 #include "HandleEvr.h"
 #include <iostream>
 #include <iomanip>
@@ -7,7 +10,6 @@
 #include <algorithm>
 #include "VarStr.h"
 
-// directoryPath?槌ua頝臬? lua瑼??vr頝臬?
 int HandleEvr::InitLoad ()
 {
 	DataAmount = m_cell.getLua_UsePath<double> ("DataAmount");
@@ -379,3 +381,6 @@ template<class T, class DT> void DependenceSort(T *beg, const uint total, std::v
 	delete[] iAry;
 	delete[] ppAry;
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

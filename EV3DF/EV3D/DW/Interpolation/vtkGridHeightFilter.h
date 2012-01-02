@@ -1,9 +1,11 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #pragma once
 #include "vtkDoubleArray.h"
 #include "vtkPointData.h"
 #include "vtkPolyDataAlgorithm.h"
 #include <vector>
-
 
 class vtkGridHeightFilter
 {
@@ -24,3 +26,6 @@ protected:
 	void BuildPlaneSample(vtkPolyData* TPpolydata, vtkDoubleArray* valuedata, double height);
 	void BuildPlaneSample(double* dataset, int n, double height);
 };
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

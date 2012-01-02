@@ -1,4 +1,7 @@
-﻿
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
 #pragma once
 #include <vector>
 #include <string>
@@ -6,10 +9,13 @@
 #include <cassert>
 #include <cstdlib>
 #pragma warning(disable : 4996)
+// str1="1 2 3 4" =>split(str1, " ") => s[0]="1" s[1]="2" s[2]="3" s[3]="4"
 typedef std::vector < std::string > strings;
 strings					split(const char *str, const char *del);
 typedef std::vector<std::wstring>	wstrings;
 wstrings				split(const wchar_t *str, const wchar_t *del);
+
+// this class for convert number to string
 class VarStr
 {
 public:
@@ -101,3 +107,6 @@ public:
 		}
 	}
 };
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

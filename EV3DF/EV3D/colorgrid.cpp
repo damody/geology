@@ -1,13 +1,7 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        colorgrid.cpp
-// Purpose:     
-// Author:      damody
-// Modified by: 
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 // Created:     19/09/2011 17:09:25
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
 
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
@@ -207,8 +201,8 @@ void ColorGrid::ChangeToView( int col, int row, const wxString& data )
 
 bool ColorGrid::ChangeColorGrid( SolidView_Sptr& view )
 {
-// 	if (view.get() == 0) // 點錯選項
-// 		return false;
+	if (view.get() == 0) // 點錯選項
+		return false;
 // 	switch (view->GetType())
 // 	{
 // 	case SEffect::BOUNDING_BOX:
@@ -303,3 +297,6 @@ bool ColorGrid::ChangeGrid( SolidView_Sptr& view )
 	return true;
 }
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

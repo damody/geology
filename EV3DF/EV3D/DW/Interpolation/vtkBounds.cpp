@@ -1,8 +1,10 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #include "vtkBounds.h"
 #include <cstdlib>
 #include <memory>
 #include <cassert>
-
 
 vtkBounds::vtkBounds()
 {
@@ -35,3 +37,6 @@ void vtkBounds::GetBounds( double bounds[] )
 	assert(bounds!=NULL);
 	memcpy(bounds, m_bounds, sizeof(double)*6);
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

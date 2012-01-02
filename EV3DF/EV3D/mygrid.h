@@ -1,13 +1,7 @@
-﻿/////////////////////////////////////////////////////////////////////////////
-// Name:        mygrid.h
-// Purpose:     
-// Author:      damody
-// Modified by: 
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 // Created:     04/10/2010 14:37:18
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
 
 #ifndef _MYGRID_H_
 #define _MYGRID_H_
@@ -111,3 +105,6 @@ public:
 
 #endif
     // _MYGRID_H_
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

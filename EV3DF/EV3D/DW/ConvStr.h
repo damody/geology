@@ -1,4 +1,8 @@
-﻿#ifndef _ConvertStr_H_
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
+#ifndef _ConvertStr_H_
 #define _ConvertStr_H_
 #include <vector>
 #include <cstring>
@@ -27,3 +31,6 @@ public:
 };
 
 #endif // _ConvertStr_H_
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

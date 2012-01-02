@@ -1,4 +1,8 @@
-﻿#pragma once
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
+#pragma once
 
 #include "wx/wx.h"
 #include "wx/wxprec.h"
@@ -79,3 +83,6 @@
 #include <vtkCamera.h>
 #include <vtkCubeAxesActor.h>
 #include <vtkDelaunay2D.h>
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
