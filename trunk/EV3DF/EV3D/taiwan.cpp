@@ -1,13 +1,9 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        taiwan.cpp
-// Purpose:     
-// Author:      damody
-// Modified by: 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 // Created:     20/04/2011 02:44:01
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
+
 #include "StdWxVtk.h"
 #include "DW/SolidDefine.h"
 #include "DW/SEffect.h"
@@ -1132,3 +1128,6 @@ void Taiwan::OnWGS84Selected( wxCommandEvent& event )
 	event.Skip(false);
 }
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

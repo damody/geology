@@ -1,4 +1,7 @@
-﻿
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
 #include "VarStr.h"
 #include <cstdio>
 #include <clocale>
@@ -93,3 +96,6 @@ VarStr::VarStr(int number)
 	m_string = std::string(chs);
 	m_wstring = (std::wstring) VarStr(m_string);
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

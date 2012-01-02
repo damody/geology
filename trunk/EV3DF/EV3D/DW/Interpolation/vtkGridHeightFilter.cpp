@@ -1,5 +1,7 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #include "vtkGridHeightFilter.h"
-
 
 double vtkGridHeightFilter::GetHeight( vtkPolyData* heightdata, double px, double pz )
 {
@@ -83,3 +85,6 @@ void vtkGridHeightFilter::BuildPlaneSample( double* dataset, int n, double heigh
 	}
 
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

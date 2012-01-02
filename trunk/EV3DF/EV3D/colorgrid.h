@@ -1,13 +1,7 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        colorgrid.h
-// Purpose:     
-// Author:      damody
-// Modified by: 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 // Created:     19/09/2011 17:09:25
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
 
 #ifndef _COLORGRID_H_
 #define _COLORGRID_H_
@@ -93,14 +87,15 @@ public:
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-
+	// change grid size
 	void DeleteGrid();
 	void AppendGrid(int Cols, int Rows);
 	void ReCreateGrid(int Cols, int Rows);
-
+	// for internal use
 	void ChangeToView(int col, int row, const wxString& data);
-
+	// when you click item, you need to change color grid from color table
 	bool ChangeColorGrid(SolidView_Sptr& view);
+	// change grid for different solidview
 	bool ChangeGrid(SolidView_Sptr& view);
 
 ////@begin ColorGrid member variables
@@ -109,3 +104,6 @@ public:
 
 #endif
     // _COLORGRID_H_
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

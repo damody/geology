@@ -2,16 +2,11 @@
 #include "FindSpan.h"
 #include <vector>
 #include <cmath>
-
+// this file write by Professor yu-chi lai
 //============================================================================
 //
-// 鈭株?, ?隞交???data file銝剜?閰脰??賢?蝢拐??Ｗ嗾??
 // 1. Xmin, Xmax, Ymin, Ymax, Zmin, Zmax, deltaX, deltaY, deltaZ
-// 2. Nx = (Xmax - Xmin) / deltaX : x 頠訾? cut撟暹活
-//
-//============================================================================
-// 鈭ouble?潭?衣蝑?=> Remove this when you go through the code,
-//****************************************************************************
+// 2. Nx = (Xmax - Xmin) / deltaX : x 
 //
 // * Two double are the same if their difference is smaller then a
 //   sigma value
@@ -26,7 +21,6 @@ inline bool IsEqual (double x1, double x2, double sigma)
 		return false;
 }
 
-// ?曉???詨?銝剔?delta?潸?蝮賢?嗾憛?
 //****************************************************************************
 //
 // * Find how many cuts in this set of numbers and also the delta and also find

@@ -1,14 +1,19 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #pragma once
 #include <memory>
 #include "vtkBounds.h"
 
 #define CUDA_THREADS 64
-
+// for send information to cuda function
 struct InterpolationInfo
 {
 	InterpolationInfo(int datasize);
 	~InterpolationInfo();
+	// get position data from float data
 	void GetPosFromXYZArray(float *data);
+	// get position data from double data
 	void GetPosFromXYZArray(double *data);
 	float max[3], min[3], interval[3];
 	void SetBounds(const vtkBounds& b)
@@ -25,3 +30,6 @@ struct InterpolationInfo
 };
 
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

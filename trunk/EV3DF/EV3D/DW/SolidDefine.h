@@ -1,6 +1,9 @@
-﻿
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
 #pragma once
-class Solid;
+class	Solid;
 class	SolidDoc;
 class	SolidView;
 class	SolidCtrl;
@@ -126,6 +129,7 @@ VTKSMART_PTR(vtkPoints)
 VTKSMART_PTR(vtkTransform)
 VTKSMART_PTR(vtkImageReslice)
 
+// for vtkSmartNew
 template<typename T, typename U> class has_member_Initialize_tester
 {
 private:
@@ -154,7 +158,7 @@ static struct
 }
 vtkSmartNew;
 
-
+// for vtkOnlyNew
 static struct
 {
 	template<class T> operator vtkSmartPointer<T> ()
@@ -176,3 +180,6 @@ void vtkSmartNew_Initialize(vtkSmartPointer<T>& Ptr)
 #include <windows.h>
 #include <tchar.h>
 #define MESSAGE(x)	MessageBox(NULL, _T(x), _T("MESSAGE"), 0);
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

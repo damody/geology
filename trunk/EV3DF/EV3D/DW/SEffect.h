@@ -1,21 +1,28 @@
-﻿#pragma once
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+
+#pragma once
 #include <string>
 #include "Color4.h"
 #include "TShape.hpp"
 #include "ColorTable.h"
 #include "SolidDefine.h"
 #pragma warning(disable:4201)
-
+// for color struct
 struct Color3Val
 {
 	unsigned char r, g, b;
 	float val;
 };
 
+// when program want to add effect
+// use this class save information
 class SEffect
 {
 public:
-	enum {
+	// enum SEffect kinds
+	enum Effects{
 		BOUNDING_BOX,
 		VERTEX,
 		CONTOUR,
@@ -27,21 +34,25 @@ public:
 		VOLUME_RENDERING
 	};
 public:
+	// Check this SEffect can visable
 	bool GetVisable() {return m_Visable;}
+	// get SEffect type
 	int  GetType() {return m_Type;}
-	std::vector<Color3Val>	m_ColorPoints;
-public:
+	// get self SEffect, can't new by user
 	static SEffect_Sptr New( int type );
+	// For each SEffect's color table
+	std::vector<Color3Val>	m_ColorPoints;
 protected:
 	bool	m_Visable;	///< 能見度
 	int	m_Type;		///< effect種類
 	SEffect():m_Visable(true){}
 protected:
-	friend SolidDoc;
-	friend SolidView;
-	friend SolidCtrl;
+	friend SolidDoc;	// MVC's M
+	friend SolidView;	// MVC's V
+	friend SolidCtrl;	// MVC's C
 };
 
+// for each type of SEffect save different information
 struct Bounding_Box_Setting : public SEffect
 {
 	Bounding_Box_Setting():

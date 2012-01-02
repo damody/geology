@@ -1,13 +1,8 @@
-﻿/////////////////////////////////////////////////////////////////////////////
-// Name:        convertdialog.h
-// Purpose:     
-// Author:      damody
-// Modified by: 
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 // Created:     24/02/2011 06:38:39
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
 
 #ifndef _CONVERTDIALOG_H_
 #define _CONVERTDIALOG_H_
@@ -143,3 +138,6 @@ public:
 
 #endif
     // _CONVERTDIALOG_H_
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

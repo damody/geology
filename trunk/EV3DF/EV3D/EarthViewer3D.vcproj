@@ -658,42 +658,6 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="3D"
-				>
-				<File
-					RelativePath=".\3D\Matrix4x4_Reference.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4_SSE.cpp"
-					>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_Reference.cpp"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_SSE.cpp"
-					>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCLCompilerTool"
-						/>
-					</FileConfiguration>
-				</File>
-			</Filter>
-			<Filter
 				Name="Lua"
 				>
 				<File
@@ -1036,50 +1000,6 @@
 				</File>
 				<File
 					RelativePath=".\DW\Interpolation\vtkNearestNeighborHeightFilter.h"
-					>
-				</File>
-			</Filter>
-			<Filter
-				Name="3D"
-				>
-				<File
-					RelativePath=".\3D\FastMathX64.h"
-					>
-					<FileConfiguration
-						Name="Release|x64"
-						ExcludedFromBuild="true"
-						>
-						<Tool
-							Name="VCCustomBuildTool"
-						/>
-					</FileConfiguration>
-				</File>
-				<File
-					RelativePath=".\3D\Gut.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4_Reference.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Matrix4x4_SSE.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_Reference.h"
-					>
-				</File>
-				<File
-					RelativePath=".\3D\Vector4_SSE.h"
 					>
 				</File>
 			</Filter>

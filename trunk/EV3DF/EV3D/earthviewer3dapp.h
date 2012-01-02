@@ -1,13 +1,8 @@
-﻿/////////////////////////////////////////////////////////////////////////////
-// Name:        earthviewer3dapp.h
-// Purpose:     
-// Author:      damody
-// Modified by: 
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 // Created:     03/03/2010 16:25:54
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
 
 #ifndef _EARTHVIEWER3DAPP_H_
 #define _EARTHVIEWER3DAPP_H_
@@ -79,3 +74,6 @@ DECLARE_APP(EarthViewer3DApp)
 
 #endif
     // _EARTHVIEWER3DAPP_H_
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

@@ -1,4 +1,7 @@
-﻿#pragma once
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+#pragma once
 #pragma warning (disable : 4996)
 #pragma warning(disable:4127)
 #include <vector>
@@ -12,6 +15,10 @@
 #include "SJCScalarField3.h"
 #include "SJCVector3.h"
 #include "SolidDefine.h"
+// this function is do the thing
+// 1. I have array1 and array2
+// 2. array1 each element has relationship with array2
+// 3. I want to sort array1, and array2 need order dependence with array1
 template <class T, class DT>
 void DependenceSort( T* beg, const uint total, std::vector<DT*>& depVector );
 
@@ -24,8 +31,11 @@ struct ptr_value_cmp
 		return (*_Left) < (*_Right);
 	}
 };
+// for read file now has 2 source
 struct PointDataSource
 {
+	// TODO: you need to remove SJCSCALAR_PTR, this format is very hard to use
+	// why we add SJCSCALAR_PTR? because Professor yu-chi lai want
 	enum {
 		SJCSCALAR_PTR,
 		VTKPOLYDATA
@@ -122,3 +132,6 @@ private:
 	CreateLua	m_CreateLua;
 	int getSize(const std::string& str);
 };
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

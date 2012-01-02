@@ -1,3 +1,6 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 #include "InterpolationInfo.h"
 
 void InterpolationInfo::GetPosFromXYZArray( float *data )
@@ -38,3 +41,6 @@ InterpolationInfo::InterpolationInfo( int datasize )
 	m_posAry[2] = (float*)malloc(sizeof(float)*datasize);
 	m_data_ary = (float*)malloc(sizeof(float)*datasize);
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

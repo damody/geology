@@ -1,4 +1,7 @@
-﻿#pragma once
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
+#pragma once
 #include "SJCVector3.h"
 #include "SJCScalarField3.h"
 #include "ColorTable.h"
@@ -8,7 +11,8 @@
 
 // use vtk to implement function like mathcube
 /**
-資料單元
+old class
+please don't use or delete
 */
 
 class Solid
@@ -65,3 +69,6 @@ private:
 	vtkSmartPointer<vtkImageShiftScale>	m_ImageShiftScale;
 
 };
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

@@ -1,13 +1,8 @@
-﻿/////////////////////////////////////////////////////////////////////////////
-// Name:        firstmain.cpp
-// Purpose:     
-// Author:      damody
-// Modified by: 
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 // Created:     19/03/2010 13:11:58
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
 #include "StdWxVtk.h"
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
@@ -888,3 +883,6 @@ void FirstMain::OpenLuaFile( std::wstring str )
 	m_ZminText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmin).c_str()));
 	m_ZmaxText->SetValue(wxString::FromAscii(ConvStr::GetStr(m_hEvr->Zmax).c_str()));
 }
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

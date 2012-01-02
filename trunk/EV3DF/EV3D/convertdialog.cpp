@@ -1,13 +1,8 @@
-////////////////////////////////////////////////////////////////////////////
-// Name:        convertdialog.cpp
-// Purpose:     
-// Author:      damody
-// Modified by: 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)
 // Created:     24/02/2011 06:38:39
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
 #include "StdWxVtk.h"
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
@@ -387,7 +382,6 @@ void ConvertDialog::OnConvertClick( wxCommandEvent& event )
 ////@end wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_CONVERT in ConvertDialog. 
 }
 
-
 /*
  * wxEVT_COMMAND_BUTTON_CLICKED event handler for ID_CLOSE
  */
@@ -398,3 +392,6 @@ void ConvertDialog::OnCloseClick( wxCommandEvent& event )
 	this->EndDialog(0);
 }
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+// In academic purposes only(2012/1/12)

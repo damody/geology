@@ -1,13 +1,8 @@
-﻿/////////////////////////////////////////////////////////////////////////////
-// Name:        earthviewer3dapp.cpp
-// Purpose:     
-// Author:      damody
-// Modified by: 
+﻿// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)
 // Created:     03/03/2010 16:25:54
-// RCS-ID:      
-// Copyright:   NTUST
-// Licence:     
-/////////////////////////////////////////////////////////////////////////////
+
 #include "StdWxVtk.h"
 // For compilers that support precompilation, includes "wx/wx.h".
 #include "wx/wxprec.h"
@@ -165,3 +160,6 @@ int EarthViewer3DApp::OnExit()
 ////@end EarthViewer3DApp cleanup
 }
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang 黃亮軒
+// author: a910000@gmail.com Kuang-Yi Chen 陳光奕
+// In academic purposes only(2012/1/12)

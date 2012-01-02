@@ -5,13 +5,15 @@
 
 void ConvStr::CharToWchar(wchar_t *unicode, const char *ansi)
 {
-	MultiByteToWideChar(CP_ACP, 0, ansi, strlen(ansi), unicode, 2048 ); 
+	int n;
+	n = MultiByteToWideChar(CP_ACP, 0, ansi, -1, 0, 0);
+	MultiByteToWideChar(CP_ACP, 0, ansi, -1, unicode, n ); 
 }
 void ConvStr::WcharToChar(const wchar_t *unicode, char *ansi)
 {
 	int n;
-	n = MultiByteToWideChar(CP_ACP, 0, ansi, -1, 0, 0);
-	MultiByteToWideChar(CP_ACP, 0, ansi, -1, unicode, n);
+	n = WideCharToMultiByte(CP_ACP, 0, unicode, -1, ansi, -1, 0, 0);
+	WideCharToMultiByte(CP_ACP, 0, unicode, -1, ansi, n, 0, 0);
 }
 
 std::wstring ConvStr::GetWstr( int number )
