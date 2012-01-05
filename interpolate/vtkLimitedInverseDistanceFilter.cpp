@@ -150,52 +150,11 @@ int vtkLimitedInverseDistanceFilter::RequestData( vtkInformation *vtkNotUsed(req
 				}
 				else if (LIMIT_RADIUS == m_limitMethod)
 				{
-					/*
-					int buffer[1000];
-					float bound[6];
-					bound[0] = dim[0]-m_Radius;
-					bound[1] = dim[0]+m_Radius;
-					bound[2] = dim[1]-m_Radius;
-					bound[3] = dim[1]+m_Radius;
-					bound[4] = dim[2]-m_Radius;
-					bound[5] = dim[2]+m_Radius;
-					m_kd_tree.FSearchKdtreeByBounding(pts, bound, buffer, 1000);
-					double sum = 0, sum2 = 0, dis=999;
-					if (buffer[0] != -1)
-					{
-						int count = 0;
-						for (int i=0;i<1000;++i,++count)
-						{
-							const int index = buffer[i];
-							if (buffer[i] == -1)
-								break;
-							dis = vtkMath::Distance2BetweenPoints(raw_points+index*4, dim);
-							dis = sqrt(dis);
-							if (dis<0.001)
-							{
-								outScalars->InsertNextTuple1(*(raw_points+index*4+3));
-								break;
-							}
-							double tmp = pow(dis, -m_PowerValue);
-							sum += tmp;
-							sum2 += tmp*(*(raw_points+index*4+3));
-						}
-						//printf("%d\n", count);
-						if (dis>=0.001)
-						{
-							sum2 /= sum;
-							outScalars->InsertNextTuple1(sum2);
-						}
-					}
-					else
-						outScalars->InsertNextTuple1(m_NullValue);
-					*/
 					double sum = 0, sum2 = 0, dis=999;
 					kDTree->FindPointsWithinRadius(m_Radius, dim, ids);
 					if (ids->GetNumberOfIds() > 0)
 					{
 						int max_ids = ids->GetNumberOfIds();
-						//if (LIMIT_NUMBER == m_limitMethod) max_ids = m_LimitNum;
 						for (int i = 0; i < max_ids; i++)
 						{
 							const int index = ids->GetId(i);
@@ -208,7 +167,7 @@ int vtkLimitedInverseDistanceFilter::RequestData( vtkInformation *vtkNotUsed(req
 							}
 							double tmp = pow(dis, -m_PowerValue);
 							sum += tmp;
-							sum2 += tmp*(*(raw_points+index*4+3)); // *(raw_points+i*4+3) is as same as inScalars->GetValue(i);
+							sum2 += tmp*(*(raw_points+index*4+3));
 						}
 						if (dis>=0.001)
 						{

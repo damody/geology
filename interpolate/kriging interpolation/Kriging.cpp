@@ -6,7 +6,6 @@ kriging::kriging( void )
 	m_AutoSetDistStep = true;
 	m_pVariogram = NULL; 
 	m_pVarioCloud = NULL;
-	m_DoPreCompute = true;
 }
 
 void kriging::SetRange( double rmax[3], double rmin[3] )
@@ -69,19 +68,6 @@ std::vector<VariogramItem> kriging::ComputeVariogramCloud( void ) const
 	} // end of for i 
 
 	return vecVario;
-}
-
-
-
-double kriging::IsoDis( double* p1, double* p2 )
-{
-	double res=0;
-	for (int i=0;i<3;i++)
-	{
-		res+= pow( p1[i]-p2[i], 2.0 );
-	}
-
-	return sqrt(res);
 }
 
 //****************************************************************************
@@ -268,8 +254,6 @@ double kriging::GetPredictData( double pos[], double &pred, double &var ) const
 			weight[mx] += m_pPrePseudoInverse(mx, my)*vvario[my];
 		ttw+=weight[mx];
 	}
-	// Inversever matrix Inv * vvario
-	//		LYCMatVecMultiplication(weight[i], m_pPrePseudoInverse[i], vvario[i]);
 	
 	if ( fabs(ttw-1) > 0.0001 )
 	{
@@ -285,7 +269,6 @@ double kriging::GetPredictData( double pos[], double &pred, double &var ) const
 	}
 
 	// Compute the variance
-	// Set up 
 	vvario[numSamples] = 0.0;
 
 	var = 0.0;

@@ -40,21 +40,28 @@ __device__ inline void InverseDistance_GetNearestPointN(float x, float y, float 
 {
 	float now, sum = 0, sum2 = 0, tmp;
 	int idx, i, j;
+	int shid, dataid;
 
-	__shared__ float sh[256][4];
-	for ( i = 0;i < *d_total_id;i+=256)
+	__shared__ float sh[1024][4];
+	for ( i=0; i < *d_total_id;i+=1024)
 	{
-		idx = i+tid;
         __syncthreads();
 		if (tid<256)
 		{
-			sh[tid][0] = xary[idx];
-			sh[tid][1] = yary[idx];
-			sh[tid][2] = zary[idx];
-			sh[tid][3] = data_ary[idx];
+			for (int j=0; j<4; j++)
+			{
+				idx = 256*j + tid + i;
+				if (idx >= *d_total_id)
+					break;
+				shid = 256*j + tid;
+				sh[tid][0] = xary[idx];
+				sh[tid][1] = yary[idx];
+				sh[tid][2] = zary[idx];
+				sh[tid][3] = data_ary[idx];
+			}
 		}
         __syncthreads();
-		for ( j=0; j<256 && i+j<*d_total_id; j++)
+		for ( j=0; j<1024 && i+j<*d_total_id; j++)
 		{
 			InverseDistance_GetDistance(x, sh[j][0], y, sh[j][1], z, sh[j][2], &now);
 
@@ -150,7 +157,7 @@ __host__ int InverseDistance_SetData( const InterpolationInfo *h_info, float pow
 	return h_dst_total_id;
 }
 
-void InverseDistance_ComputeData(_out float *dstdata, int th, bool useShMem)
+__host__ void InverseDistance_ComputeData(_out float *dstdata, int th, bool useShMem)
 {
 	int threadsPerBlock = 256;
 	if (!useShMem)
@@ -158,10 +165,10 @@ void InverseDistance_ComputeData(_out float *dstdata, int th, bool useShMem)
 	int blocksPerGrid = (sh_total_id + threadsPerBlock - 1) / threadsPerBlock;
 
 	if (useShMem)
-		InverseDistance_GetNearest<<<blocksPerGrid, threadsPerBlock>>>
+		InverseDistance_GetNearestSH<<<blocksPerGrid, threadsPerBlock>>>
 			(d_out_ary_id, d_data_ary_id, d_xary_id, d_yary_id, d_zary_id);
 	else
-		InverseDistance_GetNearestSH<<<blocksPerGrid, threadsPerBlock>>>
+		InverseDistance_GetNearest<<<blocksPerGrid, threadsPerBlock>>>
 			(d_out_ary_id, d_data_ary_id, d_xary_id, d_yary_id, d_zary_id);
 
 	cutilCheckMsg("kernel launch failure");

@@ -1,9 +1,13 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)
+
 #pragma once
 #include <memory>
 #include "vtkBounds.h"
 
 #define CUDA_THREADS 64
-
+//data information for GPU to use
 struct InterpolationInfo
 {
 	InterpolationInfo(int datasize);
@@ -24,4 +28,6 @@ struct InterpolationInfo
 	float *m_data_ary, *m_posAry[3];
 };
 
-
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)
