@@ -1,12 +1,15 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)
+
 #pragma once
-//#include "Record.h"
+
 #include "Variogram.h"
 #include <vector>
-//#include "boost_mat.h"
-
 #include <boost/numeric/ublas/matrix.hpp>
 typedef boost::numeric::ublas::matrix<double> matrixd;
 
+//3-D double position struct
 struct dPos3
 {
 	double pos[3];
@@ -30,6 +33,7 @@ struct dPos3
 	}
 };
 
+//data record struct, include a 3-D position and a value
 struct Record3
 {
 	dPos3 pos;
@@ -46,18 +50,17 @@ struct Record3
 	}
 };
 
+//kriging class, only for  Ordinary kriging
 class kriging
 {
 private:
-	//output grid data
-	std::vector<Record3> m_dataset;
-	std::vector<Record3> m_smpset;
+	std::vector<Record3> m_dataset;			//output grid data
+	std::vector<Record3> m_smpset;			//input sample set data
 	
-	int			m_uNumSamples;
-	int			m_uNumDataItems;
-	double		m_DistStep;
-	bool		m_AutoSetDistStep;
-	bool		m_DoPreCompute;
+	int			m_uNumSamples;				//number of samples point
+	int			m_uNumDataItems;			//number of data item for a samples point
+	double		m_DistStep;					//cloud variogram distance step
+	bool		m_AutoSetDistStep;			//whether use autometic to get distance step
 	//! Control space domain -> record the max and min of each domain
 	double			m_vLower[3];
 	double			m_vUpper[3];
@@ -70,11 +73,12 @@ private:
 	matrixd		m_pPrePseudoInverse;
 
 public:
-	double GetDistStep()
+	double GetDistStep()				//get cloud variogram distance step
 	{return m_DistStep;};
 	kriging(void);
 	~kriging(void){Destroy();}
-	bool Initial(int smpl, int numDataItems);
+
+	bool Initial(int smpl, int numDataItems);		//initial kriging, set number of smaple and data items
 
 	void SetSample(std::vector<Record3>& smp){m_smpset = smp;}
 	void SetRange(double rmax[3], double rmin[3] );
@@ -96,14 +100,12 @@ public:
 	void SetAutoGetDistStep(bool setting){m_AutoSetDistStep = setting;}
 
 	void GetDoubleMatrix(std::vector<double>& mat);
-
 	void GetFloatMatrix(std::vector<float>& mat);
 	void GetFloatMatrix(float* mat);
 
 	float GetNugget(){return (float)m_pVariogram->Nugget()[0];}
 	float GetSill(){return (float)m_pVariogram->Sill()[0];}
 	float GetRange(){return (float)m_pVariogram->Range()[0];}
-	void SetPreCompute(bool setting){m_DoPreCompute = setting;}
 
 protected:
 
@@ -122,10 +124,10 @@ protected:
 
 	// Pre-compute kriging system
 	bool PrecomputeKrigingSystem(void);
-	
 
-	double IsoDis(double* p1, double* p2);
-
-	void SVDInvese(Mat_DP& out, Mat_DP& a);
 	void AutoSetDistSetp();
 };
+
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)

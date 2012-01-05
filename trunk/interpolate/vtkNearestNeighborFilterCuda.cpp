@@ -1,5 +1,3 @@
-// athour: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a, ³¯¥ú«³
-// In academic purposes only
 #include "vtkNearestNeighborFilterCuda.h"
 
 #include "vtkObjectFactory.h"
@@ -94,5 +92,3 @@ void vtkNearestNeighborFilterCuda::PrintSelf(ostream& os, vtkIndent indent)
 	this->Superclass::PrintSelf(os,indent);
 }
 
-// athour: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a, ³¯¥ú«³
-// In academic purposes only

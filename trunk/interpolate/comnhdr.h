@@ -1,3 +1,7 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)
+
 #define _CRT_SECURE_NO_DEPRECATE
 #include <new>
 #include <conio.h>
@@ -48,3 +52,6 @@
 #pragma managed(push, on)
 #endif
 
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)

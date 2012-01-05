@@ -1,5 +1,7 @@
-// athour: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a, ³¯¥ú«³
-// In academic purposes only
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)
+
 #pragma warning(disable:4996) 
 #include <vtkSmartPointer.h>
 #include <cassert>
@@ -432,5 +434,6 @@ int main(int argc, char *argv[])
 	fclose(outf);
 }
 
-// athour: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a, ³¯¥ú«³
-// In academic purposes only
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)

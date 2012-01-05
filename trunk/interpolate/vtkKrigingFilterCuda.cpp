@@ -60,7 +60,6 @@ int vtkKrigingFilterCuda::RequestData(vtkInformation *vtkNotUsed(request),
 	kf.SetSample(smpset);
 	kf.Initial(smpnum, 1);
 	kf.SetAutoGetDistStep(m_AutoGetStep);
-	kf.SetPreCompute(true);
 	kf.Estimate(Variogram::VARIO_SPERICAL, 2, m_DistStep);
 	printf("DistStep:%f, \n", kf.GetDistStep());
 

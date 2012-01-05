@@ -38,18 +38,12 @@ int vtkNearestNeighborFilter::RequestData(vtkInformation *vtkNotUsed(request),
 	VTK_CREATE(outpoints, vtkPoints);
 	VTK_CREATE(outScalars, vtkDoubleArray);
 	vtkDoubleArray* inScalars = (vtkDoubleArray*)(input->GetPointData()->GetScalars());
-// 	double *raw_points = (double*)malloc(sizeof(double) * 4 * input->GetNumberOfPoints()),
-// 		*save_pos = raw_points;
+
 
 	// set kDtree and build
 	kDTree->SetDataSet(input);
 	kDTree->BuildLocator();
 
-// 	for(vtkIdType i = 0;i < input->GetNumberOfPoints();i++, save_pos += 4)
-// 	{
-// 		input->GetPoint(i, save_pos);
-// 		save_pos[3] = inScalars->GetValue(i);
-// 	}
 	double dim[3];
 	{ // fix Numerical error
 		m_Bounds.xmax += m_Interval[0]*0.5;
@@ -65,23 +59,6 @@ int vtkNearestNeighborFilter::RequestData(vtkInformation *vtkNotUsed(request),
 				vtkIdType id = kDTree->FindClosestPoint(dim);
 				outpoints->InsertNextPoint(dim);
 				outScalars->InsertNextTuple1(inScalars->GetValue(id));
-// 				double min_dis = VTK_FLOAT_MAX;
-// 				double val = VTK_FLOAT_MAX;
-// 				save_pos = raw_points;
-// 				for(vtkIdType i = 0; i < input->GetNumberOfPoints(); i++)
-// 				{
-// 					double dis = sqrt(vtkMath::Distance2BetweenPoints(save_pos, dim));
-// 					if (min_dis > dis)
-// 					{
-// 						min_dis = dis;
-// 						val = save_pos[3];
-// 					}
-// 					save_pos += 4;
-// 				}
-// 				if (val == VTK_FLOAT_MAX)
-// 					val = m_NullValue;
-// 				outpoints->InsertNextPoint(dim);
-// 				outScalars->InsertNextTuple1(val);
 			}
 		}
 	}

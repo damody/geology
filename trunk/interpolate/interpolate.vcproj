@@ -115,7 +115,6 @@
 			/>
 			<Tool
 				Name="Cudart Build Rule"
-				TargetMachinePlatform="1"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -277,7 +276,6 @@
 			/>
 			<Tool
 				Name="Cudart Build Rule"
-				TargetMachinePlatform="1"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -441,7 +439,6 @@
 			/>
 			<Tool
 				Name="Cudart Build Rule"
-				TargetMachinePlatform="1"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -749,30 +746,6 @@
 						Name="Cudart Build Rule"
 						Optimization="0"
 						Runtime="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Debug|x64"
-					>
-					<Tool
-						Name="Cudart Build Rule"
-						TargetMachinePlatform="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release_sm20|x64"
-					>
-					<Tool
-						Name="Cudart Build Rule"
-						TargetMachinePlatform="1"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release_sm11|x64"
-					>
-					<Tool
-						Name="Cudart Build Rule"
-						TargetMachinePlatform="1"
 					/>
 				</FileConfiguration>
 			</File>

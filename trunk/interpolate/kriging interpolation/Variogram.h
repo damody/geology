@@ -1,7 +1,10 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)
+
 #pragma once
 
 #include <vector>
-//#include "mrqmin.h"
 #include <nr.h>
 typedef std::vector<double> vectord;
 
@@ -13,6 +16,7 @@ struct VariogramItem{
 	vectord m_VDissimilarity;
 };
 
+//Variogram class for kriging
 class Variogram
 {
 	// member enumeration
@@ -30,12 +34,6 @@ public:
 		VARIO_NUM,
 	};
 
-	// Member classes
-public:
-
-
-
-	// Constructor / destructor
 public:
 	// Default constructor
 	Variogram(void);
@@ -151,3 +149,7 @@ private:
 	//! power coefficient of stable model
 	vectord		m_VPower;
 };
+
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)

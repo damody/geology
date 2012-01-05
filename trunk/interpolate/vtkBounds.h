@@ -1,6 +1,7 @@
 #pragma once
 #pragma warning(disable:4201)
 
+//data bound, it include max and min point
 class vtkBounds
 {
 public:
@@ -35,10 +36,10 @@ public:
 	void SetBounds(const vtkBounds& b){*this = b;}
 	void SetBounds(const double bounds[]);
 	void GetBounds(double bounds[]);
-	double Xlen(){return xmax-xmin;}
-	double Ylen(){return ymax-ymin;}
-	double Zlen(){return zmax-zmin;}
-	double Xmid(){return (xmax+xmin)/2.0;}
-	double Ymid(){return (ymax+ymin)/2.0;}
-	double Zmid(){return (zmax+zmin)/2.0;}
+	double Xlen(){return xmax-xmin;}			//get x length
+	double Ylen(){return ymax-ymin;}			//get y length
+	double Zlen(){return zmax-zmin;}			//get z length
+	double Xmid(){return (xmax+xmin)/2.0;}		//get x center
+	double Ymid(){return (ymax+ymin)/2.0;}		//get y center
+	double Zmid(){return (zmax+zmin)/2.0;}		//get z center
 };

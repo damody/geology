@@ -1,5 +1,3 @@
-// athour: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a, ³¯¥ú«³
-// In academic purposes only
 #include "vtkInverseDistanceFilterCuda.h"
 
 #include "vtkObjectFactory.h"
@@ -104,5 +102,3 @@ double vtkInverseDistanceFilterCuda::GetPowerValue()
 {
 	return m_PowerValue;
 }
-// athour: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a, ³¯¥ú«³
-// In academic purposes only

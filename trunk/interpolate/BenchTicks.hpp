@@ -1,3 +1,15 @@
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)
+
+/* 
+Usage:
+	BenchTicks_t t1;
+	{ CBenchAuto dummy(&t1);
+	  ...
+	}
+	printf("Time elapsed: %s\n", BenchTicksToString(t1));
+*/
 
 #if defined(_MSC_VER)
 	typedef unsigned __int64 BenchTicks_t;
@@ -188,11 +200,7 @@ struct CBenchAuto {
 };
 #define BENCHMON(x)			if (CBenchAuto dummy = x)
 
-/* 
-Usage:
-	BenchTicks_t t1;
-	{ CBenchAuto dummy(&t1);
-	  ...
-	}
-	printf("Time elapsed: %s\n", BenchTicksToString(t1));
-*/
+
+// author: t1238142000@gmail.com Liang-Shiuan Huang ¶À«G°a
+// author: a910000@gmail.com Kuang-Yi Chen ³¯¥ú«³
+//  In academic purposes only(2012/1/12)

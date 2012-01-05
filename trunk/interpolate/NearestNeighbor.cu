@@ -34,19 +34,27 @@ __device__ inline void NearestNeighbor_GetNearestPointN(float x, float y, float 
 						, float *xary, float *yary, float *zary, int tid)
 {
 	float min = 1.0e+38f, now;
-	int idx, i, j;
-	__shared__ float sh[256][3];
-	for ( i = 0; i < *d_total_nn; i+=256)
+	int shid, idx, i, j;
+	__shared__ float sh[1024][3];
+	for ( i = 0; i < *d_total_nn; i+=1024)
 	{
 		idx = i+tid;
 		if (tid<256)
 		{
-			sh[tid][0] = xary[idx];
-			sh[tid][1] = yary[idx];
-			sh[tid][2] = zary[idx];
+			for (int j=0; j<4; j++)
+			{
+				idx = 256*j + tid + i;
+				if (idx >= *d_total_nn)
+					break;
+				shid = 256*j + tid;
+
+				sh[tid][0] = xary[idx];
+				sh[tid][1] = yary[idx];
+				sh[tid][2] = zary[idx];
+			}
 		}
         __syncthreads();
-		for ( j=0; j<256; j++)
+		for ( j=0; j<1024; j++)
 		{
 			if (i+j < *d_total_nn)
 			{
