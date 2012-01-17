@@ -42,37 +42,40 @@ __device__ inline void InverseDistance_GetNearestPointN(float x, float y, float 
 	int idx, i, j;
 	int shid, dataid;
 
-	__shared__ float sh[1024][4];
-	for ( i=0; i < *d_total_id;i+=1024)
+	__shared__ float shx[512];
+	__shared__ float shy[512];
+	__shared__ float shz[512];
+	__shared__ float shd[512];
+	for ( i=0; i < *d_total_id;i+=512)
 	{
         __syncthreads();
 		if (tid<256)
 		{
-			for (int j=0; j<4; j++)
+			for (int j=0; j<2; j++)
 			{
 				idx = 256*j + tid + i;
 				if (idx >= *d_total_id)
 					break;
 				shid = 256*j + tid;
-				sh[tid][0] = xary[idx];
-				sh[tid][1] = yary[idx];
-				sh[tid][2] = zary[idx];
-				sh[tid][3] = data_ary[idx];
+				shx[shid] = xary[idx];
+				shy[shid] = yary[idx];
+				shz[shid] = zary[idx];
+				shd[shid] = data_ary[idx];
 			}
 		}
-        __syncthreads();
-		for ( j=0; j<1024 && i+j<*d_total_id; j++)
+		__syncthreads();
+		for ( j=0; j<512 && i+j<*d_total_id; j++)
 		{
-			InverseDistance_GetDistance(x, sh[j][0], y, sh[j][1], z, sh[j][2], &now);
+			InverseDistance_GetDistance(x, shx[j], y, shy[j], z, shz[j], &now);
 
 			if (now<0.001)
 			{
-				*res = sh[j][3];
+				*res = shd[j];
 				return;
 			}
 			tmp = pow(now, -d_power_id[0]);
 			sum += tmp;
-			sum2 += tmp*sh[j][3];
+			sum2 += tmp*shd[j];
 		}
 	}
 	sum2 /= sum;

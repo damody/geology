@@ -76,8 +76,8 @@ __device__ void OK_ComputePointSH(float x, float y, float z, float *res, float *
 	float w, d, total, r;
 	int i, j, k, idx, shid;
 	total = 0;
-	__shared__ float shmat[1024];
-	__shared__ float shval[1024];
+	__shared__ float shmat[256];
+	__shared__ float shval[256];
 	
 	for (i=0; i<*d_smp_num_OK; i++)
 	{
@@ -85,30 +85,23 @@ __device__ void OK_ComputePointSH(float x, float y, float z, float *res, float *
 		OK_GetDistance(x, xary[i], y, yary[i], z, zary[i], &d);
 		r = SphericalModel(d);
 
-		for (j=0; j<*d_smp_num_OK; j+=1024)
+		for (j=0; j<*d_smp_num_OK; j+=256)
 		{
-			idx = j+tid;
-			//idx*=2;
 			__syncthreads();
 			if (tid<256)
 			{
-				for (int j=0; j<4; j++)
-				{
-					idx = 256*j + tid + i;
-					if (idx >= *d_smp_num_OK)
-						break;
-
-					shmat[shid] = mat[(*d_smp_num_OK+1)*idx + i];
-					shval[shid] = data_ary[idx];
-				}
+				idx = tid + j;
+				shid = tid;
+				shmat[shid] = mat[(*d_smp_num_OK+1)*idx + i];
+				shval[shid] = data_ary[idx];
 			}
 			__syncthreads();
 
-			for (k=0; j+k<*d_smp_num_OK && k<1024; k++)
+			for (k=0; j+k<*d_smp_num_OK && k<256; k++)
 				w = w + shmat[k]* r * shval[k];
 		}	
 
-		w += mat[(*d_smp_num_OK+1)*i + *d_smp_num_OK]*data_ary[*d_smp_num_OK];
+		w += mat[(*d_smp_num_OK+1)*i + *d_smp_num_OK]*data_ary[i];
 		total = total + w;
 	}
 

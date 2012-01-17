@@ -358,6 +358,8 @@
 			/>
 			<Tool
 				Name="Cudart Build Rule"
+				Arch1="11"
+				Arch2="11"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -439,6 +441,9 @@
 			/>
 			<Tool
 				Name="Cudart Build Rule"
+				Arch1="11"
+				Arch2="11"
+				TargetMachinePlatform="1"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -455,7 +460,7 @@
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
 				AdditionalIncludeDirectories="&quot;$(CULA_INC_PATH)&quot;"
-				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN64;NDEBUG;_CONSOLE"
 				RuntimeLibrary="0"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"

@@ -35,40 +35,43 @@ __device__ inline void NearestNeighbor_GetNearestPointN(float x, float y, float 
 {
 	float min = 1.0e+38f, now;
 	int shid, idx, i, j;
-	__shared__ float sh[1024][3];
-	for ( i = 0; i < *d_total_nn; i+=1024)
+	__shared__ float shx[512];
+	__shared__ float shy[512];
+	__shared__ float shz[512];
+	__shared__ float shd[512];
+	for ( i = 0; i < *d_total_nn; i+=512)
 	{
 		idx = i+tid;
 		if (tid<256)
 		{
-			for (int j=0; j<4; j++)
+			for (int j=0; j<2; j++)
 			{
 				idx = 256*j + tid + i;
 				if (idx >= *d_total_nn)
 					break;
 				shid = 256*j + tid;
 
-				sh[tid][0] = xary[idx];
-				sh[tid][1] = yary[idx];
-				sh[tid][2] = zary[idx];
+				shx[shid] = xary[idx];
+				shy[shid] = yary[idx];
+				shz[shid] = zary[idx];
+				shd[shid] = data_ary[idx];
 			}
 		}
-        __syncthreads();
-		for ( j=0; j<1024; j++)
+		__syncthreads();
+		for ( j=0; j<512; j++)
 		{
 			if (i+j < *d_total_nn)
 			{
-				NearestNeighbor_GetDistance(x, sh[j][0], y, sh[j][1], z, sh[j][2], &now);
+				NearestNeighbor_GetDistance(x, shx[j], y, shy[j], z, shz[j], &now);
 				if (min > now)
 				{
 					min = now;
-					*res = data_ary[i+j];
+					*res = shd[j];
 				}
 			}
 			else
 				break;
 		}
-
 		__syncthreads();
 	}
 }
