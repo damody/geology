@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <cctype>
 #include <cassert>
+#include <auto_link_vtk.hpp>
 
 #include "main.h"
 #include "Win32Window.h"
@@ -526,12 +527,12 @@ void InitVTK()
 	g_Axes_widget->SetOrientationMarker( g_Axes );
 	g_Axes_widget->SetInteractor( g_WindowInteractor );
 	g_Axes_widget->On();
-	g_window.ToCreateWindow(0,0,800,600, L"vtkDataRender", MyProc);
+	g_window.ToCreateWindow(0,0,1920,1080, L"vtkDataRender", MyProc);
 	g_window.ToShow();
 	g_window.ToMoveCenter();
 	g_RenderWindow->SetParentId(g_window.GetHandle());
 	g_RenderWindow->Render();
-	g_RenderWindow->SetSize(800,600);
+	g_RenderWindow->SetSize(1920,1080);
 	vtkBounds bounding;
 	bounding.SetBounds(input_polydata->GetBounds());
 	g_Camera->SetPosition(0, 0, (bounding.Xmid() + bounding.Ymid() + bounding.Zmid()) / 2);
@@ -588,6 +589,15 @@ void AddVertex(vtkPolyData_Sptr poly)
 	vd.m_actor->GetProperty()->SetPointSize(4);
 	g_Renderer->AddActor(vd.m_actor);
 	g_Vectexs.push_back(vd);
+
+	g_Renderer->RemoveActor(g_ScalarBarActor);
+	g_ScalarBarActor = vtkSmartNew;
+	g_ScalarBarActor->SetLookupTable(colorTransferFunction);
+	g_ScalarBarActor->SetNumberOfLabels(5);
+	g_ScalarBarActor->SetMaximumWidthInPixels(150);
+	g_ScalarBarActor->SetMaximumHeightInPixels(400);
+
+	g_Renderer->AddActor2D(g_ScalarBarActor);
 }
 
 void AddCubeAxes(vtkPolyData_Sptr poly)
@@ -684,8 +694,9 @@ void AddVolume(vtkImageData_Sptr image)
 	g_ScalarBarActor = vtkSmartNew;
 	g_ScalarBarActor->SetLookupTable(colorTransferFunction);
 	g_ScalarBarActor->SetNumberOfLabels(5);
-	g_ScalarBarActor->SetMaximumWidthInPixels(60);
-	g_ScalarBarActor->SetMaximumHeightInPixels(300);
+	g_ScalarBarActor->SetMaximumWidthInPixels(150);
+	g_ScalarBarActor->SetMaximumHeightInPixels(400);
+
 	
 	g_Renderer->AddActor2D(g_ScalarBarActor);
 	g_Renderer->AddViewProp(vd.m_volume);
